@@ -17,4 +17,5 @@ end
 group :development, :test do
   gem 'rspec-rails', '2.12.0'
   gem 'capybara', '2.0.1'
+  gem 'simplecov-rcov', '0.2.3'
 end
