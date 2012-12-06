@@ -11,4 +11,9 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+
+end
+
+group :development, :test do
+  gem 'rspec-rails', '2.12.0'
 end
