@@ -10,6 +10,7 @@ gem 'unicorn'
 
 gem 'gds-sso', '2.1.0'
 
+gem 'therubyracer'
 gem 'jquery-rails'
 gem 'less-rails-bootstrap'
 
