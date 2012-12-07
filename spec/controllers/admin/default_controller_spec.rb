@@ -9,8 +9,9 @@ describe Admin::DefaultController do
   end
 
   it "should display some test text" do
-    visit "/"
-    page.body.should == "Test output. Remove this once real specs exist."
+    visit "/admin"
+    response.should be_success
+    page.should have_content "Test output. Remove this once real specs exist."
   end
 
 end
