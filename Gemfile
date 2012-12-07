@@ -8,6 +8,10 @@ gem 'exception_notification', '2.6.1'
 gem 'aws-ses', :require => 'aws/ses'
 gem 'unicorn'
 
+gem "mongoid", "2.4.10"
+gem "mongo", "1.6.2"
+gem "bson_ext", "1.6.2"
+
 gem 'gds-sso', '2.1.0'
 
 gem 'therubyracer'
