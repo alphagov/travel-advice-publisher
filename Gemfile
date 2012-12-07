@@ -5,6 +5,8 @@ gem 'rails', '3.2.9'
 gem 'exception_notification', '2.6.1'
 gem 'aws-ses', :require => 'aws/ses'
 
+gem 'unicorn'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
