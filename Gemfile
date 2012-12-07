@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+source 'https://gems.gemfury.com/vo6ZrmjBQu5szyywDszE/'
 
 gem 'plek', '0.5'
 
@@ -13,6 +14,12 @@ gem "mongo", "1.6.2"
 gem "bson_ext", "1.6.2"
 
 gem 'gds-sso', '2.1.0'
+
+if ENV['CONTENT_MODELS_DEV']
+  gem "govuk_content_models", :path => '../govuk_content_models'
+else
+  gem "govuk_content_models", "2.6.1"
+end
 
 gem 'therubyracer'
 gem 'jquery-rails'
