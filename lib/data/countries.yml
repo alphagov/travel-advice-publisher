@@ -1,4 +1,4 @@
---- 
+---
 - :name: Afghanistan
   :slug: afghanistan
 - :name: Albania
@@ -102,16 +102,16 @@
 - :name: Congo
   :slug: congo
 - :name: Congo (Democratic Republic)
-  :slug: congo-(democratic-republic)
+  :slug: congo-democratic-republic
 - :name: Costa Rica
   :slug: costa-rica
-- :name: "C\xC3\xB4te d\xE2\x80\x99Ivoire (Ivory Coast)"
-  :slug: cote-d_ivoire-(ivory-coast)
+- :name: "Côte d'Ivoire (Ivory Coast)"
+  :slug: cote-d-ivoire-ivory-coast
 - :name: Croatia
   :slug: croatia
 - :name: Cuba
   :slug: cuba
-- :name: "Cura\xC3\xA7ao"
+- :name: "Curaçao"
   :slug: curacao
 - :name: Cyprus
   :slug: cyprus
@@ -122,7 +122,7 @@
 - :name: Djibouti
   :slug: djibouti
 - :name: Dominica, Commonwealth of
-  :slug: dominica,-commonwealth-of
+  :slug: commonwealth-of-dominica
 - :name: Dominican Republic
   :slug: dominican-republic
 - :name: Ecuador
@@ -182,7 +182,7 @@
 - :name: Honduras
   :slug: honduras
 - :name: Hong Kong (SAR of China)
-  :slug: hong-kong-(sar-of-china)
+  :slug: hong-kong
 - :name: Hungary
   :slug: hungary
 - :name: Iceland
@@ -341,7 +341,7 @@
   :slug: samoa
 - :name: San Marino
   :slug: san-marino
-- :name: "S\xC3\xA3o Tom\xC3\xA9 and Principe"
+- :name: "São Tomé and Principe"
   :slug: sao-tome-and-principe
 - :name: Saudi Arabia
   :slug: saudi-arabia
