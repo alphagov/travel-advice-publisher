@@ -5,4 +5,11 @@ class ApplicationController < ActionController::Base
 
   include GDS::SSO::ControllerMethods
 
+  def error_404; error 404; end
+
+  private
+
+  def error(status_code)
+    render status: status_code, text: "#{status_code} error"
+  end
 end
