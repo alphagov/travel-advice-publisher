@@ -2,11 +2,11 @@ require 'spec_helper'
 require 'country'
 
 describe Country do
+  before do
+    Country.data_path = File.join(Rails.root, "spec", "fixtures", "data", "countries.yml")
+  end
   describe "Country.all" do
     it "should return a list of Countries" do
-      Country.stub(:data_path).and_return(
-        File.join(Rails.root, "spec", "fixtures", "data", "countries.yml")
-      )
       Country.all.size.should == 14
       Country.all.first.name.should == "Afghanistan"
       Country.all.first.slug.should == "afghanistan"

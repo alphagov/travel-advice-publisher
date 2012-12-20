@@ -16,6 +16,10 @@ class Country
   end
 
   def self.data_path
-    File.join(Rails.root, "lib", "data", "countries.yml")
+    @@data_path ||= File.join(Rails.root, "lib", "data", "countries.yml")
+  end
+
+  def self.data_path=(path)
+    @@data_path = path
   end
 end
