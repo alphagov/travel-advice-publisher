@@ -43,4 +43,5 @@ group :development, :test do
   gem 'factory_girl', "3.3.0"
   gem 'factory_girl_rails'
   gem 'ci_reporter'
+  gem 'database_cleaner', '0.9.1'
 end
