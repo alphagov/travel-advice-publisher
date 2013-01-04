@@ -15,11 +15,11 @@ gem "bson_ext", "1.6.2"
 
 gem 'gds-sso', '2.1.0'
 
-if ENV['CONTENT_MODELS_DEV']
+#if ENV['CONTENT_MODELS_DEV']
   gem "govuk_content_models", :path => '../govuk_content_models'
-else
-  gem "govuk_content_models", "2.6.1"
-end
+#else
+  #gem "govuk_content_models", "2.6.1"
+#end
 
 gem 'therubyracer'
 gem 'jquery-rails'
