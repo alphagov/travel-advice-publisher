@@ -4,8 +4,6 @@ describe Admin::CountriesController do
 
   before do
     login_as_stub_user
-
-    Country.data_path = File.join(Rails.root, "spec", "fixtures", "data", "countries.yml")
   end
 
   describe "GET index" do

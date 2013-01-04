@@ -1,9 +1,6 @@
 require 'spec_helper'
 
 describe Country do
-  before do
-    Country.data_path = File.join(Rails.root, "spec", "fixtures", "data", "countries.yml")
-  end
   describe "Country.all" do
     it "should return a list of Countries" do
       Country.all.size.should == 14
