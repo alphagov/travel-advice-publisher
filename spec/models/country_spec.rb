@@ -25,4 +25,26 @@ describe Country do
       country.should be_nil
     end
   end
+
+  describe "finding editions for a country" do
+    before :each do
+      @country = Country.all.first
+    end
+
+    it "should return all TravelAdviceEditions with the matching country_slug" do
+      e1 = FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug)
+      e2 = FactoryGirl.create(:travel_advice_edition, :country_slug => "wibble")
+      e3 = FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug)
+
+      @country.editions.to_a.should =~ [e1, e3]
+    end
+
+    it "should order them by descending version_number" do
+      e1 = FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :version_number => 1)
+      e3 = FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :version_number => 3)
+      e2 = FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :version_number => 2)
+
+      @country.editions.to_a.should == [e3, e2, e1]
+    end
+  end
 end

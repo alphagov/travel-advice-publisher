@@ -1,1 +1,14 @@
 <h2><%= @country.name %></h2>
+
+<table class="table table-bordered table-striped">
+  <tr>
+    <th>Version</th>
+    <th>State</th>
+  </tr>
+  <% @country.editions.each do |edition| %>
+    <tr>
+      <td>Version <%= edition.version_number %></td>
+      <td><%= edition.state %></td>
+    </tr>
+  <% end %>
+</table>
