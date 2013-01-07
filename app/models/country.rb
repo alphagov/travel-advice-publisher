@@ -3,8 +3,8 @@ class Country
   attr_reader :name, :slug
 
   def initialize(attrs)
-    @name = attrs[:name]
-    @slug = attrs[:slug]
+    @name = attrs['name']
+    @slug = attrs['slug']
   end
 
   def editions
