@@ -1,18 +1,22 @@
 <h2><%= @country.name %></h2>
 
 <table class="table table-bordered table-striped">
-  <tr>
-    <th>Version</th>
-    <th>State</th>
-    <th>Updated</th>
-    <th></th>
-  </tr>
-  <% @country.editions.each do |edition| %>
+  <thead>
     <tr>
-      <td>Version <%= edition.version_number %></td>
-      <td><%= edition.state %></td>
-      <td><%= timestamp(edition.updated_at) %></td>
-      <td><%= edition_edlt_link(edition) %></td>
+      <th>Version</th>
+      <th>State</th>
+      <th>Updated</th>
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @country.editions.each do |edition| %>
+      <tr>
+        <td>Version <%= edition.version_number %></td>
+        <td><%= edition.state %></td>
+        <td><%= timestamp(edition.updated_at) %></td>
+        <td><%= edition_edlt_link(edition) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
