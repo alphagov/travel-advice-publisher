@@ -2,7 +2,7 @@ TravelAdvicePublisher::Application.routes.draw do
 
   namespace :admin do
     resources :countries
-    resources :travel_advice 
+    resources :editions
     root :to => "countries#index"
   end
 
