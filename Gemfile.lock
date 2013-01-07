@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/alphagov/govuk_content_models.git
-  revision: 706f7c7acac0e33d9f194cedbc81c9a69659302a
+  revision: 4a5648fa7762ccabf04445692cdd4c239a39fa61
   branch: add-travel-advice-edition
   specs:
     govuk_content_models (2.6.1)

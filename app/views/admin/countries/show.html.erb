@@ -1,14 +1,26 @@
 <h2><%= @country.name %></h2>
 
+<% unless @country.has_draft_edition? %>
+  <%= button_to "Create new edition", admin_country_editions_path(@country.slug), :class => "btn btn-primary" %>
+<% end %>
+
 <table class="table table-bordered table-striped">
-  <tr>
-    <th>Version</th>
-    <th>State</th>
-  </tr>
-  <% @country.editions.each do |edition| %>
+  <thead>
     <tr>
-      <td>Version <%= edition.version_number %></td>
-      <td><%= edition.state %></td>
+      <th>Version</th>
+      <th>State</th>
+      <th>Updated</th>
+      <th></th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @country.editions.each do |edition| %>
+      <tr>
+        <td>Version <%= edition.version_number %></td>
+        <td><%= edition.state %></td>
+        <td><%= timestamp(edition.updated_at) %></td>
+        <td><%= edition_edlt_link(edition) %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

@@ -3,12 +3,27 @@ class Country
   attr_reader :name, :slug
 
   def initialize(attrs)
-    @name = attrs[:name]
-    @slug = attrs[:slug]
+    @name = attrs['name']
+    @slug = attrs['slug']
   end
 
   def editions
     TravelAdviceEdition.where(:country_slug => self.slug).order_by([:version_number, :desc])
+  end
+
+  def build_new_edition
+    if latest_edition = editions.first
+      latest_edition.build_clone
+    else
+      TravelAdviceEdition.new(:country_slug => self.slug)
+    end
+  end
+
+  def has_published_edition?
+    self.editions.with_state('published').any?
+  end
+  def has_draft_edition?
+    self.editions.with_state('draft').any?
   end
 
   def self.all
