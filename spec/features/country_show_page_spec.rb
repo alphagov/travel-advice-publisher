@@ -24,6 +24,14 @@ feature "Country show page" do
       ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M"), "view details"],
       ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M"), "view details"],
     ]
+
+    within :xpath, "//tr[contains(., 'Version 4')]" do
+      page.should have_link("edit", :href => "/admin/editions/#{e4.id}/edit")
+    end
+
+    within :xpath, "//tr[contains(., 'Version 2')]" do
+      page.should have_link("view details", :href => "/admin/editions/#{e2.id}/edit")
+    end
   end
 
 end

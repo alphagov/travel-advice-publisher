@@ -1,6 +1,6 @@
 module ApplicationHelper
   def edition_edlt_link(edition)
-    link_to (edition.draft? ? 'edit' : 'view details'), '#'
+    link_to (edition.draft? ? 'edit' : 'view details'), edit_admin_edition_path(edition)
   end
 
   def timestamp(time)
