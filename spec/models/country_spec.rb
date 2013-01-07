@@ -47,4 +47,29 @@ describe Country do
       @country.editions.to_a.should == [e3, e2, e1]
     end
   end
+
+  describe "has_published_edition?" do
+    before :each do
+      @country = Country.find_by_slug('aruba')
+    end
+
+    it "should be true with a published edition" do
+      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'published')
+      @country.has_published_edition?.should == true
+    end
+
+    it "should be false with no editions" do
+      @country.has_published_edition?.should == false
+    end
+
+    it "should be false with a draft edition" do
+      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'draft')
+      @country.has_published_edition?.should == false
+    end
+
+    it "should be false with an archived edition" do
+      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'archived')
+      @country.has_published_edition?.should == false
+    end
+  end
 end

@@ -11,6 +11,10 @@ class Country
     TravelAdviceEdition.where(:country_slug => self.slug).order_by([:version_number, :desc])
   end
 
+  def has_published_edition?
+    self.editions.with_state('published').any?
+  end
+
   def self.all
     @countries ||= data.map { |d| Country.new(d) }
   end
