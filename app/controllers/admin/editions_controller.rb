@@ -1,12 +1,20 @@
 class Admin::EditionsController < ApplicationController
 
+  before_filter :load_country, :only => [:create]
 
   def create
-    @edition = TravelAdviceEdition.new(params[:edition])
+    @edition = @country.build_new_edition
     if @edition.save
-      redirect_to admin_editions_path(@edition.to_param), :message => "Successfully created edition."
+      redirect_to edit_admin_edition_path(@edition)
     else
-      render :new
+      redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
     end
+  end
+
+  private
+
+  def load_country
+    @country = Country.find_by_slug(params[:country_id])
+    error_404 unless @country
   end
 end

@@ -48,28 +48,54 @@ describe Country do
     end
   end
 
-  describe "has_published_edition?" do
+  describe "has_{state}_edition?" do
     before :each do
       @country = Country.find_by_slug('aruba')
     end
 
-    it "should be true with a published edition" do
-      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'published')
-      @country.has_published_edition?.should == true
-    end
-
     it "should be false with no editions" do
       @country.has_published_edition?.should == false
+      @country.has_draft_edition?.should == false
     end
 
-    it "should be false with a draft edition" do
+    it "should match published editions correctly" do
+      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'published')
+      @country.has_published_edition?.should == true
+      @country.has_draft_edition?.should == false
+    end
+
+    it "should match draft editions correctly" do
       FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'draft')
       @country.has_published_edition?.should == false
+      @country.has_draft_edition?.should == true
     end
 
-    it "should be false with an archived edition" do
+    it "should be false with editions in other states" do
       FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'archived')
       @country.has_published_edition?.should == false
+      @country.has_draft_edition?.should == false
+    end
+  end
+
+  describe "build_new_edition" do
+    before :each do
+      @country = Country.find_by_slug('aruba')
+    end
+
+    it "should build a clone of the latest edition if present" do
+      ed1 = FactoryGirl.build(:travel_advice_edition)
+      ed2 = FactoryGirl.build(:travel_advice_edition)
+      ed3 = FactoryGirl.build(:travel_advice_edition)
+      @country.stub(:editions).and_return([ed3, ed2, ed1])
+      ed3.should_receive(:build_clone).and_return(:a_new_edition)
+
+      @country.build_new_edition.should == :a_new_edition
+    end
+
+    it "should build a new edition with matching slug if there are no existing editions" do
+      ed = @country.build_new_edition
+      ed.should be_new_record
+      ed.country_slug.should == 'aruba'
     end
   end
 end
