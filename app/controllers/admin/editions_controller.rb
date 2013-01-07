@@ -1,8 +1,5 @@
 class Admin::EditionsController < ApplicationController
 
-  def new
-    @edition = TravelAdviceEdition.new
-  end
 
   def create
     @edition = TravelAdviceEdition.new(params[:edition])
