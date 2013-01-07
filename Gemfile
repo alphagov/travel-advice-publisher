@@ -15,11 +15,12 @@ gem "bson_ext", "1.6.2"
 
 gem 'gds-sso', '2.1.0'
 
-#if ENV['CONTENT_MODELS_DEV']
+if ENV['CONTENT_MODELS_DEV']
   gem "govuk_content_models", :path => '../govuk_content_models'
-#else
+else
+  gem "govuk_content_models", :git => "https://github.com/alphagov/govuk_content_models.git", :branch => "add-travel-advice-edition"
   #gem "govuk_content_models", "2.6.1"
-#end
+end
 
 gem 'therubyracer'
 gem 'jquery-rails'
