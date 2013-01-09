@@ -11,6 +11,20 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+  def edit
+    @edition = TravelAdviceEdition.find(params[:id])
+    @country = Country.find_by_slug(@edition.country_slug)
+  end
+
+  def update
+    @edition = TravelAdviceEdition.find(params[:id])
+    if @edition.update_attributes(params[:edition])
+      redirect_to edit_admin_edition_path(@edition), :alert => "Edition updated"
+    else
+      redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update edition"
+    end
+  end
+
   private
 
   def load_country

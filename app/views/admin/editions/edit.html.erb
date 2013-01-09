@@ -1,1 +1,53 @@
-Edit form will be here
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+
+  <h2>Editing <%= @country.name %></h2>
+
+  <hr>
+
+  <div class="row-fluid">
+
+    <div class="span8">
+
+      <h3>Parts</h3>
+
+      <section class="accordion" id="parts">
+        
+        <%
+          # TODO: Don't do this here!
+          if @edition.parts.empty?
+            @edition.parts.build
+            @edition.order_parts
+          end 
+        %>
+
+        <%= f.semantic_fields_for :parts do |part| %>
+          <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.state != 'published'} %>
+        <% end %>
+
+      </section>
+
+      <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+
+      <%= render :partial => '/admin/editions/jquery_template', :locals => {:editable => @edition.state != 'published'} %>
+
+    </div>
+
+    <div class="span4">
+      <h3>Govspeak help</h3>
+
+      <div class="well">
+      </div>
+    </div>
+    
+    <div class="navbar navbar-fixed-bottom">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="workflow_buttons">
+            <%= f.submit "Save", :class => 'btn btn-success' %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>
