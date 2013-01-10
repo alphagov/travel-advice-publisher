@@ -5,7 +5,7 @@
 //= require twitter/bootstrap
 //= require_tree .
 
-var form_ids = {};
+var formtastic_ids = {};
 
 $(function () {
   $('.add-associated').click(function () {
@@ -16,15 +16,15 @@ $(function () {
     var template_id = elem.data('tmpl_id');
     template_contents = $('#' + template_id).html();
 
-    if (typeof(form_ids[template_id]) == 'undefined') {
+    if (typeof(formtastic_ids[template_id]) == 'undefined') {
       var current_id = target.find('fieldset input').last().attr('id').match(/_attributes_(\d+)_/)[1];
-      form_ids[template_id] = current_id;
+      formtastic_ids[template_id] = current_id;
     }
 
-    form_ids[template_id]++;
+    formtastic_ids[template_id]++;
 
     var html = $.mustache(template_contents, {
-      index: form_ids[template_id]
+      index: formtastic_ids[template_id]
     });
 
     target.append(html);
@@ -57,8 +57,8 @@ $(function() {
       });
     }
   }
-  //$('#parts').sortable(sortable_opts)
-  //    .find("a.accordion-toggle").css({cursor: 'move'});
+  $('#parts').sortable(sortable_opts)
+      .find("a.accordion-toggle").css({cursor: 'move'});
 
   // simulate a click on the first part to open it
   $('#parts .part .accordion-body').first().one('hidden', function(){
