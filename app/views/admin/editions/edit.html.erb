@@ -12,13 +12,8 @@
 
       <section class="accordion" id="parts">
         
-        <%
-          # TODO: Don't do this here!
-          if @edition.parts.empty?
-            @edition.parts.build
-            @edition.order_parts
-          end 
-        %>
+        <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
+        <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
 
         <%= f.semantic_fields_for :parts do |part| %>
           <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.state != 'published'} %>
@@ -46,6 +41,7 @@
         <div class="container-fluid">
           <div class="workflow_buttons">
             <%= f.submit "Save", :class => 'btn btn-success' %>
+            <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
           </div>
         </div>
       </div>
