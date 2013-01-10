@@ -126,7 +126,7 @@ GEM
     httpauth (0.2.0)
     i18n (0.6.1)
     journey (1.0.4)
-    jquery-rails (2.1.1)
+    jquery-rails (2.0.2)
       railties (>= 3.1.0, < 5.0)
       thor (~> 0.14)
     json (1.7.5)
@@ -282,7 +282,7 @@ DEPENDENCIES
   formtastic-bootstrap!
   gds-sso (= 2.1.0)
   govuk_content_models!
-  jquery-rails
+  jquery-rails (= 2.0.2)
   less-rails-bootstrap
   mongo (= 1.6.2)
   mongoid (= 2.4.10)
