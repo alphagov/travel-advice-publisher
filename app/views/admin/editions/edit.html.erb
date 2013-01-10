@@ -28,7 +28,8 @@
 
       <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
 
-      <%= render :partial => '/admin/editions/jquery_template', :locals => {:editable => @edition.state != 'published'} %>
+      <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/jquery_template',
+            :locals => {:editable => @edition.state != 'published'} %>
 
     </div>
 
@@ -36,6 +37,7 @@
       <h3>Govspeak help</h3>
 
       <div class="well">
+        <%= render "govspeak_help" %>
       </div>
     </div>
     
