@@ -40,4 +40,16 @@ feature "Edit Edition page" do
     assert page.has_content? 'Editing Albania'
   end
 
+  scenario "slug for parts should be automatically generated" do
+
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    click_on 'Untitled part'
+    within :css, '#parts div.part:first-of-type' do
+      fill_in 'Title', :with => 'Part One'
+      fill_in 'Body',  :with => 'Body text'
+      assert_equal 'part-one', find(:css, ".slug").value
+    end
+  end
+
 end

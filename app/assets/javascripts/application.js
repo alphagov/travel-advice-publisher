@@ -61,7 +61,9 @@ $(function() {
   //    .find("a.accordion-toggle").css({cursor: 'move'});
 
   // simulate a click on the first part to open it
-  $('#parts .part .accordion-body').first().collapse('show');
+  $('#parts .part .accordion-body').first().one('hidden', function(){
+    $('#parts .part .accordion-body').first().collapse('show');
+  });
 
   $('input.title').
     live('change', function () {
@@ -71,8 +73,7 @@ $(function() {
       // Set slug on change.
       var slug_field = elem.closest('.part').find('.slug');
       if (slug_field.text() === '') {
-        // slug_field.val(GovUKGuideUtils.convertToSlug(value));
-        slug_field.val(value);
+        slug_field.val(TravelAdviceUtils.convertToSlug(value));
       }
 
       // Set header on change.
@@ -89,4 +90,11 @@ $(function() {
     new_part.find('input.order').val(active_index);
     new_part.find('.title').focus();
   });
+
 });
+
+var TravelAdviceUtils = {
+  convertToSlug: function(title) {
+    return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+  }
+}
