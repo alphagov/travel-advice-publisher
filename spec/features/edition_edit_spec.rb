@@ -46,9 +46,7 @@ feature "Edit Edition page" do
 
     assert_equal 2, all(:css, '#parts > div.part').length
     
-    # TODO: page.body does not contain the flash message, it does in the browser...
-    #
-    # page.should have_content("Albania travel advice updated.")
+    current_path.should == "/admin/editions/#{@edition._id}/edit"
   end
 
   scenario "slug for parts should be automatically generated" do
@@ -85,8 +83,10 @@ feature "Edit Edition page" do
 
     within(:css, '.workflow_buttons') { click_on 'Save' }
 
+    current_path.should == "/admin/editions/#{@edition._id}/edit"
+
     # TODO: This is not removing the parts in page.body
-    # despite both being visible in the browser.
+    # despite the element being removed in the browser.
     #
     # page.should_not have_content("Part Two")
     # page.should_not have_css('#part-two')
