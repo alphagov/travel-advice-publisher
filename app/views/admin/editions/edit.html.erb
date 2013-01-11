@@ -2,6 +2,11 @@
 
   <h2>Editing <%= @country.name %></h2>
 
+  <%= f.inputs do %>
+    <%= f.input :title %>
+    <%= f.input :overview, :label => "Searchable description", 
+      :as => :text, :input_html => { :rows => 5, :cols => 50 } %>
+  <% end %>
   <hr>
 
   <div class="row-fluid">
