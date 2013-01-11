@@ -61,9 +61,11 @@ $(function() {
       .find("a.accordion-toggle").css({cursor: 'move'});
 
   // simulate a click on the first part to open it
-  $('#parts .part .accordion-body').first().one('hidden', function(){
-    $('#parts .part .accordion-body').first().collapse('show');
-  });
+  // TODO: This doesn't behave well as the accordion closes then opens rather
+  // than leaving the first part open.
+  // $('#parts .part .accordion-body').first().one('hidden', function(){
+  //   $('#parts .part .accordion-body').first().collapse('show');
+  // });
 
   $('input.title').
     live('change', function () {
