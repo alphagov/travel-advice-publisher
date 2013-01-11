@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/alphagov/govuk_content_models.git
-  revision: 4a5648fa7762ccabf04445692cdd4c239a39fa61
+  revision: 5e0344ad3436e99dd5b6dd3f8e4567cd2d77fa20
   branch: add-travel-advice-edition
   specs:
-    govuk_content_models (2.6.1)
+    govuk_content_models (3.0.0)
       bson_ext
       differ
       gds-api-adapters
