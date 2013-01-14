@@ -13,8 +13,6 @@ class Admin::EditionsController < ApplicationController
   end
 
   def update
-    @edition = TravelAdviceEdition.find(params[:id])
-    @country = Country.find_by_slug(@edition.country_slug)
     if @edition.update_attributes(params[:edition])
       redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
     else
