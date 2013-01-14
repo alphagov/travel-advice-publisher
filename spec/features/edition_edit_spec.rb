@@ -80,16 +80,13 @@ feature "Edit Edition page" do
     end
     
     page.should have_css('#part-two', :visible => false)
-
+    
     within(:css, '.workflow_buttons') { click_on 'Save' }
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
-    # TODO: This is not removing the parts in page.body
-    # despite the element being removed in the browser.
-    #
-    # page.should_not have_content("Part Two")
-    # page.should_not have_css('#part-two')
+    pending "This is not setting the _destroy field on the part to '1' despite the input value changing in the browser."
+    page.should_not have_content("Part Two")
   end
 
   scenario "adding an invalid part" do
