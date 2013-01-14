@@ -12,6 +12,9 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
     if @edition.update_attributes(params[:edition])
       redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
