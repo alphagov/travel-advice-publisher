@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Country show page" do
+feature "Country version index" do
 
   before do
     login_as_stub_user
