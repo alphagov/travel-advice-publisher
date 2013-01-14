@@ -13,17 +13,19 @@ gem "mongoid", "2.4.10"
 gem "mongo", "1.6.2"
 gem "bson_ext", "1.6.2"
 
-gem 'gds-sso', '2.1.0'
+gem 'gds-sso', '3.0.0'
+
+gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'
+gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstrap.git', branch: 'bootstrap-2'
 
 if ENV['CONTENT_MODELS_DEV']
   gem "govuk_content_models", :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", :git => "https://github.com/alphagov/govuk_content_models.git", :branch => "add-travel-advice-edition"
-  #gem "govuk_content_models", "2.6.1"
+  gem "govuk_content_models", "4.1.0"
 end
 
 gem 'therubyracer'
-gem 'jquery-rails'
+gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
 gem 'less-rails-bootstrap'
 
 # Gems used only for assets and not required
@@ -39,10 +41,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.12.0'
-  gem 'capybara', '2.0.1'
+  gem 'capybara', '1.1'
   gem 'simplecov-rcov', '0.2.3'
   gem 'factory_girl', "3.3.0"
   gem 'factory_girl_rails'
   gem 'ci_reporter'
   gem 'database_cleaner', '0.9.1'
+  gem 'poltergeist', '0.7.0'
 end

@@ -15,7 +15,7 @@ class Country
     if latest_edition = editions.first
       latest_edition.build_clone
     else
-      TravelAdviceEdition.new(:country_slug => self.slug)
+      TravelAdviceEdition.new(:country_slug => self.slug, :title => "#{self.name} travel advice")
     end
   end
 
