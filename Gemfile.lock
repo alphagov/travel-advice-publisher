@@ -281,7 +281,7 @@ DEPENDENCIES
   mongo (= 1.6.2)
   mongoid (= 2.4.10)
   plek (= 0.5)
-  poltergeist
+  poltergeist (= 0.7.0)
   rails (= 3.2.9)
   rspec-rails (= 2.12.0)
   simplecov-rcov (= 0.2.3)

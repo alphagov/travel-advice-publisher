@@ -47,5 +47,5 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'ci_reporter'
   gem 'database_cleaner', '0.9.1'
-  gem 'poltergeist'#, '0.7.0'
+  gem 'poltergeist', '0.7.0'
 end
