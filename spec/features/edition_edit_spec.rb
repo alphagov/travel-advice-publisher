@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-feature "Edit Edition page" do
+feature "Edit Edition page", :js => true do
   before :each do
-    Capybara.current_driver = Capybara.javascript_driver
     login_as_stub_user
     @countries = YAML.load_file(Rails.root.join('spec/fixtures/data/countries.yml'))
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
@@ -80,12 +79,15 @@ feature "Edit Edition page" do
     end
     
     page.should have_css('#part-two', :visible => false)
-    
+
+    # page.execute_script("$('.remove-associated').last().prev(':input').val('1')")
+
     within(:css, '.workflow_buttons') { click_on 'Save' }
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
     pending "This is not setting the _destroy field on the part to '1' despite the input value changing in the browser."
+
     page.should_not have_content("Part Two")
   end
 
