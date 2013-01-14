@@ -1,1 +1,56 @@
-Edit form will be here
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+
+  <h2>Editing <%= @country.name %></h2>
+
+  <%= f.inputs do %>
+    <%= f.input :title %>
+    <%= f.input :overview, :label => "Searchable description", 
+      :as => :text, :input_html => { :rows => 5, :cols => 50 } %>
+  <% end %>
+  <hr>
+
+  <div class="row-fluid">
+
+    <div class="span8">
+
+      <h3>Parts</h3>
+
+      <section class="accordion" id="parts">
+        
+        <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
+        <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
+
+        <%= f.semantic_fields_for :parts do |part| %>
+          <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.state != 'published'} %>
+        <% end %>
+
+      </section>
+
+      <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+
+      <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
+            :locals => {:editable => @edition.state != 'published'} %>
+
+    </div>
+
+    <div class="span4">
+      <h3>Govspeak help</h3>
+
+      <div class="well">
+        <%= render "govspeak_help" %>
+      </div>
+    </div>
+    
+    <div class="navbar navbar-fixed-bottom">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="workflow_buttons">
+            <%= f.submit "Save", :class => 'btn btn-success' %>
+            <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>

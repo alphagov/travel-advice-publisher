@@ -48,4 +48,33 @@ describe Admin::EditionsController do
     end
   end
 
+  describe "edit, update" do
+
+    before :each do
+      login_as_stub_user
+      @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
+      @country = Country.find_by_slug('aruba')
+    end
+
+    describe "GET to edit" do
+      it "should assign an edition and country" do
+        get :edit, :id => @edition._id
+        response.should be_success
+        assigns(:edition).should == @edition
+        assigns(:country).should == @country
+      end
+    end
+
+    describe "PUT to update with valid params" do
+      it "should update the edition" do
+        put :update, :id => @edition._id, :edition => {
+          :parts_attributes => {
+            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
+            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
+          } }
+        response.should be_redirect
+        assigns(:edition).parts.length.should == 2
+      end
+    end
+  end
 end

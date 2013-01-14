@@ -92,10 +92,11 @@ describe Country do
       @country.build_new_edition.should == :a_new_edition
     end
 
-    it "should build a new edition with matching slug if there are no existing editions" do
+    it "should build a new edition if there are no existing editions" do
       ed = @country.build_new_edition
       ed.should be_new_record
       ed.country_slug.should == 'aruba'
+      ed.title.should == "Aruba travel advice"
     end
   end
 end
