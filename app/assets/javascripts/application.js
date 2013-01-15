@@ -40,9 +40,9 @@ $(function () {
     return false;
   });
 
-  $('.workflow').live('click', function() {
-    if (confirm("Are you sure you'd like to " + $(this).text().toLowerCase() + " this edition?")) {
-      $('#edition_workflow').submit();
+  $('.publish').live('click', function() {
+    if (confirm("Are you sure you'd like to publish this edition?")) {
+      $('#publish_edition').submit();
     }
   });
 });

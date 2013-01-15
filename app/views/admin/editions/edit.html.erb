@@ -47,7 +47,7 @@
           <div class="workflow_buttons">
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
-            <%= workflow_button(@edition) %> 
+            <%= link_to "Publish", "#", :class => "publish btn btn-danger pull-right" %> 
           </div>
         </div>
       </div>
@@ -55,4 +55,6 @@
   </div>
 <% end %>
 
-<%= workflow_form(@edition) %>
+<%= form_tag publish_admin_edition_path(@edition), :id => "publish_edition", :method => :put do %>
+  <%= hidden_field_tag :id, @edition.to_param %>
+<% end %>
