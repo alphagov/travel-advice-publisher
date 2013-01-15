@@ -24,6 +24,24 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+  def publish
+    @edition = TravelAdviceEdition.find(params[:id])
+    if @edition.publish
+      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+    else
+      redirect_to edit_admin_edition_path(@edition), :alert => "Only draft editions can be published."
+    end
+  end
+
+  def archive
+    @edition = TravelAdviceEdition.find(params[:id])
+    if @edition.archive
+      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} archived."
+    else
+      redirect_to edit_admin_edition_path(@edition), :alert => "Only published editions can be archived."
+    end
+  end
+  
   private
 
   def load_country_and_edition

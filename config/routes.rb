@@ -6,6 +6,9 @@ TravelAdvicePublisher::Application.routes.draw do
     end
     resources :editions, :only => [:edit, :update]
 
+    match "editions/:id/publish" => "editions#publish", :as => :editions_publish, :via => :put
+    match "editions/:id/archive" => "editions#archive", :as => :editions_archive, :via => :put
+    
     root :to => "countries#index"
   end
 
