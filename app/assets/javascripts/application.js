@@ -38,7 +38,13 @@ $(function () {
     $(this).prev(':input').val('1');
     $('body').trigger('associated-removed');
     return false;
-  })
+  });
+
+  $('.publish').live('click', function() {
+    if (confirm("Are you sure you'd like to publish this edition?")) {
+      $('#publish_edition').submit();
+    }
+  });
 });
 
 // Javascript specific to travel advice admin

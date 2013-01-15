@@ -76,5 +76,39 @@ describe Admin::EditionsController do
         assigns(:edition).parts.length.should == 2
       end
     end
+
+    describe "PUT to update a published edition" do
+      it "should redirect and warn the editor" do
+        @edition.publish
+        put :update, :id => @edition._id, :edition => {
+          :parts_attributes => {
+            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
+            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
+          } }
+        response.should be_success 
+        flash[:alert].should == "We had some problems saving: State must be draft to modify."
+      end
+    end
+  end
+
+  describe "workflow" do
+    before :each do
+      login_as_stub_user
+      @published = FactoryGirl.create(:travel_advice_edition, :country_slug => 'aruba', :state => 'published')
+      @draft = FactoryGirl.create(:travel_advice_edition, :title => 'Aruba travel advice', :country_slug => 'aruba')
+    end
+
+    describe "publish" do
+      it "should publish the edition and archive related editions" do
+        put :publish, :id => @draft.to_param
+        
+        @draft.reload
+        @published.reload
+
+        page.should redirect_to admin_country_path(@draft.country_slug)
+        @draft.published?.should == true
+        @published.archived?.should == true
+      end
+    end
   end
 end

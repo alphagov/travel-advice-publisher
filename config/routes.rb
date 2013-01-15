@@ -4,7 +4,9 @@ TravelAdvicePublisher::Application.routes.draw do
     resources :countries, :only => [:index, :show] do
       resources :editions, :only => [:create]
     end
-    resources :editions, :only => [:edit, :update]
+    resources :editions, :only => [:edit, :update] do
+      put "publish", :on => :member
+    end
 
     root :to => "countries#index"
   end
