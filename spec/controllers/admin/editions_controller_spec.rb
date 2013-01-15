@@ -110,16 +110,5 @@ describe Admin::EditionsController do
         @published.archived?.should == true
       end
     end
-
-    describe "archive" do
-      it "should archive the edition" do
-        put :archive, :id => @published.to_param
-        
-        @published.reload
-
-        page.should redirect_to admin_country_path(@published.country_slug)
-        @published.archived?.should == true
-      end
-    end
   end
 end

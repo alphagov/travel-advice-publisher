@@ -33,15 +33,6 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
-  def archive
-    @edition = TravelAdviceEdition.find(params[:id])
-    if @edition.archive
-      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} archived."
-    else
-      redirect_to edit_admin_edition_path(@edition), :alert => "Only published editions can be archived."
-    end
-  end
-  
   private
 
   def load_country_and_edition
