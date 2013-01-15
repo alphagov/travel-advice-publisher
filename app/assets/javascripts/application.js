@@ -38,7 +38,13 @@ $(function () {
     $(this).prev(':input').val('1');
     $('body').trigger('associated-removed');
     return false;
-  })
+  });
+
+  $('.workflow').live('click', function() {
+    if (confirm("Are you sure you'd like to " + $(this).text().toLowerCase() + " this edition?")) {
+      $('#edition_workflow').submit();
+    }
+  });
 });
 
 // Javascript specific to travel advice admin

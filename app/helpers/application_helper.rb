@@ -7,6 +7,19 @@ module ApplicationHelper
     %{<time datetime="#{ time.strftime("%Y-%m-%dT%H:%M:%SZ") }">#{ time.strftime("%d/%m/%Y %H:%M") }</time>}.html_safe
   end
 
+  # TODO: Establish whether both archive and publish workflow buttons should appear for drafts.
+  def workflow_button(edition)
+    %Q(<a href="#" class="workflow btn btn-danger pull-right">#{@edition.draft? ? 'Publish' : 'Archive'}</a>).html_safe
+  end
+
+  def workflow_form(edition)
+    path = edition.draft? ? admin_editions_publish_path(edition) : admin_editions_archive_path(edition)
+    
+    form_tag path, :id => "edition_workflow", :method => :put do
+      hidden_field_tag :id, edition.to_param
+    end
+  end
+
   def setup_association(edition, opts)
     associated = edition.parts
 
@@ -19,4 +32,5 @@ module ApplicationHelper
       opts[:new_in_edit].times { associated.build }
     end
   end
+
 end
