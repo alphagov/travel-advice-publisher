@@ -3,9 +3,9 @@
   <h2>Editing <%= @country.name %></h2>
 
   <%= f.inputs do %>
-    <%= f.input :title %>
+    <%= f.input :title, :input_html => { :disabled => ! @edition.draft? } %>
     <%= f.input :overview, :label => "Searchable description", 
-      :as => :text, :input_html => { :rows => 5, :cols => 50 } %>
+      :as => :text, :input_html => { :rows => 5, :cols => 50, :disabled => ! @edition.draft? } %>
   <% end %>
   <hr>
 
@@ -21,7 +21,7 @@
         <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
 
         <%= f.semantic_fields_for :parts do |part| %>
-          <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.state != 'published'} %>
+          <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
         <% end %>
 
       </section>
@@ -29,7 +29,7 @@
       <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
 
       <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
-            :locals => {:editable => @edition.state != 'published'} %>
+            :locals => {:editable => @edition.draft?} %>
 
     </div>
 
