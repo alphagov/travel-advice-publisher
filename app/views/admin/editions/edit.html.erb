@@ -26,7 +26,9 @@
 
       </section>
 
-      <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+      <% if @edition.draft? -%>
+        <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+      <% end -%>
 
       <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
             :locals => {:editable => @edition.draft?} %>

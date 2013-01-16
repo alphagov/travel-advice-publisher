@@ -114,4 +114,15 @@ feature "Edit Edition page", :js => true do
     assert @edition.published?
   end
 
+  scenario "attempting to edit a published edition" do
+    @edition.publish
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should_not have_content "Add new part"
+    page.should have_css("#edition_title[@disabled='disabled']")
+    page.should have_css("#edition_overview[@disabled='disabled']")
+    page.should have_css(".btn-success[@disabled='disabled']")
+  end
+
 end
