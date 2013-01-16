@@ -105,4 +105,13 @@ feature "Edit Edition page", :js => true do
     page.should have_content("We had some problems saving: Parts is invalid.")
   end
 
+  scenario "publish an edition" do
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    click_on "Publish"
+
+    @edition.reload
+    assert @edition.published?
+  end
+
 end
