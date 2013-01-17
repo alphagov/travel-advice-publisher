@@ -3,7 +3,7 @@ source 'https://gems.gemfury.com/vo6ZrmjBQu5szyywDszE/'
 
 gem 'plek', '0.5'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.11'
 
 gem 'exception_notification', '2.6.1'
 gem 'aws-ses', :require => 'aws/ses'
