@@ -3,7 +3,6 @@ require 'spec_helper'
 feature "Edit Edition page", :js => true do
   before :each do
     login_as_stub_user
-    @countries = YAML.load_file(Rails.root.join('spec/fixtures/data/countries.yml'))
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
   end
 
