@@ -24,6 +24,8 @@ else
   gem "govuk_content_models", "4.2.0"
 end
 
+gem 'gds-api-adapters', "4.2.0"
+
 gem 'therubyracer'
 gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
 gem 'less-rails-bootstrap'
