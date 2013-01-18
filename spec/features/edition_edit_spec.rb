@@ -125,4 +125,11 @@ feature "Edit Edition page", :js => true do
     page.should have_css(".btn-success[@disabled='disabled']")
   end
 
+  scenario "preview an edition" do
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    save_page
+    page.should have_selector("a[href^='http://private-frontend.test.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
+  end
+
 end
