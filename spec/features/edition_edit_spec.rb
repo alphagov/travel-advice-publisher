@@ -3,6 +3,7 @@ require 'spec_helper'
 feature "Edit Edition page", :js => true do
   before :each do
     login_as_stub_user
+    stub_panopticon_registration
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
   end
 
