@@ -50,6 +50,10 @@
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
             <%= link_to "Publish", "#", :class => "publish btn btn-danger pull-right" %> 
+            <span class="pull-right">
+              <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
+              <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
+            </span>
           </div>
         </div>
       </div>
