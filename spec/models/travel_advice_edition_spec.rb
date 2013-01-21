@@ -3,6 +3,7 @@ require 'spec_helper'
 describe TravelAdviceEdition do
 
   describe "registering with panopticon on publish" do
+    # This functionality implemented in an observer.
 
     it "should register with panopticon" do
       ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
