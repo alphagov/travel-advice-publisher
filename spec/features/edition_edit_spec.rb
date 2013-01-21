@@ -128,7 +128,6 @@ feature "Edit Edition page", :js => true do
   scenario "preview an edition" do
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    save_page
     page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
   end
 
