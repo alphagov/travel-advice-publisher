@@ -19,7 +19,7 @@
         <td>Version <%= edition.version_number %></td>
         <td><%= edition.state %></td>
         <td><%= timestamp(edition.updated_at) %></td>
-        <td><%= edition_edit_link(edition) %></td>
+        <td><%= edition_edit_link(edition) %> - <%= link_to "preview", preview_edition_path(edition), :target => "blank" %></td>
       </tr>
     <% end %>
   </tbody>
