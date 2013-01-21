@@ -20,8 +20,10 @@ gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstr
 if ENV['CONTENT_MODELS_DEV']
   gem "govuk_content_models", :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "4.2.0"
+  gem "govuk_content_models", "4.3.0"
 end
+
+gem 'gds-api-adapters', "4.2.0"
 
 gem 'therubyracer'
 gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
@@ -47,4 +49,5 @@ group :development, :test do
   gem 'ci_reporter'
   gem 'database_cleaner', '0.9.1'
   gem 'poltergeist', '0.7.0'
+  gem 'webmock', '1.9.0', :require => false
 end
