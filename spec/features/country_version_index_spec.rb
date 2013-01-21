@@ -48,10 +48,10 @@ feature "Country version index" do
     rows = page.all('table tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
     rows.should == [
       ["Version", "State", "Updated", ""],
-      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M"), "edit"],
-      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M"), "view details"],
-      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M"), "view details"],
-      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M"), "view details"],
+      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M"), "edit - preview"],
+      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M"), "view details - preview"],
+      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M"), "view details - preview"],
+      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M"), "view details - preview"],
     ]
 
     within :xpath, "//tr[contains(., 'Version 4')]" do
@@ -60,6 +60,7 @@ feature "Country version index" do
 
     within :xpath, "//tr[contains(., 'Version 2')]" do
       page.should have_link("view details", :href => "/admin/editions/#{e2.id}/edit")
+      page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/aruba?edition=2']", :text => "preview")
     end
 
     page.should_not have_button("Create new edition")
