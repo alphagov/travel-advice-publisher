@@ -1,9 +1,9 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/panopticon'
 
 feature "Edit Edition page", :js => true do
   before :each do
     login_as_stub_user
-    stub_panopticon_registration
   end
 
   scenario "create a new edition" do
@@ -104,7 +104,11 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "publish an edition" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
+                                  :state => 'draft')
+
+    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
+      to_return(:status => 200, :body => "{}")
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -112,6 +116,16 @@ feature "Edit Edition page", :js => true do
 
     @edition.reload
     assert @edition.published?
+
+    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/travel-advice/albania.json").
+      with(:body => hash_including(
+        'slug' => 'travel-advice/albania',
+        'name' => 'Albania travel advice',
+        'kind' => 'travel-advice',
+        'owning_app' => 'travel-advice-publisher',
+        'rendering_app' => 'frontend',
+        'state' => 'live'
+    ))
   end
 
   scenario "attempting to edit a published edition" do
