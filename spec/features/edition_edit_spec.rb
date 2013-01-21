@@ -143,8 +143,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    save_page
-    page.should have_selector("a[href^='http://private-frontend.test.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
+    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
   end
 
 end
