@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Admin::EditionsController do
-
   describe "POST to create" do
     before :each do
       login_as_stub_user
@@ -49,7 +48,6 @@ describe Admin::EditionsController do
   end
 
   describe "edit, update" do
-
     before :each do
       login_as_stub_user
       @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
@@ -85,7 +83,7 @@ describe Admin::EditionsController do
             "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
             "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
           } }
-        response.should be_success 
+        response.should be_success
         flash[:alert].should == "We had some problems saving: State must be draft to modify."
       end
     end
@@ -101,7 +99,7 @@ describe Admin::EditionsController do
     describe "publish" do
       it "should publish the edition and archive related editions" do
         put :publish, :id => @draft.to_param
-        
+
         @draft.reload
         @published.reload
 
