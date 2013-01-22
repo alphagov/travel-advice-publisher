@@ -13,6 +13,11 @@ feature "Edit Edition page", :js => true do
 
     page.should have_field("Title", :with => "Aruba travel advice")
     page.should have_content("Untitled part")
+
+    within(:css, ".tabbable .nav") do
+      page.should have_link("Edit")
+      page.should have_link("History & Notes")
+    end
   end
 
   scenario "adding parts in the edition form" do
