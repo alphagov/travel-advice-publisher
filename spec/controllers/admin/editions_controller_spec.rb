@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Admin::EditionsController do
+
+  before :each do
+    stub_panopticon_registration
+  end
+
   describe "POST to create" do
     before :each do
       login_as_stub_user
@@ -97,15 +102,13 @@ describe Admin::EditionsController do
     end
 
     describe "publish" do
-      it "should publish the edition and archive related editions" do
+      it "should publish the edition" do
+        TravelAdviceEdition.should_receive(:find).with(@draft.to_param).and_return(@draft)
+        @draft.should_receive(:publish).and_return(true)
+
         put :publish, :id => @draft.to_param
-
-        @draft.reload
-        @published.reload
-
+        
         page.should redirect_to admin_country_path(@draft.country_slug)
-        @draft.published?.should == true
-        @published.archived?.should == true
       end
     end
   end

@@ -1,10 +1,9 @@
 require 'spec_helper'
+require 'gds_api/test_helpers/panopticon'
 
 feature "Edit Edition page", :js => true do
   before :each do
     login_as_stub_user
-    @countries = YAML.load_file(Rails.root.join('spec/fixtures/data/countries.yml'))
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
   end
 
   scenario "create a new edition" do
@@ -17,6 +16,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "adding parts in the edition form" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
     within(:css, '.container-fluid[role=main]') do
       page.should have_content "Editing Albania"
@@ -49,6 +49,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "slug for parts should be automatically generated" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
 
     visit "/admin/editions/#{@edition._id}/edit"
 
@@ -61,14 +62,10 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "removing a part from an edition" do
- 
-    @edition.parts.build
-    p1 = @edition.parts.first.update_attributes(
-      :title => 'Part One', :body => 'Body text', :slug => 'part-one')
-    
-    @edition.parts.build
-    p2 = @edition.parts.second.update_attributes(
-      :title => 'Part Two', :body => 'Body text', :slug => 'part-two')
+    @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
+    @edition.parts.build(:title => 'Part One', :body => 'Body text', :slug => 'part-one')
+    @edition.parts.build(:title => 'Part Two', :body => 'Body text', :slug => 'part-two')
+    @edition.save!
 
     visit "/admin/editions/#{@edition._id}/edit"
     
@@ -92,6 +89,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "adding an invalid part" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
 
     click_on "Untitled part"
@@ -106,16 +104,32 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "publish an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
+                                  :state => 'draft')
+
+    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
+      to_return(:status => 200, :body => "{}")
+
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     click_on "Publish"
 
     @edition.reload
     assert @edition.published?
+
+    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/travel-advice/albania.json").
+      with(:body => hash_including(
+        'slug' => 'travel-advice/albania',
+        'name' => 'Albania travel advice',
+        'kind' => 'travel-advice',
+        'owning_app' => 'travel-advice-publisher',
+        'rendering_app' => 'frontend',
+        'state' => 'live'
+    ))
   end
 
   scenario "attempting to edit a published edition" do
-    @edition.publish
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -126,6 +140,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "preview an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
