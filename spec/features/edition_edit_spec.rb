@@ -20,6 +20,19 @@ feature "Edit Edition page", :js => true do
     end
   end
 
+  scenario "viewing history after creating a new edition" do
+    visit "/admin/countries/aruba"
+    click_on "Create new edition"
+
+    within(:css, ".tabbable .nav") do
+      click_on "History & Notes"
+    end
+
+    within(:css, "#history") do
+      page.should have_content("Create by Joe Bloggs")
+    end
+  end
+
   scenario "adding parts in the edition form" do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
