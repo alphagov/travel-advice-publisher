@@ -4,7 +4,8 @@ class Admin::EditionsController < ApplicationController
   before_filter :load_country_and_edition, :only => [:edit, :update]
 
   def create
-    @edition = @country.build_new_edition
+    @edition = @country.build_new_edition_as(current_user)
+
     if @edition.save
       redirect_to edit_admin_edition_path(@edition)
     else

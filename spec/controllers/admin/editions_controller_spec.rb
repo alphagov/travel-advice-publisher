@@ -15,7 +15,7 @@ describe Admin::EditionsController do
     it "should ask the country to build a new edition, and save it" do
       Country.stub(:find_by_slug).with('aruba').and_return(@country)
       ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
-      @country.should_receive(:build_new_edition).and_return(ed)
+      @country.should_receive(:build_new_edition_as).and_return(ed)
       ed.should_receive(:save).and_return(true)
 
       post :create, :country_id => @country.slug
@@ -23,7 +23,7 @@ describe Admin::EditionsController do
 
     it "should redirect to the edit page for the new edition" do
       ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => true)
-      Country.any_instance.stub(:build_new_edition).and_return(ed)
+      Country.any_instance.stub(:build_new_edition_as).and_return(ed)
 
       post :create, :country_id => @country.slug
       response.should redirect_to(edit_admin_edition_path("1234"))
@@ -32,7 +32,7 @@ describe Admin::EditionsController do
     context "when creating a new edition fails" do
       before :each do
         @ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => false)
-        Country.any_instance.stub(:build_new_edition).and_return(@ed)
+        Country.any_instance.stub(:build_new_edition_as).and_return(@ed)
       end
 
       it "should set a flash error" do
