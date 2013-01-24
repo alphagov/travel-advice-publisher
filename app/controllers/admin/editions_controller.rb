@@ -18,6 +18,10 @@ class Admin::EditionsController < ApplicationController
 
   def update
     if @edition.update_attributes(params[:edition])
+      if params[:edition][:note] && params[:edition][:note][:comment] && !params[:edition][:note][:comment].empty?
+        @edition.create_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
+      end
+
       redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(", ")}."

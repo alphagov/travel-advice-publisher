@@ -38,6 +38,11 @@
       </div><!-- edit pane -->
 
       <div class="tab-pane" id="history">
+        <%= f.fields_for :note do |h| %>
+          <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span6', :rows => 6, :cols => 120 } %>
+          <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+        <% end %>
+
         <dl class="dl-horizontal">
           <% @edition.actions.reverse.each do |action| %>
             <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
@@ -45,6 +50,10 @@
               <strong><%= action.to_s %></strong> by
               <% if action.requester %>
                 <%= mail_to action.requester.email, action.requester.name %>
+              <% end %>
+
+              <% if action.comment.present? %>
+                <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
               <% end %>
             </dd>
           <% end %>

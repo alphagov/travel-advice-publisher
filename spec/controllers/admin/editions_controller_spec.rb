@@ -78,6 +78,15 @@ describe Admin::EditionsController do
         response.should be_redirect
         assigns(:edition).parts.length.should == 2
       end
+
+      it "should add a note" do
+        put :update, :id => @edition._id, :edition => {
+          :note => { :comment => "Test note" }
+        }
+
+        response.should be_redirect
+        assigns(:edition).actions.first.comment.should == "Test note"
+      end
     end
 
     describe "PUT to update a published edition" do

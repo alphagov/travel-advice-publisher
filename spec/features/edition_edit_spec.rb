@@ -172,4 +172,19 @@ feature "Edit Edition page", :js => true do
     page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
   end
 
+  scenario "create a note" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    within(:css, ".tabbable .nav") do
+      click_on "History & Notes"
+    end
+
+    within(:css, "#history") do
+      fill_in "Note", :with => "This is a test comment"
+      click_on "Add Note"
+    end
+
+    page.should have_content("This is a test comment")
+  end
 end
