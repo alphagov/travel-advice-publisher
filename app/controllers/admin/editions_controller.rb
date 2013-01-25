@@ -4,7 +4,8 @@ class Admin::EditionsController < ApplicationController
   before_filter :load_country_and_edition, :only => [:edit, :update]
 
   def create
-    @edition = @country.build_new_edition
+    @edition = @country.build_new_edition_as(current_user)
+
     if @edition.save
       redirect_to edit_admin_edition_path(@edition)
     else
@@ -16,6 +17,10 @@ class Admin::EditionsController < ApplicationController
   end
 
   def update
+    if params[:edition][:note] && params[:edition][:note][:comment] && !params[:edition][:note][:comment].empty?
+      @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
+    end
+
     if @edition.update_attributes(params[:edition])
       redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
     else
@@ -26,7 +31,7 @@ class Admin::EditionsController < ApplicationController
 
   def publish
     @edition = TravelAdviceEdition.find(params[:id])
-    if @edition.publish
+    if @edition.publish_as(current_user)
       redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Only draft editions can be published."

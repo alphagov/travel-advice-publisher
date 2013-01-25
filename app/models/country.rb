@@ -19,6 +19,12 @@ class Country
     end
   end
 
+  def build_new_edition_as(user)
+    edition = self.build_new_edition
+    edition.build_action_as(user, Action::NEW_VERSION)
+    return edition
+  end
+
   def has_published_edition?
     self.editions.with_state('published').any?
   end

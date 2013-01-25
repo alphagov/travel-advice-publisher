@@ -99,4 +99,19 @@ describe Country do
       ed.title.should == "Aruba travel advice"
     end
   end
+
+  describe "build_new_edition_as" do
+    before :each do
+      @user = FactoryGirl.create(:user)
+      @country = Country.find_by_slug('aruba')
+    end
+
+    it "should build out a new edition with a create action" do
+      edition = @country.build_new_edition_as(@user)
+
+      edition.actions.size.should == 1
+      edition.actions.first.requester.should == @user
+      edition.actions.first.request_type == Action::CREATE
+    end
+  end
 end

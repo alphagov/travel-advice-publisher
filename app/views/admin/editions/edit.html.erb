@@ -1,54 +1,81 @@
+<h2>Editing <%= @country.name %></h2>
+
 <%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
+      <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
+    </ul>
 
-  <h2>Editing <%= @country.name %></h2>
+    <div class="row-fluid">
+      <div class="tab-content span8">
+        <div class="tab-pane active" id="edit">
+          <%= f.inputs do %>
+            <%= f.input :title, :input_html => { :disabled => !
+                  @edition.draft?, :class => "input-xxlarge" } %>
+            <%= f.input :overview, :label => "Searchable description",
+                :as => :text, :input_html => { :class => "input-xxlarge", :disabled => ! @edition.draft? } %>
+          <% end %>
+          <hr>
 
-  <%= f.inputs do %>
-    <%= f.input :title, :input_html => { :disabled => ! @edition.draft? } %>
-    <%= f.input :overview, :label => "Searchable description", 
-      :as => :text, :input_html => { :rows => 5, :cols => 50, :disabled => ! @edition.draft? } %>
-  <% end %>
-  <hr>
+          <h3>Parts</h3>
+          <section class="accordion" id="parts">
+            <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
+            <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
 
-  <div class="row-fluid">
+            <%= f.semantic_fields_for :parts do |part| %>
+              <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+            <% end %>
+          </section>
 
-    <div class="span8">
+          <% if @edition.draft? %>
+            <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+          <% end %>
 
-      <h3>Parts</h3>
+          <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
+              :locals => {:editable => @edition.draft?} %>
+        </div><!-- edit pane -->
 
-      <section class="accordion" id="parts">
-        
-        <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
-        <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
+        <div class="tab-pane" id="history">
+          <%= f.fields_for :note do |h| %>
+            <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span6', :rows => 6, :cols => 120 } %>
+            <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+          <% end %>
 
-        <%= f.semantic_fields_for :parts do |part| %>
-          <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
-        <% end %>
+          <dl class="dl-horizontal">
+            <% @edition.actions.reverse.each do |action| %>
+              <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
+              <dd>
+                <strong><%= action.to_s %></strong> by
+                <% if action.requester %>
+                  <%= mail_to action.requester.email, action.requester.name %>
+                <% end %>
 
-      </section>
+                <% if action.comment.present? %>
+                  <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
+                <% end %>
+              </dd>
+            <% end %>
+          </dl>
+        </div><!-- history pane -->
+      </div>
 
-      <% if @edition.draft? -%>
-        <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
-      <% end -%>
+      <div class="span4">
+        <h3>Govspeak help</h3>
 
-      <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
-            :locals => {:editable => @edition.draft?} %>
-
-    </div>
-
-    <div class="span4">
-      <h3>Govspeak help</h3>
-
-      <div class="well">
-        <%= render "govspeak_help" %>
+        <div class="well">
+          <%= render "govspeak_help" %>
+        </div>
       </div>
     </div>
-    
+
     <div class="navbar navbar-fixed-bottom">
       <div class="navbar-inner">
         <div class="container-fluid">
           <div class="workflow_buttons">
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
+
             <span class="pull-right">
               <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
               <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
