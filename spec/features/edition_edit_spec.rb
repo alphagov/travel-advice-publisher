@@ -29,7 +29,7 @@ feature "Edit Edition page", :js => true do
     end
 
     within(:css, "#history") do
-      page.should have_content("Create by Joe Bloggs")
+      page.should have_content("New version by Joe Bloggs")
     end
   end
 

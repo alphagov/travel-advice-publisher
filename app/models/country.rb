@@ -21,7 +21,7 @@ class Country
 
   def build_new_edition_as(user)
     edition = self.build_new_edition
-    edition.build_action_as(user, Action::CREATE)
+    edition.build_action_as(user, Action::NEW_VERSION)
     return edition
   end
 
