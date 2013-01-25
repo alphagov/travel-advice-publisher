@@ -111,7 +111,7 @@ describe Country do
 
       edition.actions.size.should == 1
       edition.actions.first.requester.should == @user
-      edition.actions.first.request_type.should == Action::CREATE
+      edition.actions.first.request_type.should == Action::NEW_VERSION
     end
   end
 end
