@@ -1,16 +1,15 @@
 <h2>Editing <%= @country.name %></h2>
 
-<div class="tabbable">
-  <ul class="nav nav-tabs">
-    <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
-    <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
-  </ul>
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
+      <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
+    </ul>
 
-  <div class="row-fluid">
-    <div class="tab-content span8">
-      <div class="tab-pane active" id="edit">
-        <%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
-
+    <div class="row-fluid">
+      <div class="tab-content span8">
+        <div class="tab-pane active" id="edit">
           <%= f.inputs do %>
             <%= f.input :title, :input_html => { :disabled => !
                   @edition.draft?, :class => "input-xxlarge" } %>
@@ -35,56 +34,57 @@
 
           <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
               :locals => {:editable => @edition.draft?} %>
-      </div><!-- edit pane -->
+        </div><!-- edit pane -->
 
-      <div class="tab-pane" id="history">
-        <%= f.fields_for :note do |h| %>
-          <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span6', :rows => 6, :cols => 120 } %>
-          <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
-        <% end %>
-
-        <dl class="dl-horizontal">
-          <% @edition.actions.reverse.each do |action| %>
-            <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
-            <dd>
-              <strong><%= action.to_s %></strong> by
-              <% if action.requester %>
-                <%= mail_to action.requester.email, action.requester.name %>
-              <% end %>
-
-              <% if action.comment.present? %>
-                <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
-              <% end %>
-            </dd>
+        <div class="tab-pane" id="history">
+          <%= f.fields_for :note do |h| %>
+            <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span6', :rows => 6, :cols => 120 } %>
+            <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
           <% end %>
-        </dl>
-      </div><!-- history pane -->
-    </div>
 
-    <div class="span4">
-      <h3>Govspeak help</h3>
+          <dl class="dl-horizontal">
+            <% @edition.actions.reverse.each do |action| %>
+              <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
+              <dd>
+                <strong><%= action.to_s %></strong> by
+                <% if action.requester %>
+                  <%= mail_to action.requester.email, action.requester.name %>
+                <% end %>
 
-      <div class="well">
-        <%= render "govspeak_help" %>
+                <% if action.comment.present? %>
+                  <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
+                <% end %>
+              </dd>
+            <% end %>
+          </dl>
+        </div><!-- history pane -->
+      </div>
+
+      <div class="span4">
+        <h3>Govspeak help</h3>
+
+        <div class="well">
+          <%= render "govspeak_help" %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="navbar navbar-fixed-bottom">
-    <div class="navbar-inner">
-      <div class="container-fluid">
-        <div class="workflow_buttons">
-          <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
-          <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
-          <span class="pull-right">
-            <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-            <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
-          </span>
+    <div class="navbar navbar-fixed-bottom">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <div class="workflow_buttons">
+            <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
+            <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
+
+            <span class="pull-right">
+              <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
+              <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
+            </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 <% end %>
 
 <%= form_tag publish_admin_edition_path(@edition), :id => "publish_edition", :method => :put do %>
