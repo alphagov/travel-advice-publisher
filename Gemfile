@@ -11,7 +11,7 @@ gem 'mongoid', '2.4.10'
 gem 'mongo', '1.6.2'
 gem 'bson_ext', '1.6.2'
 
-gem 'plek', '1.0.0'
+gem 'plek', '1.1.0'
 gem 'gds-sso', '3.0.0'
 
 gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'

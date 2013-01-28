@@ -173,7 +173,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    plek (1.0.0)
+    plek (1.1.0)
       builder
     poltergeist (0.7.0)
       capybara (~> 1.1)
@@ -287,7 +287,7 @@ DEPENDENCIES
   less-rails-bootstrap
   mongo (= 1.6.2)
   mongoid (= 2.4.10)
-  plek (= 1.0.0)
+  plek (= 1.1.0)
   poltergeist (= 0.7.0)
   rails (= 3.2.11)
   rspec-rails (= 2.12.0)
