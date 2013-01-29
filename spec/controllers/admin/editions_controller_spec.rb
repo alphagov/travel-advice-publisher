@@ -79,6 +79,15 @@ describe Admin::EditionsController do
         assigns(:edition).parts.length.should == 2
       end
 
+      it "should strip out any blank or nil alert statuses" do
+        put :update, :id => @edition._id, :edition => {
+          :alert_status => [ "", nil, "   ", "one", "two", "three" ]
+        }
+
+        assigns(:edition)[:alert_status].should == [ "one", "two", "three" ]
+      end
+
+
       it "should add a note" do
         put :update, :id => @edition._id, :edition => {
           :note => { :comment => "Test note" }
@@ -116,7 +125,7 @@ describe Admin::EditionsController do
         @draft.should_receive(:publish).and_return(true)
 
         put :publish, :id => @draft.to_param
-        
+
         page.should redirect_to admin_country_path(@draft.country_slug)
       end
     end
