@@ -24,4 +24,9 @@ module ApplicationHelper
     end
   end
 
+  def alert_statuses_with_labels(keys)
+    # reverse keys so we list in order of decreasing severity
+    keys.reverse.map {|key| [ I18n.t("alert_status.#{key}"), key ] }
+  end
+
 end

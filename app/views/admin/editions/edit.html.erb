@@ -15,6 +15,7 @@
               <%= f.input :title, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
               <%= f.input :overview, :label => "Searchable description",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
             <% end %>
             <hr>
 
