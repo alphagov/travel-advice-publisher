@@ -53,7 +53,7 @@ class Admin::EditionsController < ApplicationController
 
   def strip_empty_alert_statuses
     if params[:edition] and params[:edition][:alert_status]
-      params[:edition][:alert_status].reject!{|s| s.nil? || s.strip.length < 1 }
+      params[:edition][:alert_status].reject!(&:blank?)
     end
   end
 end
