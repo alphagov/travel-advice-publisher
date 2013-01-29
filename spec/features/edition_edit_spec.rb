@@ -172,7 +172,7 @@ feature "Edit Edition page", :js => true do
     ))
   end
 
-  scenario "hitting publish should also save changes" do
+  scenario "save and publish an edition" do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => "albania",
                                   :title => "Albania travel advice", :state => "draft")
 
