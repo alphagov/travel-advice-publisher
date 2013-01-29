@@ -8,41 +8,52 @@
     </ul>
 
     <div class="row-fluid">
-      <div class="tab-content span8">
+      <div class="tab-content span12">
         <div class="tab-pane active" id="edit">
-          <%= f.inputs do %>
-            <%= f.input :title, :input_html => { :disabled => !
-                  @edition.draft?, :class => "input-xxlarge" } %>
-            <%= f.input :overview, :label => "Searchable description",
-                :as => :text, :input_html => { :class => "input-xxlarge", :disabled => ! @edition.draft? } %>
-          <% end %>
-          <hr>
-
-          <h3>Parts</h3>
-          <section class="accordion" id="parts">
-            <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
-            <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
-
-            <%= f.semantic_fields_for :parts do |part| %>
-              <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+          <div class="span8">
+            <%= f.inputs do %>
+              <%= f.input :title, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :overview, :label => "Searchable description",
+                :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
             <% end %>
-          </section>
+            <hr>
 
-          <% if @edition.draft? %>
-            <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
-          <% end %>
+            <h3>Parts</h3>
+            <section class="accordion" id="parts">
+              <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
+              <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
 
-          <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
-              :locals => {:editable => @edition.draft?} %>
+              <%= f.semantic_fields_for :parts do |part| %>
+                <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+              <% end %>
+            </section>
+
+            <% if @edition.draft? %>
+              <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+            <% end %>
+
+            <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
+                :locals => {:editable => @edition.draft?} %>
+          </div>
+
+          <div class="span4">
+            <h3>Govspeak help</h3>
+
+            <div class="well">
+              <%= render "govspeak_help" %>
+            </div>
+          </div>
         </div><!-- edit pane -->
 
         <div class="tab-pane" id="history">
-          <%= f.fields_for :note do |h| %>
-            <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span6', :rows => 6, :cols => 120 } %>
-            <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
-          <% end %>
+          <div class="span6">
+            <%= f.fields_for :note do |h| %>
+              <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span12', :rows => 6 } %>
+              <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+            <% end %>
+          </div>
 
-          <dl class="dl-horizontal">
+          <dl class="span6 dl-horizontal">
             <% @edition.actions.reverse.each do |action| %>
               <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
               <dd>
@@ -60,13 +71,6 @@
         </div><!-- history pane -->
       </div>
 
-      <div class="span4">
-        <h3>Govspeak help</h3>
-
-        <div class="well">
-          <%= render "govspeak_help" %>
-        </div>
-      </div>
     </div>
 
     <div class="navbar navbar-fixed-bottom">
