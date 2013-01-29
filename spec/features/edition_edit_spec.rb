@@ -18,11 +18,6 @@ feature "Edit Edition page", :js => true do
       page.should have_link("Edit")
       page.should have_link("History & Notes")
     end
-  end
-
-  scenario "viewing history after creating a new edition" do
-    visit "/admin/countries/aruba"
-    click_on "Create new edition"
 
     within(:css, ".tabbable .nav") do
       click_on "History & Notes"
@@ -33,7 +28,7 @@ feature "Edit Edition page", :js => true do
     end
   end
 
-  scenario "adding parts in the edition form" do
+  scenario "inspecting the edit form, and adding content" do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
     within(:css, '.container-fluid[role=main]') do
@@ -45,7 +40,14 @@ feature "Edit Edition page", :js => true do
       page.should have_button "Add new part"
     end
 
-    click_on 'Untitled part'
+    # Should be no parts by default
+    page.should_not have_selector('#parts .part')
+
+    fill_in 'Title', :with => 'Travel advice for Albania'
+
+    fill_in 'Summary', :with => "Summary of the situation in Albania"
+
+    click_on 'Add new part'
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Title', :with => 'Part One'
       fill_in 'Body',  :with => 'Body text'
@@ -64,13 +66,29 @@ feature "Edit Edition page", :js => true do
     all(:css, '#parts > div.part').length.should == 2
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
+
+    @edition.reload
+    @edition.title.should == "Travel advice for Albania"
+    @edition.summary.should == "Summary of the situation in Albania"
+
+    @edition.parts.size.should == 2
+    one = @edition.parts.first
+    one.title.should == 'Part One'
+    one.slug.should == 'part-one'
+    one.body.should == 'Body text'
+    one.order.should == 1
+    two = @edition.parts.last
+    two.title.should == 'Part Two'
+    two.slug.should == 'part-two'
+    two.body.should == 'Body text'
+    two.order.should == 2
   end
 
   scenario "slug for parts should be automatically generated" do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
 
-    click_on 'Untitled part'
+    click_on 'Add new part'
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Title', :with => 'Part One'
       fill_in 'Body',  :with => 'Body text'
@@ -118,7 +136,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
 
-    click_on "Untitled part"
+    click_on "Add new part"
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Body',  :with => 'Body text'
       fill_in 'Slug',  :with => 'part-one'
@@ -162,6 +180,7 @@ feature "Edit Edition page", :js => true do
     page.should_not have_content "Add new part"
     page.should have_css("#edition_title[@disabled='disabled']")
     page.should have_css("#edition_overview[@disabled='disabled']")
+    page.should have_css("#edition_summary[@disabled='disabled']")
     page.should have_css(".btn-success[@disabled='disabled']")
   end
 

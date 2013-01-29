@@ -12,17 +12,17 @@
         <div class="tab-pane active" id="edit">
           <div class="span8">
             <%= f.inputs do %>
-              <%= f.input :title, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :title, :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
               <%= f.input :overview, :label => "Searchable description",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+
+              <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
+
             <hr>
 
             <h3>Parts</h3>
             <section class="accordion" id="parts">
-              <% setup_association(f.object, :new => 1, :edit => 1); f.object.order_parts %>
-              <% f.object.parts.replace f.object.parts.sort_by(&:order) %>
-
               <%= f.semantic_fields_for :parts do |part| %>
                 <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
               <% end %>
