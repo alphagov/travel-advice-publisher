@@ -187,4 +187,41 @@ feature "Edit Edition page", :js => true do
 
     page.should have_content("This is a test comment")
   end
+
+  scenario "Set the alert status for an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should_not have_checked_field("Avoid all but essential travel to parts of the country")
+    page.should_not have_checked_field("Avoid all travel to parts of the country")
+
+    check "Avoid all but essential travel to parts of the country"
+    check "Avoid all travel to parts of the country"
+
+    click_on "Save"
+
+    page.should have_checked_field("Avoid all but essential travel to parts of the country")
+    page.should have_checked_field("Avoid all travel to parts of the country")
+    page.should_not have_checked_field("Avoid all but essential travel to the whole country")
+    page.should_not have_checked_field("Avoid all travel to the whole country")
+  end
+
+  scenario "Unset the alert status for an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft',
+      :alert_status => [ "avoid_all_travel_to_parts", "avoid_all_but_essential_travel_to_whole_country" ])
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should have_checked_field("Avoid all but essential travel to the whole country")
+    page.should have_checked_field("Avoid all travel to parts of the country")
+
+    uncheck "Avoid all but essential travel to the whole country"
+    uncheck "Avoid all travel to parts of the country"
+
+    click_on "Save"
+
+    page.should_not have_checked_field("Avoid all but essential travel to parts of the country")
+    page.should_not have_checked_field("Avoid all travel to parts of the country")
+    page.should_not have_checked_field("Avoid all but essential travel to the whole country")
+    page.should_not have_checked_field("Avoid all travel to the whole country")
+  end
 end
