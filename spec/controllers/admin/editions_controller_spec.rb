@@ -124,7 +124,7 @@ describe Admin::EditionsController do
         TravelAdviceEdition.should_receive(:find).with(@draft.to_param).and_return(@draft)
         @draft.should_receive(:publish).and_return(true)
 
-        put :publish, :id => @draft.to_param
+        post :update, :id => @draft.to_param, :edition => {}, :commit => "Save & Publish"
 
         page.should redirect_to admin_country_path(@draft.country_slug)
       end

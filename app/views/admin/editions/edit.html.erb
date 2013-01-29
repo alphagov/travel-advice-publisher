@@ -82,14 +82,11 @@
 
             <span class="pull-right">
               <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-              <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
+              <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
             </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-<% end %>
-
-<%= form_tag publish_admin_edition_path(@edition), :id => "publish_edition", :method => :put do %>
 <% end %>

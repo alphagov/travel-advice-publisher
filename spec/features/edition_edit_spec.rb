@@ -156,7 +156,7 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "Publish"
+    click_on "Save & Publish"
 
     @edition.reload
     assert @edition.published?
@@ -170,6 +170,27 @@ feature "Edit Edition page", :js => true do
         'rendering_app' => 'frontend',
         'state' => 'live'
     ))
+  end
+
+  scenario "hitting publish should also save changes" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => "albania",
+                                  :title => "Albania travel advice", :state => "draft")
+
+    @edition.parts.size.should == 0
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", :with => "Part One"
+      fill_in "Body",  :with => "Body text"
+    end
+
+    click_on "Save & Publish"
+
+    @edition.reload
+    @edition.parts.size.should == 1
+    @edition.parts.first.title.should == "Part One"
   end
 
   scenario "attempting to edit a published edition" do

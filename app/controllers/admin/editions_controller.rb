@@ -23,19 +23,16 @@ class Admin::EditionsController < ApplicationController
     end
 
     if @edition.update_attributes(params[:edition])
-      redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
+      if params[:commit] == "Save & Publish" && @edition.publish_as(current_user)
+        redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+      elsif params[:commit] == "Save & Publish"
+        redirect_to edit_admin_edition_path(@edition), :alert => "Only draft editions can be published."
+      else
+        redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
+      end
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(", ")}."
       render "/admin/editions/edit"
-    end
-  end
-
-  def publish
-    @edition = TravelAdviceEdition.find(params[:id])
-    if @edition.publish_as(current_user)
-      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
-    else
-      redirect_to edit_admin_edition_path(@edition), :alert => "Only draft editions can be published."
     end
   end
 
