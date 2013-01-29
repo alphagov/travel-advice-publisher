@@ -11,22 +11,8 @@ module ApplicationHelper
     %{<time datetime="#{ time.strftime("%Y-%m-%dT%H:%M:%SZ") }">#{ time.strftime("%d/%m/%Y %H:%M") }</time>}.html_safe
   end
 
-  def setup_association(edition, opts)
-    associated = edition.parts
-
-    opts.symbolize_keys!
-
-    (opts[:new] - associated.select(&:new_record?).length).times  { associated.build } if opts[:new] and edition.new_record? == true
-    if opts[:edit] and edition.new_record? == false
-      (opts[:edit] - associated.count).times { associated.build }
-    elsif opts[:new_in_edit] and edition.new_record? == false
-      opts[:new_in_edit].times { associated.build }
-    end
-  end
-
   def alert_statuses_with_labels(keys)
     # reverse keys so we list in order of decreasing severity
     keys.reverse.map {|key| [ I18n.t("alert_status.#{key}"), key ] }
   end
-
 end
