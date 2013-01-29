@@ -104,7 +104,7 @@ GEM
       htmlentities (~> 4)
       kramdown (~> 0.13.3)
       sanitize (= 2.0.3)
-    govuk_content_models (4.4.0)
+    govuk_content_models (4.5.0)
       bson_ext
       differ
       gds-api-adapters
@@ -282,7 +282,7 @@ DEPENDENCIES
   formtastic-bootstrap!
   gds-api-adapters (= 4.2.0)
   gds-sso (= 3.0.0)
-  govuk_content_models (= 4.4.0)
+  govuk_content_models (= 4.5.0)
   jquery-rails (= 2.0.2)
   less-rails-bootstrap
   mongo (= 1.6.2)
