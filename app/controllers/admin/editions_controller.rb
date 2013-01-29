@@ -2,6 +2,7 @@ class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
   before_filter :load_country_and_edition, :only => [:edit, :update]
+  before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
     @edition = @country.build_new_edition_as(current_user)
@@ -48,5 +49,11 @@ class Admin::EditionsController < ApplicationController
   def load_country
     @country = Country.find_by_slug(params[:country_id])
     error_404 unless @country
+  end
+
+  def strip_empty_alert_statuses
+    if params[:edition] and params[:edition][:alert_status]
+      params[:edition][:alert_status].reject!{|s| s.nil? || s.strip.length < 1 }
+    end
   end
 end
