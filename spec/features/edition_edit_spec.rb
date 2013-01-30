@@ -257,4 +257,18 @@ feature "Edit Edition page", :js => true do
     page.should have_unchecked_field("Avoid all but essential travel to the whole country")
     page.should have_unchecked_field("Avoid all travel to the whole country")
   end
+
+  context "workflow 'Save & Publish' button" do
+    scenario "does not appear for archived editions" do
+      @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'archived')
+      visit "/admin/editions/#{@edition.to_param}/edit"
+      page.should_not have_button("Save & Publish")
+    end
+
+    scenario "does not appear for published editions" do
+      @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
+      visit "/admin/editions/#{@edition.to_param}/edit"
+      page.should_not have_button("Save & Publish")
+    end
+  end
 end

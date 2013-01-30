@@ -25,8 +25,6 @@ class Admin::EditionsController < ApplicationController
     if @edition.update_attributes(params[:edition])
       if params[:commit] == "Save & Publish" && @edition.publish_as(current_user)
         redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
-      elsif params[:commit] == "Save & Publish"
-        redirect_to edit_admin_edition_path(@edition), :alert => "Only draft editions can be published."
       else
         redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
       end
