@@ -23,8 +23,13 @@ class Admin::EditionsController < ApplicationController
     end
 
     if @edition.update_attributes(params[:edition])
-      if params[:commit] == "Save & Publish" && @edition.publish_as(current_user)
-        redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+      if params[:commit] == "Save & Publish"
+        if @edition.publish_as(current_user)
+          redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+        else
+          flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
+          render "/admin/editions/edit"
+        end
       else
         redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
       end
