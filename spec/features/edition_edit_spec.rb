@@ -149,6 +149,7 @@ feature "Edit Edition page", :js => true do
 
   scenario "publish an edition" do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
+                                  :alert_status => TravelAdviceEdition::ALERT_STATUSES[1..0],
                                   :state => 'draft')
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
@@ -173,7 +174,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "attempting to edit a published edition" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
+    @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -185,7 +186,7 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "preview an edition" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
+    @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")

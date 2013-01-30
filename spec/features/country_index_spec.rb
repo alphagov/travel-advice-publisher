@@ -7,20 +7,20 @@ feature "Country Index" do
   end
 
   scenario "inspecting the country index" do
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'algeria', :state => 'published')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'angola', :state => 'archived')
+    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'algeria')
+    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'angola')
 
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'aruba', :state => 'draft')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'aruba', :state => 'published')
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
+    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
 
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'afghanistan', :state => 'draft')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'afghanistan', :state => 'published')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'afghanistan', :state => 'archived')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'afghanistan', :state => 'archived')
+    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'afghanistan')
+    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'afghanistan')
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'afghanistan')
+    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'afghanistan')
 
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'austria', :state => 'published')
-    FactoryGirl.create(:travel_advice_edition, :country_slug => 'austria', :state => 'archived')
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'austria')
+    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'austria')
 
     visit "/admin/countries"
 

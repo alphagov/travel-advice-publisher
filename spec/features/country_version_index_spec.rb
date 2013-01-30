@@ -25,9 +25,9 @@ feature "Country version index" do
 
   specify "viewing a country with published editions and creating a draft" do
     country = Country.find_by_slug('aruba')
-    e1 = FactoryGirl.create(:travel_advice_edition, :country_slug => "aruba", :state => "archived", :version_number => 1)
-    e2 = FactoryGirl.create(:travel_advice_edition, :country_slug => "aruba", :state => "archived", :version_number => 2)
-    e3 = FactoryGirl.create(:travel_advice_edition, :country_slug => "aruba", :state => "published", :version_number => 3)
+    e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 1)
+    e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 2)
+    e3 = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba", :version_number => 3)
 
     visit "/admin/countries/aruba"
 

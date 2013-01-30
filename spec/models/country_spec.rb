@@ -32,17 +32,17 @@ describe Country do
     end
 
     it "should return all TravelAdviceEditions with the matching country_slug" do
-      e1 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => @country.slug)
-      e2 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => "wibble")
-      e3 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => @country.slug)
+      e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
+      e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "wibble")
+      e3 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
 
       @country.editions.to_a.should =~ [e1, e3]
     end
 
     it "should order them by descending version_number" do
-      e1 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => @country.slug, :version_number => 1)
-      e3 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => @country.slug, :version_number => 3)
-      e2 = FactoryGirl.create(:travel_advice_edition, :state => 'archived', :country_slug => @country.slug, :version_number => 2)
+      e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 1)
+      e3 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 3)
+      e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 2)
 
       @country.editions.to_a.should == [e3, e2, e1]
     end
@@ -59,19 +59,19 @@ describe Country do
     end
 
     it "should match published editions correctly" do
-      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'published')
+      FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug)
       @country.has_published_edition?.should == true
       @country.has_draft_edition?.should == false
     end
 
     it "should match draft editions correctly" do
-      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'draft')
+      FactoryGirl.create(:draft_travel_advice_edition, :country_slug => @country.slug)
       @country.has_published_edition?.should == false
       @country.has_draft_edition?.should == true
     end
 
     it "should be false with editions in other states" do
-      FactoryGirl.create(:travel_advice_edition, :country_slug => @country.slug, :state => 'archived')
+      FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
       @country.has_published_edition?.should == false
       @country.has_draft_edition?.should == false
     end
