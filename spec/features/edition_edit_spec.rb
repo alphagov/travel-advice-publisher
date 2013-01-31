@@ -157,7 +157,7 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "Publish"
+    click_on "Save & Publish"
 
     @edition.reload
     assert @edition.published?
@@ -171,6 +171,27 @@ feature "Edit Edition page", :js => true do
         'rendering_app' => 'frontend',
         'state' => 'live'
     ))
+  end
+
+  scenario "save and publish an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => "albania",
+                                  :title => "Albania travel advice", :state => "draft")
+
+    @edition.parts.size.should == 0
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", :with => "Part One"
+      fill_in "Body",  :with => "Body text"
+    end
+
+    click_on "Save & Publish"
+
+    @edition.reload
+    @edition.parts.size.should == 1
+    @edition.parts.first.title.should == "Part One"
   end
 
   scenario "attempting to edit a published edition" do
@@ -189,7 +210,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview")
+    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview saved version")
   end
 
   scenario "create a note" do
@@ -236,5 +257,19 @@ feature "Edit Edition page", :js => true do
     page.should have_unchecked_field("Avoid all travel to parts of the country")
     page.should have_unchecked_field("Avoid all but essential travel to the whole country")
     page.should have_unchecked_field("Avoid all travel to the whole country")
+  end
+
+  context "workflow 'Save & Publish' button" do
+    scenario "does not appear for archived editions" do
+      @edition = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'albania')
+      visit "/admin/editions/#{@edition.to_param}/edit"
+      page.should_not have_button("Save & Publish")
+    end
+
+    scenario "does not appear for published editions" do
+      @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
+      visit "/admin/editions/#{@edition.to_param}/edit"
+      page.should_not have_button("Save & Publish")
+    end
   end
 end
