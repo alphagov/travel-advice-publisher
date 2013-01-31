@@ -115,8 +115,8 @@ describe Admin::EditionsController do
   describe "workflow" do
     before :each do
       login_as_stub_user
-      @published = FactoryGirl.create(:travel_advice_edition, :country_slug => 'aruba', :state => 'published')
-      @draft = FactoryGirl.create(:travel_advice_edition, :title => 'Aruba travel advice', :country_slug => 'aruba')
+      @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
+      @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
     end
 
     describe "publish" do
