@@ -261,13 +261,13 @@ feature "Edit Edition page", :js => true do
 
   context "workflow 'Save & Publish' button" do
     scenario "does not appear for archived editions" do
-      @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'archived')
+      @edition = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'albania')
       visit "/admin/editions/#{@edition.to_param}/edit"
       page.should_not have_button("Save & Publish")
     end
 
     scenario "does not appear for published editions" do
-      @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'published')
+      @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
       visit "/admin/editions/#{@edition.to_param}/edit"
       page.should_not have_button("Save & Publish")
     end
