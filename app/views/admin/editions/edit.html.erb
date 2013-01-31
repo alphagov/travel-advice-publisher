@@ -81,15 +81,14 @@
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
 
             <span class="pull-right">
-              <%= link_to "Preview", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-              <%= link_to "Publish", "#", :class => "publish btn btn-danger" %>
+              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
+              <% if ! @edition.published? and ! @edition.archived? %>
+                <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
+              <% end %>
             </span>
           </div>
         </div>
       </div>
     </div>
   </div>
-<% end %>
-
-<%= form_tag publish_admin_edition_path(@edition), :id => "publish_edition", :method => :put do %>
 <% end %>
