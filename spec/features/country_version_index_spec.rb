@@ -27,7 +27,15 @@ feature "Country version index" do
     country = Country.find_by_slug('aruba')
     e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 1)
     e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 2)
-    e3 = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba", :version_number => 3)
+    e3 = FactoryGirl.build(:travel_advice_edition, :country_slug => "aruba", :version_number => 3,
+                            :title => "Aruba extra special travel advice", :summary => "## This is the summary",
+                            :overview => "Search description about Aruba",
+                            :alert_status => [TravelAdviceEdition::ALERT_STATUSES.first])
+    e3.parts.build(:title => "Part One", :slug => "part-one", :body => "Some text")
+    e3.parts.build(:title => "Part Two", :slug => "part-2", :body => "Some more text")
+    e3.save!
+    e3.state = 'published'
+    e3.save!
 
     visit "/admin/countries/aruba"
 
@@ -38,6 +46,13 @@ feature "Country version index" do
     country.editions.count.should == 4
     e4 = country.editions.with_state('draft').first
     e4.version_number.should == 4
+    e4.title.should == "Aruba extra special travel advice"
+    e4.summary.should == "## This is the summary"
+    e4.overview.should == "Search description about Aruba"
+    e4.alert_status.should == [TravelAdviceEdition::ALERT_STATUSES.first]
+    e4.parts.map(&:title).should == ["Part One", "Part Two"]
+    e4.parts.map(&:slug).should == ["part-one", "part-2"]
+    e4.parts.map(&:body).should == ["Some text", "Some more text"]
 
     i_should_be_on "/admin/editions/#{e4.id}/edit"
 
