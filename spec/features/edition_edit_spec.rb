@@ -148,9 +148,11 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "publish an edition" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
+    @edition = FactoryGirl.build(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
                                   :alert_status => TravelAdviceEdition::ALERT_STATUSES[1..0],
-                                  :state => 'draft')
+                                  :overview => "The overview", :summary => "## Summary")
+    @edition.parts.build(:title => "Part One", :slug => "part-one", :body => "Part one body")
+    @edition.save!
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
       to_return(:status => 200, :body => "{}")
@@ -166,6 +168,8 @@ feature "Edit Edition page", :js => true do
       with(:body => hash_including(
         'slug' => 'travel-advice/albania',
         'name' => 'Albania travel advice',
+        'description' => 'The overview',
+        'indexable_content' => 'Summary Part One Part one body',
         'kind' => 'travel-advice',
         'owning_app' => 'travel-advice-publisher',
         'rendering_app' => 'frontend',
