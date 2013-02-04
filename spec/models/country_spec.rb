@@ -114,4 +114,21 @@ describe Country do
       edition.actions.first.request_type.should == Action::NEW_VERSION
     end
   end
+
+  describe "build_new_edition_from" do
+    before :each do
+      @user = FactoryGirl.create(:user)
+      @country = Country.find_by_slug('aruba')
+      @edition = FactoryGirl.create(:archived_travel_advice_edition,
+        :country_slug => @country.slug, :title => "A test title", :overview => "Meh")
+    end
+
+    it "should build a clone of the provided edition" do
+      edition = @country.build_new_edition_from(@edition, @user)
+
+      edition._id.should_not == @edition._id
+      edition.title.should == @edition.title
+      edition.overview.should == @edition.overview
+    end
+  end
 end

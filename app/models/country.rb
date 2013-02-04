@@ -25,6 +25,14 @@ class Country
     return edition
   end
 
+  def build_new_edition_from(old_edition, user)
+    edition = old_edition.clone
+    edition.state = "draft"
+    edition.version_number = old_edition.version_number + 1
+    edition.build_action_as(user, Action::NEW_VERSION)
+    return edition
+  end
+
   def has_published_edition?
     self.editions.with_state('published').any?
   end
