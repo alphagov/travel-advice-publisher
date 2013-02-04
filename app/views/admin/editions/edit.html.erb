@@ -1,6 +1,6 @@
 <h2>Editing <%= @country.name %></h2>
 
-<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :id => "edition-edit-form", :as => :edition do |f| %>
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
   <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
