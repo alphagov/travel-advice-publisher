@@ -6,25 +6,51 @@ feature "Edit Edition page", :js => true do
     login_as_stub_user
   end
 
-  scenario "create a new edition" do
-    visit "/admin/countries/aruba"
+  context "creating new editions" do
+    scenario "when no editions are present, create a new edition" do
+      visit "/admin/countries/aruba"
 
-    click_on "Create new edition"
+      click_on "Create new edition"
 
-    page.should have_field("Title", :with => "Aruba travel advice")
-    page.should have_content("Untitled part")
+      page.should have_field("Title", :with => "Aruba travel advice")
+      page.should have_content("Untitled part")
 
-    within(:css, ".tabbable .nav") do
-      page.should have_link("Edit")
-      page.should have_link("History & Notes")
+      within(:css, ".tabbable .nav") do
+        page.should have_link("Edit")
+        page.should have_link("History & Notes")
+      end
+
+      within(:css, ".tabbable .nav") do
+        click_on "History & Notes"
+      end
+
+      within(:css, "#history") do
+        page.should have_content("New version by Joe Bloggs")
+      end
     end
 
-    within(:css, ".tabbable .nav") do
-      click_on "History & Notes"
+    scenario "create an edition from an archived edition" do
+      @edition = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "albania", :title => "An archived title")
+
+      visit "/admin/editions/#{@edition._id}/edit"
+
+      within(:css, ".workflow_buttons") do
+        click_on "Create new edition"
+      end
+
+      page.should have_field("Title", :with => @edition.title)
     end
 
-    within(:css, "#history") do
-      page.should have_content("New version by Joe Bloggs")
+    scenario "create an edition from an archived edition" do
+      @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "albania", :title => "A published title")
+
+      visit "/admin/editions/#{@edition._id}/edit"
+
+      within(:css, ".workflow_buttons") do
+        click_on "Create new edition"
+      end
+
+      page.should have_field("Title", :with => @edition.title)
     end
   end
 

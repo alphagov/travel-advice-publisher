@@ -82,7 +82,9 @@
 
             <span class="pull-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-              <% if ! @edition.published? and ! @edition.archived? %>
+              <% if @edition.published? || @edition.archived? %>
+                <%= link_to "Create new edition", admin_clone_edition_path(@edition), :class => "btn btn-success" %>
+              <% else %>
                 <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
               <% end %>
             </span>
