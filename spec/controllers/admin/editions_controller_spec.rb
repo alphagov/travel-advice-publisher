@@ -50,6 +50,20 @@ describe Admin::EditionsController do
       post :create, :country_id => 'wibble'
       response.should be_missing
     end
+
+    context "cloning an existing edition" do
+      before :each do
+        @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba")
+        @country = Country.find_by_slug(@published.country_slug)
+      end
+
+      it "should build out a clone of the provided edition" do
+        post :create, :country_id => @country.slug, :edition => @published._id
+
+        page.should_not redirect_to edit_admin_edition_path(@published)
+        page.should redirect_to edit_admin_edition_path(@country.editions.first)
+      end
+    end
   end
 
   describe "edit, update" do
@@ -127,19 +141,6 @@ describe Admin::EditionsController do
 
         page.should redirect_to admin_country_path(@draft.country_slug)
       end
-    end
-  end
-
-  describe "clone_edition" do
-    before :each do
-      login_as_stub_user
-      @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba")
-      @country = Country.find_by_slug(@published.country_slug)
-    end
-
-    it "should build out a clone of the provided edition" do
-      get :clone_edition, :id => @published._id
-      page.should redirect_to edit_admin_edition_path(@country.editions.first)
     end
   end
 end

@@ -1,6 +1,6 @@
 <h2>Editing <%= @country.name %></h2>
 
-<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :id => "edition-edit-form", :as => :edition do |f| %>
   <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
@@ -83,7 +83,8 @@
             <span class="pull-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
               <% if @edition.published? || @edition.archived? %>
-                <%= link_to "Create new edition", admin_clone_edition_path(@edition), :class => "btn btn-success" %>
+                <%= link_to "Create new edition", "#",
+                      :class => "btn btn-success", :id => "new-from-existing-edition" %>
               <% else %>
                 <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
               <% end %>
@@ -93,4 +94,8 @@
       </div>
     </div>
   </div>
+<% end %>
+
+<%= form_tag admin_country_editions_path(@edition.country_slug, :edition => @edition),
+      :id => "clone-edition", :method => :post do %>
 <% end %>

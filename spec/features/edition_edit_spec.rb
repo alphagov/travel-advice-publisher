@@ -39,9 +39,10 @@ feature "Edit Edition page", :js => true do
       end
 
       page.should have_field("Title", :with => @edition.title)
+      current_path.should_not == "/admin/editions/#{@edition._id}/edit"
     end
 
-    scenario "create an edition from an archived edition" do
+    scenario "create an edition from a published edition" do
       @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "albania", :title => "A published title")
 
       visit "/admin/editions/#{@edition._id}/edit"
@@ -51,6 +52,7 @@ feature "Edit Edition page", :js => true do
       end
 
       page.should have_field("Title", :with => @edition.title)
+      current_path.should_not == "/admin/editions/#{@edition._id}/edit"
     end
   end
 
