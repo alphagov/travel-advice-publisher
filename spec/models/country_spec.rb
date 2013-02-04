@@ -128,16 +128,6 @@ describe Country do
         edition.title.should == @edition.title
         edition.overview.should == @edition.overview
       end
-
-      it "should build a clone with the correct version number" do
-        newer_version = FactoryGirl.create(:archived_travel_advice_edition,
-          :country_slug => @country.slug, :title => "A test title",
-          :overview => "Meh", :version_number => 18)
-
-        edition = @country.build_new_edition_as(@user, @edition)
-
-        edition.version_number.should == 19
-      end
     end
   end
 end
