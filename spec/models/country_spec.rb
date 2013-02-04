@@ -113,33 +113,31 @@ describe Country do
       edition.actions.first.requester.should == @user
       edition.actions.first.request_type.should == Action::NEW_VERSION
     end
-  end
 
-  describe "build_new_edition_from" do
-    before :each do
-      @user = FactoryGirl.create(:user)
-      @country = Country.find_by_slug('aruba')
-      @edition = FactoryGirl.create(:archived_travel_advice_edition,
-        :country_slug => @country.slug, :title => "A test title",
-        :overview => "Meh")
-    end
+    describe "providing an optional edition parameter" do
+      before :each do
+        @edition = FactoryGirl.create(:archived_travel_advice_edition,
+          :country_slug => @country.slug, :title => "A test title",
+          :overview => "Meh")
+      end
 
-    it "should build a clone of the provided edition" do
-      edition = @country.build_new_edition_from(@edition, @user)
+      it "should build a clone of the provided edition" do
+        edition = @country.build_new_edition_as(@user, @edition)
 
-      edition._id.should_not == @edition._id
-      edition.title.should == @edition.title
-      edition.overview.should == @edition.overview
-    end
+        edition._id.should_not == @edition._id
+        edition.title.should == @edition.title
+        edition.overview.should == @edition.overview
+      end
 
-    it "should build a clone with the correct version number" do
-      newer_version = FactoryGirl.create(:archived_travel_advice_edition,
-        :country_slug => @country.slug, :title => "A test title",
-        :overview => "Meh", :version_number => 18)
+      it "should build a clone with the correct version number" do
+        newer_version = FactoryGirl.create(:archived_travel_advice_edition,
+          :country_slug => @country.slug, :title => "A test title",
+          :overview => "Meh", :version_number => 18)
 
-      edition = @country.build_new_edition_from(@edition, @user)
+        edition = @country.build_new_edition_as(@user, @edition)
 
-      edition.version_number.should == 19
+        edition.version_number.should == 19
+      end
     end
   end
 end

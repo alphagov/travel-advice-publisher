@@ -19,16 +19,15 @@ class Country
     end
   end
 
-  def build_new_edition_as(user)
-    edition = self.build_new_edition
-    edition.build_action_as(user, Action::NEW_VERSION)
-    return edition
-  end
+  def build_new_edition_as(user, old_edition = nil)
+    if old_edition.nil?
+      edition = self.build_new_edition
+    else
+      edition = old_edition.clone
+      edition.state = "draft"
+      edition.version_number = 1 + TravelAdviceEdition.where(:country_slug => old_edition.country_slug).order_by([:version_number, :desc]).first.version_number
+    end
 
-  def build_new_edition_from(old_edition, user)
-    edition = old_edition.clone
-    edition.state = "draft"
-    edition.version_number = 1 + TravelAdviceEdition.where(:country_slug => old_edition.country_slug).order_by([:version_number, :desc]).first.version_number
     edition.build_action_as(user, Action::NEW_VERSION)
     return edition
   end

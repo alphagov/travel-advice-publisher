@@ -15,7 +15,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def clone_edition
-    edition = @country.build_new_edition_from(@edition, current_user)
+    edition = @country.build_new_edition_as(current_user, @edition)
 
     if edition.save
       redirect_to edit_admin_edition_path(edition)
