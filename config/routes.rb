@@ -13,5 +13,4 @@ TravelAdvicePublisher::Application.routes.draw do
   end
 
   root :to => redirect('/admin')
-
 end
