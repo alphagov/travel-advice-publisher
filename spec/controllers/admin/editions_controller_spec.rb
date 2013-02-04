@@ -8,8 +8,9 @@ describe Admin::EditionsController do
 
   describe "POST to create" do
     before :each do
-      login_as_stub_user
       @country = Country.find_by_slug('aruba')
+      @user = stub_user
+      login_as @user
     end
 
     it "should ask the country to build a new edition, and save it" do
@@ -59,7 +60,9 @@ describe Admin::EditionsController do
       it "should build out a clone of the provided edition" do
         Country.stub(:find_by_slug).with('aruba').and_return(@country)
         ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
-        @country.should_receive(:build_new_edition_as).and_return(ed)
+        @country.should_receive(:build_new_edition_as)
+          .with(@user, @published)
+          .and_return(ed)
         ed.should_receive(:save).and_return(true)
 
         post :create, :country_id => @country.slug, :edition_version => @published.version_number
