@@ -11,16 +11,18 @@ class Country
     TravelAdviceEdition.where(:country_slug => self.slug).order_by([:version_number, :desc])
   end
 
-  def build_new_edition
-    if latest_edition = editions.first
+  def build_new_edition(old_edition = nil)
+    if !old_edition.nil?
+      old_edition.build_clone
+    elsif latest_edition = editions.first
       latest_edition.build_clone
     else
       TravelAdviceEdition.new(:country_slug => self.slug, :title => "#{self.name} travel advice")
     end
   end
 
-  def build_new_edition_as(user)
-    edition = self.build_new_edition
+  def build_new_edition_as(user, old_edition = nil)
+    edition = self.build_new_edition(old_edition)
     edition.build_action_as(user, Action::NEW_VERSION)
     return edition
   end

@@ -82,7 +82,9 @@
 
             <span class="pull-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-              <% if ! @edition.published? and ! @edition.archived? %>
+              <% if @edition.published? || @edition.archived? %>
+                <%= link_to "Create new edition", "#", :class => "btn btn-success", :id => "new-from-existing-edition" %>
+              <% else %>
                 <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
               <% end %>
             </span>
@@ -91,4 +93,8 @@
       </div>
     </div>
   </div>
+<% end %>
+
+<%= form_tag admin_country_editions_path(@edition.country_slug, :edition_version => @edition.version_number),
+      :id => "clone-edition", :method => :post do %>
 <% end %>

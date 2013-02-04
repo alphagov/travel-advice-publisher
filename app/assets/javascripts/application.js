@@ -93,6 +93,9 @@ $(function() {
     new_part.find('.title').focus();
   });
 
+  $("#new-from-existing-edition").live('click', function() {
+    $("#clone-edition").submit();
+  });
 });
 
 var TravelAdviceUtils = {
