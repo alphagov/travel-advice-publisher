@@ -5,10 +5,15 @@ class Admin::EditionsController < ApplicationController
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
-    @edition = @country.build_new_edition_as(current_user)
+    if params[:edition_version].nil?
+      edition = @country.build_new_edition_as(current_user)
+    else
+      old_edition = @country.editions.where(:version_number => params[:edition_version]).first
+      edition = @country.build_new_edition_as(current_user, old_edition)
+    end
 
-    if @edition.save
-      redirect_to edit_admin_edition_path(@edition)
+    if edition.save
+      redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
     end

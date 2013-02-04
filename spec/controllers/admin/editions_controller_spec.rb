@@ -8,8 +8,9 @@ describe Admin::EditionsController do
 
   describe "POST to create" do
     before :each do
-      login_as_stub_user
       @country = Country.find_by_slug('aruba')
+      @user = stub_user
+      login_as @user
     end
 
     it "should ask the country to build a new edition, and save it" do
@@ -49,6 +50,25 @@ describe Admin::EditionsController do
     it "should 404 for a non-existent country" do
       post :create, :country_id => 'wibble'
       response.should be_missing
+    end
+
+    context "cloning an existing edition" do
+      before :each do
+        @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug, :version_number => 17)
+      end
+
+      it "should build out a clone of the provided edition" do
+        Country.stub(:find_by_slug).with('aruba').and_return(@country)
+        ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
+        @country.should_receive(:build_new_edition_as)
+          .with(@user, @published)
+          .and_return(ed)
+        ed.should_receive(:save).and_return(true)
+
+        post :create, :country_id => @country.slug, :edition_version => @published.version_number
+
+        response.should redirect_to(edit_admin_edition_path(ed))
+      end
     end
   end
 
@@ -115,7 +135,6 @@ describe Admin::EditionsController do
   describe "workflow" do
     before :each do
       login_as_stub_user
-      @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
       @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
     end
 

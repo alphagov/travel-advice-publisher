@@ -113,5 +113,21 @@ describe Country do
       edition.actions.first.requester.should == @user
       edition.actions.first.request_type.should == Action::NEW_VERSION
     end
+
+    describe "providing an optional edition parameter" do
+      before :each do
+        @edition = FactoryGirl.create(:archived_travel_advice_edition,
+          :country_slug => @country.slug, :title => "A test title",
+          :overview => "Meh")
+      end
+
+      it "should build a clone of the provided edition" do
+        edition = @country.build_new_edition_as(@user, @edition)
+
+        edition._id.should_not == @edition._id
+        edition.title.should == @edition.title
+        edition.overview.should == @edition.overview
+      end
+    end
   end
 end
