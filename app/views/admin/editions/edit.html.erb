@@ -95,6 +95,6 @@
   </div>
 <% end %>
 
-<%= form_tag admin_country_editions_path(@edition.country_slug, :edition => @edition),
+<%= form_tag admin_country_editions_path(@edition.country_slug, :edition_version => @edition.version_number),
       :id => "clone-edition", :method => :post do %>
 <% end %>

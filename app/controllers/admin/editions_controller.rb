@@ -5,10 +5,10 @@ class Admin::EditionsController < ApplicationController
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
-    if params[:edition].nil?
+    if params[:edition_version].nil?
       edition = @country.build_new_edition_as(current_user)
     else
-      old_edition = TravelAdviceEdition.find(params[:edition])
+      old_edition = @country.editions.where(:version_number => params[:edition_version]).first
       edition = @country.build_new_edition_as(current_user, old_edition)
     end
 

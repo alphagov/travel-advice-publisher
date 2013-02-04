@@ -58,7 +58,7 @@ describe Admin::EditionsController do
       end
 
       it "should build out a clone of the provided edition" do
-        post :create, :country_id => @country.slug, :edition => @published._id
+        post :create, :country_id => @country.slug, :edition_version => @published.version_number
 
         page.should_not redirect_to edit_admin_edition_path(@published)
         page.should redirect_to edit_admin_edition_path(@country.editions.first)
