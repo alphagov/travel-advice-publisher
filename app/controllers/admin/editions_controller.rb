@@ -1,7 +1,7 @@
 class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update]
+  before_filter :load_country_and_edition, :only => [:clone_edition, :edit, :update]
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
@@ -9,6 +9,16 @@ class Admin::EditionsController < ApplicationController
 
     if @edition.save
       redirect_to edit_admin_edition_path(@edition)
+    else
+      redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
+    end
+  end
+
+  def clone_edition
+    edition = @country.build_new_edition_from(@edition, current_user)
+
+    if edition.save
+      redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
     end

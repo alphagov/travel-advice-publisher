@@ -115,7 +115,6 @@ describe Admin::EditionsController do
   describe "workflow" do
     before :each do
       login_as_stub_user
-      @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
       @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
     end
 
@@ -128,6 +127,19 @@ describe Admin::EditionsController do
 
         page.should redirect_to admin_country_path(@draft.country_slug)
       end
+    end
+  end
+
+  describe "clone_edition" do
+    before :each do
+      login_as_stub_user
+      @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba")
+      @country = Country.find_by_slug(@published.country_slug)
+    end
+
+    it "should build out a clone of the provided edition" do
+      get :clone_edition, :id => @published._id
+      page.should redirect_to edit_admin_edition_path(@country.editions.first)
     end
   end
 end
