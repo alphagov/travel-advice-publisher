@@ -53,15 +53,18 @@ describe Admin::EditionsController do
 
     context "cloning an existing edition" do
       before :each do
-        @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "aruba")
-        @country = Country.find_by_slug(@published.country_slug)
+        @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug, :version_number => 17)
       end
 
       it "should build out a clone of the provided edition" do
+        Country.stub(:find_by_slug).with('aruba').and_return(@country)
+        ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
+        @country.should_receive(:build_new_edition_as).and_return(ed)
+        ed.should_receive(:save).and_return(true)
+
         post :create, :country_id => @country.slug, :edition_version => @published.version_number
 
-        page.should_not redirect_to edit_admin_edition_path(@published)
-        page.should redirect_to edit_admin_edition_path(@country.editions.first)
+        response.should redirect_to(edit_admin_edition_path(ed))
       end
     end
   end
