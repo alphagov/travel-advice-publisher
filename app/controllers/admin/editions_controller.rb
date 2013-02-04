@@ -8,11 +8,13 @@ class Admin::EditionsController < ApplicationController
     if params[:edition_version].nil?
       edition = @country.build_new_edition_as(current_user)
     else
-      old_edition = @country.editions.where(:version_number => params[:edition_version]).first
-      edition = @country.build_new_edition_as(current_user, old_edition)
+      unless @country.editions.where(:state => "draft").size >= 1
+        old_edition = @country.editions.where(:version_number => params[:edition_version]).first
+        edition = @country.build_new_edition_as(current_user, old_edition)
+      end
     end
 
-    if edition.save
+    if !edition.nil? && edition.save
       redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
@@ -20,6 +22,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def edit
+    @draft_exists = @country.editions.where(:state => "draft").size >= 1
   end
 
   def update
