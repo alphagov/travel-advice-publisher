@@ -71,7 +71,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
     within(:css, '.container-fluid[role=main]') do
-      page.should have_content "Editing Albania"
+      page.should have_content "Editing Albania Version 1"
     end
 
     within(:css, '.row-fluid .span8') do
