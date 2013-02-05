@@ -22,7 +22,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def edit
-    @draft_exists = @country.editions.where(:state => "draft").size >= 1
+    @draft_exists = @country.has_draft_edition?
   end
 
   def update
