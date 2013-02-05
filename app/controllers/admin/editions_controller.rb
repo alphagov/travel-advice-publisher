@@ -22,7 +22,6 @@ class Admin::EditionsController < ApplicationController
   end
 
   def edit
-    @draft_exists = @country.has_draft_edition?
   end
 
   def update
