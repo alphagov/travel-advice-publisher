@@ -70,19 +70,6 @@ describe Admin::EditionsController do
 
         response.should redirect_to(edit_admin_edition_path(ed))
       end
-
-      it "should not allow creation of new editions if draft exists" do
-        criteria = stub("Mongoid Criteria")
-        criteria.should_receive(:where).with(:state => "draft").and_return([:draft])
-        @country.should_not_receive(:build_new_edition_as)
-
-        Country.stub(:find_by_slug).with("aruba").and_return(@country)
-        Country.any_instance.stub(:editions).and_return(criteria)
-
-        post :create, :country_id => @country.slug, :edition_version => @published.version_number
-
-        response.should redirect_to(admin_country_path(@country.slug))
-      end
     end
   end
 
