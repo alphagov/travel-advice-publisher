@@ -54,6 +54,17 @@ feature "Edit Edition page", :js => true do
       page.should have_field("Title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
     end
+
+    scenario "should not allow creation of drafts if draft already exists" do
+      @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "albania", :title => "A published title")
+      @draft = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => "draft")
+
+      visit "/admin/editions/#{@edition._id}/edit"
+
+      within(:css, ".workflow_buttons") do
+        page.should_not have_link("Create new edition")
+      end
+    end
   end
 
   scenario "inspecting the edit form, and adding content" do
