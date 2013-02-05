@@ -55,21 +55,9 @@
             <% end %>
           </div>
 
-          <dl class="span6 dl-horizontal">
-            <% @edition.actions.reverse.each do |action| %>
-              <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
-              <dd>
-                <strong><%= action.to_s %></strong> by
-                <% if action.requester %>
-                  <%= mail_to action.requester.email, action.requester.name %>
-                <% end %>
-
-                <% if action.comment.present? %>
-                  <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
-                <% end %>
-              </dd>
-            <% end %>
-          </dl>
+          <div class="span6">
+            <%= render :partial => 'edition_history', :collection => @country.editions, :as => :edition %>
+          </div>
         </div><!-- history pane -->
       </div>
 

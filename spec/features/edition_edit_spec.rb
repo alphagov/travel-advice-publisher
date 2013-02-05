@@ -44,6 +44,9 @@ feature "Edit Edition page", :js => true do
 
     scenario "create an edition from a published edition" do
       @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => "albania", :title => "A published title")
+      @edition.actions.build(:request_type => Action::NEW_VERSION)
+      @edition.actions.build(:request_type => Action::PUBLISH, :requester => User.first, :comment => "Made some changes...")
+      @edition.save(:validate => false)
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -53,6 +56,16 @@ feature "Edit Edition page", :js => true do
 
       page.should have_field("Title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
+
+      within "#history" do
+        page.should have_content("Notes for version 2")
+        page.should have_content("New version by Joe Bloggs")
+
+        page.should have_content("Notes for version 1")
+        page.should have_content("Publish by Joe Bloggs")
+        page.should have_content("Made some changes...")
+        page.should have_content("New version by GOV.UK Bot")
+      end
     end
 
     scenario "should not allow creation of drafts if draft already exists" do
