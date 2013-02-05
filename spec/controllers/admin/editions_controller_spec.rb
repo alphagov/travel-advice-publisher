@@ -58,12 +58,13 @@ describe Admin::EditionsController do
       end
 
       it "should build out a clone of the provided edition" do
-        Country.stub(:find_by_slug).with('aruba').and_return(@country)
         ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
-        @country.should_receive(:build_new_edition_as)
-          .with(@user, @published)
-          .and_return(ed)
         ed.should_receive(:save).and_return(true)
+
+        @country.should_receive(:build_new_edition_as)
+          .with(@user, @published).and_return(ed)
+
+        Country.stub(:find_by_slug).with("aruba").and_return(@country)
 
         post :create, :country_id => @country.slug, :edition_version => @published.version_number
 
