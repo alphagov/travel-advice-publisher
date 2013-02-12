@@ -13,7 +13,6 @@ feature "Edit Edition page", :js => true do
       click_on "Create new edition"
 
       page.should have_field("Title", :with => "Aruba travel advice")
-      page.should have_content("Untitled part")
 
       within(:css, ".tabbable .nav") do
         page.should have_link("Edit")
