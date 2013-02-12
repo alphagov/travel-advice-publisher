@@ -13,7 +13,6 @@ feature "Edit Edition page", :js => true do
       click_on "Create new edition"
 
       page.should have_field("Title", :with => "Aruba travel advice")
-      page.should have_content("Untitled part")
 
       within(:css, ".tabbable .nav") do
         page.should have_link("Edit")
@@ -239,6 +238,7 @@ feature "Edit Edition page", :js => true do
 
   scenario "attempting to edit a published edition" do
     @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
+    @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -247,6 +247,7 @@ feature "Edit Edition page", :js => true do
     page.should have_css("#edition_overview[@disabled='disabled']")
     page.should have_css("#edition_summary[@disabled='disabled']")
     page.should have_css(".btn-success[@disabled='disabled']")
+    page.should_not have_button("Save & Publish")
   end
 
   scenario "preview an edition" do
