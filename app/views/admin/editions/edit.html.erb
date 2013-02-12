@@ -82,10 +82,10 @@
 
             <span class="pull-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
-              <% if !@country.has_draft_edition? && (@edition.published? || @edition.archived?) %>
-                <%= link_to "Create new edition", "#", :class => "btn btn-success", :id => "new-from-existing-edition" %>
-              <% else %>
+              <% if @edition.draft? %>
                 <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
+              <% elsif !@country.has_draft_edition? %>
+                <%= link_to "Create new edition", "#", :class => "btn btn-success", :id => "new-from-existing-edition" %>
               <% end %>
             </span>
           </div>
