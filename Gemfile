@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'https://gems.gemfury.com/vo6ZrmjBQu5szyywDszE/'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 gem 'exception_notification', '2.6.1'
 gem 'aws-ses', :require => 'aws/ses'
