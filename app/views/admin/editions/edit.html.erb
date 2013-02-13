@@ -1,4 +1,6 @@
-<h2>Editing <%= @country.name %></h2>
+<div class="page-header">
+  <h1>Editing <%= @country.name %> <small>Version <%= @edition.version_number %></small></h1>
+</div>
 
 <%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
   <div class="tabbable">
@@ -53,21 +55,9 @@
             <% end %>
           </div>
 
-          <dl class="span6 dl-horizontal">
-            <% @edition.actions.reverse.each do |action| %>
-              <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
-              <dd>
-                <strong><%= action.to_s %></strong> by
-                <% if action.requester %>
-                  <%= mail_to action.requester.email, action.requester.name %>
-                <% end %>
-
-                <% if action.comment.present? %>
-                  <%= simple_format(escape_once(action.comment), {}, :sanitize => false) %>
-                <% end %>
-              </dd>
-            <% end %>
-          </dl>
+          <div class="span6">
+            <%= render :partial => 'edition_history', :collection => @country.editions, :as => :edition %>
+          </div>
         </div><!-- history pane -->
       </div>
 
