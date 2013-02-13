@@ -20,6 +20,6 @@ class RegisterableTravelAdviceEdition
   end
 
   def slug
-    "travel-advice/#{@edition.country_slug}"
+    "foreign-travel-advice/#{@edition.country_slug}"
   end
 end

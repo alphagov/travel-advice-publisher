@@ -215,9 +215,9 @@ feature "Edit Edition page", :js => true do
     @edition.reload
     assert @edition.published?
 
-    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/travel-advice/albania.json").
+    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
       with(:body => hash_including(
-        'slug' => 'travel-advice/albania',
+        'slug' => 'foreign-travel-advice/albania',
         'name' => 'Albania travel advice',
         'description' => 'The overview',
         'indexable_content' => 'Summary Part One Part one body',
@@ -267,7 +267,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview saved version")
+    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/albania?edition=1']", :text => "Preview saved version")
   end
 
   scenario "create a note" do
