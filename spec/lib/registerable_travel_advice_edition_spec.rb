@@ -35,7 +35,7 @@ describe RegisterableTravelAdviceEdition do
     end
 
     it "should return the edition's country_slug with travel_advice prepended" do
-      @registerable.slug.should == "travel-advice/#{@edition.country_slug}"
+      @registerable.slug.should == "foreign-travel-advice/#{@edition.country_slug}"
     end
 
     it "should return the edition's title" do

@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def preview_edition_path(edition, cache = true)
-    "#{Plek.current.find("private-frontend")}/travel-advice/#{edition.country_slug}" + "?edition=#{edition.version_number}&cache=#{Time.now().to_i}"
+    "#{Plek.current.find("private-frontend")}/foreign-travel-advice/#{edition.country_slug}" + "?edition=#{edition.version_number}&cache=#{Time.now().to_i}"
   end
 
   def timestamp(time)

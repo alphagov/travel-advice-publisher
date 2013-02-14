@@ -198,41 +198,13 @@ feature "Edit Edition page", :js => true do
     page.should have_content("We had some problems saving: Parts is invalid.")
   end
 
-  scenario "publish an edition" do
-    @edition = FactoryGirl.build(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
+  scenario "save and publish an edition" do
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
                                   :alert_status => TravelAdviceEdition::ALERT_STATUSES[1..0],
                                   :overview => "The overview", :summary => "## Summary")
-    @edition.parts.build(:title => "Part One", :slug => "part-one", :body => "Part one body")
-    @edition.save!
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
       to_return(:status => 200, :body => "{}")
-
-    visit "/admin/editions/#{@edition.to_param}/edit"
-
-    click_on "Save & Publish"
-
-    @edition.reload
-    assert @edition.published?
-
-    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/travel-advice/albania.json").
-      with(:body => hash_including(
-        'slug' => 'travel-advice/albania',
-        'name' => 'Albania travel advice',
-        'description' => 'The overview',
-        'indexable_content' => 'Summary Part One Part one body',
-        'kind' => 'travel-advice',
-        'owning_app' => 'travel-advice-publisher',
-        'rendering_app' => 'frontend',
-        'state' => 'live'
-    ))
-  end
-
-  scenario "save and publish an edition" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => "albania",
-                                  :title => "Albania travel advice", :state => "draft")
-
-    @edition.parts.size.should == 0
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -247,6 +219,19 @@ feature "Edit Edition page", :js => true do
     @edition.reload
     @edition.parts.size.should == 1
     @edition.parts.first.title.should == "Part One"
+    assert @edition.published?
+
+    WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
+      with(:body => hash_including(
+        'slug' => 'foreign-travel-advice/albania',
+        'name' => 'Albania travel advice',
+        'description' => 'The overview',
+        'indexable_content' => 'Summary Part One Body text',
+        'kind' => 'travel-advice',
+        'owning_app' => 'travel-advice-publisher',
+        'rendering_app' => 'frontend',
+        'state' => 'live'
+    ))
   end
 
   scenario "attempting to edit a published edition" do
@@ -267,7 +252,7 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/albania?edition=1']", :text => "Preview saved version")
+    page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/albania?edition=1']", :text => "Preview saved version")
   end
 
   scenario "create a note" do
