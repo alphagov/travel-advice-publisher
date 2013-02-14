@@ -75,7 +75,7 @@ feature "Country version index" do
 
     within :xpath, "//tr[contains(., 'Version 2')]" do
       page.should have_link("view details", :href => "/admin/editions/#{e2.id}/edit")
-      page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/travel-advice/aruba?edition=2']", :text => "preview")
+      page.should have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/aruba?edition=2']", :text => "preview")
     end
 
     page.should_not have_button("Create new edition")
