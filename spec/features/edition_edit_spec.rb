@@ -89,6 +89,10 @@ feature "Edit Edition page", :js => true do
       within_section "the fieldset labelled Metadata" do
         page.should have_field("Search title", :with => @edition.title)
         page.should have_field("Search description")
+
+        # The first version can't be a minor update...
+        page.should_not have_field("Minor update")
+        page.should have_field("Change description")
       end
 
       within_section "the fieldset labelled Summary content" do
@@ -110,6 +114,8 @@ feature "Edit Edition page", :js => true do
 
     fill_in 'Search title', :with => 'Travel advice for Albania'
     fill_in 'Search description', :with => "Read this if you're planning on visiting Albania"
+
+    fill_in 'Change description', :with => "Made changes to all the stuff"
 
     fill_in 'Summary', :with => "Summary of the situation in Albania"
 
@@ -137,6 +143,7 @@ feature "Edit Edition page", :js => true do
     @edition.title.should == "Travel advice for Albania"
     @edition.overview.should == "Read this if you're planning on visiting Albania"
     @edition.summary.should == "Summary of the situation in Albania"
+    @edition.change_description.should == "Made changes to all the stuff"
 
     @edition.parts.size.should == 2
     one = @edition.parts.first
@@ -149,6 +156,29 @@ feature "Edit Edition page", :js => true do
     two.slug.should == 'part-two'
     two.body.should == 'Body text'
     two.order.should == 2
+  end
+
+  scenario "Seeing the minor update toggle on the edit form for non-first versions" do
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :minor_update => true)
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    within('h1') { page.should have_content "Editing Albania Version 2" }
+
+    within '#edit' do
+      within_section "the fieldset labelled Metadata" do
+        page.should have_checked_field("Minor update")
+        page.find_field("Change description").should_not be_visible
+
+        uncheck "Minor update"
+        page.find_field("Change description").should be_visible
+      end
+    end
+
+    click_on "Save"
+
+    @edition.reload
+    @edition.minor_update.should == false
   end
 
   scenario "slug for parts should be automatically generated" do

@@ -17,6 +17,11 @@
               <%= f.input :title, :label => "Search title", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
               <%= f.input :overview, :label => "Search description",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+
+              <% unless @edition.version_number == 1 %>
+                <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
+              <% end %>
+              <%= f.input :change_description, :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs :name => "Summary content" do %>
