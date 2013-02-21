@@ -13,29 +13,31 @@
       <div class="tab-content span12">
         <div class="tab-pane active" id="edit">
           <div class="span8">
-            <%= f.inputs do %>
-              <%= f.input :title, :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
-              <%= f.input :overview, :label => "Searchable description",
+            <%= f.inputs :name => "Metadata" do %>
+              <%= f.input :title, :label => "Search title", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :overview, :label => "Search description",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+            <% end %>
+
+            <%= f.inputs :name => "Summary content" do %>
               <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
               <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
-            <hr>
+            <%= f.inputs :name => "Parts" do %>
+              <section class="accordion" id="parts">
+                <%= f.semantic_fields_for :parts do |part| %>
+                  <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+                <% end %>
+              </section>
 
-            <h3>Parts</h3>
-            <section class="accordion" id="parts">
-              <%= f.semantic_fields_for :parts do |part| %>
-                <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+              <% if @edition.draft? %>
+                <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
               <% end %>
-            </section>
 
-            <% if @edition.draft? %>
-              <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
+              <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
+                  :locals => {:editable => @edition.draft?} %>
             <% end %>
-
-            <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
-                :locals => {:editable => @edition.draft?} %>
           </div>
 
           <div class="span4">

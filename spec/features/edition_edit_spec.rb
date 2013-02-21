@@ -12,7 +12,7 @@ feature "Edit Edition page", :js => true do
 
       click_on "Create new edition"
 
-      page.should have_field("Title", :with => "Aruba travel advice")
+      page.should have_field("Search title", :with => "Aruba travel advice")
 
       within(:css, ".tabbable .nav") do
         page.should have_link("Edit")
@@ -37,7 +37,7 @@ feature "Edit Edition page", :js => true do
         click_on "Create new edition"
       end
 
-      page.should have_field("Title", :with => @edition.title)
+      page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
     end
 
@@ -53,7 +53,7 @@ feature "Edit Edition page", :js => true do
         click_on "Create new edition"
       end
 
-      page.should have_field("Title", :with => @edition.title)
+      page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
       within "#history" do
@@ -80,21 +80,36 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "inspecting the edit form, and adding content" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition._id}/edit"
-    within(:css, '.container-fluid[role=main]') do
-      page.should have_content "Editing Albania Version 1"
+
+    within('h1') { page.should have_content "Editing Albania Version 1" }
+
+    within '#edit' do
+      within_section "the fieldset labelled Metadata" do
+        page.should have_field("Search title", :with => @edition.title)
+        page.should have_field("Search description")
+      end
+
+      within_section "the fieldset labelled Summary content" do
+        page.should have_unchecked_field("Avoid all travel to the whole country")
+        page.should have_unchecked_field("Avoid all travel to parts of the country")
+        page.should have_unchecked_field("Avoid all but essential travel to the whole country")
+        page.should have_unchecked_field("Avoid all but essential travel to parts of the country")
+
+        page.should have_field("Summary")
+      end
+
+      within_section "the fieldset labelled Parts" do
+        # Should be no parts by default
+        page.should_not have_selector('#parts .part')
+
+        page.should have_button "Add new part"
+      end
     end
 
-    within(:css, '.row-fluid .span8') do
-      page.should have_content "Parts"
-      page.should have_button "Add new part"
-    end
-
-    # Should be no parts by default
-    page.should_not have_selector('#parts .part')
-
-    fill_in 'Title', :with => 'Travel advice for Albania'
+    fill_in 'Search title', :with => 'Travel advice for Albania'
+    fill_in 'Search description', :with => "Read this if you're planning on visiting Albania"
 
     fill_in 'Summary', :with => "Summary of the situation in Albania"
 
@@ -120,6 +135,7 @@ feature "Edit Edition page", :js => true do
 
     @edition.reload
     @edition.title.should == "Travel advice for Albania"
+    @edition.overview.should == "Read this if you're planning on visiting Albania"
     @edition.summary.should == "Summary of the situation in Albania"
 
     @edition.parts.size.should == 2
