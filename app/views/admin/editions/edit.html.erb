@@ -21,6 +21,14 @@
               <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
+            <%= f.inputs "Image" do %>
+              <% unless @edition.image_id.blank? %>
+                <p>Image ID: <%= @edition.image_id %></p>
+              <% end %>
+
+              <%= f.input :image, :as => :file %>
+            <% end %>
+
             <hr>
 
             <h3>Parts</h3>

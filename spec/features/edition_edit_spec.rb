@@ -301,6 +301,19 @@ feature "Edit Edition page", :js => true do
     page.should have_unchecked_field("Avoid all travel to the whole country")
   end
 
+  scenario "upload an image to an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should have_field("Image", :type => "file")
+
+    attach_file("Image", Rails.root.join("spec","fixtures","uploads","image.jpg"))
+    click_on "Save"
+
+    page.should_not have_content("We had some problems saving")
+    page.should have_selector("img[src$='image\.jpg']")
+  end
+
   context "workflow 'Save & Publish' button" do
     scenario "does not appear for archived editions" do
       @edition = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'albania')
