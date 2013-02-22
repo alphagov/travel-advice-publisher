@@ -1,5 +1,5 @@
 require "travel_advice_edition"
-require "asset_uploader"
+require "gds_api/asset_manager"
 
 class TravelAdviceEdition
   attr_accessor :image
@@ -18,9 +18,9 @@ class TravelAdviceEdition
 
   private
     def upload_image
-      uploader = AssetUploader.new(Plek.current.find('asset-manager'))
-      response = uploader.upload(image)
+      @asset_api ||= GdsApi::AssetManager.new(Plek.current.find('asset-manager'))
+      response = @asset_api.create_asset(@image)
 
-      self.image_id = JSON.parse(response.body)['id']
+      self.image_id = response.id.match(/\/([^\/]+)\z/) {|m| m[1] }
     end
 end

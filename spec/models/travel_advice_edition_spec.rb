@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "gds_api/asset_manager"
 
 describe TravelAdviceEdition do
 
@@ -25,7 +26,7 @@ describe TravelAdviceEdition do
   describe "uploading an image" do
     it "should not invoke the uploader when the image has not been changed" do
       ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
-      AssetUploader.should_not_receive(:new)
+      GdsApi::AssetManager.should_not_receive(:new)
 
       ed.save
     end
@@ -35,12 +36,12 @@ describe TravelAdviceEdition do
       ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
       ed.image = file
 
-      uploader = stub("AssetUploader")
+      adapter = stub("AssetManager")
       response = stub
 
-      AssetUploader.should_receive(:new).and_return(uploader)
-      uploader.should_receive(:upload).with(file).and_return(response)
-      response.should_receive(:body).and_return('{ "id": "an_image_id" }')
+      GdsApi::AssetManager.should_receive(:new).and_return(adapter)
+      adapter.should_receive(:create_asset).with(file).and_return(response)
+      response.should_receive(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
 
       ed.save
       ed.reload
