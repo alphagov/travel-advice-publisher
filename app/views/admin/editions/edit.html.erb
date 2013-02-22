@@ -23,7 +23,7 @@
 
             <%= f.inputs "Image" do %>
               <% unless @edition.image_id.blank? %>
-                <p>Image ID: <%= @edition.image_id %></p>
+                <p class="uploaded-image">Image ID: <%= @edition.image_id %></p>
               <% end %>
 
               <%= f.input :image, :as => :file %>

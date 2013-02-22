@@ -302,6 +302,14 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "upload an image to an edition" do
+    adapter = stub("AssetManager")
+    GdsApi::AssetManager.should_receive(:new).and_return(adapter)
+
+    response = stub
+    adapter.should_receive(:create_asset).and_return(response)
+
+    response.should_receive(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
+
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -311,7 +319,7 @@ feature "Edit Edition page", :js => true do
     click_on "Save"
 
     page.should_not have_content("We had some problems saving")
-    page.should have_selector("img[src$='image\.jpg']")
+    page.should have_selector(".uploaded-image")
   end
 
   context "workflow 'Save & Publish' button" do
