@@ -245,27 +245,40 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "save and publish an edition" do
+    @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
                                   :alert_status => TravelAdviceEdition::ALERT_STATUSES[1..0],
+                                  :change_description => "Stuff changed", :minor_update => false,
                                   :overview => "The overview", :summary => "## Summary")
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
       to_return(:status => 200, :body => "{}")
 
-    visit "/admin/editions/#{@edition.to_param}/edit"
+    now = Time.now.utc
+    Timecop.freeze(now) do
+      visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "Add new part"
-    within :css, "#parts div.part:first-of-type" do
-      fill_in "Title", :with => "Part One"
-      fill_in "Body",  :with => "Body text"
+      click_on "Add new part"
+      within :css, "#parts div.part:first-of-type" do
+        fill_in "Title", :with => "Part One"
+        fill_in "Body",  :with => "Body text"
+      end
+
+      click_on "Save & Publish"
     end
 
-    click_on "Save & Publish"
+    @old_edition.reload
+    @old_edition.should be_archived
 
     @edition.reload
     @edition.parts.size.should == 1
     @edition.parts.first.title.should == "Part One"
-    assert @edition.published?
+    @edition.should be_published
+
+    @edition.published_at.to_i.should == now.to_i
+    action = @edition.actions.last
+    action.request_type.should == Action::PUBLISH
+    action.comment.should == "Stuff changed"
 
     WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
       with(:body => hash_including(
@@ -278,6 +291,37 @@ feature "Edit Edition page", :js => true do
         'rendering_app' => 'frontend',
         'state' => 'live'
     ))
+  end
+
+  scenario "save and publish a minor update to an edition" do
+    Timecop.travel(3.days.ago) do
+      @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania',
+                                       :summary => "## The summaryy",
+                                       :change_description => "Some things changed", :minor_update => false)
+    end
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
+
+    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
+      to_return(:status => 200, :body => "{}")
+
+    now = Time.now.utc
+    Timecop.freeze(now) do
+      visit "/admin/editions/#{@edition.to_param}/edit"
+
+      fill_in "Summary", :with => "## The summary"
+      check "Minor update"
+
+      click_on "Save & Publish"
+    end
+
+    @edition.reload
+    @edition.should be_published
+    @edition.change_description.should == "Some things changed"
+
+    @edition.published_at.should == @old_edition.published_at
+    action = @edition.actions.last
+    action.request_type.should == Action::PUBLISH
+    action.comment.should == "Minor update"
   end
 
   scenario "attempting to edit a published edition" do

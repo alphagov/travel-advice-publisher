@@ -21,7 +21,7 @@
               <% unless @edition.version_number == 1 %>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
-              <%= f.input :change_description, :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <%= f.input :change_description, :as => :text, :required => true, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs :name => "Summary content" do %>
