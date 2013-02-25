@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-source 'https://gems.gemfury.com/vo6ZrmjBQu5szyywDszE/'
+source 'https://BnrJb6FZyzspBboNJzYZ@gem.fury.io/govuk/'
 
 gem 'rails', '3.2.12'
 
@@ -22,7 +22,7 @@ gem 'reverse_markdown'
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "4.5.4"
+  gem "govuk_content_models", "4.9.1"
 end
 
 gem 'gds-api-adapters', "4.2.0"
@@ -47,4 +47,5 @@ group :development, :test do
   gem 'database_cleaner', '0.9.1'
   gem 'poltergeist', '0.7.0'
   gem 'webmock', '1.9.0', :require => false
+  gem 'timecop', '0.5.9.2'
 end
