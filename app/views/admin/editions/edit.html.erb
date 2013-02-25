@@ -22,11 +22,11 @@
             <% end %>
 
             <%= f.inputs "Image" do %>
-              <% unless @edition.image_id.blank? %>
-                <p class="uploaded-image">Image ID: <%= @edition.image_id %></p>
+              <% if @edition.image %>
+                <p class="uploaded-image">Current image <%= image_tag @edition.image.file_url %></p>
               <% end %>
 
-              <%= f.input :image, :as => :file %>
+              <%= f.input :image, :as => :file, :label => "Upload a new image" %>
             <% end %>
 
             <hr>

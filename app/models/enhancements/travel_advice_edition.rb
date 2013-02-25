@@ -2,10 +2,14 @@ require "travel_advice_edition"
 require "gds_api/asset_manager"
 
 class TravelAdviceEdition
-  attr_accessor :image
-
   after_initialize { @image_has_changed = false }
   before_save :upload_image, :if => :image_has_changed?
+
+  def image
+    unless self.image_id.blank?
+      @image ||= TravelAdvicePublisher.asset_api.asset(self.image_id)
+    end
+  end
 
   def image=(image)
     @image_has_changed = true

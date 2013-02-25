@@ -303,23 +303,29 @@ feature "Edit Edition page", :js => true do
 
   scenario "upload an image to an edition" do
     adapter = stub("AssetManager")
-    GdsApi::AssetManager.should_receive(:new).and_return(adapter)
+    TravelAdvicePublisher.stub(:asset_api).and_return(adapter)
 
-    response = stub
-    adapter.should_receive(:create_asset).and_return(response)
+    asset = stub
+    asset.stub(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
+    asset.stub(:file_url).and_return('http://path/to/image.jpg')
 
-    response.should_receive(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
+    adapter.stub(:asset).with("an_image_id").and_return(asset)
+    adapter.should_receive(:create_asset).and_return(asset)
 
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_field("Image", :type => "file")
+    page.should have_field("Upload a new image", :type => "file")
 
-    attach_file("Image", Rails.root.join("spec","fixtures","uploads","image.jpg"))
+    attach_file("Upload a new image", Rails.root.join("spec","fixtures","uploads","image.jpg"))
     click_on "Save"
 
+    @edition.reload
+
     page.should_not have_content("We had some problems saving")
-    page.should have_selector(".uploaded-image")
+    within(:css, ".uploaded-image") do
+      page.should have_selector("img[src$='image.jpg']")
+    end
   end
 
   context "workflow 'Save & Publish' button" do
