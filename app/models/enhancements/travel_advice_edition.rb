@@ -18,9 +18,7 @@ class TravelAdviceEdition
 
   private
     def upload_image
-      @asset_api ||= GdsApi::AssetManager.new(Plek.current.find('asset-manager'))
-      response = @asset_api.create_asset(@image)
-
+      response = TravelAdvicePublisher.asset_api.create_asset(:file => @image)
       self.image_id = response.id.match(/\/([^\/]+)\z/) {|m| m[1] }
     end
 end

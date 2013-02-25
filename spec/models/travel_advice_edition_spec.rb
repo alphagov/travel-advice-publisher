@@ -39,8 +39,8 @@ describe TravelAdviceEdition do
       adapter = stub("AssetManager")
       response = stub
 
-      GdsApi::AssetManager.should_receive(:new).and_return(adapter)
-      adapter.should_receive(:create_asset).with(file).and_return(response)
+      TravelAdvicePublisher.should_receive(:asset_api).and_return(adapter)
+      adapter.should_receive(:create_asset).with({ :file => file }).and_return(response)
       response.should_receive(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
 
       ed.save
