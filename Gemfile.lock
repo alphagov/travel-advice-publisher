@@ -208,6 +208,8 @@ GEM
     rake (10.0.3)
     rdoc (3.12.1)
       json (~> 1.4)
+    reverse_markdown (0.4.3)
+      nokogiri
     rspec-core (2.12.1)
     rspec-expectations (2.12.0)
       diff-lcs (~> 1.1.3)
@@ -288,6 +290,7 @@ DEPENDENCIES
   plek (= 1.1.0)
   poltergeist (= 0.7.0)
   rails (= 3.2.12)
+  reverse_markdown
   rspec-rails (= 2.12.0)
   simplecov-rcov (= 0.2.3)
   therubyracer

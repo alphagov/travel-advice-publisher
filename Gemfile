@@ -17,6 +17,8 @@ gem 'gds-sso', '3.0.0'
 gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'
 gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstrap.git', branch: 'bootstrap-2'
 
+gem 'reverse_markdown'
+
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
