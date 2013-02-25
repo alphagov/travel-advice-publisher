@@ -296,8 +296,8 @@ feature "Edit Edition page", :js => true do
   scenario "save and publish a minor update to an edition" do
     Timecop.travel(3.days.ago) do
       @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania',
-                                       :summary => "## The summaryy",
-                                       :change_description => "Some things changed", :minor_update => false)
+                                        :summary => "## The summaryy",
+                                        :change_description => "Some things changed", :minor_update => false)
     end
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
 
