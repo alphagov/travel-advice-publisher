@@ -1,5 +1,6 @@
 require 'spec_helper'
 require "gds_api/asset_manager"
+require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
 
@@ -83,6 +84,28 @@ describe TravelAdviceEdition do
         @ed.save!
 
         @ed.image_id.should == "an_image_id"
+      end
+
+      it "catches any errors raised by the api client" do
+        GdsApi::AssetManager.any_instance.should_receive(:create_asset).and_raise(GdsApi::TimedOutException)
+
+        expect {
+          @ed.image = @file
+          @ed.save!
+        }.to_not raise_error
+
+        @ed.errors[:image_id].should =~ ["could not be uploaded"]
+      end
+
+      it "doesn't stop the edition saving when an uploading error is raised" do
+        GdsApi::AssetManager.any_instance.should_receive(:create_asset).and_raise(GdsApi::TimedOutException)
+
+        @ed.image = @file
+        @ed.summary = "foo"
+        @ed.save!
+
+        @ed.reload
+        @ed.summary.should == "foo"
       end
     end
 

@@ -34,8 +34,12 @@ class TravelAdviceEdition
         end
 
         define_method("upload_#{field}") do
-          response = TravelAdvicePublisher.asset_api.create_asset(:file => instance_variable_get("@#{field}_file"))
-          self.send("#{field}_id=", response.id.match(/\/([^\/]+)\z/) {|m| m[1] })
+          begin
+            response = TravelAdvicePublisher.asset_api.create_asset(:file => instance_variable_get("@#{field}_file"))
+            self.send("#{field}_id=", response.id.match(/\/([^\/]+)\z/) {|m| m[1] })
+          rescue GdsApi::BaseError
+            errors.add("#{field}_id".to_sym, "could not be uploaded")
+          end
         end
         private "upload_#{field}".to_sym
       end
