@@ -291,7 +291,6 @@ DEPENDENCIES
   plek (= 1.1.0)
   poltergeist (= 0.7.0)
   rails (= 3.2.12)
-  rest-client
   rspec-rails (= 2.12.0)
   simplecov-rcov (= 0.2.3)
   therubyracer
