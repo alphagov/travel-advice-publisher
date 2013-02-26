@@ -23,30 +23,87 @@ describe TravelAdviceEdition do
     end
   end
 
-  describe "uploading an image" do
-    it "should not invoke the uploader when the image has not been changed" do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
-      GdsApi::AssetManager.should_not_receive(:new)
+  describe "attached fields" do
+    it "retrieves the asset from the api" do
+      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
 
-      ed.save
+      asset = OpenStruct.new(:file_url => "/path/to/image")
+      GdsApi::AssetManager.any_instance.should_receive(:asset).with("an_image_id").and_return(asset)
+
+      ed.image.file_url.should == "/path/to/image"
     end
 
-    it "should invoke the uploader when an image has been changed and save the asset id" do
+    it "caches the asset from the api" do
+      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+
+      asset = OpenStruct.new(:something => "one", :something_else => "two")
+      GdsApi::AssetManager.any_instance.should_receive(:asset).once.with("an_image_id").and_return(asset)
+
+      ed.image.something.should == "one"
+      ed.image.something_else.should == "two"
+    end
+
+    it "assigns a file and detects it has changed" do
       file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
       ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+
       ed.image = file
+      ed.image_has_changed?.should be_true
+    end
 
-      adapter = stub("AssetManager")
-      response = stub
+    it "does not upload an asset if it has not changed" do
+      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+      TravelAdviceEdition.any_instance.should_not_receive(:upload_image)
 
-      TravelAdvicePublisher.should_receive(:asset_api).and_return(adapter)
-      adapter.should_receive(:create_asset).with({ :file => file }).and_return(response)
-      response.should_receive(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
+      ed.save!
+    end
 
-      ed.save
-      ed.reload
+    describe "saving an edition" do
+      before do
+        @ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+        @file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
 
-      ed.image_id.should == "an_image_id"
+        @asset = stub
+        @asset.stub(:id).and_return('http://asset-manager.dev.gov.uk/assets/an_image_id')
+      end
+
+      it "uploads the asset" do
+        GdsApi::AssetManager.any_instance.should_receive(:create_asset).
+          with({ :file => @file }).and_return(@asset)
+
+        @ed.image = @file
+        @ed.save!
+      end
+
+      it "assigns the asset id to the attachment id attribute" do
+        GdsApi::AssetManager.any_instance.stub(:create_asset).
+          with({ :file => @file }).and_return(@asset)
+
+        @ed.image = @file
+        @ed.save!
+
+        @ed.image_id.should == "an_image_id"
+      end
+    end
+
+    describe "removing an asset" do
+      it "removes an asset when remove_* set to true" do
+        ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+        ed.remove_image = true
+        ed.save!
+
+        ed.image_id.should be_nil
+      end
+
+      it "doesn't remove an asset when remove_* set to false or empty" do
+        ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+        ed.remove_image = false
+        ed.remove_image = ""
+        ed.remove_image = nil
+        ed.save!
+
+        ed.image_id.should == "an_image_id"
+      end
     end
   end
 end
