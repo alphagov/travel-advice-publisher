@@ -391,6 +391,102 @@ feature "Edit Edition page", :js => true do
     page.should have_unchecked_field("Avoid all travel to the whole country")
   end
 
+  scenario "managing images for an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
+
+    file_one = File.open(Rails.root.join("spec","fixtures","uploads","image.jpg"))
+    file_two = File.open(Rails.root.join("spec","fixtures","uploads","image_two.jpg"))
+
+    asset_one = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/an_image_id', :file_url => 'http://path/to/image.jpg')
+    asset_two = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/another_image_id', :file_url => 'http://path/to/image_two.jpg')
+
+    TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_one)
+
+    TravelAdvicePublisher.asset_api.stub(:asset).with("an_image_id").and_return(asset_one)
+    TravelAdvicePublisher.asset_api.stub(:asset).with("another_image_id").and_return(asset_two)
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should have_field("Upload a new map image", :type => "file")
+    attach_file("Upload a new map image", file_one.path)
+    click_on "Save"
+
+    within(:css, ".uploaded-image") do
+      page.should have_selector("img[src$='image.jpg']")
+    end
+
+    # ensure image is not removed on save
+    click_on "Save"
+
+    within(:css, ".uploaded-image") do
+      page.should have_selector("img[src$='image.jpg']")
+    end
+
+    # replace image
+    TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
+
+    attach_file("Upload a new map image", file_two.path)
+    click_on "Save"
+
+    within(:css, ".uploaded-image") do
+      page.should have_selector("img[src$='image_two.jpg']")
+    end
+
+    # remove image
+    check "Remove image?"
+    click_on "Save"
+
+    page.should_not have_selector(".uploaded-image")
+  end
+
+  scenario "managing documents for an edition" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
+
+    file_one = File.open(Rails.root.join("spec","fixtures","uploads","document.pdf"))
+    file_two = File.open(Rails.root.join("spec","fixtures","uploads","document_two.pdf"))
+
+    asset_one = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/a_document_id', :name => "document.pdf", :file_url => 'http://path/to/document.pdf')
+    asset_two = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/another_document_id', :name => "document_two.pdf", :file_url => 'http://path/to/document_two.pdf')
+
+    TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_one)
+
+    TravelAdvicePublisher.asset_api.stub(:asset).with("a_document_id").and_return(asset_one)
+    TravelAdvicePublisher.asset_api.stub(:asset).with("another_document_id").and_return(asset_two)
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    page.should have_field("Upload a new PDF", :type => "file")
+    attach_file("Upload a new PDF", file_one.path)
+    click_on "Save"
+
+    within(:css, ".uploaded-document") do
+      page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
+    end
+
+    # ensure document is not removed on save
+    click_on "Save"
+
+    within(:css, ".uploaded-document") do
+      page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
+    end
+
+    # replace document
+    TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
+
+    attach_file("Upload a new PDF", file_two.path)
+    click_on "Save"
+
+    within(:css, ".uploaded-document") do
+      page.should have_link("Download document_two.pdf", :href => "http://path/to/document_two.pdf")
+    end
+
+    # remove document
+    check "Remove PDF?"
+    click_on "Save"
+
+    page.should_not have_selector(".uploaded-document")
+  end
+
   context "workflow 'Save & Publish' button" do
     scenario "does not appear for archived editions" do
       @edition = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'albania')

@@ -36,6 +36,11 @@ class Admin::EditionsController < ApplicationController
           render "/admin/editions/edit"
         end
       else
+        # catch any upload errors
+        if @edition.errors.any?
+          flash[:alert] = @edition.errors.full_messages.join(", ")
+        end
+
         redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
       end
     else
