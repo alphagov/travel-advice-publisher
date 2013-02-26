@@ -23,7 +23,11 @@ else
   gem "govuk_content_models", "4.9.1"
 end
 
-gem 'gds-api-adapters', "4.2.0"
+if ENV['API_DEV']
+  gem 'gds-api-adapters', :path => '../gds-api-adapters'
+else
+  gem 'gds-api-adapters', "5.0.1"
+end
 
 gem 'therubyracer'
 gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
