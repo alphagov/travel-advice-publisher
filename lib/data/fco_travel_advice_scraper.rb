@@ -20,6 +20,7 @@ class FCOTravelAdviceScraper
 
   def run
     process_index
+
     @urls.each do |url|
       begin
         ta = process_travel_advice_page(url)
@@ -39,8 +40,8 @@ class FCOTravelAdviceScraper
               key, val = p.shift
               part = Part.new(:slug => key.downcase.parameterize, :title => key, :body => val)
               advice.parts << part
-            end
-            
+            end 
+
             if advice.save!
               @travel_advice[slug] = advice
               puts "Saved draft advice for #{country_name}"
@@ -80,11 +81,7 @@ class FCOTravelAdviceScraper
       section_title = el.at_css("a h2").text.strip
       
       if anchor_name == 'travelSummary'
-        summary = section_siblings(el)
-        unless Govspeak::Document.new(summary).valid?
-          summary = section_siblings(el, false)
-        end
-        travel_advice[:summary] = summary
+        travel_advice[:summary] = section_siblings(el)
       else
         travel_advice[:parts] << {section_title => section_siblings(el)}
       end
@@ -94,11 +91,12 @@ class FCOTravelAdviceScraper
     travel_advice
   end
 
-  def section_siblings(el, as_markdown=true)
+  def section_siblings(el)
     markdown = ''
     while el.next_sibling and not el.next_sibling.matches?('.newTATopicBox')
       if el.next_sibling.text.present?
-        markdown << (as_markdown ? to_markdown(el.next_sibling) : el.next_sibling.text.strip)
+        md = to_markdown(el.next_sibling)
+        markdown << (Govspeak::Document.new(md).valid? ? md : el.next_sibling.text.strip)
       end
       el = el.next_sibling
     end
