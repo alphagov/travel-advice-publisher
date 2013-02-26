@@ -23,10 +23,32 @@
 
             <%= f.inputs "Image" do %>
               <% if @edition.image %>
-                <p class="uploaded-image">Current image <%= image_tag @edition.image.file_url %></p>
+                <div class="well uploaded-image">
+                  <p><strong>Current image</strong></p>
+                  <p><%= image_tag @edition.image.file_url %></p>
+                  <p><%= label_tag do %>Remove image? <%= check_box_tag "edition[remove_image]", "1" %><% end %></p>
+                </div>
+
+                <h4>Replace image</h4>
               <% end %>
 
               <%= f.input :image, :as => :file, :label => "Upload a new image" %>
+            <% end %>
+
+            <%= f.inputs "Document" do %>
+              <% if @edition.document %>
+                <div class="well uploaded-document">
+                  <p><strong>Current document</strong></p>
+                  <p><%= link_to @edition.document.file_url do %>Download <em><%= @edition.document.name %></em><% end %></p>
+                  <p><%= label_tag do %>
+                    Remove document? <%= check_box_tag "edition[remove_document]", "1" %>
+                  <% end %></p>
+                </div>
+
+                <h4>Replace document</h4>
+              <% end %>
+
+              <%= f.input :document, :as => :file, :label => "Upload a new document" %>
             <% end %>
 
             <hr>
