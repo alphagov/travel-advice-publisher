@@ -12,7 +12,7 @@ feature "Edit Edition page", :js => true do
 
       click_on "Create new edition"
 
-      page.should have_field("Title", :with => "Aruba travel advice")
+      page.should have_field("Search title", :with => "Aruba travel advice")
 
       within(:css, ".tabbable .nav") do
         page.should have_link("Edit")
@@ -37,7 +37,7 @@ feature "Edit Edition page", :js => true do
         click_on "Create new edition"
       end
 
-      page.should have_field("Title", :with => @edition.title)
+      page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
     end
 
@@ -53,7 +53,7 @@ feature "Edit Edition page", :js => true do
         click_on "Create new edition"
       end
 
-      page.should have_field("Title", :with => @edition.title)
+      page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
       within "#history" do
@@ -80,21 +80,42 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "inspecting the edit form, and adding content" do
-    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
     visit "/admin/editions/#{@edition._id}/edit"
-    within(:css, '.container-fluid[role=main]') do
-      page.should have_content "Editing Albania Version 1"
+
+    within('h1') { page.should have_content "Editing Albania Version 1" }
+
+    within '#edit' do
+      within_section "the fieldset labelled Metadata" do
+        page.should have_field("Search title", :with => @edition.title)
+        page.should have_field("Search description")
+
+        # The first version can't be a minor update...
+        page.should_not have_field("Minor update")
+        page.should have_field("Change description")
+      end
+
+      within_section "the fieldset labelled Summary content" do
+        page.should have_unchecked_field("Avoid all travel to the whole country")
+        page.should have_unchecked_field("Avoid all travel to parts of the country")
+        page.should have_unchecked_field("Avoid all but essential travel to the whole country")
+        page.should have_unchecked_field("Avoid all but essential travel to parts of the country")
+
+        page.should have_field("Summary")
+      end
+
+      within_section "the fieldset labelled Parts" do
+        # Should be no parts by default
+        page.should_not have_selector('#parts .part')
+
+        page.should have_button "Add new part"
+      end
     end
 
-    within(:css, '.row-fluid .span8') do
-      page.should have_content "Parts"
-      page.should have_button "Add new part"
-    end
+    fill_in 'Search title', :with => 'Travel advice for Albania'
+    fill_in 'Search description', :with => "Read this if you're planning on visiting Albania"
 
-    # Should be no parts by default
-    page.should_not have_selector('#parts .part')
-
-    fill_in 'Title', :with => 'Travel advice for Albania'
+    fill_in 'Change description', :with => "Made changes to all the stuff"
 
     fill_in 'Summary', :with => "Summary of the situation in Albania"
 
@@ -120,7 +141,9 @@ feature "Edit Edition page", :js => true do
 
     @edition.reload
     @edition.title.should == "Travel advice for Albania"
+    @edition.overview.should == "Read this if you're planning on visiting Albania"
     @edition.summary.should == "Summary of the situation in Albania"
+    @edition.change_description.should == "Made changes to all the stuff"
 
     @edition.parts.size.should == 2
     one = @edition.parts.first
@@ -133,6 +156,29 @@ feature "Edit Edition page", :js => true do
     two.slug.should == 'part-two'
     two.body.should == 'Body text'
     two.order.should == 2
+  end
+
+  scenario "Seeing the minor update toggle on the edit form for non-first versions" do
+    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :minor_update => true)
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    within('h1') { page.should have_content "Editing Albania Version 2" }
+
+    within '#edit' do
+      within_section "the fieldset labelled Metadata" do
+        page.should have_checked_field("Minor update")
+        page.find_field("Change description").should_not be_visible
+
+        uncheck "Minor update"
+        page.find_field("Change description").should be_visible
+      end
+    end
+
+    click_on "Save"
+
+    @edition.reload
+    @edition.minor_update.should == false
   end
 
   scenario "slug for parts should be automatically generated" do
@@ -199,27 +245,40 @@ feature "Edit Edition page", :js => true do
   end
 
   scenario "save and publish an edition" do
+    @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
                                   :alert_status => TravelAdviceEdition::ALERT_STATUSES[1..0],
+                                  :change_description => "Stuff changed", :minor_update => false,
                                   :overview => "The overview", :summary => "## Summary")
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
       to_return(:status => 200, :body => "{}")
 
-    visit "/admin/editions/#{@edition.to_param}/edit"
+    now = Time.now.utc
+    Timecop.freeze(now) do
+      visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "Add new part"
-    within :css, "#parts div.part:first-of-type" do
-      fill_in "Title", :with => "Part One"
-      fill_in "Body",  :with => "Body text"
+      click_on "Add new part"
+      within :css, "#parts div.part:first-of-type" do
+        fill_in "Title", :with => "Part One"
+        fill_in "Body",  :with => "Body text"
+      end
+
+      click_on "Save & Publish"
     end
 
-    click_on "Save & Publish"
+    @old_edition.reload
+    @old_edition.should be_archived
 
     @edition.reload
     @edition.parts.size.should == 1
     @edition.parts.first.title.should == "Part One"
-    assert @edition.published?
+    @edition.should be_published
+
+    @edition.published_at.to_i.should == now.to_i
+    action = @edition.actions.last
+    action.request_type.should == Action::PUBLISH
+    action.comment.should == "Stuff changed"
 
     WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
       with(:body => hash_including(
@@ -232,6 +291,37 @@ feature "Edit Edition page", :js => true do
         'rendering_app' => 'frontend',
         'state' => 'live'
     ))
+  end
+
+  scenario "save and publish a minor update to an edition" do
+    Timecop.travel(3.days.ago) do
+      @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania',
+                                        :summary => "## The summaryy",
+                                        :change_description => "Some things changed", :minor_update => false)
+    end
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
+
+    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
+      to_return(:status => 200, :body => "{}")
+
+    now = Time.now.utc
+    Timecop.freeze(now) do
+      visit "/admin/editions/#{@edition.to_param}/edit"
+
+      fill_in "Summary", :with => "## The summary"
+      check "Minor update"
+
+      click_on "Save & Publish"
+    end
+
+    @edition.reload
+    @edition.should be_published
+    @edition.change_description.should == "Some things changed"
+
+    @edition.published_at.should == @old_edition.published_at
+    action = @edition.actions.last
+    action.request_type.should == Action::PUBLISH
+    action.comment.should == "Minor update"
   end
 
   scenario "attempting to edit a published edition" do

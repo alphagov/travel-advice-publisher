@@ -96,10 +96,22 @@ $(function() {
   $("#new-from-existing-edition").live('click', function() {
     $("#clone-edition").submit();
   });
+
+  $("#edition_minor_update").change(function() {
+    TravelAdviceUtils.setChangeDescriptionVisibility($(this));
+  });
+  TravelAdviceUtils.setChangeDescriptionVisibility($("#edition_minor_update"));
 });
 
 var TravelAdviceUtils = {
   convertToSlug: function(title) {
     return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
+  },
+  setChangeDescriptionVisibility: function($elem) {
+    if ($elem.attr('checked')) {
+      $("#edition_change_description_input").hide();
+    } else {
+      $("#edition_change_description_input").show();
+    }
   }
 }
