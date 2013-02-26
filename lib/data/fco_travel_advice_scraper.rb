@@ -181,21 +181,4 @@ class FCOTravelAdviceScraper
     alerts
   end
 
-  def section_name(name)
-    case name
-    when "travelSummary"
-      "summary"
-    when "safetySecurity"
-      "safety-and-security"
-    when "lawsCustoms"
-      "laws-and-customs"
-    when "entryRequirements"
-      "entry-requirements"
-    when "naturalDisasters"
-      "natural-disasters"
-    else
-      name
-    end
-  end
 end
-
