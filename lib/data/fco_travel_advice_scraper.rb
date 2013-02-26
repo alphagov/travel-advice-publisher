@@ -13,12 +13,10 @@ class FCOTravelAdviceScraper
 
   def initialize
     @urls = []
-    @embassies = {}
+    @travel_advice = {}
     @countries = YAML.load_file(File.expand_path('../countries.yml', __FILE__))
     @index_uri = URI.parse(INDEX_URL)
   end
-
-  attr_reader :embassies
 
   def run
     process_index
@@ -29,24 +27,24 @@ class FCOTravelAdviceScraper
         country_name = ta[:title]
         country = find_country(country_name)
         if country
-          ta[:country_slug] = country['slug']
-          
-          existing_drafts = TravelAdviceEdition.where(:country_slug => ta[:country_slug], :state => 'draft')
+          slug = country['slug']
+          ta[:country_slug] = slug
+          existing_drafts = TravelAdviceEdition.where(:country_slug => slug, :state => 'draft')
 
           if existing_drafts.empty?
-
             parts = ta.delete(:parts)
-
             advice = TravelAdviceEdition.new(ta)
               
             parts.each do |p|
-              key = p.keys.first
-              val = p[key]
+              key, val = p.shift
               part = Part.new(:slug => key.downcase.parameterize, :title => key, :body => val)
               advice.parts << part
             end
-
-            puts "Saved draft advice for #{country_name}" if advice.save!
+            
+            if advice.save!
+              @travel_advice[slug] = advice
+              puts "Saved draft advice for #{country_name}"
+            end
           else
             puts "Existing draft found for #{country_name}. Skipping."
           end
@@ -57,7 +55,7 @@ class FCOTravelAdviceScraper
         puts "Error #{ex.class}: #{ex.message} processing #{url}"
       end
     end
-    @embassies
+    @travel_advice
   end
 
   def process_index
@@ -108,7 +106,7 @@ class FCOTravelAdviceScraper
   end
 
   def to_markdown(str)
-    ReverseMarkdown.parse(str) # .gsub("*", "") # TODO: Preserve strong tags?
+    ReverseMarkdown.parse(str).gsub("*", "")
   end
 
   def find_country(country_name)
