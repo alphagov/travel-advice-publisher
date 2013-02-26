@@ -407,8 +407,8 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_field("Upload a new image", :type => "file")
-    attach_file("Upload a new image", file_one.path)
+    page.should have_field("Upload a new map image", :type => "file")
+    attach_file("Upload a new map image", file_one.path)
     click_on "Save"
 
     within(:css, ".uploaded-image") do
@@ -425,7 +425,7 @@ feature "Edit Edition page", :js => true do
     # replace image
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
-    attach_file("Upload a new image", file_two.path)
+    attach_file("Upload a new map image", file_two.path)
     click_on "Save"
 
     within(:css, ".uploaded-image") do
@@ -433,7 +433,7 @@ feature "Edit Edition page", :js => true do
     end
 
     # remove image
-    check "Remove image"
+    check "Remove image?"
     click_on "Save"
 
     page.should_not have_selector(".uploaded-image")
@@ -455,8 +455,8 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_field("Upload a new document", :type => "file")
-    attach_file("Upload a new document", file_one.path)
+    page.should have_field("Upload a new PDF", :type => "file")
+    attach_file("Upload a new PDF", file_one.path)
     click_on "Save"
 
     within(:css, ".uploaded-document") do
@@ -473,7 +473,7 @@ feature "Edit Edition page", :js => true do
     # replace document
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
-    attach_file("Upload a new document", file_two.path)
+    attach_file("Upload a new PDF", file_two.path)
     click_on "Save"
 
     within(:css, ".uploaded-document") do
@@ -481,7 +481,7 @@ feature "Edit Edition page", :js => true do
     end
 
     # remove document
-    check "Remove document"
+    check "Remove PDF?"
     click_on "Save"
 
     page.should_not have_selector(".uploaded-document")

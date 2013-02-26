@@ -24,39 +24,39 @@
               <%= f.input :change_description, :as => :text, :required => true, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
             <% end %>
 
-            <%= f.inputs :name => "Summary content" do %>
-              <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
-              <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
-            <% end %>
-
-            <%= f.inputs "Image" do %>
+            <%= f.inputs "Map image" do %>
               <% if @edition.image %>
                 <div class="well uploaded-image">
-                  <p><strong>Current image</strong></p>
+                  <p><strong>Current map image</strong></p>
                   <p><%= image_tag @edition.image.file_url %></p>
                   <p><%= label_tag do %>Remove image? <%= check_box_tag "edition[remove_image]", "1" %><% end %></p>
                 </div>
 
-                <h4>Replace image</h4>
+                <h4>Replace map image</h4>
               <% end %>
 
-              <%= f.input :image, :as => :file, :label => "Upload a new image" %>
+              <%= f.input :image, :as => :file, :label => "Upload a new map image" %>
             <% end %>
 
-            <%= f.inputs "Document" do %>
+            <%= f.inputs "Map PDF" do %>
               <% if @edition.document %>
                 <div class="well uploaded-document">
-                  <p><strong>Current document</strong></p>
+                  <p><strong>Current PDF</strong></p>
                   <p><%= link_to @edition.document.file_url do %>Download <em><%= @edition.document.name %></em><% end %></p>
                   <p><%= label_tag do %>
-                    Remove document? <%= check_box_tag "edition[remove_document]", "1" %>
+                    Remove PDF? <%= check_box_tag "edition[remove_document]", "1" %>
                   <% end %></p>
                 </div>
 
-                <h4>Replace document</h4>
+                <h4>Replace PDF</h4>
               <% end %>
 
-              <%= f.input :document, :as => :file, :label => "Upload a new document" %>
+              <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
+            <% end %>
+
+            <%= f.inputs :name => "Summary content" do %>
+              <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
+              <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
             <hr>
