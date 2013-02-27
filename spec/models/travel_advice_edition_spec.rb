@@ -4,6 +4,46 @@ require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
 
+  describe "creating draft artefact in panopticon" do
+    it "should register a draft with panopticon on creating first draft" do
+      c = Country.find_by_slug('aruba')
+      ed = c.build_new_edition
+
+      registerer = stub("Registerer")
+      registerable_edition = stub("RegisterableEdition")
+      RegisterableTravelAdviceEdition.should_receive(:new).with(ed).and_return(registerable_edition)
+      GdsApi::Panopticon::Registerer.should_receive(:new).with(
+        :owning_app => 'travel-advice-publisher',
+        :rendering_app => 'frontend',
+        :kind => 'travel-advice'
+      ).and_return(registerer)
+      registerer.should_receive(:register).with(registerable_edition)
+
+      ed.save!
+    end
+
+    it "should not register on subsequent saves of the first draft" do
+      ed = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
+
+      RegisterableTravelAdviceEdition.should_not_receive(:new)
+      GdsApi::Panopticon::Registerer.should_not_receive(:new)
+
+      ed.title += "with extra sauce"
+      ed.save!
+    end
+
+    it "should not register a draft on creating subsequent drafts" do
+      FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
+      c = Country.find_by_slug('aruba')
+      ed = c.build_new_edition
+
+      RegisterableTravelAdviceEdition.should_not_receive(:new)
+      GdsApi::Panopticon::Registerer.should_not_receive(:new)
+
+      ed.save!
+    end
+  end
+
   describe "registering with panopticon on publish" do
     # This functionality implemented in an observer.
 
