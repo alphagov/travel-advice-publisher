@@ -4,6 +4,10 @@ require 'gds_api/panopticon'
 class PanopticonRegistrationObserver < Mongoid::Observer
   observe :travel_advice_edition
 
+  def after_create(edition)
+    register_with_panopticon(edition) if edition.version_number == 1
+  end
+
   def after_publish(edition, transition)
     register_with_panopticon(edition)
   end
