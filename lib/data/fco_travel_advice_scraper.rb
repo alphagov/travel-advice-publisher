@@ -26,6 +26,7 @@ class FCOTravelAdviceScraper
         ta = process_travel_advice_page(url)
         
         country_name = ta[:title]
+        ta[:title] += " travel advice"
         country = find_country(country_name)
         if country
           slug = country['slug']
