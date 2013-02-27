@@ -84,9 +84,9 @@ class FCOTravelAdviceScraper
       if anchor_name == 'travelSummary'
         travel_advice[:summary] = section_siblings(el)
       else
-        travel_advice[:parts] << {section_title => section_siblings(el)}
+        travel_advice[:parts] << {section_title => section_siblings(el)} unless section_title == 'General'
       end
-      
+
     end
     
     travel_advice
