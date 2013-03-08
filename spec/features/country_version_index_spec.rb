@@ -80,4 +80,32 @@ feature "Country version index" do
 
     page.should_not have_button("Create new edition")
   end
+
+  context "related links for countries" do
+    before do
+      @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => "australia",
+                                   :version_number => 1,
+                                   :title => "Australia extra special travel advice",
+                                   :summary => "## This is the summary",
+                                   :overview => "Search description about Australia")
+      @country = Country.find_by_slug(@edition.country_slug)
+
+      visit "/admin/countries/#{@country.slug}"
+    end
+
+    specify "allows adding related content" do
+      within "div.row-fluid" do
+        click_on "Edit related content"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+      within "form#related-items" do
+        page.select("Another thing", :from => "related_artefact_ids[]")
+        click_on "Save"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}"
+    end
+  end
 end
