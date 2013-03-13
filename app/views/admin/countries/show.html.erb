@@ -1,14 +1,12 @@
 <h2><%= @country.name %></h2>
 
 <div class="row-fluid">
-  <div class="btn-group">
   <% unless @country.has_draft_edition? %>
     <%= button_to "Create new edition", admin_country_editions_path(@country.slug), :class => "btn btn-success" %>
   <% end %>
 
   <%= button_to "Edit related content", edit_admin_country_path(@country.slug),
-      {:method => :get, :class => "btn btn-primary" } %>
-  </div>
+      :method => :get, :class => "btn btn-primary" %>
 </div>
 
 <table class="table table-bordered table-striped">
