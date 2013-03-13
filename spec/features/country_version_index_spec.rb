@@ -90,10 +90,20 @@ feature "Country version index" do
                                    :overview => "Search description about Australia")
       @country = Country.find_by_slug(@edition.country_slug)
 
+      @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+      FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
+      @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
+      FactoryGirl.create(:artefact, :name => "Gamma", :slug => "gamma")
+
       visit "/admin/countries/#{@country.slug}"
     end
 
     specify "allows adding related content" do
+      country_artefact = {:name => @country.name, :slug => @country.slug}
+      panopticon_has_metadata(country_artefact)
+      stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+        to_return(:status => 200, :body => country_artefact.to_json)
+
       within "div.row-fluid" do
         click_on "Edit related content"
       end
@@ -101,11 +111,22 @@ feature "Country version index" do
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        page.select("Another thing", :from => "related_artefact_ids[]")
+        find("select[id='related_artefacts']").all("option")[1..-1].map { |option|
+          option.text
+        }.should == ["Alpha", "Australia", "Beta", "Gamma"]
+
+        page.select("Beta", :from => "related_artefacts")
         click_on "Save"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}"
+
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+        with(:body => {
+          "name" => @country.name,
+          "slug" => @country.slug,
+          "related_items" => @beta.id
+        }.to_json).once
     end
   end
 end
