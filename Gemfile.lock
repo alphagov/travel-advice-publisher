@@ -90,7 +90,7 @@ GEM
     faye-websocket (0.4.6)
       eventmachine (>= 0.12.0)
     ffi (1.2.0)
-    gds-api-adapters (5.0.1)
+    gds-api-adapters (5.3.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -140,7 +140,7 @@ GEM
     libwebsocket (0.1.7.1)
       addressable
       websocket
-    link_header (0.0.5)
+    link_header (0.0.6)
     lrucache (0.1.4)
       PriorityQueue (~> 0.1.2)
     mail (2.5.3)
@@ -284,7 +284,7 @@ DEPENDENCIES
   factory_girl_rails
   formtastic!
   formtastic-bootstrap!
-  gds-api-adapters (= 5.0.1)
+  gds-api-adapters (= 5.3.0)
   gds-sso (= 3.0.0)
   govuk_content_models (= 4.9.1)
   jquery-rails (= 2.0.2)
