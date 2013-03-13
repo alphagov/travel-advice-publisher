@@ -1,3 +1,5 @@
+require "gds_api/test_helpers/panopticon"
+
 module GdsApiHelpers
   def stub_panopticon_registration
     GdsApi::Panopticon::Registerer.any_instance.stub(:register)
@@ -22,6 +24,7 @@ RSpec.configuration.before :each, :type => :controller do
 end
 
 RSpec.configuration.include GdsApiHelpers, :type => :feature
+RSpec.configuration.include GdsApi::TestHelpers::Panopticon, :type => :feature
 RSpec.configuration.before :each, :type => :feature do
   stub_panopticon_draft_registration
 end
