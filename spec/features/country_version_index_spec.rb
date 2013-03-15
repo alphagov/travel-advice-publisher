@@ -112,11 +112,11 @@ feature "Country version index" do
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        find("select[id='related_artefacts']").all("option")[1..-1].map { |option|
+        find("select[id='related_artefacts_']").all("option")[1..-1].map { |option|
           option.text
         }.should == ["Alpha", "Australia", "Beta", "Gamma"]
 
-        page.select("Beta", :from => "related_artefacts")
+        page.select("Beta", :from => "related_artefacts_")
         click_on "Save"
       end
 
@@ -126,7 +126,33 @@ feature "Country version index" do
         with(:body => {
           "name" => @country.name,
           "slug" => @country.slug,
-          "related_items" => @beta.id
+          "related_items" => [@beta.id]
+        }.to_json).once
+    end
+
+    specify "removal of a related artefact" do
+      @artefact.related_artefact_ids = [@alpha.id, @beta.id]
+      @artefact.save
+
+      within "div.row-fluid" do
+        click_on "Edit related content"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+      within "form#related-items" do
+        within "#related_empty" do
+          page.select("Gamma", :from => "related_artefacts_")
+        end
+
+        click_on "Save"
+      end
+
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+        with(:body => {
+          "name" => @country.name,
+          "slug" => @country.slug,
+          "related_items" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
   end

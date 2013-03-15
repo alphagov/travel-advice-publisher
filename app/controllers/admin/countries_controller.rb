@@ -12,6 +12,7 @@ class Admin::CountriesController < ApplicationController
   def edit
     @country = Country.find_by_slug(params[:id]) || error_404
     @related_items = Artefact.all.asc(:name).to_a
+    @artefact = Artefact.find_by_slug(params[:id])
   end
 
   def update

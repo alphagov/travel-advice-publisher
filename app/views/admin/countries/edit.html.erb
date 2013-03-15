@@ -1,13 +1,15 @@
 <h2><%= @country.name %></h2>
 
 <%= form_tag({:action => :update}, { :method => :put, :id => "related-items"}) do %>
-  <div class="row-fluid">
-    <div class="span5">
-      <%= select_tag("related_artefacts",
-                     options_from_collection_for_select(@related_items, :id, :name),
-                     { prompt: "Select a related item", :class => "span9" }) %>
-    </div>
-  </div>
+  <% if @artefact.related_artefact_ids.length > 0 %>
+    <% @artefact.related_artefact_ids.each_with_index do |id, index| %>
+      <%= render :partial => "related_content", :locals => {
+            :id => id, :index => index, :related_items => @related_items} %>
+    <% end %>
+  <% end %>
+
+  <%= render :partial => "related_content", :locals => {
+        :id => nil, :index => "empty", :related_items => @related_items} %>
 
   <div class="row-fluid">
     <div class="btn-group">
