@@ -17,7 +17,7 @@ namespace :panopticon do
       need_id: 133,
       description: "",
       indexable_content: "",
-      state: RegisterableTravelAdviceEdition.globally_live? ? 'live' : 'draft'
+      state: 'live'
     )
     registerer.register(record)
   end

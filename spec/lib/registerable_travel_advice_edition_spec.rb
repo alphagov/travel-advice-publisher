@@ -48,27 +48,4 @@ describe RegisterableTravelAdviceEdition do
       @registerable.indexable_content.should == @edition.indexable_content
     end
   end
-
-  describe "globally_live?" do
-    it "should be true in test" do
-      RegisterableTravelAdviceEdition.globally_live?.should be_true
-    end
-
-    it "should be true if TRAVEL_ADVICE_LIVE is true" do
-      Rails.stub_chain(:env, :production?).and_return(true)
-      ::TRAVEL_ADVICE_LIVE = true
-      RegisterableTravelAdviceEdition.globally_live?.should be_true
-    end
-
-    it "should be false in production by default" do
-      Rails.stub_chain(:env, :production?).and_return(true)
-      RegisterableTravelAdviceEdition.globally_live?.should be_false
-    end
-
-    after :each do
-      if defined? TRAVEL_ADVICE_LIVE
-        Object.class_eval { remove_const :TRAVEL_ADVICE_LIVE }
-      end
-    end
-  end
 end
