@@ -10,7 +10,7 @@ class Admin::CountriesController < ApplicationController
   end
 
   def edit
-    @country = Country.find_by_slug(params[:id]) || error_404
+    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
     @artefact = Artefact.find_by_slug(params[:id])
 
     if @artefact.nil?
