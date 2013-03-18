@@ -6,7 +6,7 @@ class Admin::CountriesController < ApplicationController
   end
 
   def show
-    @country = Country.find_by_slug(params[:id]) || error_404
+    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
   end
 
   def edit
