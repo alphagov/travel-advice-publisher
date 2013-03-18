@@ -82,139 +82,142 @@ feature "Country version index" do
   end
 
   context "related links for countries" do
-    before do
-      Capybara.current_driver = Capybara.javascript_driver
+    context "when a draft is present" do
+      before do
+        Capybara.current_driver = Capybara.javascript_driver
 
-      @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => "australia",
-                                   :version_number => 1,
-                                   :title => "Australia extra special travel advice",
-                                   :summary => "## This is the summary",
-                                   :overview => "Search description about Australia")
-      @country = Country.find_by_slug(@edition.country_slug)
+        @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => "australia",
+                                     :version_number => 1,
+                                     :title => "Australia extra special travel advice",
+                                     :summary => "## This is the summary",
+                                     :overview => "Search description about Australia",
+                                     :state => "draft")
+        @country = Country.find_by_slug(@edition.country_slug)
 
-      @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+        @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
 
-      @alpha = FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
-      @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
-      @gamma = FactoryGirl.create(:artefact, :name => "Gamma", :slug => "gamma")
+        @alpha = FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
+        @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
+        @gamma = FactoryGirl.create(:artefact, :name => "Gamma", :slug => "gamma")
 
-      country_artefact = {:name => @country.name, :slug => @country.slug}
-      panopticon_has_metadata(country_artefact)
-      stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
-        to_return(:status => 200, :body => country_artefact.to_json)
+        country_artefact = {:name => @country.name, :slug => @country.slug}
+        panopticon_has_metadata(country_artefact)
+        stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+          to_return(:status => 200, :body => country_artefact.to_json)
 
-      visit "/admin/countries/#{@country.slug}"
-    end
-
-    specify "add related content when none present" do
-      within "div.row-fluid" do
-        click_on "Edit related content"
+        visit "/admin/countries/#{@country.slug}"
       end
 
-      i_should_be_on "/admin/countries/#{@country.slug}/edit"
-
-      within "form#related-items" do
-        find("select[id='related_artefacts_']").all("option")[1..-1].map { |option|
-          option.text
-        }.should == ["Alpha", "Australia", "Beta", "Gamma"]
-
-        page.select("Beta", :from => "related_artefacts_")
-        click_on "Save"
-      end
-
-      i_should_be_on "/admin/countries/#{@country.slug}"
-
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
-        with(:body => {
-          "name" => @country.name,
-          "slug" => @country.slug,
-          "related_items" => [@beta.id]
-        }.to_json).once
-    end
-
-    specify "add related artefacts when related artefacts present" do
-      @artefact.related_artefact_ids = [@alpha.id, @beta.id]
-      @artefact.save
-
-      within "div.row-fluid" do
-        click_on "Edit related content"
-      end
-
-      i_should_be_on "/admin/countries/#{@country.slug}/edit"
-
-      within "form#related-items" do
-        within "#related_empty" do
-          page.select("Gamma", :from => "related_artefacts_")
+      specify "add related content when none present" do
+        within "div.row-fluid" do
+          click_on "Edit related content"
         end
 
-        click_on "Save"
-      end
+        i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
-        with(:body => {
-          "name" => @country.name,
-          "slug" => @country.slug,
-          "related_items" => [@alpha.id, @beta.id, @gamma.id]
-        }.to_json).once
-    end
+        within "form#related-items" do
+          find("select[id='related_artefacts_']").all("option")[1..-1].map { |option|
+            option.text
+          }.should == ["Alpha", "Australia", "Beta", "Gamma"]
 
-    specify "add multiple new related artefacts" do
-      within "div.row-fluid" do
-        click_on "Edit related content"
-      end
-
-      i_should_be_on "/admin/countries/#{@country.slug}/edit"
-
-      page.all("select").count.should == 1
-
-      within "form#related-items" do
-        within "#related_empty" do
-          page.all("select").last.all("option").select { |x| x.text == @alpha.name }.first.select_option
+          page.select("Beta", :from => "related_artefacts_")
+          click_on "Save"
         end
 
-        click_on "Add another related item"
-        page.all("select").count.should == 2
-        page.all("select").last.all("option").select { |x| x.text == @beta.name }.first.select_option
+        i_should_be_on "/admin/countries/#{@country.slug}"
 
-        click_on "Add another related item"
-        page.all("select").count.should == 3
-        page.all("select").last.all("option").select { |x| x.text == @gamma.name }.first.select_option
-
-        click_on "Save"
+        WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+          with(:body => {
+            "name" => @country.name,
+            "slug" => @country.slug,
+            "related_items" => [@beta.id]
+          }.to_json).once
       end
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
-        with(:body => {
-          "name" => @country.name,
-          "slug" => @country.slug,
-          "related_items" => [@alpha.id, @beta.id, @gamma.id]
-        }.to_json).once
-    end
+      specify "add related artefacts when related artefacts present" do
+        @artefact.related_artefact_ids = [@alpha.id, @beta.id]
+        @artefact.save
 
-    specify "remove a related artefact" do
-      @artefact.related_artefacts = [@alpha, @beta, @gamma]
-      @artefact.save
-
-      within "div.row-fluid" do
-        click_on "Edit related content"
-      end
-
-      i_should_be_on "/admin/countries/#{@country.slug}/edit"
-
-      within "form#related-items" do
-        within "#related_0" do
-          click_on "Remove related item"
+        within "div.row-fluid" do
+          click_on "Edit related content"
         end
 
-        click_on "Save"
+        i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+        within "form#related-items" do
+          within "#related_empty" do
+            page.select("Gamma", :from => "related_artefacts_")
+          end
+
+          click_on "Save"
+        end
+
+        WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+          with(:body => {
+            "name" => @country.name,
+            "slug" => @country.slug,
+            "related_items" => [@alpha.id, @beta.id, @gamma.id]
+          }.to_json).once
       end
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
-        with(:body => {
-          "name" => @country.name,
-          "slug" => @country.slug,
-          "related_items" => [@beta.id, @gamma.id]
-        }.to_json).once
+      specify "add multiple new related artefacts" do
+        within "div.row-fluid" do
+          click_on "Edit related content"
+        end
+
+        i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+        page.all("select").count.should == 1
+
+        within "form#related-items" do
+          within "#related_empty" do
+            page.all("select").last.all("option").select { |x| x.text == @alpha.name }.first.select_option
+          end
+
+          click_on "Add another related item"
+          page.all("select").count.should == 2
+          page.all("select").last.all("option").select { |x| x.text == @beta.name }.first.select_option
+
+          click_on "Add another related item"
+          page.all("select").count.should == 3
+          page.all("select").last.all("option").select { |x| x.text == @gamma.name }.first.select_option
+
+          click_on "Save"
+        end
+
+        WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+          with(:body => {
+            "name" => @country.name,
+            "slug" => @country.slug,
+            "related_items" => [@alpha.id, @beta.id, @gamma.id]
+          }.to_json).once
+      end
+
+      specify "remove a related artefact" do
+        @artefact.related_artefacts = [@alpha, @beta, @gamma]
+        @artefact.save
+
+        within "div.row-fluid" do
+          click_on "Edit related content"
+        end
+
+        i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+        within "form#related-items" do
+          within "#related_0" do
+            click_on "Remove related item"
+          end
+
+          click_on "Save"
+        end
+
+        WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+          with(:body => {
+            "name" => @country.name,
+            "slug" => @country.slug,
+            "related_items" => [@beta.id, @gamma.id]
+          }.to_json).once
+      end
     end
   end
 end
