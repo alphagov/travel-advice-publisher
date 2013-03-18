@@ -97,8 +97,6 @@
   slug: comoros
 - name: Congo
   slug: congo
-- name: Congo (Democratic Republic)
-  slug: congo-democratic-republic
 - name: Costa Rica
   slug: costa-rica
 - name: "Côte d'Ivoire"
@@ -113,6 +111,8 @@
   slug: cyprus
 - name: Czech Republic
   slug: czech-republic
+- name: Democratic Republic of Congo
+  slug: democratic-republic-of-congo
 - name: Denmark
   slug: denmark
 - name: Djibouti
@@ -175,7 +175,7 @@
   slug: guyana
 - name: Haiti
   slug: haiti
-- name: Holy See (Vatican City)
+- name: Holy See
   slug: holy-see
 - name: Honduras
   slug: honduras
@@ -304,7 +304,7 @@
 - name: Norway
   slug: norway
 - name: The Occupied Palestinian Territories
-  slug: occupied-palestinian-territories
+  slug: the-occupied-palestinian-territories
 - name: Oman
   slug: oman
 - name: Pakistan
@@ -321,8 +321,8 @@
   slug: peru
 - name: Philippines
   slug: philippines
-- name: Pitcairn
-  slug: pitcairn
+- name: Pitcairn Island
+  slug: pitcairn-island
 - name: Poland
   slug: poland
 - name: Portugal
@@ -431,8 +431,8 @@
   slug: ukraine
 - name: United Arab Emirates
   slug: united-arab-emirates
-- name: United States
-  slug: united-states
+- name: USA
+  slug: usa
 - name: Uruguay
   slug: uruguay
 - name: Uzbekistan
