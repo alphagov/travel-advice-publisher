@@ -72,4 +72,12 @@ describe Admin::CountriesController do
       end
     end
   end
+
+  describe "POST update" do
+    it "returns a 404 if no country found" do
+      post :update, id: "middle-earth"
+
+      response.should be_not_found
+    end
+  end
 end

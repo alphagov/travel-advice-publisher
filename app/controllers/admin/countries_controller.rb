@@ -22,7 +22,7 @@ class Admin::CountriesController < ApplicationController
   end
 
   def update
-    @country = Country.find_by_slug(params[:id]) || error_404
+    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
     artefact = panopticon_api.artefact_for_slug(@country.slug).to_hash
     panopticon_api.put_artefact(@country.slug, artefact.merge(
       "related_items" => params[:related_artefacts].select { |x| !x.empty? }))
