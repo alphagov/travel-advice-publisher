@@ -11,8 +11,14 @@ class Admin::CountriesController < ApplicationController
 
   def edit
     @country = Country.find_by_slug(params[:id]) || error_404
-    @related_items = Artefact.all.asc(:name).to_a
     @artefact = Artefact.find_by_slug(params[:id])
+
+    if @artefact.nil?
+      flash[:alert] = "Can't edit related content if no draft items present."
+      redirect_to(:action => "show", :id => params[:id]) and return
+    end
+
+    @related_items = Artefact.all.asc(:name).to_a
   end
 
   def update

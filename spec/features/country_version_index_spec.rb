@@ -219,5 +219,26 @@ feature "Country version index" do
           }.to_json).once
       end
     end
+
+    context "when no drafts exist" do
+      specify "remove a related artefact" do
+        @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => "australia",
+                                     :version_number => 1,
+                                     :title => "Australia extra special travel advice",
+                                     :summary => "## This is the summary",
+                                     :overview => "Search description about Australia",
+                                     :state => "published")
+        @country = Country.find_by_slug(@edition.country_slug)
+
+        visit "/admin/countries/#{@country.slug}"
+
+        within "div.row-fluid" do
+          click_on "Edit related content"
+        end
+
+        page.status_code == 302
+        page.should have_content "Can't edit related content if no draft items present."
+      end
+    end
   end
 end
