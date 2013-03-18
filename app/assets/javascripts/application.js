@@ -112,6 +112,11 @@ $(function() {
 
     relatedItemChildren.last().before(newRelatedItem);
   });
+
+  $("#remove-related-item").on("click", function () {
+    var that = $(this);
+    that.parent().parent().remove();
+  });
 });
 
 var TravelAdviceUtils = {

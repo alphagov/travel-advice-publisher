@@ -190,5 +190,31 @@ feature "Country version index" do
           "related_items" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
+
+    specify "remove a related artefact" do
+      @artefact.related_artefacts = [@alpha, @beta, @gamma]
+      @artefact.save
+
+      within "div.row-fluid" do
+        click_on "Edit related content"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+      within "form#related-items" do
+        within "#related_0" do
+          click_on "Remove related item"
+        end
+
+        click_on "Save"
+      end
+
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+        with(:body => {
+          "name" => @country.name,
+          "slug" => @country.slug,
+          "related_items" => [@beta.id, @gamma.id]
+        }.to_json).once
+    end
   end
 end
