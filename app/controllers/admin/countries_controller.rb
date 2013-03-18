@@ -33,6 +33,6 @@ class Admin::CountriesController < ApplicationController
 
   def panopticon_api
     @panopticon_api ||= GdsApi::Panopticon.new(Plek.current.find("panopticon"),
-                                               PANOPTICON_API_CREDENTIALS)
+                                               CONTENT_API_CREDENTIALS)
   end
 end
