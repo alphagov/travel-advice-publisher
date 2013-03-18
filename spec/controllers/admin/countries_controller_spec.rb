@@ -46,4 +46,30 @@ describe Admin::CountriesController do
     end
   end
 
+  describe "GET edit" do
+    describe "when an Artefact is present" do
+      before do
+        @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+      end
+
+      it "renders the edit view" do
+        get :edit, id: "australia"
+
+        assigns(:country).name.should eq("Australia")
+        assigns(:country).slug.should eq("australia")
+        assigns(:artefact).name.should eq("Australia")
+
+        response.should be_success
+        response.should render_template :edit
+      end
+    end
+
+    describe "when an Artefact isn't present" do
+      it "redirects user to main list page" do
+        get :edit, id: "australia"
+
+        response.should be_redirect
+      end
+    end
+  end
 end
