@@ -19,6 +19,7 @@ RSpec.configuration.before :each, :type => :model do
 end
 
 RSpec.configuration.include GdsApiHelpers, :type => :controller
+RSpec.configuration.include GdsApi::TestHelpers::Panopticon, :type => :controller
 RSpec.configuration.before :each, :type => :controller do
   stub_panopticon_registration
 end
