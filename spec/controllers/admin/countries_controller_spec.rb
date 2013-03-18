@@ -39,7 +39,7 @@ describe Admin::CountriesController do
 
     describe "given an invalid country" do
       it "returns a 404" do
-        get :show, id: "middle-earth"
+        get :show, id: "the-shire"
 
         response.should be_not_found
       end
@@ -75,7 +75,7 @@ describe Admin::CountriesController do
 
   describe "POST update" do
     it "returns a 404 if no country found" do
-      post :update, id: "middle-earth"
+      post :update, id: "gondor"
 
       response.should be_not_found
     end
