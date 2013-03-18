@@ -83,6 +83,8 @@ feature "Country version index" do
 
   context "related links for countries" do
     before do
+      Capybara.current_driver = Capybara.javascript_driver
+
       @edition = FactoryGirl.build(:travel_advice_edition, :country_slug => "australia",
                                    :version_number => 1,
                                    :title => "Australia extra special travel advice",
@@ -104,7 +106,7 @@ feature "Country version index" do
       visit "/admin/countries/#{@country.slug}"
     end
 
-    specify "allows adding related content" do
+    specify "add related content when none present" do
       within "div.row-fluid" do
         click_on "Edit related content"
       end
@@ -130,7 +132,7 @@ feature "Country version index" do
         }.to_json).once
     end
 
-    specify "removal of a related artefact" do
+    specify "add related artefacts when related artefacts present" do
       @artefact.related_artefact_ids = [@alpha.id, @beta.id]
       @artefact.save
 
@@ -144,6 +146,39 @@ feature "Country version index" do
         within "#related_empty" do
           page.select("Gamma", :from => "related_artefacts_")
         end
+
+        click_on "Save"
+      end
+
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+        with(:body => {
+          "name" => @country.name,
+          "slug" => @country.slug,
+          "related_items" => [@alpha.id, @beta.id, @gamma.id]
+        }.to_json).once
+    end
+
+    specify "add multiple new related artefacts" do
+      within "div.row-fluid" do
+        click_on "Edit related content"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+      page.all("select").count.should == 1
+
+      within "form#related-items" do
+        within "#related_empty" do
+          page.all("select").last.all("option").select { |x| x.text == @alpha.name }.first.select_option
+        end
+
+        click_on "Add another related item"
+        page.all("select").count.should == 2
+        page.all("select").last.all("option").select { |x| x.text == @beta.name }.first.select_option
+
+        click_on "Add another related item"
+        page.all("select").count.should == 3
+        page.all("select").last.all("option").select { |x| x.text == @gamma.name }.first.select_option
 
         click_on "Save"
       end
