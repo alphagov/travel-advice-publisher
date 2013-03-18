@@ -75,9 +75,28 @@ describe Admin::CountriesController do
 
   describe "POST update" do
     it "returns a 404 if no country found" do
-      post :update, id: "gondor"
+      put :update, id: "gondor"
 
       response.should be_not_found
+    end
+
+    describe "when an artefact is present" do
+      before do
+        @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+        @alpha = FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
+        @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
+
+        country_artefact = {:name => @artefact.name, :slug => @artefact.slug}
+        panopticon_has_metadata(country_artefact)
+        stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
+          to_return(:status => 200, :body => country_artefact.to_json)
+      end
+
+      it "should update the related artefacts for a given" do
+        put :update, id: "australia", related_artefacts: [@alpha.id.to_s, @beta.id.to_s]
+
+        response.should be_redirect
+      end
     end
   end
 end
