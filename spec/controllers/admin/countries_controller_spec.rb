@@ -47,6 +47,11 @@ describe Admin::CountriesController do
   end
 
   describe "GET edit" do
+    before do
+      @global_artefact = FactoryGirl.create(:artefact, :name => "Foreign travel advice", :slug => "foreign-travel-advice")
+      @global_artefact.related_artefacts << FactoryGirl.create(:artefact, :name => "Sibyl", :slug => "sibyl")
+    end
+
     describe "when an Artefact is present" do
       before do
         @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")

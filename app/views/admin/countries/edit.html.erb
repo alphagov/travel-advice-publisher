@@ -1,6 +1,14 @@
-<h2><%= @country.name %></h2>
+<h2>Related Items for <%= @country.name %></h2>
 
 <%= form_tag({:action => :update}, { :method => :put, :id => "related-items"}) do %>
+  <h3>Global related items</h3>
+  <ul id="global-related-items">
+  <% @global_related_artefacts.each_with_index do |artefact, index| %>
+    <li id="global-related-<%= index %>"><%= artefact.name %></li>
+  <% end %>
+  </ul>
+
+  <h3>Country-specific related items</h3>
   <% if @artefact.related_artefact_ids.length > 0 %>
     <% @artefact.related_artefact_ids.each_with_index do |id, index| %>
       <%= render :partial => "related_content", :locals => {

@@ -11,6 +11,7 @@ class Admin::CountriesController < ApplicationController
 
   def edit
     @country = Country.find_by_slug(params[:id]) || (error_404 and return)
+    @global_related_artefacts = Artefact.find_by_slug("foreign-travel-advice").related_artefacts
     @artefact = Artefact.find_by_slug(params[:id])
 
     if @artefact.nil?

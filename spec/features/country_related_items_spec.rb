@@ -4,6 +4,9 @@ feature "related items for countries" do
   before do
     Capybara.current_driver = Capybara.javascript_driver
     login_as_stub_user
+
+    @global_artefact = FactoryGirl.create(:artefact, :name => "Foreign travel advice", :slug => "foreign-travel-advice")
+    @global_artefact.related_artefacts << FactoryGirl.create(:artefact, :name => "Sibyl", :slug => "sibyl")
   end
 
   context "when a draft is present" do
@@ -40,7 +43,7 @@ feature "related items for countries" do
       within "form#related-items" do
         find("select[id='related_artefacts_']").all("option")[1..-1].map { |option|
           option.text
-        }.should == ["Alpha", "Australia", "Beta", "Gamma"]
+        }.should include("Alpha", "Australia", "Beta", "Gamma")
 
         page.select("Beta", :from => "related_artefacts_")
         click_on "Save"
@@ -139,6 +142,20 @@ feature "related items for countries" do
           "slug" => @country.slug,
           "related_items" => [@beta.id, @gamma.id]
         }.to_json).once
+    end
+
+    specify "shows the global related artefacts when editing a specific country's related items" do
+      visit "/admin/countries/#{@country.slug}"
+
+      within "div.row-fluid" do
+        click_on "Edit related content"
+      end
+
+      i_should_be_on "/admin/countries/#{@country.slug}/edit"
+
+      within "#global-related-items" do
+        page.should have_content "Sibyl"
+      end
     end
   end
 
