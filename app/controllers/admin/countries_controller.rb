@@ -1,16 +1,16 @@
 require "gds_api/panopticon"
 
 class Admin::CountriesController < ApplicationController
+  before_filter :load_country, :only => [:show, :edit, :update]
+
   def index
     @countries = Country.all
   end
 
   def show
-    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
   end
 
   def edit
-    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
     @global_related_artefacts = Artefact.find_by_slug("foreign-travel-advice").related_artefacts
     @artefact = Artefact.find_by_slug(artefact_slug_for_country(params[:id]))
 
@@ -23,7 +23,6 @@ class Admin::CountriesController < ApplicationController
   end
 
   def update
-    @country = Country.find_by_slug(params[:id]) || (error_404 and return)
     country_slug = artefact_slug_for_country(@country.slug)
     artefact = panopticon_api.artefact_for_slug(country_slug).to_hash
     panopticon_api.put_artefact(country_slug, artefact.merge(
@@ -40,5 +39,9 @@ class Admin::CountriesController < ApplicationController
 
   def artefact_slug_for_country(country)
     "foreign-travel-advice/#{country}"
+  end
+
+  def load_country
+    @country = Country.find_by_slug(params[:id]) || error_404
   end
 end
