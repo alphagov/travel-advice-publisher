@@ -54,7 +54,8 @@ describe Admin::CountriesController do
 
     describe "when an Artefact is present" do
       before do
-        @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+        @artefact = FactoryGirl.create(:artefact, :name => "Australia",
+          :slug => "foreign-travel-advice/australia", :kind => "travel-advice")
       end
 
       it "renders the edit view" do
@@ -87,7 +88,8 @@ describe Admin::CountriesController do
 
     describe "when an artefact is present" do
       before do
-        @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+        @artefact = FactoryGirl.create(:artefact, :name => "Australia",
+          :slug => "foreign-travel-advice/australia", :kind => "travel-advice")
         @alpha = FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
         @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
 

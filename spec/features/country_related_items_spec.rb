@@ -19,15 +19,16 @@ feature "related items for countries" do
                                    :state => "draft")
       @country = Country.find_by_slug(@edition.country_slug)
 
-      @artefact = FactoryGirl.create(:artefact, :name => "Australia", :slug => "australia")
+      @artefact = FactoryGirl.create(:artefact, :name => "Australia",
+        :slug => "foreign-travel-advice/australia", :kind => "travel-advice")
 
       @alpha = FactoryGirl.create(:artefact, :name => "Alpha", :slug => "alpha")
       @beta = FactoryGirl.create(:artefact, :name => "Beta", :slug => "beta")
       @gamma = FactoryGirl.create(:artefact, :name => "Gamma", :slug => "gamma")
 
-      country_artefact = {:name => @country.name, :slug => @country.slug}
+      country_artefact = {:name => @country.name, :slug => @artefact.slug}
       panopticon_has_metadata(country_artefact)
-      stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+      stub_request(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
         to_return(:status => 200, :body => country_artefact.to_json)
 
       visit "/admin/countries/#{@country.slug}"
@@ -51,10 +52,10 @@ feature "related items for countries" do
 
       i_should_be_on "/admin/countries/#{@country.slug}"
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
         with(:body => {
           "name" => @country.name,
-          "slug" => @country.slug,
+          "slug" => @artefact.slug,
           "related_items" => [@beta.id]
         }.to_json).once
     end
@@ -77,10 +78,10 @@ feature "related items for countries" do
         click_on "Save"
       end
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
         with(:body => {
           "name" => @country.name,
-          "slug" => @country.slug,
+          "slug" => @artefact.slug,
           "related_items" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
@@ -110,10 +111,10 @@ feature "related items for countries" do
         click_on "Save"
       end
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
         with(:body => {
           "name" => @country.name,
-          "slug" => @country.slug,
+          "slug" => @artefact.slug,
           "related_items" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
@@ -136,10 +137,10 @@ feature "related items for countries" do
         click_on "Save"
       end
 
-      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@country.slug}.json").
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/#{@artefact.slug}.json").
         with(:body => {
           "name" => @country.name,
-          "slug" => @country.slug,
+          "slug" => @artefact.slug,
           "related_items" => [@beta.id, @gamma.id]
         }.to_json).once
     end

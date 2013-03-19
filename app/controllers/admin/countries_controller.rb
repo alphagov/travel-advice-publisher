@@ -12,7 +12,7 @@ class Admin::CountriesController < ApplicationController
   def edit
     @country = Country.find_by_slug(params[:id]) || (error_404 and return)
     @global_related_artefacts = Artefact.find_by_slug("foreign-travel-advice").related_artefacts
-    @artefact = Artefact.find_by_slug(params[:id])
+    @artefact = Artefact.find_by_slug(artefact_slug_for_country(params[:id]))
 
     if @artefact.nil?
       flash[:alert] = "Can't edit related content if no draft items present."
@@ -24,8 +24,9 @@ class Admin::CountriesController < ApplicationController
 
   def update
     @country = Country.find_by_slug(params[:id]) || (error_404 and return)
-    artefact = panopticon_api.artefact_for_slug(@country.slug).to_hash
-    panopticon_api.put_artefact(@country.slug, artefact.merge(
+    country_slug = artefact_slug_for_country(@country.slug)
+    artefact = panopticon_api.artefact_for_slug(country_slug).to_hash
+    panopticon_api.put_artefact(country_slug, artefact.merge(
       "related_items" => params[:related_artefacts].select { |x| !x.empty? }))
     redirect_to admin_country_path
   end
@@ -35,5 +36,9 @@ class Admin::CountriesController < ApplicationController
   def panopticon_api
     @panopticon_api ||= GdsApi::Panopticon.new(Plek.current.find("panopticon"),
                                                CONTENT_API_CREDENTIALS)
+  end
+
+  def artefact_slug_for_country(country)
+    "foreign-travel-advice/#{country}"
   end
 end
