@@ -56,7 +56,7 @@ feature "related items for countries" do
         with(:body => {
           "name" => @country.name,
           "slug" => @artefact.slug,
-          "related_items" => [@beta.id]
+          "related_artefact_ids" => [@beta.id]
         }.to_json).once
     end
 
@@ -82,7 +82,7 @@ feature "related items for countries" do
         with(:body => {
           "name" => @country.name,
           "slug" => @artefact.slug,
-          "related_items" => [@alpha.id, @beta.id, @gamma.id]
+          "related_artefact_ids" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
 
@@ -115,7 +115,7 @@ feature "related items for countries" do
         with(:body => {
           "name" => @country.name,
           "slug" => @artefact.slug,
-          "related_items" => [@alpha.id, @beta.id, @gamma.id]
+          "related_artefact_ids" => [@alpha.id, @beta.id, @gamma.id]
         }.to_json).once
     end
 
@@ -141,7 +141,7 @@ feature "related items for countries" do
         with(:body => {
           "name" => @country.name,
           "slug" => @artefact.slug,
-          "related_items" => [@beta.id, @gamma.id]
+          "related_artefact_ids" => [@beta.id, @gamma.id]
         }.to_json).once
     end
 
