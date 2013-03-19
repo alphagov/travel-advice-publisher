@@ -96,10 +96,10 @@ feature "Edit Edition page", :js => true do
       end
 
       within_section "the fieldset labelled Summary content" do
-        page.should have_unchecked_field("Avoid all travel to the whole country")
-        page.should have_unchecked_field("Avoid all travel to parts of the country")
-        page.should have_unchecked_field("Avoid all but essential travel to the whole country")
-        page.should have_unchecked_field("Avoid all but essential travel to parts of the country")
+        page.should have_unchecked_field("The FCO advise against all travel to the whole country")
+        page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
+        page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
+        page.should have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
 
         page.should have_field("Summary")
       end
@@ -365,30 +365,30 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'australia', :state => 'draft')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    page.should have_unchecked_field("Avoid all but essential travel to parts of the country")
-    page.should have_unchecked_field("Avoid all travel to parts of the country")
-    page.should have_unchecked_field("Avoid all but essential travel to the whole country")
-    page.should have_unchecked_field("Avoid all travel to the whole country")
+    page.should have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
+    page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
+    page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
+    page.should have_unchecked_field("The FCO advise against all travel to the whole country")
 
-    check "Avoid all but essential travel to parts of the country"
-    check "Avoid all travel to parts of the country"
-
-    click_on "Save"
-
-    page.should have_checked_field("Avoid all but essential travel to parts of the country")
-    page.should have_checked_field("Avoid all travel to parts of the country")
-    page.should have_unchecked_field("Avoid all but essential travel to the whole country")
-    page.should have_unchecked_field("Avoid all travel to the whole country")
-
-    uncheck "Avoid all but essential travel to parts of the country"
-    uncheck "Avoid all travel to parts of the country"
+    check "The FCO advise against all but essential travel to parts of the country"
+    check "The FCO advise against all travel to parts of the country"
 
     click_on "Save"
 
-    page.should have_unchecked_field("Avoid all but essential travel to parts of the country")
-    page.should have_unchecked_field("Avoid all travel to parts of the country")
-    page.should have_unchecked_field("Avoid all but essential travel to the whole country")
-    page.should have_unchecked_field("Avoid all travel to the whole country")
+    page.should have_checked_field("The FCO advise against all but essential travel to parts of the country")
+    page.should have_checked_field("The FCO advise against all travel to parts of the country")
+    page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
+    page.should have_unchecked_field("The FCO advise against all travel to the whole country")
+
+    uncheck "The FCO advise against all but essential travel to parts of the country"
+    uncheck "The FCO advise against all travel to parts of the country"
+
+    click_on "Save"
+
+    page.should have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
+    page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
+    page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
+    page.should have_unchecked_field("The FCO advise against all travel to the whole country")
   end
 
   scenario "managing images for an edition" do
