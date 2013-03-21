@@ -15,8 +15,8 @@ namespace :panopticon do
       slug: 'foreign-travel-advice',
       title: "Foreign travel advice",
       need_id: 133,
-      description: "",
-      indexable_content: "",
+      description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
+      indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       state: 'live'
     )
     registerer.register(record)
