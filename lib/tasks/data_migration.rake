@@ -42,7 +42,7 @@ Travel advice for #{country.name} has been published for the first time on the n
 There are no major changes to the advice.
           EOT
         end
-        ed.overview = "Travel advice for #{country.name}"
+        ed.overview = "Latest travel advice for #{country.name} including safety and security, entry requirements, travel warnings and health"
         ed.save!(:validate => false)
       end
     end
