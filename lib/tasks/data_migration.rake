@@ -17,5 +17,29 @@ namespace :data_migration do
       end
     end
   end
+
+  desc "Populate search and change descriptions"
+  task :update_descriptions => :environment do
+    Country.all.each do |country|
+      eds = country.editions.to_a
+      unless eds.any?
+        puts "No editions found for #{country.slug}"
+        next
+      end
+      eds.each do |ed|
+        if ed.minor_update? and ed.draft?
+          puts "Skipping updating change_description for minor draft for #{country.name} v#{ed.version_number}"
+        else
+          ed.change_description = <<-EOT
+Travel advice for #{country.name} has been published for the first time on the new government website, [GOV.UK](https://www.gov.uk/ "GOV.UK"). 
+
+There are no major changes to the advice.
+          EOT
+        end
+        ed.overview = "Latest travel advice for #{country.name} including safety and security, entry requirements, travel warnings and health"
+        ed.save!(:validate => false)
+      end
+    end
+  end
 end
 
