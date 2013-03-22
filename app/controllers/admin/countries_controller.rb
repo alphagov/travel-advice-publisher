@@ -19,7 +19,7 @@ class Admin::CountriesController < ApplicationController
       redirect_to(:action => "show", :id => params[:id]) and return
     end
 
-    @related_items = Artefact.all.asc(:name).to_a
+    @related_items = Artefact.relatable_items
   end
 
   def update
