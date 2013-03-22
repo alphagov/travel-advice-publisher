@@ -11,7 +11,7 @@ gem 'mongoid', '2.4.10'
 gem 'mongo', '1.6.2'
 gem 'bson_ext', '1.6.2'
 
-gem 'plek', '1.1.0'
+gem 'plek', '1.2.0'
 gem 'gds-sso', '3.0.0'
 
 gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'
@@ -22,13 +22,13 @@ gem 'reverse_markdown' # TODO: Used by FCOTravelAdviceScraper. Safe to remove th
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "4.9.1"
+  gem "govuk_content_models", "4.13.0"
 end
 
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', "5.0.1"
+  gem 'gds-api-adapters', '5.3.0'
 end
 
 gem 'therubyracer'
