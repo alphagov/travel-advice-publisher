@@ -24,9 +24,8 @@ class Admin::CountriesController < ApplicationController
 
   def update
     country_slug = artefact_slug_for_country(@country.slug)
-    artefact = panopticon_api.artefact_for_slug(country_slug).to_hash
-    panopticon_api.put_artefact(country_slug, artefact.merge(
-      "related_artefact_ids" => params[:related_artefacts].select { |x| x.present? }))
+    panopticon_api.put_artefact(country_slug,
+      "related_artefact_ids" => params[:related_artefacts].select { |x| x.present? })
     redirect_to admin_country_path
   end
 
