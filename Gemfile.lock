@@ -90,7 +90,7 @@ GEM
     faye-websocket (0.4.6)
       eventmachine (>= 0.12.0)
     ffi (1.2.0)
-    gds-api-adapters (5.0.1)
+    gds-api-adapters (5.3.0)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -105,7 +105,7 @@ GEM
       htmlentities (~> 4)
       kramdown (~> 0.13.3)
       sanitize (= 2.0.3)
-    govuk_content_models (4.9.1)
+    govuk_content_models (4.13.0)
       bson_ext
       differ
       gds-api-adapters
@@ -140,7 +140,7 @@ GEM
     libwebsocket (0.1.7.1)
       addressable
       websocket
-    link_header (0.0.5)
+    link_header (0.0.6)
     lrucache (0.1.4)
       PriorityQueue (~> 0.1.2)
     mail (2.5.3)
@@ -172,7 +172,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
-    plek (1.1.0)
+    plek (1.2.0)
       builder
     poltergeist (0.7.0)
       capybara (~> 1.1)
@@ -284,14 +284,14 @@ DEPENDENCIES
   factory_girl_rails
   formtastic!
   formtastic-bootstrap!
-  gds-api-adapters (= 5.0.1)
+  gds-api-adapters (= 5.3.0)
   gds-sso (= 3.0.0)
-  govuk_content_models (= 4.9.1)
+  govuk_content_models (= 4.13.0)
   jquery-rails (= 2.0.2)
   less-rails-bootstrap
   mongo (= 1.6.2)
   mongoid (= 2.4.10)
-  plek (= 1.1.0)
+  plek (= 1.2.0)
   poltergeist (= 0.7.0)
   rails (= 3.2.13)
   reverse_markdown

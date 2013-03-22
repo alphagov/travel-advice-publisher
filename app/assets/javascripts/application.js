@@ -101,6 +101,22 @@ $(function() {
     TravelAdviceUtils.setChangeDescriptionVisibility($(this));
   });
   TravelAdviceUtils.setChangeDescriptionVisibility($("#edition_minor_update"));
+
+  $("#add-related-item").on("click", function () {
+    var relatedItemChildren = $("#related-items").children(".row-fluid");
+    var newRelatedItem = relatedItemChildren.first().clone();
+
+    newRelatedItem.removeAttr("id");
+    newRelatedItem.find("select").removeAttr("selected");
+    newRelatedItem.find("select").val(0);
+
+    relatedItemChildren.last().before(newRelatedItem);
+  });
+
+  $("#remove-related-item").on("click", function () {
+    var that = $(this);
+    that.parent().parent().remove();
+  });
 });
 
 var TravelAdviceUtils = {
