@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 require 'gds_api/test_helpers/panopticon'
 
@@ -499,5 +501,16 @@ feature "Edit Edition page", :js => true do
       visit "/admin/editions/#{@edition.to_param}/edit"
       page.should_not have_button("Save & Publish")
     end
+  end
+
+  scenario "Fixing smart-quotes in govsepak fields" do
+    @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => "albania")
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    fill_in "Change description", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ “GOV.UK”)"
+    click_on "Save"
+
+    @edition.reload
+    @edition.change_description.should == 'Some things changed on [GOV.UK](https://www.gov.uk/ "GOV.UK")'
   end
 end
