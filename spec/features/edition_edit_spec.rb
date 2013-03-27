@@ -265,7 +265,6 @@ feature "Edit Edition page", :js => true do
     find(:css, "input#edition_parts_attributes_2_order").set "1"
 
     click_on "Save"
-    save_page
 
     page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Gromit")
     page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Cheese")
