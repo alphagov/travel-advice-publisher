@@ -246,6 +246,32 @@ feature "Edit Edition page", :js => true do
     page.should have_content("We had some problems saving: Parts is invalid.")
   end
 
+  scenario "updating the parts sort order" do
+    @edition = FactoryGirl.create(:travel_advice_edition, :country_slug => 'albania', :state => 'draft')
+
+    @edition.parts << Part.new(:title => "Wallace", :slug => "wallace", :order => 1)
+    @edition.parts << Part.new(:title => "Gromit", :slug => "gromit", :order => 2)
+    @edition.parts << Part.new(:title => "Cheese", :slug => "cheese", :order => 3)
+    @edition.save!
+
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Wallace")
+    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Gromit")
+    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Cheese")
+
+    find(:css, "input#edition_parts_attributes_0_order").set "2"
+    find(:css, "input#edition_parts_attributes_1_order").set "0"
+    find(:css, "input#edition_parts_attributes_2_order").set "1"
+
+    click_on "Save"
+    save_page
+
+    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Gromit")
+    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Cheese")
+    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Wallace")
+  end
+
   scenario "save and publish an edition" do
     @old_edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :title => 'Albania travel advice',
