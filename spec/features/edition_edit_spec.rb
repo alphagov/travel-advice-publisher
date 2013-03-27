@@ -507,10 +507,10 @@ feature "Edit Edition page", :js => true do
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    fill_in "Change description", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ “GOV.UK”)"
+    fill_in "Summary", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ “GOV.UK”)"
     click_on "Save"
 
     @edition.reload
-    @edition.change_description.should == 'Some things changed on [GOV.UK](https://www.gov.uk/ "GOV.UK")'
+    @edition.summary.should == 'Some things changed on [GOV.UK](https://www.gov.uk/ "GOV.UK")'
   end
 end
