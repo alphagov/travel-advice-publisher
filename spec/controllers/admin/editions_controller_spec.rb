@@ -73,6 +73,29 @@ describe Admin::EditionsController do
     end
   end
 
+  describe "destroy" do
+    before :each do
+      login_as_stub_user
+    end
+
+    describe "GET to destroy" do
+      it "should delete the latest draft edition" do
+        edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
+        TravelAdviceEdition.any_instance.should_receive(:destroy).and_return(true)
+        get :destroy, :id => edition.id
+        response.should redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
+      end
+
+      it "wont let a published edition be deleted" do
+        edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+        TravelAdviceEdition.any_instance.should_not_receive(:destroy)
+
+        get :destroy, :id => edition.id
+        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+edition");
+
+      end
+    end
+  end
   describe "edit, update" do
     before :each do
       login_as_stub_user
