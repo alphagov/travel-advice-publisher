@@ -31,7 +31,7 @@ class Admin::EditionsController < ApplicationController
         redirect_to admin_country_path(country_slug, :alert => "Failed to delete draft edition")
       end
     else
-      redirect_to edit_admin_edition_path(@edition, :alert => "Can't delete a published edition")
+      redirect_to edit_admin_edition_path(@edition, :alert => "Can't delete a published or archived edition")
     end
   end
 

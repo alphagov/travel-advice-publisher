@@ -91,7 +91,16 @@ describe Admin::EditionsController do
         TravelAdviceEdition.any_instance.should_not_receive(:destroy)
 
         get :destroy, :id => edition.id
-        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+edition");
+        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
+
+      end
+
+      it "wont let an archived edition be deleted" do
+        edition = FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'aruba')
+        TravelAdviceEdition.any_instance.should_not_receive(:destroy)
+
+        get :destroy, :id => edition.id
+        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
 
       end
     end
