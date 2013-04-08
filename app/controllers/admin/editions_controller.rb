@@ -24,7 +24,7 @@ class Admin::EditionsController < ApplicationController
 
   def destroy
     country_slug = @edition.country_slug
-    if @edition.state == "draft"
+    if @edition.draft?
       if @edition.destroy
         redirect_to admin_country_path(country_slug, :alert => "Edition deleted")
       else
