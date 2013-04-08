@@ -1,7 +1,7 @@
 class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update]
+  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy]
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
@@ -20,6 +20,19 @@ class Admin::EditionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def destroy
+    country_slug = @edition.country_slug
+    if @edition.draft?
+      if @edition.destroy
+        redirect_to admin_country_path(country_slug, :alert => "Edition deleted")
+      else
+        redirect_to admin_country_path(country_slug, :alert => "Failed to delete draft edition")
+      end
+    else
+      redirect_to edit_admin_edition_path(@edition, :alert => "Can't delete a published or archived edition")
+    end
   end
 
   def update
