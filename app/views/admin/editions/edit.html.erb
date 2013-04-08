@@ -107,6 +107,7 @@
         <div class="container-fluid">
           <div class="workflow_buttons">
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
+            <%= link_to "Delete", admin_edition_path(@edition), :method => :delete, :class => 'btn btn-danger', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
 
             <span class="pull-right">
