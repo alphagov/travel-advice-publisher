@@ -14,8 +14,8 @@
         <div class="tab-pane active" id="edit">
           <div class="span8">
             <%= f.inputs :name => "Metadata" do %>
-              <%= f.input :title, :label => "Search title", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
-              <%= f.input :overview, :label => "Search description",
+              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :overview, :label => "Search description (plain text)",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
 
               <% unless @edition.version_number == 1 %>
@@ -25,6 +25,7 @@
             <% end %>
 
             <%= f.inputs "Map image" do %>
+            <p>The image should be a minimum of 430px wide and in JPEG format.</p>
               <% if @edition.image %>
                 <div class="well uploaded-image">
                   <p><strong>Current map image</strong></p>
