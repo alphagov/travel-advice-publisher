@@ -124,14 +124,14 @@ feature "Edit Edition page", :js => true do
     click_on 'Add new part'
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Title', :with => 'Part One'
-      fill_in 'Body',  :with => 'Body text'
+      fill_in 'Body (govspeak available)',  :with => 'Body text'
       fill_in 'Slug',  :with => 'part-one'
     end
 
     click_on 'Add new part'
     within :css, '#parts div.part:nth-of-type(2)' do
       fill_in 'Title', :with => 'Part Two'
-      fill_in 'Body',  :with => 'Body text'
+      fill_in 'Body (govspeak available)',  :with => 'Body text'
       fill_in 'Slug',  :with => 'part-two'
     end
 
@@ -190,7 +190,7 @@ feature "Edit Edition page", :js => true do
     click_on 'Add new part'
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Title', :with => 'Part One'
-      fill_in 'Body',  :with => 'Body text'
+      fill_in 'Body (govspeak available)',  :with => 'Body text'
 
       find(:css, ".slug").value.should == 'part-one'
     end
@@ -237,7 +237,7 @@ feature "Edit Edition page", :js => true do
 
     click_on "Add new part"
     within :css, '#parts div.part:first-of-type' do
-      fill_in 'Body',  :with => 'Body text'
+      fill_in 'Body (govspeak available)',  :with => 'Body text'
       fill_in 'Slug',  :with => 'part-one'
     end
 
@@ -288,7 +288,7 @@ feature "Edit Edition page", :js => true do
       click_on "Add new part"
       within :css, "#parts div.part:first-of-type" do
         fill_in "Title", :with => "Part One"
-        fill_in "Body",  :with => "Body text"
+        fill_in "Body (govspeak available)",  :with => "Body text"
       end
 
       click_on "Save & Publish"
@@ -335,7 +335,7 @@ feature "Edit Edition page", :js => true do
     Timecop.freeze(now) do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
-      fill_in "Summary", :with => "## The summary"
+      fill_in "Summary (govspeak available)", :with => "## The summary"
       check "Minor update"
 
       click_on "Save & Publish"
