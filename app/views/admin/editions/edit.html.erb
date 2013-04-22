@@ -22,6 +22,7 @@
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
               <%= f.input :change_description, :as => :text, :required => true, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <%= f.input :csv_synonyms, :label => "Country Synonyms", :required => false, :input_html => { :class => "span9" } %>
             <% end %>
 
             <%= f.inputs "Map image" do %>
