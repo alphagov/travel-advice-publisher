@@ -14,14 +14,15 @@
         <div class="tab-pane active" id="edit">
           <div class="span8">
             <%= f.inputs :name => "Metadata" do %>
-              <%= f.input :title, :label => "Search title", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
-              <%= f.input :overview, :label => "Search description",
+              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :overview, :label => "Search description (plain text)",
                 :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
 
               <% unless @edition.version_number == 1 %>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
-              <%= f.input :change_description, :as => :text, :required => true, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => { 
+                :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs "Map image" do %>
@@ -54,14 +55,14 @@
               <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
             <% end %>
 
-            <%= f.inputs :name => "Summary content" do %>
+            <%= f.inputs :name => "Summary content (govspeak available)" do %>
               <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
               <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
             <hr>
 
-            <%= f.inputs :name => "Parts" do %>
+            <%= f.inputs :name => "Parts (govspeak available)" do %>
               <section class="accordion" id="parts">
                 <%= f.semantic_fields_for :parts, f.object.parts.in_order do |part| %>
                   <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
@@ -77,7 +78,7 @@
             <% end %>
           </div>
 
-          <div class="span4">
+          <div class="span4 govspeak-container">
             <h3>Govspeak help</h3>
 
             <div class="well">

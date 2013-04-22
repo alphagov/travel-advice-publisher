@@ -94,10 +94,10 @@ feature "Edit Edition page", :js => true do
 
         # The first version can't be a minor update...
         page.should_not have_field("Minor update")
-        page.should have_field("Change description")
+        page.should have_field("Change description (plain text)")
       end
 
-      within_section "the fieldset labelled Summary content" do
+      within_section "the fieldset labelled Summary content (govspeak available)" do
         page.should have_unchecked_field("The FCO advise against all travel to the whole country")
         page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
         page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
@@ -106,7 +106,7 @@ feature "Edit Edition page", :js => true do
         page.should have_field("Summary")
       end
 
-      within_section "the fieldset labelled Parts" do
+      within_section "the fieldset labelled Parts (govspeak available)" do
         # Should be no parts by default
         page.should_not have_selector('#parts .part')
 
