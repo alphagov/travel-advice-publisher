@@ -94,7 +94,7 @@ feature "Edit Edition page", :js => true do
 
         # The first version can't be a minor update...
         page.should_not have_field("Minor update")
-        page.should have_field("Change description")
+        page.should have_field("Change description (plain text)")
       end
 
       within_section "the fieldset labelled Summary content (govspeak available)" do
