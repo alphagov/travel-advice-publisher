@@ -1,7 +1,17 @@
 require "travel_advice_edition"
 require "gds_api/asset_manager"
+require "csv"
 
 class TravelAdviceEdition
+
+  def csv_synonyms
+    self.synonyms.map { |s| "\"#{s}\"" }.join(",")
+  end
+
+  def csv_synonyms=(value)
+    self.synonyms = CSV.parse(value).flatten
+  end
+
 
   private
     def self.attaches(*fields)

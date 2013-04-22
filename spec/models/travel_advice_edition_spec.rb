@@ -4,6 +4,27 @@ require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
 
+  describe "CSV Synonyms" do
+    before do
+      @edition = Country.find_by_slug('aruba').build_new_edition
+    end
+
+    it "should parse string input into an array for saving from view" do
+      @edition.csv_synonyms="bar,baz,boo"
+      expect(@edition.synonyms).to eq(%w{bar baz boo})
+    end
+
+    it "should parse array out into string for view" do
+      @edition.synonyms = %w{foo bar}
+      expect(@edition.csv_synonyms).to eq '"foo","bar"'
+    end
+
+    it "can deal with quoted input when parsing input" do
+      @edition.csv_synonyms='"some,place","bar"'
+      expect(@edition.synonyms).to eq ["some,place", "bar"]
+    end
+  end
+
   describe "creating draft artefact in panopticon" do
     it "should register a draft with panopticon on creating first draft" do
       c = Country.find_by_slug('aruba')
