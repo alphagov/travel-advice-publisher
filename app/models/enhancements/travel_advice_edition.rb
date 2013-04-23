@@ -1,7 +1,21 @@
 require "travel_advice_edition"
 require "gds_api/asset_manager"
+require "csv"
 
 class TravelAdviceEdition
+
+  def csv_synonyms
+    CSV.generate_line(self.synonyms).chomp
+  end
+
+  def csv_synonyms=(value)
+    # remove spaces between commas and value
+    # which prevents parse_line erroring
+    value.gsub!(/",\s+"/, '","')
+    synonyms = CSV.parse_line(value) || []
+    self.synonyms = synonyms.map(&:strip).reject(&:blank?)
+  end
+
 
   private
     def self.attaches(*fields)
