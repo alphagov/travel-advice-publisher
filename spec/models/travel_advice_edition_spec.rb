@@ -25,6 +25,21 @@ describe TravelAdviceEdition do
         @edition.csv_synonyms='"some place", "bar","foo"'
         expect(@edition.synonyms).to eq ["some place", "bar", "foo"]
       end
+
+      it "supports blank string as input" do
+        @edition.csv_synonyms = ""
+        expect(@edition.synonyms).to eq []
+      end
+
+      it "deals with extra whitespace" do
+        @edition.csv_synonyms = "         "
+        expect(@edition.synonyms).to eq []
+      end
+
+      it "strips leading and trailing whitespace" do
+        @edition.csv_synonyms = "       foo    ,   bar    "
+        expect(@edition.synonyms).to eq ["foo","bar"]
+      end
     end
 
     describe "writing synonyms out to frontend" do
