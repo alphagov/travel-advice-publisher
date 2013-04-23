@@ -9,19 +9,29 @@ describe TravelAdviceEdition do
       @edition = Country.find_by_slug('aruba').build_new_edition
     end
 
-    it "should parse string input into an array for saving from view" do
-      @edition.csv_synonyms="bar,baz,boo"
-      expect(@edition.synonyms).to eq(%w{bar baz boo})
+    describe "reading user input for synonyms" do
+      it "should parse string input into an array for saving from view" do
+        @edition.csv_synonyms="bar,baz,boo"
+        expect(@edition.synonyms).to eq(%w{bar baz boo})
+      end
+
+      it "can deal with quoted input when parsing input" do
+        @edition.csv_synonyms='"some,place",bar'
+        expect(@edition.csv_synonyms).to eq '"some,place",bar'
+        expect(@edition.synonyms).to eq ["some,place", "bar"]
+      end
+
+      it "supports spaces in the input" do
+        @edition.csv_synonyms='"some place", "bar","foo"'
+        expect(@edition.synonyms).to eq ["some place", "bar", "foo"]
+      end
     end
 
-    it "should parse array out into string for view" do
-      @edition.synonyms = %w{foo bar}
-      expect(@edition.csv_synonyms).to eq '"foo","bar"'
-    end
-
-    it "can deal with quoted input when parsing input" do
-      @edition.csv_synonyms='"some,place","bar"'
-      expect(@edition.synonyms).to eq ["some,place", "bar"]
+    describe "writing synonyms out to frontend" do
+      it "should parse array out into string for view" do
+        @edition.synonyms = %w{foo bar}
+        expect(@edition.csv_synonyms).to eq 'foo,bar'
+      end
     end
   end
 
