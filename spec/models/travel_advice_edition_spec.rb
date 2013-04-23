@@ -32,6 +32,11 @@ describe TravelAdviceEdition do
         @edition.synonyms = %w{foo bar}
         expect(@edition.csv_synonyms).to eq 'foo,bar'
       end
+
+      it "should deal with commas in the synonyms" do
+        @edition.synonyms = ["some, thing", "foo"]
+        expect(@edition.csv_synonyms).to eq '"some, thing",foo'
+      end
     end
   end
 

@@ -95,6 +95,8 @@ feature "Edit Edition page", :js => true do
         # The first version can't be a minor update...
         page.should_not have_field("Minor update")
         page.should have_field("Change description")
+
+        page.should have_field("Synonyms")
       end
 
       within_section "the fieldset labelled Summary content" do
@@ -121,6 +123,8 @@ feature "Edit Edition page", :js => true do
 
     fill_in 'Summary', :with => "Summary of the situation in Albania"
 
+    fill_in 'Synonyms', :with => "Foo,Bar"
+
     click_on 'Add new part'
     within :css, '#parts div.part:first-of-type' do
       fill_in 'Title', :with => 'Part One'
@@ -146,6 +150,7 @@ feature "Edit Edition page", :js => true do
     @edition.overview.should == "Read this if you're planning on visiting Albania"
     @edition.summary.should == "Summary of the situation in Albania"
     @edition.change_description.should == "Made changes to all the stuff"
+    @edition.synonyms.should == ["Foo", "Bar"]
 
     @edition.parts.size.should == 2
     one = @edition.parts.first

@@ -9,8 +9,15 @@ class TravelAdviceEdition
   end
 
   def csv_synonyms=(value)
-    value.gsub!(/",\s+"/, '","')
-    self.synonyms = CSV.parse_line(value)
+    if value == ""
+      self.synonyms = []
+    else
+      # remove spaces between commas and value
+      # which prevents parse_line erroring
+      value.gsub!(/",\s+"/, '","')
+      self.synonyms = CSV.parse_line(value)
+    end
+
   end
 
 
