@@ -23,6 +23,7 @@
               <% end %>
               <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => { 
                 :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs "Map image" do %>

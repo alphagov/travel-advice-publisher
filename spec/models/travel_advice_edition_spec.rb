@@ -4,6 +4,57 @@ require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
 
+  describe "CSV Synonyms" do
+    before do
+      @edition = Country.find_by_slug('aruba').build_new_edition
+    end
+
+    describe "reading user input for synonyms" do
+      it "should parse string input into an array for saving from view" do
+        @edition.csv_synonyms="bar,baz,boo"
+        expect(@edition.synonyms).to eq(%w{bar baz boo})
+      end
+
+      it "can deal with quoted input when parsing input" do
+        @edition.csv_synonyms='"some,place",bar'
+        expect(@edition.csv_synonyms).to eq '"some,place",bar'
+        expect(@edition.synonyms).to eq ["some,place", "bar"]
+      end
+
+      it "supports spaces in the input" do
+        @edition.csv_synonyms='"some place", "bar","foo"'
+        expect(@edition.synonyms).to eq ["some place", "bar", "foo"]
+      end
+
+      it "supports blank string as input" do
+        @edition.csv_synonyms = ""
+        expect(@edition.synonyms).to eq []
+      end
+
+      it "deals with extra whitespace" do
+        @edition.csv_synonyms = "         "
+        expect(@edition.synonyms).to eq []
+      end
+
+      it "strips leading and trailing whitespace" do
+        @edition.csv_synonyms = "       foo    ,   bar    "
+        expect(@edition.synonyms).to eq ["foo","bar"]
+      end
+    end
+
+    describe "writing synonyms out to frontend" do
+      it "should parse array out into string for view" do
+        @edition.synonyms = %w{foo bar}
+        expect(@edition.csv_synonyms).to eq 'foo,bar'
+      end
+
+      it "should deal with commas in the synonyms" do
+        @edition.synonyms = ["some, thing", "foo"]
+        expect(@edition.csv_synonyms).to eq '"some, thing",foo'
+      end
+    end
+  end
+
   describe "creating draft artefact in panopticon" do
     it "should register a draft with panopticon on creating first draft" do
       c = Country.find_by_slug('aruba')
