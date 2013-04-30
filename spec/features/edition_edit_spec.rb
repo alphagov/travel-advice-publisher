@@ -88,18 +88,19 @@ feature "Edit Edition page", :js => true do
     within('h1') { page.should have_content "Editing Albania Version 1" }
 
     within '#edit' do
-      within_section "the fieldset labelled Metadata" do
-        page.should have_field("Search title", :with => @edition.title)
-        page.should have_field("Search description")
-
+      within_section "the fieldset labelled Type of update" do
         # The first version can't be a minor update...
         page.should_not have_field("Minor update")
         page.should have_field("Change description (plain text)")
+      end
 
+      within_section "the fieldset labelled Metadata" do
+        page.should have_field("Search title", :with => @edition.title)
+        page.should have_field("Search description")
         page.should have_field("Synonyms")
       end
 
-      within_section "the fieldset labelled Summary content (govspeak available)" do
+      within_section "the fieldset labelled Summary content" do
         page.should have_unchecked_field("The FCO advise against all travel to the whole country")
         page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
         page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
@@ -173,7 +174,7 @@ feature "Edit Edition page", :js => true do
     within('h1') { page.should have_content "Editing Albania Version 2" }
 
     within '#edit' do
-      within_section "the fieldset labelled Metadata" do
+      within_section "the fieldset labelled Type of update" do
         page.should have_checked_field("Minor update")
         page.find_field("Change description").should_not be_visible
 

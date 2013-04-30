@@ -37,7 +37,7 @@ feature "related items for countries" do
 
     specify "add related content when none present" do
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
@@ -61,7 +61,7 @@ feature "related items for countries" do
       @artefact.save
 
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
@@ -79,7 +79,7 @@ feature "related items for countries" do
 
     specify "add multiple new related artefacts" do
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
@@ -110,7 +110,7 @@ feature "related items for countries" do
       @artefact.save
 
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
@@ -130,7 +130,7 @@ feature "related items for countries" do
       visit "/admin/countries/#{@country.slug}"
 
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
@@ -154,7 +154,7 @@ feature "related items for countries" do
       visit "/admin/countries/#{@country.slug}"
 
       within "div.row-fluid" do
-        click_on "Edit related content"
+        click_on "Edit relevant links"
       end
 
       page.status_code == 302

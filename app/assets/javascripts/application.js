@@ -125,9 +125,9 @@ var TravelAdviceUtils = {
   },
   setChangeDescriptionVisibility: function($elem) {
     if ($elem.attr('checked')) {
-      $("#edition_change_description_input").hide();
+      $("#major_update_input").hide();
     } else {
-      $("#edition_change_description_input").show();
+      $("#major_update_input").show();
     }
   }
 }
