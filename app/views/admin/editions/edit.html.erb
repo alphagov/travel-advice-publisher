@@ -13,17 +13,19 @@
       <div class="tab-content span12">
         <div class="tab-pane active" id="edit">
           <div class="span8">
-            <%= f.inputs :name => "Update Type" do %>
-              <h5>Minor Update</h5>
-              <p>Tick the box if the change you're making is minor (eg fixing a typo or a small change to wording).</p>
+            <%= f.inputs :name => "Type of update" do %>
+              <h5>Minor update</h5>
+              <p>Tick the box if the only change you're making is minor (eg fixing a typo or a small change to wording).</p>
               <% unless @edition.version_number == 1 %>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
-              <h5>Major Update</h5>
-              <p>Describe the change you're making in the box below if it's major (eg an update to a political situation). An email will be sent to subscribers with your description of the change.</p>
-              <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
-                :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
-              <% end %>
+              <div id="major_update_input">
+                <h5>Major update</h5>
+                <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
+                <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
+                  :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              </div>
+            <% end %>
 
             <%= f.inputs :name => "Metadata" do %>
               <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
