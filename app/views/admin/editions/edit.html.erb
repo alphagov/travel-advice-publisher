@@ -13,20 +13,29 @@
       <div class="tab-content span12">
         <div class="tab-pane active" id="edit">
           <div class="span8">
-            <%= f.inputs :name => "Metadata" do %>
-              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
-              <%= f.input :overview, :label => "Search description (plain text)",
-                :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
-
+            <%= f.inputs :name => "Update Type" do %>
+              <h5>Minor Update</h5>
+              <p>If the change is just a minor change, tick the above box. This will mark the change as minor and not send an update email to Travel Advice subscribers.</p>
               <% unless @edition.version_number == 1 %>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
-              <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => { 
+              <h5>Major Update</h5>
+              <p>If the change is important, you should fill out the Change Description box above with a description of the changes. This will mark the change as major and send this in an email to all subscribers informing them of the update.</p>
+              <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
                 :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              <% end %>
+
+            <%= f.inputs :name => "Metadata" do %>
+              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+            <%= f.input :overview, :label => "Search description (plain text)",
+              :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+
               <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
 
-            <%= f.inputs "Map image" do %>
+            <%= f.inputs :name => "Summary content" do %>
+              <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
+              <label>Map Image</label>
               <% if @edition.image %>
                 <div class="well uploaded-image">
                   <p><strong>Current map image</strong></p>
@@ -34,13 +43,12 @@
                   <p><%= label_tag do %>Remove image? <%= check_box_tag "edition[remove_image]", "1" %><% end %></p>
                 </div>
 
-                <h4>Replace map image</h4>
+                <p><strong>Replace map image</strong></p>
               <% end %>
-
               <%= f.input :image, :as => :file, :label => "Upload a new map image" %>
-            <% end %>
 
-            <%= f.inputs "Map PDF" do %>
+
+              <label>PDF Document</label>
               <% if @edition.document %>
                 <div class="well uploaded-document">
                   <p><strong>Current PDF</strong></p>
@@ -50,17 +58,13 @@
                   <% end %></p>
                 </div>
 
-                <h4>Replace PDF</h4>
+                <p><strong>Replace PDF</strong></p>
               <% end %>
 
               <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
-            <% end %>
+              <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
 
-            <%= f.inputs :name => "Summary content (govspeak available)" do %>
-              <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
-              <%= f.input :summary, :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
             <% end %>
-
             <hr>
 
             <%= f.inputs :name => "Parts (govspeak available)" do %>
