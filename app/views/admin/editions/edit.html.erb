@@ -15,12 +15,12 @@
           <div class="span8">
             <%= f.inputs :name => "Update Type" do %>
               <h5>Minor Update</h5>
-              <p>If the change is just a minor change, tick the above box. This will mark the change as minor and not send an update email to Travel Advice subscribers.</p>
+              <p>Tick the box if the change you're making is minor (eg fixing a typo or a small change to wording).</p>
               <% unless @edition.version_number == 1 %>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
               <h5>Major Update</h5>
-              <p>If the change is important, you should fill out the Change Description box above with a description of the changes. This will mark the change as major and send this in an email to all subscribers informing them of the update.</p>
+              <p>Describe the change you're making in the box below if it's major (eg an update to a political situation). An email will be sent to subscribers with your description of the change.</p>
               <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
                 :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
               <% end %>
