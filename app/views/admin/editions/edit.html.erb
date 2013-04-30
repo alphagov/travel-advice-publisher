@@ -14,14 +14,16 @@
         <div class="tab-pane active" id="edit">
           <div class="span8">
             <%= f.inputs :name => "Type of update" do %>
-              <h5>Minor update</h5>
-              <p>Tick the box if the only change you're making is minor (eg fixing a typo or a small change to wording).</p>
               <% unless @edition.version_number == 1 %>
+                <h5>Minor update</h5>
+              <p>Tick the box if the only change you're making is minor (eg fixing a typo or a small change to wording).</p>
                 <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
               <% end %>
               <div id="major_update_input">
                 <h5>Major update</h5>
-                <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
+                <% unless @edition.version_number == 1 %>
+                  <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
+                <% end %>
                 <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
                   :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
               </div>
