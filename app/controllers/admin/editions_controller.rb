@@ -89,7 +89,7 @@ class Admin::EditionsController < ApplicationController
   def set_review_date
     @edition.reviewed_at = Time.zone.now.utc
     if @edition.save!
-      redirect_to edit_admin_edition_path(@edition), :alert => "Updated review date"
+      redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
     end
