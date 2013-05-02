@@ -168,9 +168,14 @@ feature "Edit Edition page", :js => true do
 
   scenario "Updating the reviewed at date for a published edition" do
     @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
-    visit "/admin/editions/#{@edition._id}/edit"
-    click_on "Update review date"
+    day = 1.day.ago
+    Timecop.freeze(day) do
+      visit "/admin/editions/#{@edition._id}/edit"
+      click_on "Update review date"
+    end
     @edition.reload
+    @edition.reviewed_at.to_i.should == day.to_i
+
     page.should have_content "Updated review date"
   end
 
