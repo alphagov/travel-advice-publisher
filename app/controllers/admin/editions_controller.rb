@@ -1,7 +1,7 @@
 class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy, :reviewed_at]
+  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy]
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
