@@ -15,6 +15,7 @@
       <th>Version</th>
       <th>State</th>
       <th>Updated</th>
+      <th>Reviewed At</th>
       <th></th>
     </tr>
   </thead>
@@ -24,6 +25,13 @@
         <td>Version <%= edition.version_number %></td>
         <td><%= edition.state %></td>
         <td><%= timestamp(edition.updated_at) %></td>
+        <td>
+          <%- if edition.reviewed_at == nil -%>
+            N/A
+          <%- else %>
+            <%= timestamp(edition.reviewed_at) %>
+          <%- end %>
+        </td>
         <td><%= edition_edit_link(edition) %> - <%= link_to "preview", preview_edition_path(edition), :target => "blank" %></td>
       </tr>
     <% end %>

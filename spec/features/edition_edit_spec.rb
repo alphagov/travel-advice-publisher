@@ -166,6 +166,14 @@ feature "Edit Edition page", :js => true do
     two.order.should == 2
   end
 
+  scenario "Updating the reviewed at date for a published edition" do
+    @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
+    visit "/admin/editions/#{@edition._id}/edit"
+    click_on "Update review date"
+    @edition.reload
+    page.should have_content "Updated review date"
+  end
+
   scenario "Seeing the minor update toggle on the edit form for non-first versions" do
     FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania', :minor_update => true)

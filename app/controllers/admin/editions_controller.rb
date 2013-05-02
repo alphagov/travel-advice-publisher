@@ -1,7 +1,7 @@
 class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy]
+  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy, :reviewed_at]
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
@@ -35,7 +35,13 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+
   def update
+    if params[:commit] == "Update review date"
+      set_review_date
+      return
+    end
+
     if params[:edition][:note] && params[:edition][:note][:comment] && !params[:edition][:note][:comment].empty?
       @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
     end
@@ -77,6 +83,15 @@ class Admin::EditionsController < ApplicationController
   def strip_empty_alert_statuses
     if params[:edition] and params[:edition][:alert_status]
       params[:edition][:alert_status].reject!(&:blank?)
+    end
+  end
+
+  def set_review_date
+    @edition.reviewed_at = Time.zone.now.utc
+    if @edition.save!
+      redirect_to edit_admin_edition_path(@edition), :alert => "Updated review date"
+    else
+      redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
     end
   end
 end
