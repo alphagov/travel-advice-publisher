@@ -123,7 +123,7 @@
             <span class="pull-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
               <% if @edition.published? %>
-                <%= f.submit "Update review date", :class => "btn" %>
+                <%= f.submit "Update review date", :class => "btn btn-success" %>
               <% end %>
               <% if @edition.draft? %>
                 <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
