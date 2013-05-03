@@ -35,7 +35,6 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
-
   def update
     if params[:commit] == "Update review date"
       set_review_date
