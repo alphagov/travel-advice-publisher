@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def timestamp(time)
-    %{<time datetime="#{ time.strftime("%Y-%m-%dT%H:%M:%SZ") }">#{ time.strftime("%d/%m/%Y %H:%M") }</time>}.html_safe
+    %{<time datetime="#{ time.strftime("%Y-%m-%dT%H:%M:%SZ") }">#{ time.strftime("%d/%m/%Y %H:%M %Z") }</time>}.html_safe
   end
 
   def alert_statuses_with_labels(keys)
