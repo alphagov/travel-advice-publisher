@@ -10,6 +10,8 @@ gem 'unicorn'
 gem 'mongoid', '2.4.10'
 gem 'mongo', '1.6.2'
 gem 'bson_ext', '1.6.2'
+gem 'mongoid_rails_migrations', '1.0.1'
+
 
 gem 'plek', '1.2.0'
 gem 'gds-sso', '3.0.0'
