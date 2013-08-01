@@ -24,7 +24,7 @@ gem 'reverse_markdown' # TODO: Used by FCOTravelAdviceScraper. Safe to remove th
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "4.19.0"
+  gem "govuk_content_models", "5.10.2"
 end
 
 if ENV['API_DEV']
