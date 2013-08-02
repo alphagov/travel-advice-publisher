@@ -345,6 +345,10 @@ feature "Edit Edition page", :js => true do
                                         :summary => "## The summaryy",
                                         :change_description => "Some things changed", :minor_update => false)
     end
+    Timecop.travel(2.days.ago) do
+      @old_edition.reviewed_at = Time.zone.now.utc
+      @old_edition.save!
+    end
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
 
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
@@ -365,6 +369,7 @@ feature "Edit Edition page", :js => true do
     @edition.change_description.should == "Some things changed"
 
     @edition.published_at.should == @old_edition.published_at
+    @edition.reviewed_at.should == @old_edition.reviewed_at
     action = @edition.actions.last
     action.request_type.should == Action::PUBLISH
     action.comment.should == "Minor update"
