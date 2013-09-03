@@ -23,7 +23,7 @@ describe RegisterableTravelAdviceEdition do
     end
   end
 
-  describe "passed-through fields" do
+  describe "simple fields" do
     before :each do
       @edition = FactoryGirl.build(:travel_advice_edition)
       @registerable = RegisterableTravelAdviceEdition.new(@edition)
@@ -46,6 +46,10 @@ describe RegisterableTravelAdviceEdition do
     it "should return the edition's indexable_content" do
       @edition.parts << Part.new(:title => "Foo", :body => "Bar")
       @registerable.indexable_content.should == @edition.indexable_content
+    end
+
+    it "should return 133 for the need_id" do
+      @registerable.need_id.should == 133
     end
   end
 end
