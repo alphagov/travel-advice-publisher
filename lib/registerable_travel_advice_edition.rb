@@ -22,4 +22,8 @@ class RegisterableTravelAdviceEdition
   def slug
     "foreign-travel-advice/#{@edition.country_slug}"
   end
+
+  def need_id
+    133
+  end
 end
