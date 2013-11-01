@@ -51,5 +51,13 @@ describe RegisterableTravelAdviceEdition do
     it "should return 133 for the need_id" do
       @registerable.need_id.should == 133
     end
+
+    it "should return /<slug>.atom for the paths" do
+      @registerable.paths.should == ["/foreign-travel-advice/#{@edition.country_slug}.atom"]
+    end
+
+    it "should return /<slug> for the prefix routes" do
+      @registerable.prefixes.should == ["/foreign-travel-advice/#{@edition.country_slug}"]
+    end
   end
 end

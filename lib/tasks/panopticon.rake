@@ -11,10 +11,13 @@ namespace :panopticon do
 
     registerer = GdsApi::Panopticon::Registerer.new(:owning_app => "travel-advice-publisher", :rendering_app => "frontend", :kind => 'custom-application')
 
+    slug = "foreign-travel-advice"
     record = OpenStruct.new(
-      slug: 'foreign-travel-advice',
+      slug: slug,
       title: "Foreign travel advice",
       need_id: 133,
+      paths: ["/#{slug}", "/#{slug}.json", "/#{slug}.atom"],
+      prefixes: [],
       description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       state: 'live'
