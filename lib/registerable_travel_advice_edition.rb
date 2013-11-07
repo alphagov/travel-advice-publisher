@@ -26,4 +26,12 @@ class RegisterableTravelAdviceEdition
   def need_id
     133
   end
+
+  def paths
+    ["/#{slug}.atom"]
+  end
+
+  def prefixes
+    ["/#{slug}"]
+  end
 end
