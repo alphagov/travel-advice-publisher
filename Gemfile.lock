@@ -280,7 +280,6 @@ PLATFORMS
 
 DEPENDENCIES
   aws-ses
-  bson_ext (~> 1.7.1)
   capybara (= 1.1)
   ci_reporter
   database_cleaner (= 0.9.1)
@@ -295,8 +294,7 @@ DEPENDENCIES
   jquery-rails (= 2.0.2)
   less-rails-bootstrap
   logstasher (= 0.4.1)
-  mongo (~> 1.7)
-  mongoid (~> 2.5)
+  mongoid (= 2.6)
   mongoid_rails_migrations (= 1.0.1)
   plek (= 1.2.0)
   poltergeist (= 0.7.0)
