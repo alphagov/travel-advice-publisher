@@ -8,6 +8,7 @@ gem 'aws-ses', :require => 'aws/ses'
 gem 'unicorn'
 
 gem 'mongoid', '2.6'
+gem 'bson_ext', '1.7.1'
 gem 'mongoid_rails_migrations', '1.0.1'
 
 

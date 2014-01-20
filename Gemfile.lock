@@ -280,6 +280,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-ses
+  bson_ext (= 1.7.1)
   capybara (= 1.1)
   ci_reporter
   database_cleaner (= 0.9.1)
