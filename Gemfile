@@ -31,7 +31,7 @@ else
   gem 'gds-api-adapters', '5.3.0'
 end
 
-gem 'therubyracer'
+gem 'therubyracer', '0.12.0'
 gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
 gem 'less-rails-bootstrap'
 
