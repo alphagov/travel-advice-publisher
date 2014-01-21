@@ -7,9 +7,8 @@ gem 'exception_notification', '2.6.1'
 gem 'aws-ses', :require => 'aws/ses'
 gem 'unicorn'
 
-gem 'mongoid', '2.4.10'
-gem 'mongo', '1.6.2'
-gem 'bson_ext', '1.6.2'
+gem 'mongoid', '2.6'
+gem 'bson_ext', '1.7.1'
 gem 'mongoid_rails_migrations', '1.0.1'
 
 
@@ -22,7 +21,7 @@ gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstr
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "5.10.2"
+  gem "govuk_content_models", "6.0.6"
 end
 
 if ENV['API_DEV']
