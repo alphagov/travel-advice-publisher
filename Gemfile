@@ -13,7 +13,7 @@ gem 'mongoid_rails_migrations', '1.0.1'
 
 
 gem 'plek', '1.2.0'
-gem 'gds-sso', '3.0.0'
+gem 'gds-sso', '9.2.0'
 
 gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'
 gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstrap.git', branch: 'bootstrap-2'
@@ -21,7 +21,7 @@ gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstr
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "6.0.6"
+  gem "govuk_content_models", "6.1.0"
 end
 
 if ENV['API_DEV']
