@@ -142,7 +142,7 @@ GEM
       websocket
     link_header (0.0.6)
     logstash-event (1.1.5)
-    logstasher (0.4.1)
+    logstasher (0.4.8)
       logstash-event (~> 1.1.0)
     lrucache (0.1.4)
       PriorityQueue (~> 0.1.2)
@@ -296,7 +296,7 @@ DEPENDENCIES
   govuk_content_models (= 6.1.0)
   jquery-rails (= 2.0.2)
   less-rails-bootstrap
-  logstasher (= 0.4.1)
+  logstasher (= 0.4.8)
   mongoid (= 2.6)
   mongoid_rails_migrations (= 1.0.1)
   plek (= 1.2.0)
