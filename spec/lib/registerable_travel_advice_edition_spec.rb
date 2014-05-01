@@ -48,8 +48,8 @@ describe RegisterableTravelAdviceEdition do
       @registerable.indexable_content.should == @edition.indexable_content
     end
 
-    it "should return 133 for the need_id" do
-      @registerable.need_id.should == 133
+    it "should return ['101191'] for the need_ids" do
+      @registerable.need_ids.should == ['101191']
     end
 
     it "should return /<slug>.atom for the paths" do
