@@ -23,8 +23,8 @@ class RegisterableTravelAdviceEdition
     "foreign-travel-advice/#{@edition.country_slug}"
   end
 
-  def need_id
-    133
+  def need_ids
+    ['101191']
   end
 
   def paths
