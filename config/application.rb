@@ -18,6 +18,9 @@ end
 module TravelAdvicePublisher
   mattr_accessor :asset_api
 
+  # Maslow need ID for Travel Advice Publisher
+  NEED_ID = '101191'
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

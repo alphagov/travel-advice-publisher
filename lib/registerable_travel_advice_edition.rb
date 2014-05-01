@@ -24,7 +24,7 @@ class RegisterableTravelAdviceEdition
   end
 
   def need_ids
-    ['101191']
+    [TravelAdvicePublisher::NEED_ID]
   end
 
   def paths

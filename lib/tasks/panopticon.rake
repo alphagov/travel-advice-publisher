@@ -15,7 +15,7 @@ namespace :panopticon do
     record = OpenStruct.new(
       slug: slug,
       title: "Foreign travel advice",
-      need_id: 133,
+      need_ids: [TravelAdvicePublisher::NEED_ID],
       paths: ["/#{slug}", "/#{slug}.json", "/#{slug}.atom"],
       prefixes: [],
       description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
