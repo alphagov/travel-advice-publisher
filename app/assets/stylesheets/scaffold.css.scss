@@ -4,6 +4,13 @@
   margin-bottom: 63px;
 }
 
+// Override the font-size for main textareas
+.formtastic textarea.form-control {
+  font-size: 17px;
+  line-height: 26px;
+  color: #555;
+}
+
 .govspeak-help {
   height: 200px;
   overflow-y: scroll;
