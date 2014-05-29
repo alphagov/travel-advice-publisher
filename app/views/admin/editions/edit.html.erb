@@ -117,16 +117,15 @@
         </div><!-- history pane -->
       </div>
 
-    <div class="navbar navbar-fixed-bottom">
+    <div class="navbar navbar-default navbar-fixed-bottom text-center">
       <div class="navbar-inner">
         <div class="container">
-          <div class="workflow_buttons">
+          <div class="navbar-btn">
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
             <%= link_to "Delete", admin_edition_path(@edition), :method => :delete, :class => 'btn btn-danger', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
-
-            <span class="pull-right">
-              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
+            <span class="navbar-right">
+              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn btn-default", :target => "blank" %>
               <% if @edition.published? %>
                 <%= f.submit "Update review date", :class => "btn btn-success" %>
               <% end %>

@@ -1,3 +1,9 @@
+// Increase padding on footer to account for
+// fixed navbar
+.page-footer {
+  margin-bottom: 63px;
+}
+
 .govspeak-help {
   height: 200px;
   overflow-y: scroll;

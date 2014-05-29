@@ -35,7 +35,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         click_on "Create new edition"
       end
 
@@ -51,7 +51,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         click_on "Create new edition"
       end
 
@@ -75,7 +75,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         page.should_not have_link("Create new edition")
       end
     end
@@ -140,7 +140,7 @@ feature "Edit Edition page", :js => true do
       fill_in 'Slug',  :with => 'part-two'
     end
 
-    within(:css, '.workflow_buttons') { click_on 'Save' }
+    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
 
     all(:css, '#parts > div.part').length.should == 2
 
@@ -241,7 +241,7 @@ feature "Edit Edition page", :js => true do
 
     # page.execute_script("$('.remove-associated').last().prev(':input').val('1')")
 
-    within(:css, '.workflow_buttons') { click_on 'Save' }
+    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
