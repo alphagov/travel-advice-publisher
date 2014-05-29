@@ -1,8 +1,5 @@
-//= require jquery
-//= require jquery_ujs
 //= require jquery-ui.custom.min
 //= require jquery.mustache
-//= require twitter/bootstrap
 //= require_tree .
 
 var formtastic_ids = {};
