@@ -1,21 +1,34 @@
-<h2><%= @country.name %></h2>
+<ul class="breadcrumb">
+  <li>
+    <%= link_to "All countries", admin_countries_path %>
+  </li>
+  <li class="active"><%= @country.name %></li>
+</ul>
 
-<div class="row-fluid">
-  <% unless @country.has_draft_edition? %>
-    <%= button_to "Create new edition", admin_country_editions_path(@country.slug), :class => "btn btn-success" %>
-  <% end %>
+<h1 class="page-title">
+  <%= @country.name %>
+</h1>
 
-  <%= button_to "Edit relevant links", edit_admin_country_path(@country.slug),
-      :method => :get, :class => "btn btn-primary" %>
-</div>
 
-<table class="table table-bordered table-striped">
+<% unless @country.has_draft_edition? %>
+  <%= button_to "Create new edition",
+    admin_country_editions_path(@country.slug),
+    :form_class => 'pull-left add-right-margin',
+    :class => "btn btn-success" %>
+<% end %>
+
+<%= button_to "Edit relevant links",
+      edit_admin_country_path(@country.slug),
+      :method => :get,
+      :class => 'btn btn-default' %>
+
+<table class="table table-bordered table-striped add-top-margin">
   <thead>
-    <tr>
+    <tr class="table-header">
       <th>Version</th>
       <th>State</th>
       <th>Updated</th>
-      <th>Reviewed At</th>
+      <th>Reviewed</th>
       <th></th>
     </tr>
   </thead>
@@ -26,7 +39,7 @@
         <td><%= edition.state %></td>
         <td><%= timestamp(edition.updated_at) %></td>
         <td><%= edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" %></td>
-        <td><%= edition_edit_link(edition) %> - <%= link_to "preview", preview_edition_path(edition), :target => "blank" %></td>
+        <td><%= edition_edit_link(edition) %> — <%= link_to "preview", preview_edition_path(edition), :target => "blank" %></td>
       </tr>
     <% end %>
   </tbody>

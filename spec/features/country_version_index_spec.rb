@@ -1,3 +1,4 @@
+#encoding: utf-8
 require 'spec_helper'
 
 feature "Country version index" do
@@ -62,11 +63,11 @@ feature "Country version index" do
 
     rows = page.all('table tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
     rows.should == [
-      ["Version", "State", "Updated", "Reviewed At", ""],
-      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit - preview"],
-      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - preview"],
-      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - preview"],
-      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - preview"],
+      ["Version", "State", "Updated", "Reviewed", ""],
+      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit — preview"],
+      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
+      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
+      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
     ]
 
     within :xpath, "//tr[contains(., 'Version 4')]" do
