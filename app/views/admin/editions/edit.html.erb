@@ -9,9 +9,8 @@
       <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
     </ul>
 
-    <div class="">
-      <div class="tab-content col-md-12">
-        <div class="tab-pane active" id="edit">
+      <div class="tab-content add-vertical-margins">
+        <div class="tab-pane active row" id="edit">
           <div class="col-md-8">
             <%= f.inputs :name => "Type of update" do %>
               <% unless @edition.version_number == 1 %>
@@ -96,7 +95,7 @@
           </div>
         </div><!-- edit pane -->
 
-        <div class="tab-pane" id="history">
+        <div class="tab-pane row" id="history">
           <div class="col-md-6">
             <%= f.fields_for :note do |h| %>
               <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'col-md-12', :rows => 6 } %>
@@ -109,8 +108,6 @@
           </div>
         </div><!-- history pane -->
       </div>
-
-    </div>
 
     <div class="navbar navbar-fixed-bottom">
       <div class="navbar-inner">
