@@ -61,7 +61,7 @@ feature "related items for countries" do
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        within "#related_empty" do
+        within ".related-empty" do
           page.select("Gamma", :from => "related_artefacts_")
         end
 
@@ -78,7 +78,7 @@ feature "related items for countries" do
       page.all("select").count.should == 1
 
       within "form#related-items" do
-        within "#related_empty" do
+        within ".related-empty" do
           page.all("select").last.all("option").select { |x| x.text == @alpha.name }.first.select_option
         end
 
@@ -104,7 +104,7 @@ feature "related items for countries" do
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        within "#related_0" do
+        within ".related-0" do
           click_on "Remove related item"
         end
 

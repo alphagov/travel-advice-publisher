@@ -93,20 +93,21 @@ $(function() {
   });
   TravelAdviceUtils.setChangeDescriptionVisibility($("#edition_minor_update"));
 
-  $("#add-related-item").on("click", function () {
-    var relatedItemChildren = $("#related-items").children(".row-fluid");
-    var newRelatedItem = relatedItemChildren.first().clone();
+  $(".js-add-related-item").on("click", function () {
+    var relatedItems = $(".js-related-items"),
+        newRelatedItem = relatedItems.children('.row').first().clone();
 
-    newRelatedItem.removeAttr("id");
+    // Reset select value
     newRelatedItem.find("select").removeAttr("selected");
     newRelatedItem.find("select").val(0);
 
-    relatedItemChildren.last().before(newRelatedItem);
+    // Append new item
+    relatedItems.append(newRelatedItem);
   });
 
-  $("#remove-related-item").on("click", function () {
+  $(".js-related-items").on("click", ".js-remove-related-item", function () {
     var that = $(this);
-    that.parent().parent().remove();
+    that.parents('.js-related-item').remove();
   });
 });
 

@@ -1,11 +1,10 @@
-<div class="row" id="related_<%= index %>">
+<div class="add-bottom-margin row js-related-item related-<%= index %>">
   <div class="col-md-5">
     <%= select_tag("related_artefacts[]",
                    options_from_collection_for_select(related_items, :id, :name, id),
                    { prompt: "Select a related item", :class => "col-md-9" }) %>
   </div>
-
-  <div class="span2">
-    <button id="remove-related-item" class="btn btn-danger offset1" type="button">Remove related item</button>
+  <div class="col-md-2">
+    <button class="js-remove-related-item btn btn-danger" type="button">Remove related item</button>
   </div>
 </div>
