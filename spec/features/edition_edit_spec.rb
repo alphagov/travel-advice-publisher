@@ -275,9 +275,11 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition._id}/edit"
 
-    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Wallace")
-    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Gromit")
-    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Cheese")
+    # Capybara nth-of-type tests need an element in their selector
+    # https://github.com/jnicklas/capybara/issues/1109
+    page.should have_selector("#parts div.part:nth-of-type(1) .panel-title a", :text => 'Wallace')
+    page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => 'Gromit')
+    page.should have_selector("#parts div.part:nth-of-type(3) .panel-title a", :text => 'Cheese')
 
     find(:css, "input#edition_parts_attributes_0_order").set "2"
     find(:css, "input#edition_parts_attributes_1_order").set "0"
@@ -285,9 +287,9 @@ feature "Edit Edition page", :js => true do
 
     click_on "Save"
 
-    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Gromit")
-    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Cheese")
-    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Wallace")
+    page.should have_selector("#parts div.part:nth-of-type(1) .panel-title a", :text => "Gromit")
+    page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => "Cheese")
+    page.should have_selector("#parts div.part:nth-of-type(3) .panel-title a", :text => "Wallace")
   end
 
   scenario "save and publish an edition" do
