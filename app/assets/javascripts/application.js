@@ -116,7 +116,7 @@ var TravelAdviceUtils = {
     return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
   },
   setChangeDescriptionVisibility: function($elem) {
-    if ($elem.attr('checked')) {
+    if ($elem.is(':checked')) {
       $("#major_update_input").hide();
     } else {
       $("#major_update_input").show();
