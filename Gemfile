@@ -15,8 +15,9 @@ gem 'mongoid_rails_migrations', '1.0.1'
 gem 'plek', '1.2.0'
 gem 'gds-sso', '9.2.0'
 
-gem 'formtastic', git: 'https://github.com/justinfrench/formtastic.git', branch: '2.1-stable'
-gem 'formtastic-bootstrap', git: 'https://github.com/cgunther/formtastic-bootstrap.git', branch: 'bootstrap-2'
+gem 'govuk_admin_template', '0.0.6'
+gem 'formtastic', '2.3.0.rc3'
+gem 'formtastic-bootstrap', '3.0.0'
 
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
@@ -31,15 +32,13 @@ else
 end
 
 gem 'therubyracer', '0.12.0'
-gem 'jquery-rails', '2.0.2' # TODO: Newer versions break publisher sortable parts. Will need attention.
-gem 'less-rails-bootstrap'
-
 gem 'logstasher', '0.4.8'
 
 # Gems used only for assets and not required in production
 # environments by default.
 group :assets do
   gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', '3.2.6'
 end
 
 group :development, :test do
