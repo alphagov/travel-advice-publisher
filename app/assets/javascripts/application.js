@@ -29,7 +29,7 @@ $(function () {
     return false;
   });
 
-  $('.remove-associated').live('click', function () {
+  $('body').on('click', '.remove-associated', function () {
     var css_selector = $(this).data('selector');
     $(this).parents(css_selector).hide();
     $(this).prev(':input').val('1');
@@ -64,8 +64,8 @@ $(function() {
   //   $('#parts .part .accordion-body').first().collapse('show');
   // });
 
-  $('input.title').
-    live('change', function () {
+  $('body').
+    on('change', 'input.title', function () {
       var elem = $(this);
       var value = elem.val();
 
@@ -90,7 +90,7 @@ $(function() {
     new_part.find('.title').focus();
   });
 
-  $("#new-from-existing-edition").live('click', function() {
+  $("body").on('click', '#new-from-existing-edition', function() {
     $("#clone-edition").submit();
   });
 
