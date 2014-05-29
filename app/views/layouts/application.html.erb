@@ -31,7 +31,7 @@
 
 <% content_for :content do %>
   <% [:notice, :alert].select { |k| flash[k].present? }.each do |k| %>
-    <div class="alert <%= k %>">
+    <div class="alert alert-warning">
       <%= flash[k] %>
     </div>
   <% end %>
