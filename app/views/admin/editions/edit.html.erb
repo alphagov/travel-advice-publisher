@@ -100,7 +100,7 @@
           <div class="span6">
             <%= f.fields_for :note do |h| %>
               <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span12', :rows => 6 } %>
-              <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+              <%= h.action :submit, :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
             <% end %>
           </div>
 
