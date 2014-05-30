@@ -36,10 +36,7 @@ feature "related items for countries" do
     end
 
     specify "add related content when none present" do
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
-
+      click_on "Edit relevant links"
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
@@ -60,14 +57,11 @@ feature "related items for countries" do
       @artefact.related_artefact_ids = [@alpha.id, @beta.id]
       @artefact.save
 
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
-
+      click_on "Edit relevant links"
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        within "#related_empty" do
+        within ".related-empty" do
           page.select("Gamma", :from => "related_artefacts_")
         end
 
@@ -78,16 +72,13 @@ feature "related items for countries" do
     end
 
     specify "add multiple new related artefacts" do
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
-
+      click_on "Edit relevant links"
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       page.all("select").count.should == 1
 
       within "form#related-items" do
-        within "#related_empty" do
+        within ".related-empty" do
           page.all("select").last.all("option").select { |x| x.text == @alpha.name }.first.select_option
         end
 
@@ -109,14 +100,11 @@ feature "related items for countries" do
       @artefact.related_artefacts = [@alpha, @beta, @gamma]
       @artefact.save
 
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
-
+      click_on "Edit relevant links"
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "form#related-items" do
-        within "#related_0" do
+        within ".related-0" do
           click_on "Remove related item"
         end
 
@@ -128,11 +116,7 @@ feature "related items for countries" do
 
     specify "shows the global related artefacts when editing a specific country's related items" do
       visit "/admin/countries/#{@country.slug}"
-
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
-
+      click_on "Edit relevant links"
       i_should_be_on "/admin/countries/#{@country.slug}/edit"
 
       within "#global-related-items" do
@@ -152,10 +136,7 @@ feature "related items for countries" do
       @country = Country.find_by_slug(@edition.country_slug)
 
       visit "/admin/countries/#{@country.slug}"
-
-      within "div.row-fluid" do
-        click_on "Edit relevant links"
-      end
+      click_on "Edit relevant links"
 
       page.status_code == 302
       page.should have_content "Can't edit related content if no draft items present."

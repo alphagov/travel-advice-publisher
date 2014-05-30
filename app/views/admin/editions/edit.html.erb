@@ -1,4 +1,12 @@
-<div class="page-header">
+<ul class="breadcrumb">
+  <li>
+    <%= link_to "All countries", admin_countries_path %>
+  </li>
+  <li><%= link_to @country.name, admin_country_path(@country.slug) %></li>
+  <li class="active">Editing <%= @country.name %></li>
+</ul>
+
+<div class="page-title">
   <h1>Editing <%= @country.name %> <small>Version <%= @edition.version_number %></small></h1>
 </div>
 
@@ -9,10 +17,9 @@
       <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
     </ul>
 
-    <div class="row-fluid">
-      <div class="tab-content span12">
-        <div class="tab-pane active" id="edit">
-          <div class="span8">
+      <div class="tab-content add-bottom-margin">
+        <div class="tab-pane active row" id="edit">
+          <div class="col-md-8">
             <%= f.inputs :name => "Type of update" do %>
               <% unless @edition.version_number == 1 %>
                 <h5>Minor update</h5>
@@ -25,16 +32,16 @@
                   <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
                 <% end %>
                 <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
-                  :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+                  :class => "col-md-9", :rows => 4, :disabled => ! @edition.draft? } %>
               </div>
             <% end %>
 
             <%= f.inputs :name => "Metadata" do %>
-              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "span9" } %>
+              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "col-md-9" } %>
             <%= f.input :overview, :label => "Search description (plain text)",
-              :as => :text, :input_html => { :class => "span9", :rows => 4, :disabled => ! @edition.draft? } %>
+              :as => :text, :input_html => { :class => "col-md-9", :rows => 4, :disabled => ! @edition.draft? } %>
 
-              <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
+              <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "col-md-9", :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs :name => "Summary content" do %>
@@ -66,13 +73,12 @@
               <% end %>
 
               <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
-              <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "span9", :disabled => ! @edition.draft? } %>
+              <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "col-md-9", :disabled => ! @edition.draft? } %>
 
             <% end %>
-            <hr>
 
             <%= f.inputs :name => "Parts (govspeak available)" do %>
-              <section class="accordion" id="parts">
+              <section class="panel-group" id="parts">
                 <%= f.semantic_fields_for :parts, f.object.parts.in_order do |part| %>
                   <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
                 <% end %>
@@ -87,7 +93,7 @@
             <% end %>
           </div>
 
-          <div class="span4 govspeak-container">
+          <div class="col-md-4 govspeak-container">
             <h3>Govspeak help</h3>
 
             <div class="well">
@@ -96,32 +102,29 @@
           </div>
         </div><!-- edit pane -->
 
-        <div class="tab-pane" id="history">
-          <div class="span6">
+        <div class="tab-pane row add-top-margin" id="history">
+          <div class="col-md-6">
             <%= f.fields_for :note do |h| %>
-              <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'span12', :rows => 6 } %>
-              <%= h.commit_button :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+              <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'col-md-12', :rows => 6 } %>
+              <%= h.action :submit, :label => "Add Note", :button_html => { :class => "add-top-margin btn btn-success" } %>
             <% end %>
           </div>
 
-          <div class="span6">
+          <div class="col-md-6">
             <%= render :partial => 'edition_history', :collection => @country.editions, :as => :edition %>
           </div>
         </div><!-- history pane -->
       </div>
 
-    </div>
-
-    <div class="navbar navbar-fixed-bottom">
+    <div class="navbar navbar-default navbar-fixed-bottom text-center">
       <div class="navbar-inner">
-        <div class="container-fluid">
-          <div class="workflow_buttons">
+        <div class="container">
+          <div class="navbar-btn">
             <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
             <%= link_to "Delete", admin_edition_path(@edition), :method => :delete, :class => 'btn btn-danger', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
-
-            <span class="pull-right">
-              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn", :target => "blank" %>
+            <span class="navbar-right">
+              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn btn-default", :target => "blank" %>
               <% if @edition.published? %>
                 <%= f.submit "Update review date", :class => "btn btn-success" %>
               <% end %>

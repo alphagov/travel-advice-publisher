@@ -1,4 +1,6 @@
-<h2>Related Items for <%= @country.name %></h2>
+<h1 class="page-title-with-border">
+  Related Items for <%= @country.name %>
+</h1>
 
 <%= form_tag({:action => :update}, { :method => :put, :id => "related-items"}) do %>
   <h3>Global related items</h3>
@@ -9,20 +11,17 @@
   </ul>
 
   <h3>Country-specific related items</h3>
-  <% if @artefact.related_artefact_ids.length > 0 %>
-    <% @artefact.related_artefact_ids.each_with_index do |id, index| %>
-      <%= render :partial => "related_content", :locals => {
-            :id => id, :index => index, :related_items => @related_items} %>
+  <div class="js-related-items">
+    <% if @artefact.related_artefact_ids.length > 0 %>
+      <% @artefact.related_artefact_ids.each_with_index do |id, index| %>
+        <%= render :partial => "related_content", :locals => {
+              :id => id, :index => index, :related_items => @related_items} %>
+      <% end %>
     <% end %>
-  <% end %>
-
-  <%= render :partial => "related_content", :locals => {
+    <%= render :partial => "related_content", :locals => {
         :id => nil, :index => "empty", :related_items => @related_items} %>
-
-  <div class="row-fluid">
-    <div class="btn-group">
-      <button class="btn btn-primary" id="add-related-item" type="button">Add another related item</button>
-      <%= submit_tag "Save", :class => "btn btn-success" %>
-    </div>
   </div>
+
+  <button class="js-add-related-item btn btn-default add-right-margin" type="button">Add another related item</button>
+  <%= submit_tag "Save", :class => "btn btn-success" %>
 <% end %>

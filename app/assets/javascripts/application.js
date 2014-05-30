@@ -1,8 +1,5 @@
-//= require jquery
-//= require jquery_ujs
 //= require jquery-ui.custom.min
 //= require jquery.mustache
-//= require twitter/bootstrap
 //= require_tree .
 
 var formtastic_ids = {};
@@ -32,7 +29,7 @@ $(function () {
     return false;
   });
 
-  $('.remove-associated').live('click', function () {
+  $('body').on('click', '.remove-associated', function () {
     var css_selector = $(this).data('selector');
     $(this).parents(css_selector).hide();
     $(this).prev(':input').val('1');
@@ -46,29 +43,23 @@ $(function() {
   // collapse the parts using the bootstrap accordion
   $(".collapse").collapse();
 
+  var accordionSelector = ".js-sort-handle";
   var sortable_opts = {
     axis: "y",
-    handle: "a.accordion-toggle",
+    handle: accordionSelector,
     stop: function(event, ui) {
       $('.part').each(function (i, elem) {
         $(elem).find('input.order').val(i + 1);
-        ui.item.find("a.accordion-toggle").addClass("highlight");
-        setTimeout(function() { $("a.accordion-toggle.highlight").removeClass("highlight") }, 20 )
+        ui.item.find(accordionSelector).addClass("yellow-fade");
       });
     }
   }
+
   $('#parts').sortable(sortable_opts)
-      .find("a.accordion-toggle").css({cursor: 'move'});
+      .find(accordionSelector).css({cursor: 'move'});
 
-  // simulate a click on the first part to open it
-  // TODO: This doesn't behave well as the accordion closes then opens rather
-  // than leaving the first part open.
-  // $('#parts .part .accordion-body').first().one('hidden', function(){
-  //   $('#parts .part .accordion-body').first().collapse('show');
-  // });
-
-  $('input.title').
-    live('change', function () {
+  $('body').
+    on('change', 'input.title', function () {
       var elem = $(this);
       var value = elem.val();
 
@@ -93,7 +84,7 @@ $(function() {
     new_part.find('.title').focus();
   });
 
-  $("#new-from-existing-edition").live('click', function() {
+  $("body").on('click', '#new-from-existing-edition', function() {
     $("#clone-edition").submit();
   });
 
@@ -102,20 +93,21 @@ $(function() {
   });
   TravelAdviceUtils.setChangeDescriptionVisibility($("#edition_minor_update"));
 
-  $("#add-related-item").on("click", function () {
-    var relatedItemChildren = $("#related-items").children(".row-fluid");
-    var newRelatedItem = relatedItemChildren.first().clone();
+  $(".js-add-related-item").on("click", function () {
+    var relatedItems = $(".js-related-items"),
+        newRelatedItem = relatedItems.children('.row').first().clone();
 
-    newRelatedItem.removeAttr("id");
+    // Reset select value
     newRelatedItem.find("select").removeAttr("selected");
     newRelatedItem.find("select").val(0);
 
-    relatedItemChildren.last().before(newRelatedItem);
+    // Append new item
+    relatedItems.append(newRelatedItem);
   });
 
-  $("#remove-related-item").on("click", function () {
+  $(".js-related-items").on("click", ".js-remove-related-item", function () {
     var that = $(this);
-    that.parent().parent().remove();
+    that.parents('.js-related-item').remove();
   });
 });
 
@@ -124,7 +116,7 @@ var TravelAdviceUtils = {
     return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
   },
   setChangeDescriptionVisibility: function($elem) {
-    if ($elem.attr('checked')) {
+    if ($elem.is(':checked')) {
       $("#major_update_input").hide();
     } else {
       $("#major_update_input").show();

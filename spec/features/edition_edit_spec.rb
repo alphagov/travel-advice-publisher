@@ -35,7 +35,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         click_on "Create new edition"
       end
 
@@ -51,7 +51,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         click_on "Create new edition"
       end
 
@@ -59,10 +59,10 @@ feature "Edit Edition page", :js => true do
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
       within "#history" do
-        page.should have_content("Notes for version 2")
+        page.should have_content("Version 2")
         page.should have_content("New version by Joe Bloggs")
 
-        page.should have_content("Notes for version 1")
+        page.should have_content("Version 1")
         page.should have_content("Publish by Joe Bloggs")
         page.should have_content("Made some changes...")
         page.should have_content("New version by GOV.UK Bot")
@@ -75,7 +75,7 @@ feature "Edit Edition page", :js => true do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      within(:css, ".workflow_buttons") do
+      within(:css, ".navbar-fixed-bottom") do
         page.should_not have_link("Create new edition")
       end
     end
@@ -140,7 +140,7 @@ feature "Edit Edition page", :js => true do
       fill_in 'Slug',  :with => 'part-two'
     end
 
-    within(:css, '.workflow_buttons') { click_on 'Save' }
+    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
 
     all(:css, '#parts > div.part').length.should == 2
 
@@ -241,7 +241,7 @@ feature "Edit Edition page", :js => true do
 
     # page.execute_script("$('.remove-associated').last().prev(':input').val('1')")
 
-    within(:css, '.workflow_buttons') { click_on 'Save' }
+    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
@@ -275,9 +275,11 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition._id}/edit"
 
-    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Wallace")
-    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Gromit")
-    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Cheese")
+    # Capybara nth-of-type tests need an element in their selector
+    # https://github.com/jnicklas/capybara/issues/1109
+    page.should have_selector("#parts div.part:nth-of-type(1) .panel-title a", :text => 'Wallace')
+    page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => 'Gromit')
+    page.should have_selector("#parts div.part:nth-of-type(3) .panel-title a", :text => 'Cheese')
 
     find(:css, "input#edition_parts_attributes_0_order").set "2"
     find(:css, "input#edition_parts_attributes_1_order").set "0"
@@ -285,9 +287,9 @@ feature "Edit Edition page", :js => true do
 
     click_on "Save"
 
-    page.should have_selector("#parts div.part:nth-of-type(1) .accordion-toggle", :text => "Gromit")
-    page.should have_selector("#parts div.part:nth-of-type(2) .accordion-toggle", :text => "Cheese")
-    page.should have_selector("#parts div.part:nth-of-type(3) .accordion-toggle", :text => "Wallace")
+    page.should have_selector("#parts div.part:nth-of-type(1) .panel-title a", :text => "Gromit")
+    page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => "Cheese")
+    page.should have_selector("#parts div.part:nth-of-type(3) .panel-title a", :text => "Wallace")
   end
 
   scenario "save and publish an edition" do
