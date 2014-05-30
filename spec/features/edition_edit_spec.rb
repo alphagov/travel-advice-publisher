@@ -59,10 +59,10 @@ feature "Edit Edition page", :js => true do
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
       within "#history" do
-        page.should have_content("Notes for version 2")
+        page.should have_content("Version 2")
         page.should have_content("New version by Joe Bloggs")
 
-        page.should have_content("Notes for version 1")
+        page.should have_content("Version 1")
         page.should have_content("Publish by Joe Bloggs")
         page.should have_content("Made some changes...")
         page.should have_content("New version by GOV.UK Bot")

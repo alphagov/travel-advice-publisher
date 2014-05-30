@@ -107,7 +107,7 @@
           <div class="col-md-6">
             <%= f.fields_for :note do |h| %>
               <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'col-md-12', :rows => 6 } %>
-              <%= h.action :submit, :label => "Add Note", :button_html => { :class => "btn btn-success" } %>
+              <%= h.action :submit, :label => "Add Note", :button_html => { :class => "add-top-margin btn btn-success" } %>
             <% end %>
           </div>
 
