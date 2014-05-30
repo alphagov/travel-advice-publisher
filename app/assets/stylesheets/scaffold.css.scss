@@ -11,6 +11,10 @@
   color: #555;
 }
 
+fieldset.inputs {
+  @extend %add-top-margin;
+}
+
 .govspeak-help {
   height: 200px;
   overflow-y: scroll;

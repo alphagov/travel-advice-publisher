@@ -17,7 +17,7 @@
       <li><a href="#history" data-toggle="tab">History &amp; Notes</a></li>
     </ul>
 
-      <div class="tab-content add-vertical-margins">
+      <div class="tab-content add-bottom-margin">
         <div class="tab-pane active row" id="edit">
           <div class="col-md-8">
             <%= f.inputs :name => "Type of update" do %>
@@ -76,7 +76,6 @@
               <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "col-md-9", :disabled => ! @edition.draft? } %>
 
             <% end %>
-            <hr>
 
             <%= f.inputs :name => "Parts (govspeak available)" do %>
               <section class="panel-group" id="parts">
@@ -103,7 +102,7 @@
           </div>
         </div><!-- edit pane -->
 
-        <div class="tab-pane row" id="history">
+        <div class="tab-pane row add-top-margin" id="history">
           <div class="col-md-6">
             <%= f.fields_for :note do |h| %>
               <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'col-md-12', :rows => 6 } %>
