@@ -15,6 +15,12 @@
   <% end %>
 <% end %>
 
+<% content_for :favicon do %>
+  <% environment_style = GovukAdminTemplate.environment_style %>
+  <%= favicon_link_tag environment_style ?
+        "favicon-#{environment_style}.png" : "favicon.png" %>
+<% end %>
+
 <% content_for :app_title, 'GOV.UK Travel Advice Publisher' %>
 <% content_for :page_title, content_for(:app_title) %>
 
