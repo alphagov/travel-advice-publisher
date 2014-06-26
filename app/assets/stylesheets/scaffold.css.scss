@@ -12,7 +12,7 @@
 }
 
 fieldset.inputs {
-  @extend %add-top-margin;
+  @include add-top-margin;
 }
 
 .govspeak-help {
