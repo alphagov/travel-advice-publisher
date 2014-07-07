@@ -32,16 +32,16 @@
                   <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
                 <% end %>
                 <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
-                  :class => "col-md-9", :rows => 4, :disabled => ! @edition.draft? } %>
+                  :class => "input-md-8", :rows => 4, :disabled => ! @edition.draft? } %>
               </div>
             <% end %>
 
             <%= f.inputs :name => "Metadata" do %>
-              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "col-md-9" } %>
+              <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "input-md-8" } %>
             <%= f.input :overview, :label => "Search description (plain text)",
-              :as => :text, :input_html => { :class => "col-md-9", :rows => 4, :disabled => ! @edition.draft? } %>
+              :as => :text, :input_html => { :class => "input-md-8", :rows => 4, :disabled => ! @edition.draft? } %>
 
-              <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "col-md-9", :disabled => ! @edition.draft? } %>
+              <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "input-md-8", :disabled => ! @edition.draft? } %>
             <% end %>
 
             <%= f.inputs :name => "Summary content" do %>
@@ -73,7 +73,7 @@
               <% end %>
 
               <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
-              <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "col-md-9", :disabled => ! @edition.draft? } %>
+              <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "input-md-8", :disabled => ! @edition.draft? } %>
 
             <% end %>
 
@@ -105,7 +105,7 @@
         <div class="tab-pane row add-top-margin" id="history">
           <div class="col-md-6">
             <%= f.fields_for :note do |h| %>
-              <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'col-md-12', :rows => 6 } %>
+              <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'input-md-6', :rows => 6 } %>
               <%= h.action :submit, :label => "Add Note", :button_html => { :class => "add-top-margin btn btn-success" } %>
             <% end %>
           </div>
