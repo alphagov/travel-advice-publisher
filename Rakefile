@@ -5,3 +5,5 @@
 require File.expand_path('../config/application', __FILE__)
 
 TravelAdvicePublisher::Application.load_tasks
+
+task :default => [:spec, 'jasmine:ci']
