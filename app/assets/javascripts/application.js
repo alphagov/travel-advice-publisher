@@ -40,8 +40,6 @@ $(function () {
 
 // Javascript specific to travel advice admin
 $(function() {
-  // collapse the parts using the bootstrap accordion
-  $("main .collapse").collapse();
 
   var accordionSelector = ".js-sort-handle";
   var sortable_opts = {
