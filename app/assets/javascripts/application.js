@@ -41,21 +41,6 @@ $(function () {
 // Javascript specific to travel advice admin
 $(function() {
 
-  var accordionSelector = ".js-sort-handle";
-  var sortable_opts = {
-    axis: "y",
-    handle: accordionSelector,
-    stop: function(event, ui) {
-      $('.part').each(function (i, elem) {
-        $(elem).find('input.order').val(i + 1);
-        ui.item.find(accordionSelector).addClass("yellow-fade");
-      });
-    }
-  }
-
-  $('#parts').sortable(sortable_opts)
-      .find(accordionSelector).css({cursor: 'move'});
-
   $('body').
     on('change', 'input.title', function () {
       var elem = $(this);

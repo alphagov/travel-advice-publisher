@@ -78,7 +78,7 @@
             <% end %>
 
             <%= f.inputs :name => "Parts (govspeak available)" do %>
-              <section class="panel-group" id="parts">
+              <section class="panel-group" id="parts" data-module="sortable-parts">
                 <%= f.semantic_fields_for :parts, f.object.parts.in_order do |part| %>
                   <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
                 <% end %>
