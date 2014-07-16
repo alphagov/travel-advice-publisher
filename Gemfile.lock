@@ -111,6 +111,12 @@ GEM
     http_parser.rb (0.5.3)
     httpauth (0.2.0)
     i18n (0.6.9)
+    jasmine (2.0.2)
+      jasmine-core (~> 2.0.0)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+    jasmine-core (2.0.0)
     journey (1.0.4)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
@@ -163,6 +169,7 @@ GEM
     omniauth-oauth2 (1.1.1)
       oauth2 (~> 0.8.0)
       omniauth (~> 1.0)
+    phantomjs (1.9.7.1)
     plek (1.2.0)
       builder
     poltergeist (0.7.0)
@@ -284,6 +291,7 @@ DEPENDENCIES
   gds-sso (= 9.2.0)
   govuk_admin_template (= 1.0.5)
   govuk_content_models (= 6.1.0)
+  jasmine (= 2.0.2)
   logstasher (= 0.4.8)
   mongoid (= 2.6)
   mongoid_rails_migrations (= 1.0.1)

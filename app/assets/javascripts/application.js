@@ -40,23 +40,6 @@ $(function () {
 
 // Javascript specific to travel advice admin
 $(function() {
-  // collapse the parts using the bootstrap accordion
-  $("main .collapse").collapse();
-
-  var accordionSelector = ".js-sort-handle";
-  var sortable_opts = {
-    axis: "y",
-    handle: accordionSelector,
-    stop: function(event, ui) {
-      $('.part').each(function (i, elem) {
-        $(elem).find('input.order').val(i + 1);
-        ui.item.find(accordionSelector).addClass("yellow-fade");
-      });
-    }
-  }
-
-  $('#parts').sortable(sortable_opts)
-      .find(accordionSelector).css({cursor: 'move'});
 
   $('body').
     on('change', 'input.title', function () {
@@ -110,16 +93,3 @@ $(function() {
     that.parents('.js-related-item').remove();
   });
 });
-
-var TravelAdviceUtils = {
-  convertToSlug: function(title) {
-    return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
-  },
-  setChangeDescriptionVisibility: function($elem) {
-    if ($elem.is(':checked')) {
-      $("#major_update_input").hide();
-    } else {
-      $("#major_update_input").show();
-    }
-  }
-}
