@@ -2,8 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.18'
 
-gem 'exception_notification', '2.6.1'
-gem 'aws-ses', :require => 'aws/ses'
 gem 'unicorn'
 
 gem 'mongoid', '2.6'
@@ -32,6 +30,7 @@ end
 
 gem 'therubyracer', '0.12.0'
 gem 'logstasher', '0.4.8'
+gem 'airbrake', '~> 4.0.0'
 
 # Gems used only for assets and not required in production
 # environments by default.
