@@ -10,7 +10,7 @@ gem 'mongoid_rails_migrations', '1.0.1'
 
 
 gem 'plek', '1.2.0'
-gem 'gds-sso', '9.2.0'
+gem 'gds-sso', '9.3.0'
 
 gem 'govuk_admin_template', '1.0.5'
 gem 'formtastic', '2.3.0.rc3'
