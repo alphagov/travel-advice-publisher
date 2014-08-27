@@ -173,8 +173,7 @@ GEM
       oauth2 (~> 1.0)
       omniauth (~> 1.2)
     phantomjs (1.9.7.1)
-    plek (1.2.0)
-      builder
+    plek (1.8.1)
     poltergeist (0.7.0)
       capybara (~> 1.1)
       childprocess (~> 0.3)
@@ -299,7 +298,7 @@ DEPENDENCIES
   logstasher (= 0.4.8)
   mongoid (= 2.6)
   mongoid_rails_migrations (= 1.0.1)
-  plek (= 1.2.0)
+  plek (= 1.8.1)
   poltergeist (= 0.7.0)
   rails (= 3.2.18)
   rspec-rails (= 2.12.0)
