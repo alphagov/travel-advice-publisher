@@ -40,7 +40,7 @@ feature "Country version index" do
 
     visit "/admin/countries/aruba"
 
-    page.all('table td:first-child').map(&:text).should == ["Version 3", "Version 2", "Version 1"]
+    page.all('table tr td:first-child').map(&:text).should == ["Version 3", "Version 2", "Version 1"]
 
     click_on "Create new edition"
 
