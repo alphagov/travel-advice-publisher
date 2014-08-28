@@ -4,7 +4,9 @@ TravelAdvicePublisher::Application.routes.draw do
       resources :editions, :only => [:create]
     end
 
-    resources :editions, :only => [:edit, :update, :destroy]
+    resources :editions, :only => [:edit, :update, :destroy] do
+      get 'diff/:compare_id', :to => :diff, :as => :diff, :on => :member
+    end
 
     root :to => "countries#index"
   end

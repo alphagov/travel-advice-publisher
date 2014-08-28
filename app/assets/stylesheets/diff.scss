@@ -1,0 +1,60 @@
+.diff {
+  border: 1px solid #dddddd;
+  border-left: 40px solid #f3f3f3;
+  padding: 15px;
+
+  ul {
+    padding-left: 0;
+
+    li {
+      padding: 5px 2px;
+      margin-bottom: 1em;
+      word-wrap: break-word;
+      list-style: none;
+
+      del,
+      ins {
+        text-decoration: none;
+      }
+    }
+
+    li.del {
+      background-color: #fdd;
+
+      strong {
+        font-weight: normal;
+        background-color: #faa;
+      }
+    }
+
+    li.ins {
+      background-color: #dfd;
+
+      strong {
+        font-weight: normal;
+        background-color: #77f177;
+      }
+    }
+
+    li.del:before,
+    li.ins:before {
+      position: absolute;
+      font-size: 26px;
+      font-weight: bold;
+      margin-left: -60px;
+      margin-top: -10px;
+      width: 40px;
+      text-align: center;
+    }
+
+    li.del:before {
+      color: #DA4F49;
+      content: "-";
+    }
+
+    li.ins:before {
+      color: #468847;
+      content: "+";
+    }
+  }
+}

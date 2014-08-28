@@ -1,7 +1,7 @@
 class Admin::EditionsController < ApplicationController
 
   before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy]
+  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy, :diff]
   before_filter :strip_empty_alert_statuses, :only => :update
 
   def create
@@ -17,6 +17,10 @@ class Admin::EditionsController < ApplicationController
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
     end
+  end
+
+  def diff
+    @comparison = @country.editions.find(params[:compare_id])
   end
 
   def edit

@@ -1,6 +1,14 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Version <%= edition.version_number %></h3>
+    <h3 class="panel-title">
+      Version <%= edition.version_number %>
+
+      <% if edition.version_number > 1 %>
+        <%= link_to "Compare with version #{edition.version_number - 1}",
+              diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
+              class: 'pull-right' %>
+      <% end %>
+    </h3>
   </div>
   <div class="panel-body">
     <dl class="dl-horizontal remove-bottom-margin">
