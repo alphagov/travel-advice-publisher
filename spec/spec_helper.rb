@@ -7,7 +7,6 @@ SimpleCov.start 'rails'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'govuk_content_models/test_helpers/factories'
 
 # Requires supporting ruby files with custom matchers and macros, etc,

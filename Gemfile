@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.18'
+gem 'rails', '3.2.19'
 
 gem 'unicorn'
 
@@ -9,11 +9,11 @@ gem 'bson_ext', '1.7.1'
 gem 'mongoid_rails_migrations', '1.0.1'
 
 
-gem 'plek', '1.2.0'
+gem 'plek', '1.8.1'
 gem 'gds-sso', '9.3.0'
 
 gem 'govuk_admin_template', '1.0.5'
-gem 'formtastic', '2.3.0.rc3'
+gem 'formtastic', '2.3.0'
 gem 'formtastic-bootstrap', '3.0.0'
 
 if ENV['CONTENT_MODELS_DEV']
@@ -25,7 +25,7 @@ end
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '5.3.0'
+  gem 'gds-api-adapters', '14.1.1'
 end
 
 gem 'therubyracer', '0.12.0'
