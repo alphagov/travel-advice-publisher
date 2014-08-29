@@ -1,17 +1,18 @@
-<div class="panel panel-default">
+<div id="version<%= edition.version_number %>" class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">
-      Version <%= edition.version_number %>
+    <a data-toggle="collapse" class="panel-title history" href="#versionBody<%= edition.version_number %>">
+      <i class="glyphicon glyphicon-smaller-than-text glyphicon-chevron-down add-right-margin"></i> Version <%= edition.version_number %>
+    </a>
 
-      <% if edition.version_number > 1 %>
-        <%= link_to "Compare with version #{edition.version_number - 1}",
-              diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
-              class: 'pull-right' %>
-      <% end %>
-    </h3>
+    <% if edition.version_number > 1 %>
+      <%= link_to "Compare with version #{edition.version_number - 1}",
+            diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
+            class: 'pull-right' %>
+    <% end %>
   </div>
-  <div class="panel-body">
-    <dl class="dl-horizontal remove-bottom-margin">
+
+  <div class="panel-collapse collapse<% if edition_counter == 0 %> in<% end %>" id="versionBody<%= edition.version_number %>">
+    <dl class="panel-body dl-horizontal remove-bottom-margin">
       <% edition.actions.reverse.each do |action| %>
         <dt><%= action.created_at.strftime("%d/%m/%Y") %>  <%= action.created_at.strftime("%R") %></dt>
         <dd>

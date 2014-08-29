@@ -111,7 +111,8 @@
           <% end %>
         </div>
 
-        <div class="col-md-6">
+        <div class="edition-history col-md-6 panel-group">
+          <h4 class="remove-top-margin">Version history</h4>
           <%= render :partial => 'edition_history', :collection => @country.editions, :as => :edition %>
         </div>
       </div><!-- history pane -->
