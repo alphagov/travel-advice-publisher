@@ -8,6 +8,7 @@ gem 'mongoid', '2.6'
 gem 'bson_ext', '1.7.1'
 gem 'mongoid_rails_migrations', '1.0.1'
 
+gem 'diffy'
 
 gem 'plek', '1.8.1'
 gem 'gds-sso', '9.3.0'

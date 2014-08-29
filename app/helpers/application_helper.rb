@@ -15,4 +15,8 @@ module ApplicationHelper
     # reverse keys so we list in order of decreasing severity
     keys.reverse.map {|key| [ I18n.t("alert_status.#{key}"), key ] }
   end
+
+  def diff_html(version_1, version_2)
+    Diffy::Diff.new(version_1, version_2, :allow_empty_diff => false).to_s(:html).html_safe
+  end
 end
