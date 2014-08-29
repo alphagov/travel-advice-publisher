@@ -12,4 +12,6 @@ TravelAdvicePublisher::Application.routes.draw do
   end
 
   root :to => redirect('/admin')
+
+  mount GovukAdminTemplate::Engine, at: "/style-guide"
 end
