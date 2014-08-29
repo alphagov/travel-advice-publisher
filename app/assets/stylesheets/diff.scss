@@ -1,6 +1,15 @@
+/* ==========================================================================
+   Diff of two editions
+   ========================================================================== */
+
+$added-color: #dfd;
+$strong-added-color: #77f177;
+$removed-color: #fdd;
+$strong-removed-color: #faa;
+
 .diff {
-  border: 1px solid #dddddd;
-  border-left: 40px solid #f3f3f3;
+  border: 1px solid $gray-lighter;
+  border-left: 40px solid $gray-lighter;
   padding: 15px;
 
   ul {
@@ -19,20 +28,20 @@
     }
 
     li.del {
-      background-color: #fdd;
+      background-color: $removed-color;
 
       strong {
         font-weight: normal;
-        background-color: #faa;
+        background-color: $strong-removed-color;
       }
     }
 
     li.ins {
-      background-color: #dfd;
+      background-color: $added-color;
 
       strong {
         font-weight: normal;
-        background-color: #77f177;
+        background-color: $strong-added-color;
       }
     }
 
@@ -41,19 +50,19 @@
       position: absolute;
       font-size: 26px;
       font-weight: bold;
-      margin-left: -60px;
-      margin-top: -10px;
+      margin-left: -57px;
+      margin-top: -11px;
       width: 40px;
       text-align: center;
     }
 
     li.del:before {
-      color: #DA4F49;
+      color: $strong-removed-color;
       content: "-";
     }
 
     li.ins:before {
-      color: #468847;
+      color: $strong-added-color;
       content: "+";
     }
   }
