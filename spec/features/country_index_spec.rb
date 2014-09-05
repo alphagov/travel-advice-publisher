@@ -24,9 +24,8 @@ feature "Country Index" do
 
     visit "/admin/countries"
 
-    rows = page.all('table tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
+    rows = page.all('table tbody tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
     rows.should == [
-      ["Country",             "Status"],
       ["Afghanistan",         "advice published"],
       ["Albania",             "no advice published"],
       ["Algeria",             "advice published"],

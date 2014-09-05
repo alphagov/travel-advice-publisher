@@ -2,17 +2,27 @@
   Countries
 </h1>
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered" data-module="filterable-table">
   <thead>
     <tr class="table-header">
       <th>Country</th>
       <th>Status</th>
     </tr>
+    <!--[if gte IE 8]><!-->
+    <tr class="if-no-js-hide table-header-secondary">
+      <td colspan="2">
+        <form>
+          <label for="table-filter" class="rm">Filter countries</label>
+          <input id="table-filter" type="text" class="form-control normal js-filter-table-input" placeholder="Filter list of countries">
+        </form>
+      </td>
+    </tr>
+    <!--<![endif]-->
   </thead>
   <tbody>
     <% @countries.each do |country| %>
       <tr>
-        <td><%= link_to country.name, admin_country_path(country.slug) %></td>
+        <td><%= link_to country.name, admin_country_path(country.slug), class: 'js-open-on-submit' %></td>
         <% if country.has_published_edition? %>
           <td>advice published</td>
         <% else %>
