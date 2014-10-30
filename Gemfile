@@ -42,13 +42,13 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '2.12.0'
-  gem 'capybara', '1.1'
+  gem 'capybara', '2.2.1'
   gem 'simplecov-rcov', '0.2.3'
   gem 'factory_girl', '3.3.0'
   gem 'factory_girl_rails'
   gem 'ci_reporter'
   gem 'database_cleaner', '0.9.1'
-  gem 'poltergeist', '0.7.0'
+  gem 'poltergeist', '1.5.0'
   gem 'webmock', '1.9.0', :require => false
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.0.2'
