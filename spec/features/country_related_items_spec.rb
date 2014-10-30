@@ -4,6 +4,7 @@ feature "related items for countries" do
   before do
     Capybara.current_driver = Capybara.javascript_driver
     login_as_stub_user
+    stub_artefact_related_items_update   
 
     @global_artefact = FactoryGirl.create(:artefact, :name => "Foreign travel advice", :slug => "foreign-travel-advice")
     @global_artefact.related_artefacts << FactoryGirl.create(:artefact, :name => "Sibyl", :slug => "sibyl")

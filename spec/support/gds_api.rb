@@ -11,6 +11,12 @@ module GdsApiHelpers
       with(:body => hash_including('state' => 'draft')).
       to_return(:status => 200, :body => "{}")
   end
+
+  def stub_artefact_related_items_update
+    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice}).
+      with(:body => hash_including('related_artefact_ids' => anything)).
+      to_return(:status => 200, :body => "{}")
+  end
 end
 
 RSpec.configuration.include GdsApiHelpers, :type => :model
