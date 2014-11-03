@@ -58,11 +58,16 @@ feature "Edit Edition page", :js => true do
       page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
+      within(:css, ".tabbable .nav") do
+        click_on "History & Notes"
+      end
+
       within "#history" do
         page.should have_content("Version 2")
         page.should have_content("New version by Joe Bloggs")
 
         page.should have_content("Version 1")
+        click_on "Version 1"
         page.should have_content("Publish by Joe Bloggs")
         page.should have_content("Made some changes...")
         page.should have_content("New version by GOV.UK Bot")
@@ -140,7 +145,7 @@ feature "Edit Edition page", :js => true do
       fill_in 'Slug',  :with => 'part-two'
     end
 
-    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
+    click_navbar_button "Save"
 
     all(:css, '#parts > div.part').length.should == 2
 
@@ -189,14 +194,15 @@ feature "Edit Edition page", :js => true do
     within '#edit' do
       within_section "the fieldset labelled Type of update" do
         page.should have_checked_field("Minor update")
-        page.find_field("Change description").should_not be_visible
+
+        page.find_field("Change description", visible: false).should_not be_visible
 
         uncheck "Minor update"
         page.find_field("Change description").should be_visible
       end
     end
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     @edition.reload
     @edition.minor_update.should == false
@@ -241,7 +247,7 @@ feature "Edit Edition page", :js => true do
 
     # page.execute_script("$('.remove-associated').last().prev(':input').val('1')")
 
-    within(:css, '.navbar-fixed-bottom') { click_on 'Save' }
+    click_navbar_button "Save"
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
@@ -260,7 +266,7 @@ feature "Edit Edition page", :js => true do
       fill_in 'Slug',  :with => 'part-one'
     end
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     page.should have_content("We had some problems saving: Parts is invalid.")
   end
@@ -281,11 +287,11 @@ feature "Edit Edition page", :js => true do
     page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => 'Gromit')
     page.should have_selector("#parts div.part:nth-of-type(3) .panel-title a", :text => 'Cheese')
 
-    find(:css, "input#edition_parts_attributes_0_order").set "2"
-    find(:css, "input#edition_parts_attributes_1_order").set "0"
-    find(:css, "input#edition_parts_attributes_2_order").set "1"
+    find(:css, "input#edition_parts_attributes_0_order", visible: false).set "2"
+    find(:css, "input#edition_parts_attributes_1_order", visible: false).set "0"
+    find(:css, "input#edition_parts_attributes_2_order", visible: false).set "1"
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     page.should have_selector("#parts div.part:nth-of-type(1) .panel-title a", :text => "Gromit")
     page.should have_selector("#parts div.part:nth-of-type(2) .panel-title a", :text => "Cheese")
@@ -303,17 +309,15 @@ feature "Edit Edition page", :js => true do
       to_return(:status => 200, :body => "{}")
 
     now = Time.now.utc
-    Timecop.freeze(now) do
-      visit "/admin/editions/#{@edition.to_param}/edit"
+    visit "/admin/editions/#{@edition.to_param}/edit"
 
-      click_on "Add new part"
-      within :css, "#parts div.part:first-of-type" do
-        fill_in "Title", :with => "Part One"
-        fill_in "Body",  :with => "Body text"
-      end
-
-      click_on "Save & Publish"
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", :with => "Part One"
+      fill_in "Body",  :with => "Body text"
     end
+
+    click_navbar_button "Save & Publish"
 
     @old_edition.reload
     @old_edition.should be_archived
@@ -323,7 +327,7 @@ feature "Edit Edition page", :js => true do
     @edition.parts.first.title.should == "Part One"
     @edition.should be_published
 
-    @edition.published_at.to_i.should == now.to_i
+    @edition.published_at.to_i.should be_within(1.0).of(now.to_i)
     action = @edition.actions.last
     action.request_type.should == Action::PUBLISH
     action.comment.should == "Stuff changed"
@@ -384,10 +388,10 @@ feature "Edit Edition page", :js => true do
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     page.should_not have_content "Add new part"
-    page.should have_css("#edition_title[@disabled='disabled']")
-    page.should have_css("#edition_overview[@disabled='disabled']")
-    page.should have_css("#edition_summary[@disabled='disabled']")
-    page.should have_css(".btn-success[@disabled='disabled']")
+    page.should have_css("#edition_title[disabled]")
+    page.should have_css("#edition_overview[disabled]")
+    page.should have_css("#edition_summary[disabled]")
+    page.should have_css(".btn-success[disabled]")
     page.should_not have_button("Save & Publish")
   end
 
@@ -410,8 +414,9 @@ feature "Edit Edition page", :js => true do
       fill_in "Note", :with => "This is a test comment"
       click_on "Add Note"
     end
-
+    Capybara.ignore_hidden_elements = false
     page.should have_content("This is a test comment")
+    Capybara.ignore_hidden_elements = true
   end
 
   scenario "Set the alert status for an edition" do
@@ -426,7 +431,7 @@ feature "Edit Edition page", :js => true do
     check "The FCO advise against all but essential travel to parts of the country"
     check "The FCO advise against all travel to parts of the country"
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     page.should have_checked_field("The FCO advise against all but essential travel to parts of the country")
     page.should have_checked_field("The FCO advise against all travel to parts of the country")
@@ -436,7 +441,7 @@ feature "Edit Edition page", :js => true do
     uncheck "The FCO advise against all but essential travel to parts of the country"
     uncheck "The FCO advise against all travel to parts of the country"
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     page.should have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
     page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
@@ -462,14 +467,15 @@ feature "Edit Edition page", :js => true do
 
     page.should have_field("Upload a new map image", :type => "file")
     attach_file("Upload a new map image", file_one.path)
-    click_on "Save"
+
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       page.should have_selector("img[src$='image.jpg']")
     end
 
     # ensure image is not removed on save
-    click_on "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       page.should have_selector("img[src$='image.jpg']")
@@ -479,7 +485,8 @@ feature "Edit Edition page", :js => true do
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new map image", file_two.path)
-    click_on "Save"
+
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       page.should have_selector("img[src$='image_two.jpg']")
@@ -487,7 +494,8 @@ feature "Edit Edition page", :js => true do
 
     # remove image
     check "Remove image?"
-    click_on "Save"
+
+    click_navbar_button "Save"
 
     page.should_not have_selector(".uploaded-image")
   end
@@ -510,14 +518,14 @@ feature "Edit Edition page", :js => true do
 
     page.should have_field("Upload a new PDF", :type => "file")
     attach_file("Upload a new PDF", file_one.path)
-    click_on "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
     end
 
     # ensure document is not removed on save
-    click_on "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
@@ -527,7 +535,7 @@ feature "Edit Edition page", :js => true do
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new PDF", file_two.path)
-    click_on "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       page.should have_link("Download document_two.pdf", :href => "http://path/to/document_two.pdf")
@@ -535,7 +543,7 @@ feature "Edit Edition page", :js => true do
 
     # remove document
     check "Remove PDF?"
-    click_on "Save"
+    click_navbar_button "Save"
 
     page.should_not have_selector(".uploaded-document")
   end
@@ -559,7 +567,7 @@ feature "Edit Edition page", :js => true do
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     fill_in "Summary", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ “GOV.UK”)"
-    click_on "Save"
+    click_navbar_button "Save"
 
     @edition.reload
     @edition.summary.should == 'Some things changed on [GOV.UK](https://www.gov.uk/ "GOV.UK")'
