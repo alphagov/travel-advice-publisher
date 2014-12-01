@@ -51,5 +51,5 @@ group :development, :test do
   gem 'poltergeist', '1.5.0'
   gem 'webmock', '1.9.0', :require => false
   gem 'timecop', '0.5.9.2'
-  gem 'jasmine', '2.0.2'
+  gem 'jasmine', '2.1.0'
 end
