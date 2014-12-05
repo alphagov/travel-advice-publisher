@@ -562,14 +562,13 @@ feature "Edit Edition page", :js => true do
     end
   end
 
-  scenario "Fixing smart-quotes in govsepak fields" do
+  scenario "disallowing hover text on links in govsepak fields" do
     @edition = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    fill_in "Summary", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ “GOV.UK”)"
+    fill_in "Summary", :with => "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
     click_navbar_button "Save"
 
-    @edition.reload
-    @edition.summary.should == 'Some things changed on [GOV.UK](https://www.gov.uk/ "GOV.UK")'
+    page.should have_content(%q<Don't include hover text in links. Delete the text in quotation marks eg "This appears when you hover over the link.">)
   end
 end
