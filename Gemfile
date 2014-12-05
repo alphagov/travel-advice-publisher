@@ -13,7 +13,7 @@ gem 'diffy'
 gem 'plek', '1.8.1'
 gem 'gds-sso', '9.3.0'
 
-gem 'govuk_admin_template', '1.1.6'
+gem 'govuk_admin_template', '1.4.0'
 gem 'formtastic', '2.3.0'
 gem 'formtastic-bootstrap', '3.0.0'
 
@@ -51,5 +51,5 @@ group :development, :test do
   gem 'poltergeist', '1.5.0'
   gem 'webmock', '1.9.0', :require => false
   gem 'timecop', '0.5.9.2'
-  gem 'jasmine', '2.0.2'
+  gem 'jasmine', '2.1.0'
 end
