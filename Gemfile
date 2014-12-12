@@ -11,7 +11,7 @@ gem 'mongoid_rails_migrations', '1.0.1'
 gem 'diffy'
 
 gem 'plek', '1.8.1'
-gem 'gds-sso', '9.3.0'
+gem 'gds-sso', '10.0.0'
 
 gem 'govuk_admin_template', '1.4.0'
 gem 'formtastic', '2.3.0'
@@ -20,7 +20,7 @@ gem 'formtastic-bootstrap', '3.0.0'
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", "6.1.0"
+  gem "govuk_content_models", "27.1.0"
 end
 
 if ENV['API_DEV']
