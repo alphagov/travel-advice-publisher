@@ -10,21 +10,29 @@ $strong-removed-color: #faa;
 .diff {
   border: 1px solid $gray-lighter;
   border-left: 40px solid $gray-lighter;
+  border-radius: 3px;
   padding: 15px;
 
   ul {
     padding-left: 0;
 
     li {
-      padding: 5px 2px;
-      margin-bottom: 1em;
+      min-height: 24px;
+      margin: 0 -15px;
+      padding: 0 15px;
       word-wrap: break-word;
       list-style: none;
+      position: relative;
 
       del,
       ins {
         text-decoration: none;
       }
+    }
+
+    li.del,
+    li.ins {
+      padding-top: 2px;
     }
 
     li.del {
@@ -48,21 +56,24 @@ $strong-removed-color: #faa;
     li.del:before,
     li.ins:before {
       position: absolute;
-      font-size: 26px;
       font-weight: bold;
-      margin-left: -57px;
-      margin-top: -11px;
+      margin-left: -55px;
       width: 40px;
       text-align: center;
+      min-height: 24px;
+      top: 0;
+      bottom: 0;
     }
 
     li.del:before {
-      color: $strong-removed-color;
+      color: $state-danger-text;
+      background-color: $removed-color;
       content: "-";
     }
 
     li.ins:before {
-      color: $strong-added-color;
+      color: $state-success-text;
+      background-color: $added-color;
       content: "+";
     }
   }
