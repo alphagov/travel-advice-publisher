@@ -1,6 +1,6 @@
 TravelAdvicePublisher::Application.routes.draw do
   namespace :admin do
-    resources :countries, :only => [:edit, :index, :show, :update] do
+    resources :countries, :only => [:index, :show] do
       resources :editions, :only => [:create]
     end
 
