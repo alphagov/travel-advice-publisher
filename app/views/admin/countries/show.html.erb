@@ -13,14 +13,8 @@
 <% unless @country.has_draft_edition? %>
   <%= button_to "Create new edition",
     admin_country_editions_path(@country.slug),
-    :form_class => 'pull-left add-right-margin',
     :class => "btn btn-success" %>
 <% end %>
-
-<%= button_to "Edit relevant links",
-      edit_admin_country_path(@country.slug),
-      :method => :get,
-      :class => 'btn btn-default' %>
 
 <table class="table table-bordered table-striped add-top-margin">
   <thead>
