@@ -26,7 +26,7 @@ end
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '14.1.1'
+  gem 'gds-api-adapters', '20.1.1'
 end
 
 gem 'therubyracer', '0.12.0'
