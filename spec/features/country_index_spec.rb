@@ -37,9 +37,9 @@ feature "Country Index" do
       ["Argentina",           "no advice published"],
       ["Armenia",             "no advice published"],
       ["Aruba",               "advice published"],
-      ["Ascension Island",    "no advice published"],
       ["Australia",           "no advice published"],
       ["Austria",             "advice published"],
+      ["Azerbaijan",          "no advice published"],
     ]
   end
 end
