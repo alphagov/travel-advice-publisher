@@ -306,3 +306,6 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn
   webmock (= 1.9.0)
+
+BUNDLED WITH
+   1.10.6
