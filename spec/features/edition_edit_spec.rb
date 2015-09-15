@@ -28,6 +28,17 @@ feature "Edit Edition page", :js => true do
       within(:css, "#history") do
         page.should have_content("New version by Joe Bloggs")
       end
+
+      WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/aruba.json").
+        with(:body => hash_including(
+          'slug' => 'foreign-travel-advice/aruba',
+          'content_id' => '56bae85b-a57c-4ca2-9dbd-68361a086bb3', # from countries.yml fixture
+          'name' => 'Aruba travel advice',
+          'kind' => 'travel-advice',
+          'owning_app' => 'travel-advice-publisher',
+          'rendering_app' => 'frontend',
+          'state' => 'draft'
+      ))
     end
 
     scenario "create an edition from an archived edition" do
@@ -335,6 +346,7 @@ feature "Edit Edition page", :js => true do
     WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
       with(:body => hash_including(
         'slug' => 'foreign-travel-advice/albania',
+        'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
         'name' => 'Albania travel advice',
         'description' => 'The overview',
         'indexable_content' => 'Summary Part One Body text',

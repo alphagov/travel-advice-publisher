@@ -1,10 +1,11 @@
 class Country
 
-  attr_reader :name, :slug
+  attr_reader :name, :slug, :content_id
 
   def initialize(attrs)
     @name = attrs['name']
     @slug = attrs['slug']
+    @content_id = attrs['content_id']
   end
 
   def editions
