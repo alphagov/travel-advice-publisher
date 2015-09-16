@@ -60,4 +60,21 @@ describe RegisterableTravelAdviceEdition do
       @registerable.prefixes.should == ["/foreign-travel-advice/#{@edition.country_slug}"]
     end
   end
+
+  describe "content_id" do
+    before :each do
+      @edition = FactoryGirl.build(:travel_advice_edition)
+      @registerable = RegisterableTravelAdviceEdition.new(@edition)
+    end
+
+    it "should return the content_id of the corresponding country" do
+      @edition.country_slug = 'albania'
+      @registerable.content_id.should == Country.find_by_slug('albania').content_id
+    end
+
+    it "should return nil if there is no corresponding country" do
+      @edition.country_slug = 'non-existent'
+      @registerable.content_id.should be_nil
+    end
+  end
 end

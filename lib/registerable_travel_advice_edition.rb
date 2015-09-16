@@ -23,6 +23,10 @@ class RegisterableTravelAdviceEdition
     "foreign-travel-advice/#{@edition.country_slug}"
   end
 
+  def content_id
+    country.try(:content_id)
+  end
+
   def need_ids
     [TravelAdvicePublisher::NEED_ID]
   end
@@ -33,5 +37,11 @@ class RegisterableTravelAdviceEdition
 
   def prefixes
     ["/#{slug}"]
+  end
+
+  private
+
+  def country
+    Country.find_by_slug(@edition.country_slug)
   end
 end
