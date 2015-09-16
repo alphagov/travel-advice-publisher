@@ -355,6 +355,13 @@ feature "Edit Edition page", :js => true do
         'rendering_app' => 'frontend',
         'state' => 'live'
     ))
+
+    assert_publishing_api_put_item("/foreign-travel-advice/albania", {
+      "title" => "Albania travel advice",
+      "description" => "The overview",
+      "format" => "placeholder_travel_advice",
+      'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
+    })
   end
 
   scenario "save and publish a minor update to an edition" do

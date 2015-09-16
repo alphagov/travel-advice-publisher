@@ -52,6 +52,7 @@ class Admin::EditionsController < ApplicationController
     if @edition.update_attributes(params[:edition])
       if params[:commit] == "Save & Publish"
         if @edition.publish_as(current_user)
+          PublishingApiNotifier.send_to_publishing_api(@edition)
           redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
         else
           flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
