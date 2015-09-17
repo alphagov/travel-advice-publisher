@@ -61,5 +61,18 @@ describe EditionPresenter do
     it "is valid against the content schemas", :schema_test => true do
       expect(presented_data).to be_valid_against_schema('placeholder')
     end
+
+    context "when republishing" do
+      let(:presenter) { EditionPresenter.new(edition, republish: true) }
+
+      it "sets the update_type to 'republish'" do
+        expect(presented_data['update_type']).to eq('republish')
+      end
+
+      it "sets the update_type to 'republish' for a minor update" do
+        edition.minor_update = true
+        expect(presented_data['update_type']).to eq('republish')
+      end
+    end
   end
 end

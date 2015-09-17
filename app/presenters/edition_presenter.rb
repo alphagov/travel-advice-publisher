@@ -1,7 +1,8 @@
 class EditionPresenter
 
-  def initialize(edition)
+  def initialize(edition, republish: false)
     @edition = edition
+    @republish = republish
   end
   attr_reader :edition
 
@@ -20,7 +21,7 @@ class EditionPresenter
       "rendering_app" => "frontend",
       "routes" => routes,
       "public_updated_at" => public_updated_at.iso8601,
-      "update_type" => edition.minor_update ? "minor" : "major",
+      "update_type" => update_type,
     }
   end
 
@@ -39,6 +40,11 @@ class EditionPresenter
 
   def public_updated_at
     edition.published_at || Time.zone.now
+  end
+
+  def update_type
+    return 'republish' if @republish
+    edition.minor_update ? 'minor' : 'major'
   end
 
   def country
