@@ -37,6 +37,15 @@ git clean -fdx
 # is master.
 git merge --no-commit origin/master || git merge --abort
 
+# Clone govuk-content-schemas depedency for contract tests
+rm -rf tmp/govuk-content-schemas
+git clone git@github.com:alphagov/govuk-content-schemas.git tmp/govuk-content-schemas
+(
+  cd tmp/govuk-content-schemas
+  git checkout ${SCHEMA_GIT_COMMIT:-"master"}
+)
+export GOVUK_CONTENT_SCHEMAS_PATH=tmp/govuk-content-schemas
+
 export RAILS_ENV=test
 bundle install --path "${HOME}/bundles/${JOB_NAME}" --deployment --without development
 
