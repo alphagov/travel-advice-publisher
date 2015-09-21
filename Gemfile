@@ -52,4 +52,5 @@ group :development, :test do
   gem 'webmock', '1.9.0', :require => false
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.1.0'
+  gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
 end

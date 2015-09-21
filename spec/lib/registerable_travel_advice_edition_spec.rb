@@ -69,7 +69,7 @@ describe RegisterableTravelAdviceEdition do
 
     it "should return the content_id of the corresponding country" do
       @edition.country_slug = 'albania'
-      @registerable.content_id.should == Country.find_by_slug('albania').content_id
+      @registerable.content_id.should == '2a3938e1-d588-45fc-8c8f-0f51814d5409' # From countries.yml fixture
     end
 
     it "should return nil if there is no corresponding country" do

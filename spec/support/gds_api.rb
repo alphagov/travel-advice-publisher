@@ -35,3 +35,8 @@ RSpec.configuration.include GdsApi::TestHelpers::Panopticon, :type => :feature
 RSpec.configuration.before :each, :type => :feature do
   stub_panopticon_draft_registration
 end
+
+RSpec.configuration.include GdsApiHelpers, :type => :rake_task
+RSpec.configuration.before :each, :type => :rake_task do
+  stub_panopticon_registration
+end

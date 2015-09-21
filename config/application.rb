@@ -17,9 +17,12 @@ end
 
 module TravelAdvicePublisher
   mattr_accessor :asset_api
+  mattr_accessor :publishing_api
 
   # Maslow need ID for Travel Advice Publisher
   NEED_ID = '101191'
+
+  INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0"
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
