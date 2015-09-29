@@ -13,7 +13,7 @@ gem 'diffy', '3.0.7'
 gem 'plek', '1.8.1'
 gem 'gds-sso', '10.0.0'
 
-gem 'govuk_admin_template', '2.3.1'
+gem 'govuk_admin_template', '3.0.0'
 gem 'formtastic', '2.3.0'
 gem 'formtastic-bootstrap', '3.0.0'
 
