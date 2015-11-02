@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EditionPresenter do
+describe IndexPresenter do
   let(:presenter) { IndexPresenter.new }
 
   it "returns the index base_path" do
