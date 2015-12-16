@@ -110,7 +110,7 @@ GEM
       state_machine
     hashie (3.2.0)
     hike (1.2.3)
-    htmlentities (4.3.1)
+    htmlentities (4.3.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
