@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.22'
 
-gem 'unicorn'
+gem 'unicorn', '5.0.1'
 
 gem 'mongoid', '2.6'
 gem 'bson_ext', '1.7.1'
@@ -29,7 +29,6 @@ else
   gem 'gds-api-adapters', '~> 24.2.0'
 end
 
-gem 'therubyracer', '0.12.0'
 gem 'logstasher', '0.4.8'
 gem 'airbrake', '~> 4.0.0'
 
@@ -53,4 +52,5 @@ group :development, :test do
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.1.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
+  gem 'test-unit'
 end
