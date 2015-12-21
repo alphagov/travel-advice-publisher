@@ -3,8 +3,8 @@ require 'spec_helper'
 describe IndexPresenter do
   let(:presenter) { IndexPresenter.new }
 
-  it "returns the index base_path" do
-    expect(presenter.base_path).to eq("/foreign-travel-advice")
+  it "returns the index content_id" do
+    expect(presenter.content_id).to eq(TravelAdvicePublisher::INDEX_CONTENT_ID)
   end
 
   describe "render_for_publishing_api" do

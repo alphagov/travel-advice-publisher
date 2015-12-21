@@ -11,8 +11,8 @@ describe EditionPresenter do
   }
   let(:presenter) { EditionPresenter.new(edition) }
 
-  it "constructs the base_path for an edition" do
-    expect(presenter.base_path).to eq("/foreign-travel-advice/aruba")
+  it "constructs the content_id for an edition" do
+    expect(presenter.content_id).to eq("56bae85b-a57c-4ca2-9dbd-68361a086bb3")
   end
 
   describe "render_for_publishing_api" do

@@ -6,15 +6,21 @@ class EditionPresenter
   end
   attr_reader :edition
 
-  def base_path
-    "/foreign-travel-advice/#{edition.country_slug}"
+  def content_id
+    country.content_id
+  end
+
+  def update_type
+    return 'republish' if @republish
+    edition.minor_update ? 'minor' : 'major'
   end
 
   def render_for_publishing_api
     {
+      "content_id" => content_id,
+      "base_path" => base_path,
       "format" => "placeholder_travel_advice",
       "title" => edition.title,
-      "content_id" => content_id,
       "description" => edition.overview,
       "locale" => "en",
       "publishing_app" => "travel-advice-publisher",
@@ -25,10 +31,9 @@ class EditionPresenter
     }
   end
 
-  private
-
-  def content_id
-    country.try(:content_id)
+private
+  def base_path
+    "/foreign-travel-advice/#{edition.country_slug}"
   end
 
   def routes
@@ -40,11 +45,6 @@ class EditionPresenter
 
   def public_updated_at
     edition.published_at || Time.zone.now
-  end
-
-  def update_type
-    return 'republish' if @republish
-    edition.minor_update ? 'minor' : 'major'
   end
 
   def country
