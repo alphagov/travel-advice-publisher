@@ -362,6 +362,10 @@ feature "Edit Edition page", :js => true do
       "format" => "placeholder_travel_advice",
       'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
     })
+
+    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      update_type: "major"
+    })
   end
 
   scenario "save and publish a minor update to an edition" do

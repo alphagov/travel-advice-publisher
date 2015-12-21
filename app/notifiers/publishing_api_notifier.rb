@@ -10,11 +10,35 @@ class PublishingApiNotifier
 
   def send_to_publishing_api
     if edition.published?
-      TravelAdvicePublisher.publishing_api.put_content_item(presenter.base_path, presenter.render_for_publishing_api)
+      api.put_content_item(base_path, publishing_api_payload)
+      api_v2.publish(content_id, publish_payload)
     end
   end
 
-  private
+private
+  def api
+    TravelAdvicePublisher.publishing_api
+  end
+
+  def api_v2
+    TravelAdvicePublisher.publishing_api_v2
+  end
+
+  def base_path
+    presenter.base_path
+  end
+
+  def content_id
+    presenter.content_id
+  end
+
+  def publishing_api_payload
+    presenter.render_for_publishing_api
+  end
+
+  def publish_payload
+    presenter.update_type
+  end
 
   def presenter
     @presenter ||= EditionPresenter.new(edition)
