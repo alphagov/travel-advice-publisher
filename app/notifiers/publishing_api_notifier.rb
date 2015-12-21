@@ -10,7 +10,7 @@ class PublishingApiNotifier
 
   def send_to_publishing_api
     if edition.published?
-      api.put_content_item(base_path, publishing_api_payload)
+      api_v2.put_content(content_id, publishing_api_payload)
       api_v2.publish(content_id, publish_payload)
     end
   end

@@ -356,11 +356,11 @@ feature "Edit Edition page", :js => true do
         'state' => 'live'
     ))
 
-    assert_publishing_api_put_item("/foreign-travel-advice/albania", {
-      "title" => "Albania travel advice",
-      "description" => "The overview",
-      "format" => "placeholder_travel_advice",
-      'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
+    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      title: "Albania travel advice",
+      description: "The overview",
+      format: "placeholder_travel_advice",
+      content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
     })
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
