@@ -33,11 +33,6 @@ describe EditionPresenter do
       })
     end
 
-    it "doesn't set a content_id with no corresponding country" do
-      edition.country_slug = 'non-existent'
-      expect(presented_data["content_id"]).to be_nil
-    end
-
     it "sets public_updated_at to now if published_at isn't set" do
       # eg for a draft item
       edition.published_at = nil
