@@ -53,4 +53,5 @@ group :development, :test do
   gem 'jasmine', '2.1.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
   gem 'test-unit'
+  gem 'pry-rails'
 end
