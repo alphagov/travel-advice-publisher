@@ -70,10 +70,10 @@ describe "publishing_api take tasks", :type => :rake_task do
 
       task.invoke
 
-      expect(a_request(:put, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_ENDPOINT + "/v2/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3"))
+      expect(a_request(:put, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3"))
         .not_to have_been_made
 
-      expect(a_request(:post, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_ENDPOINT + "/v2/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3/publish"))
+      expect(a_request(:post, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3/publish"))
         .not_to have_been_made
 
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6")

@@ -17,7 +17,6 @@ end
 
 module TravelAdvicePublisher
   mattr_accessor :asset_api
-  mattr_accessor :publishing_api
   mattr_accessor :publishing_api_v2
 
   # Maslow need ID for Travel Advice Publisher
