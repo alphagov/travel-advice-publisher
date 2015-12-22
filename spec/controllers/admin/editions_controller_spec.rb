@@ -123,27 +123,52 @@ describe Admin::EditionsController do
 
     describe "PUT to update with valid params" do
       it "should update the edition" do
-        put :update, :id => @edition._id, :edition => {
-          :parts_attributes => {
-            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
-            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
-          } }
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            parts_attributes: {
+              "0" => {
+                title: "Part One",
+                body: "Body text",
+                slug: "part-one",
+                order: "1"
+              },
+              "1" => {
+                title: "Part Two",
+                body: "Body text",
+                slug: "part-two",
+                order: "2"
+              },
+            },
+          },
+        }
+
         response.should be_redirect
         assigns(:edition).parts.length.should == 2
       end
 
       it "should strip out any blank or nil alert statuses" do
-        put :update, :id => @edition._id, :edition => {
-          :alert_status => [ "", nil, "   ", "one", "two", "three" ]
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            alert_status: [ "", nil, "   ", "one", "two", "three" ]
+          },
         }
 
         assigns(:edition)[:alert_status].should == [ "one", "two", "three" ]
       end
 
-
       it "should add a note" do
-        put :update, :id => @edition._id, :edition => {
-          :note => { :comment => "Test note" }
+        put :update, {
+          id: @edition._id,
+          commit: "Add Note",
+          edition: {
+            note: {
+              comment: "Test note"
+            }
+          },
         }
 
         response.should be_redirect
@@ -154,11 +179,27 @@ describe Admin::EditionsController do
     describe "PUT to update a published edition" do
       it "should redirect and warn the editor" do
         @edition.publish
-        put :update, :id => @edition._id, :edition => {
-          :parts_attributes => {
-            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
-            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
-          } }
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            :parts_attributes => {
+              "0" => {
+                title: "Part One",
+                body: "Body text",
+                slug: "part-one",
+                order: "1"
+              },
+              "1" => {
+                title: "Part Two",
+                body: "Body text",
+                slug: "part-two",
+                order: "2"
+              }
+            }
+          }
+        }
+
         response.should be_success
         flash[:alert].should == "We had some problems saving: State must be draft to modify."
       end

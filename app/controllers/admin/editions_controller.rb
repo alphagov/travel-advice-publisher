@@ -40,35 +40,17 @@ class Admin::EditionsController < ApplicationController
   end
 
   def update
-    if params[:commit] == "Update review date"
-      set_review_date
-      return
-    end
-
-    if params[:edition][:note] && params[:edition][:note][:comment] && !params[:edition][:note][:comment].empty?
-      @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
-    end
-
-    if @edition.update_attributes(params[:edition])
-      if params[:commit] == "Save & Publish"
-        if @edition.publish_as(current_user)
-          PublishingApiNotifier.send_to_publishing_api(@edition)
-          redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
-        else
-          flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
-          render "/admin/editions/edit"
-        end
-      else
-        # catch any upload errors
-        if @edition.errors.any?
-          flash[:alert] = @edition.errors.full_messages.join(", ")
-        end
-
-        redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
-      end
+    case params[:commit]
+    when "Update review date"
+      update_review_date
+    when "Save"
+      save
+    when "Save & Publish"
+      save_and_publish
+    when "Add Note"
+      add_note
     else
-      flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(", ")}."
-      render "/admin/editions/edit"
+      raise ArgumentError, "params[:commit] is not recognised: #{params[:commit].inspect}"
     end
   end
 
@@ -90,12 +72,45 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
-  def set_review_date
+  def save_and_publish
+    save do
+      if @edition.publish_as(current_user)
+        PublishingApiNotifier.send_to_publishing_api(@edition)
+        redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+      else
+        flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
+        render "/admin/editions/edit"
+      end
+    end
+  end
+
+  def save(&block)
+    if @edition.update_attributes(params[:edition])
+      block.call and return if block_given?
+
+      if @edition.errors.any?
+        flash[:alert] = @edition.errors.full_messages.join(", ")
+      end
+
+      redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
+    else
+      flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(", ")}."
+      render "/admin/editions/edit"
+    end
+  end
+
+  def update_review_date
     @edition.reviewed_at = Time.zone.now.utc
+
     if @edition.save!
       redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
     end
+  end
+
+  def add_note
+    @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
+    save
   end
 end
