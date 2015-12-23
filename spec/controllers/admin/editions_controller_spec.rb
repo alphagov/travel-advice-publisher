@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Admin::EditionsController do
+  include GdsApi::TestHelpers::PublishingApiV2
 
   before :each do
     stub_panopticon_registration
@@ -213,6 +214,10 @@ describe Admin::EditionsController do
     end
 
     describe "publish" do
+      before do
+        stub_any_publishing_api_call
+      end
+
       it "should publish the edition" do
         TravelAdviceEdition.should_receive(:find).with(@draft.to_param).and_return(@draft)
         @draft.should_receive(:publish).and_return(true)
