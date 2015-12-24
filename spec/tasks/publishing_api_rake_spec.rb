@@ -8,7 +8,7 @@ describe "publishing_api rake tasks", :type => :rake_task do
     Rake.application = nil # Reset any previously loaded tasks
     Rails.application.load_tasks
 
-   stub_any_publishing_api_call
+    stub_any_publishing_api_call
   end
 
   describe "publish" do
@@ -20,7 +20,7 @@ describe "publishing_api rake tasks", :type => :rake_task do
       assert_publishing_api_put_content(TravelAdvicePublisher::INDEX_CONTENT_ID, {
         base_path: "/foreign-travel-advice",
         title: "Foreign travel advice",
-        format: "placeholder_travel_advice_index",
+        format: "travel_advice_index",
         update_type: "minor",
       })
 
