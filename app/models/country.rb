@@ -11,6 +11,10 @@ class Country
     TravelAdviceEdition.where(country_slug: slug).order_by([:version_number, :desc])
   end
 
+  def last_published_edition
+    editions.with_state("published").first
+  end
+
   def build_new_edition(old_edition = nil)
     if old_edition.present?
       old_edition.build_clone
