@@ -13,6 +13,7 @@ class Admin::EditionsController < ApplicationController
     end
 
     if edition.save
+      PublishingApiNotifier.put_content(edition)
       redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
@@ -73,23 +74,29 @@ class Admin::EditionsController < ApplicationController
   end
 
   def save_and_publish
-    save do
-      if @edition.publish_as(current_user)
-        PublishingApiNotifier.put_content(@edition)
-        PublishingApiNotifier.publish(@edition)
+    if @edition.update_attributes(params[:edition]) && @edition.publish_as(current_user)
+      PublishingApiNotifier.put_content(@edition)
+      PublishingApiNotifier.publish(@edition)
 
-        redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
-      else
-        flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
-        render "/admin/editions/edit"
+      # catch any upload errors
+      if @edition.errors.any?
+        flash[:alert] = @edition.errors.full_messages.join(", ")
       end
+
+      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+    else
+      flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
+      render "/admin/editions/edit"
     end
   end
 
   def save(&block)
     if @edition.update_attributes(params[:edition])
+      PublishingApiNotifier.put_content(@edition)
+
       block.call and return if block_given?
 
+      # catch any upload errors
       if @edition.errors.any?
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
@@ -105,6 +112,7 @@ class Admin::EditionsController < ApplicationController
     @edition.reviewed_at = Time.zone.now.utc
 
     if @edition.save!
+      PublishingApiNotifier.put_content(@edition)
       redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
