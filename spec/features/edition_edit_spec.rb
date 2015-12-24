@@ -505,7 +505,13 @@ feature "Edit Edition page", :js => true do
     page.should have_content("This is a test comment")
     Capybara.ignore_hidden_elements = true
 
-    pending "ADD A TEST?"
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "actions", [
+      {
+        "request_type" => "note",
+        "comment" => "This is a test comment",
+        "requester" => User.last.uid,
+      }
+    ])
   end
 
   scenario "Set the alert status for an edition" do
