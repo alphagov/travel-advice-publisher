@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'rake'
 
-describe "publishing_api take tasks", :type => :rake_task do
+describe "publishing_api rake tasks", :type => :rake_task do
   include GdsApi::TestHelpers::PublishingApiV2
 
   before do
@@ -42,7 +42,7 @@ describe "publishing_api take tasks", :type => :rake_task do
       assert_publishing_api_put_content("56bae85b-a57c-4ca2-9dbd-68361a086bb3", {
         base_path: "/foreign-travel-advice/aruba",
         title: aruba.title,
-        format: "placeholder_travel_advice",
+        format: "travel_advice",
         update_type: "republish",
         public_updated_at: aruba.published_at.iso8601,
       })
@@ -54,7 +54,7 @@ describe "publishing_api take tasks", :type => :rake_task do
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", {
         base_path: "/foreign-travel-advice/algeria",
         title: algeria.title,
-        format: "placeholder_travel_advice",
+        format: "travel_advice",
         update_type: "republish",
         public_updated_at: algeria.published_at.iso8601,
       })

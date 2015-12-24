@@ -24,6 +24,8 @@ module TravelAdvicePublisher
 
   INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0"
 
+  EMAIL_SIGNUP_URL = "https://public.govdelivery.com/accounts/UKGOVUK/subscriber/topics?qsp=TRAVEL"
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
