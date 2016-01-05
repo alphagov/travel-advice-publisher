@@ -26,7 +26,7 @@ end
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 24.2.0'
+  gem 'gds-api-adapters', '~> 26.4.0'
 end
 
 gem 'logstasher', '0.4.8'
@@ -53,4 +53,5 @@ group :development, :test do
   gem 'jasmine', '2.1.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
   gem 'test-unit'
+  gem 'pry-rails'
 end

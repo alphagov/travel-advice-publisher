@@ -1,69 +1,114 @@
 require 'spec_helper'
 
 describe EditionPresenter do
+  let(:user) { FactoryGirl.create(:user) }
+
   let(:edition) {
-    FactoryGirl.build(:travel_advice_edition,
+    edition = FactoryGirl.build(
+      :travel_advice_edition,
       :country_slug => 'aruba',
       :title => "Aruba travel advice",
       :overview => "Something something",
-      :published_at => Time.zone.now,
+      :published_at => 5.minutes.ago,
+      :summary => "Edition summary",
+      :alert_status => [TravelAdviceEdition::ALERT_STATUSES.first],
     )
-  }
-  let(:presenter) { EditionPresenter.new(edition) }
 
-  it "constructs the base_path for an edition" do
-    expect(presenter.base_path).to eq("/foreign-travel-advice/aruba")
+    edition.parts.build(
+      slug: "terrorism",
+      title: "Terrorism",
+      body: "<p>There is an underlying threat from ...</p>",
+    )
+
+    edition.actions.build(
+      request_type: Action::PUBLISH,
+      requester: user,
+      comment: "Some comment",
+    )
+
+    edition
+  }
+
+  subject { described_class.new(edition) }
+
+  describe "#content_id" do
+    it "returns the content_id of the edition" do
+      expect(subject.content_id).to eq("56bae85b-a57c-4ca2-9dbd-68361a086bb3")
+    end
   end
 
-  describe "render_for_publishing_api" do
-    let(:presented_data) { presenter.render_for_publishing_api }
+  describe "#update_type" do
+    it "returns the update_type of the edition" do
+      expect(subject.update_type).to eq("major")
+    end
+  end
 
-    it "returns a placeholder item" do
-      edition.published_at = 5.minutes.ago
-      expect(presented_data).to include({
-        "format" => "placeholder_travel_advice",
-        "title" => edition.title,
-        "description" => edition.overview,
+  describe "#render_for_publishing_api" do
+    let(:presented_data) { subject.render_for_publishing_api }
+
+    it "is valid against the content schemas", :schema_test => true do
+      expect(presented_data["format"]).to eq("placeholder_travel_advice")
+
+      presented_data["format"] = "travel_advice"
+      expect(presented_data).to be_valid_against_schema('travel_advice')
+    end
+
+    it "returns a travel_advice item" do
+      expect(presented_data).to eq(
         "content_id" => "56bae85b-a57c-4ca2-9dbd-68361a086bb3", # From countries.yml fixture
+        "base_path" => "/foreign-travel-advice/aruba",
+        "format" => "placeholder_travel_advice",
+        "title" => "Aruba travel advice",
+        "description" => "Something something",
         "locale" => "en",
         "publishing_app" => "travel-advice-publisher",
         "rendering_app" => "frontend",
         "public_updated_at" => edition.published_at.iso8601,
         "update_type" => "major",
-      })
+        "routes" => [
+          {"path" => "/foreign-travel-advice/aruba", "type" => "prefix"},
+          {"path" => "/foreign-travel-advice/aruba.atom", "type" => "exact"}
+        ],
+        "details" => {
+          "summary" => "Edition summary",
+          "country" => {
+            "slug" => "aruba",
+            "name" => "Aruba",
+          },
+          "reviewed_at" => Time.zone.now.iso8601,
+          "change_description" => "Stuff changed",
+          "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
+          "parts" => [
+            {
+              "slug" => "terrorism",
+              "title" => "Terrorism",
+              "body" => "<p>There is an underlying threat from ...</p>",
+            }
+          ],
+          "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
+        }
+      )
     end
 
-    it "doesn't set a content_id with no corresponding country" do
-      edition.country_slug = 'non-existent'
-      expect(presented_data["content_id"]).to be_nil
-    end
+    context "when the edition does not have a published_at" do
+      it "sets public_updated_at to now if published_at isn't set" do
+        edition.published_at = nil
 
-    it "sets public_updated_at to now if published_at isn't set" do
-      # eg for a draft item
-      edition.published_at = nil
-      Timecop.freeze do
-        expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
+        Timecop.freeze do
+          expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
+        end
       end
     end
 
-    it "sets update_type to minor for a minor update" do
-      edition.minor_update = true
-      expect(presented_data["update_type"]).to eq("minor")
-    end
-
-    it "creates the necessary routes for the edition" do
-      expect(presented_data["routes"]).to match_array([
-        {"path" => "/foreign-travel-advice/aruba", "type" => "prefix"},
-        {"path" => "/foreign-travel-advice/aruba.atom", "type" => "exact"},
-      ])
-    end
-
-    it "is valid against the content schemas", :schema_test => true do
-      expect(presented_data).to be_valid_against_schema('placeholder')
+    context "when it is a minor update" do
+      it "sets update_type to minor for a minor update" do
+        edition.minor_update = true
+        expect(presented_data["update_type"]).to eq("minor")
+      end
     end
 
     context "when republishing" do
-      let(:presenter) { EditionPresenter.new(edition, republish: true) }
+      subject { described_class.new(edition, republish: true) }
 
       it "sets the update_type to 'republish'" do
         expect(presented_data['update_type']).to eq('republish')

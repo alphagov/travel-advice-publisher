@@ -48,6 +48,30 @@ describe Country do
     end
   end
 
+  describe "#last_published_edition" do
+    before do
+      @country = Country.all.first
+
+      @archived = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
+      @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 2)
+      @draft = FactoryGirl.create(:draft_travel_advice_edition, country_slug: @country.slug, version_number: 3)
+    end
+
+    it "should return the last published edition for the country" do
+      expect(@country.last_published_edition.version_number).to eq(2)
+    end
+
+    context "when there are no published editions for the country" do
+      before do
+        @published.destroy
+      end
+
+      it "should return nil" do
+        expect(@country.last_published_edition).to be_nil
+      end
+    end
+  end
+
   describe "has_{state}_edition?" do
     before :each do
       @country = Country.find_by_slug('aruba')

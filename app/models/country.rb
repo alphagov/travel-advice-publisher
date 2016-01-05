@@ -1,38 +1,42 @@
 class Country
-
   attr_reader :name, :slug, :content_id
 
   def initialize(attrs)
-    @name = attrs['name']
-    @slug = attrs['slug']
-    @content_id = attrs['content_id']
+    @name = attrs.fetch("name")
+    @slug = attrs.fetch("slug")
+    @content_id = attrs.fetch("content_id")
   end
 
   def editions
-    TravelAdviceEdition.where(:country_slug => self.slug).order_by([:version_number, :desc])
+    TravelAdviceEdition.where(country_slug: slug).order_by([:version_number, :desc])
+  end
+
+  def last_published_edition
+    editions.with_state("published").first
   end
 
   def build_new_edition(old_edition = nil)
-    if !old_edition.nil?
+    if old_edition.present?
       old_edition.build_clone
-    elsif latest_edition = editions.first
+    elsif (latest_edition = editions.first)
       latest_edition.build_clone
     else
-      TravelAdviceEdition.new(:country_slug => self.slug, :title => "#{self.name} travel advice")
+      TravelAdviceEdition.new(country_slug: slug, title: "#{name} travel advice")
     end
   end
 
   def build_new_edition_as(user, old_edition = nil)
-    edition = self.build_new_edition(old_edition)
+    edition = build_new_edition(old_edition)
     edition.build_action_as(user, Action::NEW_VERSION)
-    return edition
+    edition
   end
 
   def has_published_edition?
-    self.editions.with_state('published').any?
+    editions.with_state('published').any?
   end
+
   def has_draft_edition?
-    self.editions.with_state('draft').any?
+    editions.with_state('draft').any?
   end
 
   def self.all
@@ -40,7 +44,7 @@ class Country
   end
 
   def self.find_by_slug(slug)
-    all.select {|c| c.slug == slug }.first
+    all.find {|c| c.slug == slug }
   end
 
   def self.data
@@ -52,7 +56,11 @@ class Country
   end
 
   def self.data_path=(path)
-    @countries = nil if path != @data_path # Clear the memoized countries when the data_path is changed.
+    clear_memoized_countries unless path == @data_path
     @data_path = path
+  end
+
+  def self.clear_memoized_countries
+    @countries = nil
   end
 end

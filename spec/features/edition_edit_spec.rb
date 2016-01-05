@@ -8,6 +8,26 @@ feature "Edit Edition page", :js => true do
     login_as_stub_user
   end
 
+  def assert_details_contains(content_id, key, expected_value)
+    assert_publishing_api_put_content(content_id, -> (response) {
+      payload = JSON.parse(response.body)
+      details = payload.fetch("details")
+      actual_value = details.fetch(key)
+
+      expect(actual_value).to eq(expected_value)
+    })
+  end
+
+  def assert_details_does_not_contain(content_id, key)
+    assert_publishing_api_put_content(content_id, -> (response) {
+      payload = JSON.parse(response.body)
+      details = payload.fetch("details")
+
+      expect(details.keys).to_not include(key)
+      true
+    })
+  end
+
   context "creating new editions" do
     scenario "when no editions are present, create a new edition" do
       visit "/admin/countries/aruba"
@@ -52,6 +72,12 @@ feature "Edit Edition page", :js => true do
 
       page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
+
+      assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+        title: "An archived title",
+        format: "placeholder_travel_advice",
+        content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+      })
     end
 
     scenario "create an edition from a published edition" do
@@ -180,19 +206,25 @@ feature "Edit Edition page", :js => true do
     two.slug.should == 'part-two'
     two.body.should == 'Body text'
     two.order.should == 2
+
+    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      title: "Travel advice for Albania",
+      format: "placeholder_travel_advice",
+      content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+    })
   end
 
   scenario "Updating the reviewed at date for a published edition" do
-    @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
-    day = 1.day.ago
-    Timecop.freeze(day) do
+    Timecop.freeze do
+      @edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'albania')
       visit "/admin/editions/#{@edition._id}/edit"
       click_on "Update review date"
-    end
-    @edition.reload
-    @edition.reviewed_at.to_i.should == day.to_i
+      @edition.reload
+      @edition.reviewed_at.to_i.should == Time.now.to_i
 
-    page.should have_content "Updated review date"
+      page.should have_content "Updated review date"
+      assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "reviewed_at", Time.now.iso8601)
+    end
   end
 
   scenario "Seeing the minor update toggle on the edit form for non-first versions" do
@@ -261,6 +293,19 @@ feature "Edit Edition page", :js => true do
     click_navbar_button "Save"
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
+
+    assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "parts", [
+      {
+        "slug" => "part-one",
+        "title" => "Part One",
+        "body" => "Body text",
+      },
+      {
+        "slug" => "part-two",
+        "title" => "Part Two",
+        "body" => "Body text",
+      },
+    ])
 
     pending "This is not setting the _destroy field on the part to '1' despite the input value changing in the browser."
 
@@ -331,17 +376,17 @@ feature "Edit Edition page", :js => true do
     click_navbar_button "Save & Publish"
 
     @old_edition.reload
-    @old_edition.should be_archived
+    expect(@old_edition).to be_archived
 
     @edition.reload
-    @edition.parts.size.should == 1
-    @edition.parts.first.title.should == "Part One"
-    @edition.should be_published
+    expect(@edition.parts.size).to eq 1
+    expect(@edition.parts.first.title).to eq "Part One"
+    expect(@edition).to be_published
 
     @edition.published_at.to_i.should be_within(1.0).of(now.to_i)
     action = @edition.actions.last
-    action.request_type.should == Action::PUBLISH
-    action.comment.should == "Stuff changed"
+    expect(action.request_type).to eq Action::PUBLISH
+    expect(action.comment).to eq "Stuff changed"
 
     WebMock.should have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
       with(:body => hash_including(
@@ -356,11 +401,8 @@ feature "Edit Edition page", :js => true do
         'state' => 'live'
     ))
 
-    assert_publishing_api_put_item("/foreign-travel-advice/albania", {
-      "title" => "Albania travel advice",
-      "description" => "The overview",
-      "format" => "placeholder_travel_advice",
-      'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
+    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      update_type: "major"
     })
   end
 
@@ -390,14 +432,24 @@ feature "Edit Edition page", :js => true do
     end
 
     @edition.reload
-    @edition.should be_published
-    @edition.change_description.should == "Some things changed"
+    expect(@edition).to be_published
+    expect(@edition.change_description).to eq "Some things changed"
 
-    @edition.published_at.should == @old_edition.published_at
-    @edition.reviewed_at.should == @old_edition.reviewed_at
+    expect(@edition.published_at).to eq @old_edition.published_at
+    expect(@edition.reviewed_at).to eq @old_edition.reviewed_at
     action = @edition.actions.last
-    action.request_type.should == Action::PUBLISH
-    action.comment.should == "Minor update"
+    expect(action.request_type).to eq Action::PUBLISH
+    expect(action.comment).to eq "Minor update"
+
+    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      format: "placeholder_travel_advice",
+      content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+    })
+
+
+    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      update_type: "minor"
+    })
   end
 
   scenario "attempting to edit a published edition" do
@@ -452,6 +504,11 @@ feature "Edit Edition page", :js => true do
 
     click_navbar_button "Save"
 
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", [
+      "avoid_all_travel_to_parts",
+      "avoid_all_but_essential_travel_to_parts",
+    ])
+
     page.should have_checked_field("The FCO advise against all but essential travel to parts of the country")
     page.should have_checked_field("The FCO advise against all travel to parts of the country")
     page.should have_unchecked_field("The FCO advise against all but essential travel to the whole country")
@@ -460,7 +517,12 @@ feature "Edit Edition page", :js => true do
     uncheck "The FCO advise against all but essential travel to parts of the country"
     uncheck "The FCO advise against all travel to parts of the country"
 
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
+
     click_navbar_button "Save"
+
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", [])
 
     page.should have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
     page.should have_unchecked_field("The FCO advise against all travel to parts of the country")
@@ -474,8 +536,17 @@ feature "Edit Edition page", :js => true do
     file_one = File.open(Rails.root.join("spec","fixtures","uploads","image.jpg"))
     file_two = File.open(Rails.root.join("spec","fixtures","uploads","image_two.jpg"))
 
-    asset_one = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/an_image_id', :file_url => 'http://path/to/image.jpg')
-    asset_two = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/another_image_id', :file_url => 'http://path/to/image_two.jpg')
+    asset_one = OpenStruct.new(
+      id: 'http://asset-manager.dev.gov.uk/assets/an_image_id',
+      file_url: 'http://path/to/image_one.jpg',
+      content_type: "image/jpeg",
+    )
+
+    asset_two = OpenStruct.new(
+      id: 'http://asset-manager.dev.gov.uk/assets/another_image_id',
+      file_url: 'http://path/to/image_two.jpg',
+      content_type: "image/jpeg",
+    )
 
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_one)
 
@@ -490,20 +561,36 @@ feature "Edit Edition page", :js => true do
     click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
-      page.should have_selector("img[src$='image.jpg']")
+      page.should have_selector("img[src$='image_one.jpg']")
     end
+
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
+      "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg"
+    })
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
 
     # ensure image is not removed on save
     click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
-      page.should have_selector("img[src$='image.jpg']")
+      page.should have_selector("img[src$='image_one.jpg']")
     end
+
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
+      "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg"
+    })
 
     # replace image
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new map image", file_two.path)
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
 
     click_navbar_button "Save"
 
@@ -511,12 +598,22 @@ feature "Edit Edition page", :js => true do
       page.should have_selector("img[src$='image_two.jpg']")
     end
 
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
+      "url" => "http://path/to/image_two.jpg",
+      "content_type" => "image/jpeg"
+    })
+
     # remove image
     check "Remove image?"
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
 
     click_navbar_button "Save"
 
     page.should_not have_selector(".uploaded-image")
+
+    assert_details_does_not_contain("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image")
   end
 
   scenario "managing documents for an edition" do
@@ -525,8 +622,19 @@ feature "Edit Edition page", :js => true do
     file_one = File.open(Rails.root.join("spec","fixtures","uploads","document.pdf"))
     file_two = File.open(Rails.root.join("spec","fixtures","uploads","document_two.pdf"))
 
-    asset_one = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/a_document_id', :name => "document.pdf", :file_url => 'http://path/to/document.pdf')
-    asset_two = OpenStruct.new(:id => 'http://asset-manager.dev.gov.uk/assets/another_document_id', :name => "document_two.pdf", :file_url => 'http://path/to/document_two.pdf')
+    asset_one = OpenStruct.new(
+      id: 'http://asset-manager.dev.gov.uk/assets/a_document_id',
+      name: "document_one.pdf",
+      file_url: 'http://path/to/document_one.pdf',
+      content_type: "application/pdf",
+    )
+
+    asset_two = OpenStruct.new(
+      id: 'http://asset-manager.dev.gov.uk/assets/another_document_id',
+      name: "document_two.pdf",
+      file_url: 'http://path/to/document_two.pdf',
+      content_type: "application/pdf",
+    )
 
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_one)
 
@@ -537,34 +645,63 @@ feature "Edit Edition page", :js => true do
 
     page.should have_field("Upload a new PDF", :type => "file")
     attach_file("Upload a new PDF", file_one.path)
+
     click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
-      page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
+      page.should have_link("Download document_one.pdf", :href => "http://path/to/document_one.pdf")
     end
+
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
+      "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf",
+    })
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
 
     # ensure document is not removed on save
     click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
-      page.should have_link("Download document.pdf", :href => "http://path/to/document.pdf")
+      page.should have_link("Download document_one.pdf", :href => "http://path/to/document_one.pdf")
     end
+
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
+      "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf",
+    })
 
     # replace document
     TravelAdvicePublisher.asset_api.should_receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new PDF", file_two.path)
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
+
     click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       page.should have_link("Download document_two.pdf", :href => "http://path/to/document_two.pdf")
     end
 
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
+      "url" => "http://path/to/document_two.pdf",
+      "content_type" => "application/pdf",
+    })
+
     # remove document
     check "Remove PDF?"
+
+    # Clear the previous request before saving again.
+    WebMock::RequestRegistry.instance.reset!
+
     click_navbar_button "Save"
 
     page.should_not have_selector(".uploaded-document")
+
+    assert_details_does_not_contain("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document")
   end
 
   context "workflow 'Save & Publish' button" do

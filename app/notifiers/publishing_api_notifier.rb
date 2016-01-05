@@ -1,22 +1,17 @@
-class PublishingApiNotifier
-  def self.send_to_publishing_api(edition)
-    new(edition).send_to_publishing_api
-  end
+module PublishingApiNotifier
+  class << self
+    def put_content(edition)
+      presenter = EditionPresenter.new(edition)
+      api = TravelAdvicePublisher.publishing_api_v2
 
-  def initialize(edition)
-    @edition = edition
-  end
-  attr_reader :edition
-
-  def send_to_publishing_api
-    if edition.published?
-      TravelAdvicePublisher.publishing_api.put_content_item(presenter.base_path, presenter.render_for_publishing_api)
+      api.put_content(presenter.content_id, presenter.render_for_publishing_api)
     end
-  end
 
-  private
+    def publish(edition)
+      presenter = EditionPresenter.new(edition)
+      api = TravelAdvicePublisher.publishing_api_v2
 
-  def presenter
-    @presenter ||= EditionPresenter.new(edition)
+      api.publish(presenter.content_id, presenter.update_type)
+    end
   end
 end

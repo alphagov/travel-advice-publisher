@@ -1,37 +1,40 @@
 require 'spec_helper'
 
 describe Admin::EditionsController do
+  include GdsApi::TestHelpers::PublishingApiV2
 
-  before :each do
+  before do
     stub_panopticon_registration
+    stub_any_publishing_api_call
   end
 
   describe "POST to create" do
-    before :each do
+    before do
       @country = Country.find_by_slug('aruba')
       @user = stub_user
       login_as @user
     end
 
-    it "should ask the country to build a new edition, and save it" do
-      Country.stub(:find_by_slug).with('aruba').and_return(@country)
-      ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
-      @country.should_receive(:build_new_edition_as).and_return(ed)
-      ed.should_receive(:save).and_return(true)
+    it "creates a new edition for the country" do
+      expect {
+        post :create, country_id: "aruba"
+      }.to change(TravelAdviceEdition, :count).by(1)
 
-      post :create, :country_id => @country.slug
+      edition = TravelAdviceEdition.last
+
+      expect(edition.title).to eq("Aruba travel advice")
+      expect(edition.country_slug).to eq("aruba")
     end
 
     it "should redirect to the edit page for the new edition" do
-      ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => true)
-      Country.any_instance.stub(:build_new_edition_as).and_return(ed)
+      post :create, country_id: "aruba"
+      edition = TravelAdviceEdition.last
 
-      post :create, :country_id => @country.slug
-      response.should redirect_to(edit_admin_edition_path("1234"))
+      expect(response).to redirect_to(edit_admin_edition_path(edition))
     end
 
     context "when creating a new edition fails" do
-      before :each do
+      before do
         @ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => false)
         Country.any_instance.stub(:build_new_edition_as).and_return(@ed)
       end
@@ -53,28 +56,21 @@ describe Admin::EditionsController do
     end
 
     context "cloning an existing edition" do
-      before :each do
+      before do
         @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug, :version_number => 17)
       end
 
       it "should build out a clone of the provided edition" do
-        ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234")
-        ed.should_receive(:save).and_return(true)
+        post :create, country_id: "aruba", edition_version: @published.version_number
+        edition = TravelAdviceEdition.last
 
-        @country.should_receive(:build_new_edition_as)
-          .with(@user, @published).and_return(ed)
-
-        Country.stub(:find_by_slug).with("aruba").and_return(@country)
-
-        post :create, :country_id => @country.slug, :edition_version => @published.version_number
-
-        response.should redirect_to(edit_admin_edition_path(ed))
+        expect(response).to redirect_to(edit_admin_edition_path(edition))
       end
     end
   end
 
   describe "destroy" do
-    before :each do
+    before do
       login_as_stub_user
     end
 
@@ -106,7 +102,7 @@ describe Admin::EditionsController do
     end
   end
   describe "edit, update" do
-    before :each do
+    before do
       login_as_stub_user
       @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
       @country = Country.find_by_slug('aruba')
@@ -123,27 +119,52 @@ describe Admin::EditionsController do
 
     describe "PUT to update with valid params" do
       it "should update the edition" do
-        put :update, :id => @edition._id, :edition => {
-          :parts_attributes => {
-            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
-            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
-          } }
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            parts_attributes: {
+              "0" => {
+                title: "Part One",
+                body: "Body text",
+                slug: "part-one",
+                order: "1"
+              },
+              "1" => {
+                title: "Part Two",
+                body: "Body text",
+                slug: "part-two",
+                order: "2"
+              },
+            },
+          },
+        }
+
         response.should be_redirect
         assigns(:edition).parts.length.should == 2
       end
 
       it "should strip out any blank or nil alert statuses" do
-        put :update, :id => @edition._id, :edition => {
-          :alert_status => [ "", nil, "   ", "one", "two", "three" ]
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            alert_status: [ "", nil, "   ", "one", "two", "three" ]
+          },
         }
 
         assigns(:edition)[:alert_status].should == [ "one", "two", "three" ]
       end
 
-
       it "should add a note" do
-        put :update, :id => @edition._id, :edition => {
-          :note => { :comment => "Test note" }
+        put :update, {
+          id: @edition._id,
+          commit: "Add Note",
+          edition: {
+            note: {
+              comment: "Test note"
+            }
+          },
         }
 
         response.should be_redirect
@@ -154,11 +175,27 @@ describe Admin::EditionsController do
     describe "PUT to update a published edition" do
       it "should redirect and warn the editor" do
         @edition.publish
-        put :update, :id => @edition._id, :edition => {
-          :parts_attributes => {
-            "0" => { :title => "Part One", :body => "Body text", :slug => "part-one", :order => "1" },
-            "1" => { :title => "Part Two", :body => "Body text", :slug => "part-two", :order => "2" }
-          } }
+        put :update, {
+          commit: "Save",
+          id: @edition._id,
+          edition: {
+            :parts_attributes => {
+              "0" => {
+                title: "Part One",
+                body: "Body text",
+                slug: "part-one",
+                order: "1"
+              },
+              "1" => {
+                title: "Part Two",
+                body: "Body text",
+                slug: "part-two",
+                order: "2"
+              }
+            }
+          }
+        }
+
         response.should be_success
         flash[:alert].should == "We had some problems saving: State must be draft to modify."
       end
@@ -166,7 +203,7 @@ describe Admin::EditionsController do
   end
 
   describe "workflow" do
-    before :each do
+    before do
       login_as_stub_user
       @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
     end
