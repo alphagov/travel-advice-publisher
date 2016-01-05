@@ -11,7 +11,7 @@ class IndexPresenter
     {
       "content_id" => content_id,
       "base_path" => "/foreign-travel-advice",
-      "format" => "travel_advice_index",
+      "format" => "placeholder_travel_advice_index",
       "title" => "Foreign travel advice",
       "description" => "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       "locale" => "en",

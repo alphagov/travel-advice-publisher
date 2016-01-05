@@ -47,6 +47,9 @@ describe EditionPresenter do
     let(:presented_data) { subject.render_for_publishing_api }
 
     it "is valid against the content schemas", :schema_test => true do
+      expect(presented_data["format"]).to eq("placeholder_travel_advice")
+
+      presented_data["format"] = "travel_advice"
       expect(presented_data).to be_valid_against_schema('travel_advice')
     end
 
@@ -54,7 +57,7 @@ describe EditionPresenter do
       expect(presented_data).to eq(
         "content_id" => "56bae85b-a57c-4ca2-9dbd-68361a086bb3", # From countries.yml fixture
         "base_path" => "/foreign-travel-advice/aruba",
-        "format" => "travel_advice",
+        "format" => "placeholder_travel_advice",
         "title" => "Aruba travel advice",
         "description" => "Something something",
         "locale" => "en",
