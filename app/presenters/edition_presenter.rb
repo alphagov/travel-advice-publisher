@@ -50,7 +50,6 @@ private
       "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
       "parts" => parts,
       "alert_status" => edition.alert_status,
-      "actions" => actions,
     }
 
     details.merge!("image" => image) if image
@@ -94,18 +93,5 @@ private
 
   def document
     @document ||= AssetPresenter.present(edition.document)
-  end
-
-  # We're keeping this simple for now, pending a discussion on how to model actions.
-  # https://trello.com/c/5trAiqh8/468-investigate-how-to-model-actions-in-the-publishing-api
-  def actions
-    edition.actions.map do |action|
-      hash = {
-        "request_type" => action.request_type,
-        "comment" => action.comment,
-      }
-      hash.merge!("requester" => action.requester.uid) if action.requester
-      hash
-    end
   end
 end

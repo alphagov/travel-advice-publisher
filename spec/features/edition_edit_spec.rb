@@ -109,14 +109,6 @@ feature "Edit Edition page", :js => true do
         page.should have_content("Made some changes...")
         page.should have_content("New version by GOV.UK Bot")
       end
-
-      assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "actions", [
-        {
-          "request_type" => "new_version",
-          "requester" => GDS::SSO.test_user.uid,
-          "comment" => nil,
-        }
-      ])
     end
 
     scenario "should not allow creation of drafts if draft already exists" do
@@ -409,14 +401,6 @@ feature "Edit Edition page", :js => true do
         'state' => 'live'
     ))
 
-    assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "actions", [
-      {
-        "request_type" => Action::PUBLISH,
-        "requester" => GDS::SSO.test_user.uid,
-        "comment" => "Stuff changed",
-      }
-    ])
-
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
       update_type: "major"
     })
@@ -504,14 +488,6 @@ feature "Edit Edition page", :js => true do
     Capybara.ignore_hidden_elements = false
     page.should have_content("This is a test comment")
     Capybara.ignore_hidden_elements = true
-
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "actions", [
-      {
-        "request_type" => "note",
-        "comment" => "This is a test comment",
-        "requester" => User.last.uid,
-      }
-    ])
   end
 
   scenario "Set the alert status for an edition" do

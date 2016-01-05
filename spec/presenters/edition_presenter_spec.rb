@@ -83,13 +83,6 @@ describe EditionPresenter do
             }
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
-          "actions" => [
-            {
-              "request_type" => Action::PUBLISH,
-              "requester" => user.uid,
-              "comment" => "Some comment",
-            }
-          ]
         }
       )
     end
