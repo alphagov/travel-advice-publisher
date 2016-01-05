@@ -44,7 +44,7 @@ class Country
   end
 
   def self.find_by_slug(slug)
-    all.detect {|c| c.slug == slug }
+    all.find {|c| c.slug == slug }
   end
 
   def self.data
