@@ -31,6 +31,7 @@ end
 
 gem 'logstasher', '0.4.8'
 gem 'airbrake', '~> 4.0.0'
+gem 'govspeak', '~> 3.1.1'
 
 # Gems used only for assets and not required in production
 # environments by default.
