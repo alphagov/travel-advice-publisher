@@ -18,7 +18,10 @@ RSpec.describe PartPresenter do
     expect(presented).to eq(
       "slug" => "part-one",
       "title" => "Part One",
-      "body" => "Body text",
+      "body" => [
+        { "content_type" => "text/govspeak", "content" => "Body text" },
+        { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
+      ],
     )
   end
 end

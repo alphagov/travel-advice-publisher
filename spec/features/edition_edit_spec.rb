@@ -272,11 +272,17 @@ feature "Edit Edition page", :js => true do
 
     @edition.parts.build
     p1 = @edition.parts.first.update_attributes(
-      :title => 'Part One', :body => 'Body text', :slug => 'part-one')
+      title: 'Part One',
+      slug: 'part-one',
+      body: 'Body text',
+    )
 
     @edition.parts.build
     p2 = @edition.parts.second.update_attributes(
-      :title => 'Part Two', :body => 'Body text', :slug => 'part-two')
+      title: 'Part Two',
+      slug: 'part-two',
+      body: 'Body text',
+    )
 
     visit "/admin/editions/#{@edition._id}/edit"
 
@@ -298,12 +304,18 @@ feature "Edit Edition page", :js => true do
       {
         "slug" => "part-one",
         "title" => "Part One",
-        "body" => "Body text",
+        "body" => [
+          { "content_type" => "text/govspeak", "content" => "Body text" },
+          { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
+        ],
       },
       {
         "slug" => "part-two",
         "title" => "Part Two",
-        "body" => "Body text",
+        "body" => [
+          { "content_type" => "text/govspeak", "content" => "Body text" },
+          { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
+        ],
       },
     ])
 

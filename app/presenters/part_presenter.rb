@@ -11,7 +11,7 @@ class PartPresenter
     {
       "slug" => part.slug,
       "title" => part.title,
-      "body" => part.body,
+      "body" => GovspeakPresenter.present(part.body),
     }
   end
 

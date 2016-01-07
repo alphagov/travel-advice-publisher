@@ -40,7 +40,7 @@ class EditionPresenter
 private
   def details
     details = {
-      "summary" => edition.summary,
+      "summary" => GovspeakPresenter.present(edition.summary),
       "country" => {
         "slug" => country.slug,
         "name" => country.name,
