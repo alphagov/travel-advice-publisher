@@ -45,6 +45,7 @@ private
         "slug" => country.slug,
         "name" => country.name,
       },
+      "updated_at" => updated_at.iso8601,
       "reviewed_at" => reviewed_at.iso8601,
       "change_description" => edition.change_description,
       "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
@@ -71,6 +72,10 @@ private
 
   def public_updated_at
     edition.published_at || Time.zone.now
+  end
+
+  def updated_at
+    edition.updated_at || Time.zone.now
   end
 
   def reviewed_at
