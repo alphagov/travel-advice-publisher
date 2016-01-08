@@ -75,6 +75,7 @@ describe EditionPresenter do
             "slug" => "aruba",
             "name" => "Aruba",
           },
+          "updated_at" => Time.zone.now.iso8601,
           "reviewed_at" => Time.zone.now.iso8601,
           "change_description" => "Stuff changed",
           "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
