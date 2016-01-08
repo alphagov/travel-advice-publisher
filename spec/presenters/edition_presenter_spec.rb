@@ -10,14 +10,14 @@ describe EditionPresenter do
       :title => "Aruba travel advice",
       :overview => "Something something",
       :published_at => 5.minutes.ago,
-      :summary => "Edition summary",
+      :summary => "### Summary",
       :alert_status => [TravelAdviceEdition::ALERT_STATUSES.first],
     )
 
     edition.parts.build(
       slug: "terrorism",
       title: "Terrorism",
-      body: "<p>There is an underlying threat from ...</p>",
+      body: "There is an underlying threat from ...",
     )
 
     edition.actions.build(
@@ -70,7 +70,10 @@ describe EditionPresenter do
           {"path" => "/foreign-travel-advice/aruba.atom", "type" => "exact"}
         ],
         "details" => {
-          "summary" => "Edition summary",
+          "summary" => [
+            { "content_type" => "text/govspeak", "content" => "### Summary" },
+            { "content_type" => "text/html", "content" => "<h3 id=\"summary\">Summary</h3>\n" },
+          ],
           "country" => {
             "slug" => "aruba",
             "name" => "Aruba",
@@ -83,7 +86,10 @@ describe EditionPresenter do
             {
               "slug" => "terrorism",
               "title" => "Terrorism",
-              "body" => "<p>There is an underlying threat from ...</p>",
+              "body" => [
+                { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
+                { "content_type" => "text/html", "content" => "<p>There is an underlying threat from &hellip;</p>\n" },
+              ],
             }
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
