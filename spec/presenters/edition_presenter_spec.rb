@@ -18,6 +18,14 @@ describe EditionPresenter do
       slug: "terrorism",
       title: "Terrorism",
       body: "There is an underlying threat from ...",
+      order: 2,
+    )
+
+    edition.parts.build(
+      slug: "safety-and-security",
+      title: "Safety and security",
+      body: "Keep your valuables safely stored ...",
+      order: 1,
     )
 
     edition.actions.build(
@@ -83,6 +91,14 @@ describe EditionPresenter do
           "change_description" => "Stuff changed",
           "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
           "parts" => [
+            {
+              "slug" => "safety-and-security",
+              "title" => "Safety and security",
+              "body" => [
+                { "content_type" => "text/govspeak", "content" => "Keep your valuables safely stored ..." },
+                { "content_type" => "text/html", "content" => "<p>Keep your valuables safely stored &hellip;</p>\n" },
+              ],
+            },
             {
               "slug" => "terrorism",
               "title" => "Terrorism",

@@ -87,7 +87,7 @@ private
   end
 
   def parts
-    edition.parts.map do |part|
+    edition.order_parts.map do |part|
       PartPresenter.present(part)
     end
   end
