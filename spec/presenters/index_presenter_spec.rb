@@ -69,6 +69,7 @@ describe IndexPresenter do
               {
                 "name" => "Andorra",
                 "base_path" => "/foreign-travel-advice/andorra",
+                "updated_at" => Time.zone.now.iso8601,
                 "public_updated_at" => Time.zone.now.iso8601,
                 "change_description" => "Stuff changed",
                 "synonyms" => [],
@@ -76,6 +77,7 @@ describe IndexPresenter do
               {
                 "name" => "Aruba",
                 "base_path" => "/foreign-travel-advice/aruba",
+                "updated_at" => Time.zone.now.iso8601,
                 "public_updated_at" => three_days_ago.iso8601,
                 "change_description" => "Stuff changed",
                 "synonyms" => ["foo", "bar"],
