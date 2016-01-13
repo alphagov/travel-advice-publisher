@@ -18,6 +18,10 @@ namespace :publishing_api do
 
       api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
       api_v2.publish(presenter.content_id, presenter.update_type)
+
+      print "."
     end
+
+    puts
   end
 end
