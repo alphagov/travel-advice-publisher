@@ -40,6 +40,7 @@ private
       {
         "name" => country.name,
         "base_path" => "/foreign-travel-advice/#{country.slug}",
+        "updated_at" => updated_at(edition).iso8601,
         "public_updated_at" => public_updated_at(edition).iso8601,
         "change_description" => edition.change_description,
         "synonyms" => edition.synonyms,
@@ -49,5 +50,9 @@ private
 
   def public_updated_at(edition)
     (edition.published_at || Time.now).in_time_zone
+  end
+
+  def updated_at(edition)
+    (edition.updated_at || Time.now).in_time_zone
   end
 end
