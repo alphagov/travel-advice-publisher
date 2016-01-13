@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -xe
 
 GH_STATUS_REPO_NAME=${INITIATING_REPO_NAME:-"alphagov/travel-advice-publisher"}
 CONTEXT_MESSAGE=${CONTEXT_MESSAGE:-"default"}
