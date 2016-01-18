@@ -77,6 +77,7 @@ class Admin::EditionsController < ApplicationController
     if @edition.update_attributes(params[:edition]) && @edition.publish_as(current_user)
       PublishingApiNotifier.put_content(@edition)
       PublishingApiNotifier.publish(@edition)
+      PublishingApiNotifier.publish_index
 
       # catch any upload errors
       if @edition.errors.any?
