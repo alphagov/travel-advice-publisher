@@ -83,6 +83,15 @@ describe IndexPresenter do
                 "synonyms" => ["foo", "bar"],
               },
             ],
+            "primary_parent" => {
+              "web_url" => "https://www.gov.uk/browse/abroad/travel-abroad",
+              "title" => "Travel abroad",
+              "parent" => {
+                "web_url" => "https://www.gov.uk/browse/abroad",
+                "title" => "Passports, travel and living abroad",
+                "parent" => nil
+              }
+            },
           },
         )
       end
