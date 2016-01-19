@@ -58,6 +58,8 @@ describe EditionPresenter do
       expect(presented_data["format"]).to eq("placeholder_travel_advice")
 
       presented_data["format"] = "travel_advice"
+      presented_data.delete("links")
+
       expect(presented_data).to be_valid_against_schema('travel_advice')
     end
 
@@ -109,6 +111,21 @@ describe EditionPresenter do
             }
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
+        },
+        "links" => {
+          "parent" => {
+            "web_url" => "/foreign-travel-advice",
+            "title" => "Foreign travel advice",
+            "parent" => {
+              "web_url" => "/browse/abroad/travel-abroad",
+              "title" => "Travel abroad",
+              "parent" => {
+                "web_url" => "/browse/abroad",
+                "title" => "Passports, travel and living abroad",
+                "parent" => nil
+              }
+            }
+          },
         }
       )
     end
