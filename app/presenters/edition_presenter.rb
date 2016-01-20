@@ -51,6 +51,7 @@ private
       "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
       "parts" => parts,
       "alert_status" => edition.alert_status,
+      "primary_parent" => breadcrumbs,
     }
 
     details.merge!("image" => image) if image
@@ -98,5 +99,9 @@ private
 
   def document
     @document ||= AssetPresenter.present(edition.document)
+  end
+
+  def breadcrumbs
+    @breadcrumbs ||= BreadcrumbsPresenter.present
   end
 end

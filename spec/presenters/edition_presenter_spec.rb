@@ -109,6 +109,19 @@ describe EditionPresenter do
             }
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
+          "primary_parent" => {
+            "web_url" => "https://www.gov.uk/foreign-travel-advice",
+            "title" => "Foreign travel advice",
+            "parent" => {
+              "web_url" => "https://www.gov.uk/browse/abroad/travel-abroad",
+              "title" => "Travel abroad",
+              "parent" => {
+                "web_url" => "https://www.gov.uk/browse/abroad",
+                "title" => "Passports, travel and living abroad",
+                "parent" => nil
+              }
+            }
+          },
         }
       )
     end

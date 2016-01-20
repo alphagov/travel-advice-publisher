@@ -27,6 +27,7 @@ class IndexPresenter
       "details" => {
         "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
         "countries" => countries,
+        "primary_parent" => breadcrumbs,
       }
     }
   end
@@ -46,6 +47,10 @@ private
         "synonyms" => edition.synonyms,
       }
     end.compact
+  end
+
+  def breadcrumbs
+    BreadcrumbsPresenter.present_for_index
   end
 
   def public_updated_at(edition)
