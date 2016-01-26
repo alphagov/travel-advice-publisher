@@ -73,11 +73,11 @@ feature "Edit Edition page", :js => true do
       page.should have_field("Search title", :with => @edition.title)
       current_path.should_not == "/admin/editions/#{@edition._id}/edit"
 
-      assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+      assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
         title: "An archived title",
         format: "placeholder_travel_advice",
         content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
-      })
+      ))
     end
 
     scenario "create an edition from a published edition" do
@@ -207,11 +207,11 @@ feature "Edit Edition page", :js => true do
     two.body.should == 'Body text'
     two.order.should == 2
 
-    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
       title: "Travel advice for Albania",
       format: "placeholder_travel_advice",
       content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
-    })
+    ))
   end
 
   scenario "Updating the reviewed at date for a published edition" do
@@ -457,11 +457,10 @@ feature "Edit Edition page", :js => true do
     expect(action.request_type).to eq Action::PUBLISH
     expect(action.comment).to eq "Minor update"
 
-    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
+    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
       format: "placeholder_travel_advice",
       content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
-    })
-
+    ))
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
       update_type: "minor"
