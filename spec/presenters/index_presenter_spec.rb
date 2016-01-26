@@ -42,6 +42,8 @@ describe IndexPresenter do
       expect(presented_data["format"]).to eq("placeholder_travel_advice_index")
 
       presented_data["format"] = "travel_advice_index"
+      presented_data.delete("links")
+
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
     end
 
@@ -82,8 +84,19 @@ describe IndexPresenter do
                 "change_description" => "Stuff changed",
                 "synonyms" => ["foo", "bar"],
               },
-            ],
+            ]
           },
+          "links" => {
+            "parent" => {
+              "web_url" => "/browse/abroad/travel-abroad",
+              "title" => "Travel abroad",
+              "parent" => {
+                "web_url" => "/browse/abroad",
+                "title" => "Passports, travel and living abroad",
+                "parent" => nil
+              }
+            }
+          }
         )
       end
     end

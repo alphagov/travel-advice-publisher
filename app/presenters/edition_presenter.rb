@@ -34,6 +34,7 @@ class EditionPresenter
       "public_updated_at" => public_updated_at.iso8601,
       "update_type" => update_type,
       "details" => details,
+      "links" => { "parent" => breadcrumbs }
     }
   end
 
@@ -98,5 +99,9 @@ private
 
   def document
     @document ||= AssetPresenter.present(edition.document)
+  end
+
+  def breadcrumbs
+    @breadcrumbs ||= BreadcrumbsPresenter.present
   end
 end
