@@ -10,7 +10,7 @@ gem 'mongoid_rails_migrations', '1.0.1'
 
 gem 'diffy', '3.0.7'
 
-gem 'plek', '1.8.1'
+gem 'plek', '~> 1.9.0'
 gem 'gds-sso', '10.0.0'
 
 gem 'govuk_admin_template', '3.0.0'
@@ -26,7 +26,7 @@ end
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 26.4.0'
+  gem 'gds-api-adapters', '~> 27.2.0'
 end
 
 gem 'logstasher', '0.4.8'
