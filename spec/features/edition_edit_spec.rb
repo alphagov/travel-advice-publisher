@@ -420,6 +420,8 @@ feature "Edit Edition page", :js => true do
     assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID, {
       update_type: "minor"
     })
+
+    assert_email_alert_sent("subject" => "Albania travel advice")
   end
 
   scenario "save and publish a minor update to an edition" do

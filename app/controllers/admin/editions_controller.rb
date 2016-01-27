@@ -80,6 +80,7 @@ class Admin::EditionsController < ApplicationController
       PublishingApiNotifier.put_links(@edition)
       PublishingApiNotifier.publish(@edition)
       PublishingApiNotifier.publish_index
+      EmailAlertApiNotifier.send_alert(@edition)
 
       # catch any upload errors
       if @edition.errors.any?
