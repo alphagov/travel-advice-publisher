@@ -395,7 +395,7 @@ feature "Edit Edition page", :js => true do
     expect(@edition.parts.first.title).to eq "Part One"
     expect(@edition).to be_published
 
-    @edition.published_at.to_i.should be_within(1.0).of(now.to_i)
+    @edition.published_at.to_i.should be_within(5.0).of(now.to_i)
     action = @edition.actions.last
     expect(action.request_type).to eq Action::PUBLISH
     expect(action.comment).to eq "Stuff changed"
