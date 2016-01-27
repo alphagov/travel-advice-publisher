@@ -41,4 +41,14 @@ RSpec.describe EmailAlertApiNotifier do
       expect(subject.send_alert(edition)).to be_nil
     end
   end
+
+  context "when Rails.config.send_email_alerts is false" do
+    before do
+      Rails.application.config.stub(:send_email_alerts).and_return(false)
+    end
+
+    it "does nothing" do
+      expect(subject.send_alert(edition)).to be_nil
+    end
+  end
 end

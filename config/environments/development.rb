@@ -28,4 +28,7 @@ TravelAdvicePublisher::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # We should always send email alerts in development
+  config.send_email_alerts = true
 end

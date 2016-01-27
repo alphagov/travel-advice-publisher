@@ -32,4 +32,7 @@ TravelAdvicePublisher::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # We should always send email alerts in test
+  config.send_email_alerts = true
 end
