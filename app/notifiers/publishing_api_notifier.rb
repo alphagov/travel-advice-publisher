@@ -6,6 +6,12 @@ module PublishingApiNotifier
       api.put_content(presenter.content_id, presenter.render_for_publishing_api)
     end
 
+    def put_links(edition)
+      presenter = LinksPresenter.new(edition)
+
+      api.put_links(presenter.content_id, presenter.present)
+    end
+
     def publish(edition)
       presenter = EditionPresenter.new(edition)
 
@@ -16,6 +22,7 @@ module PublishingApiNotifier
       presenter = IndexPresenter.new
 
       api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      api.put_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
       api.publish(presenter.content_id, presenter.update_type)
     end
 

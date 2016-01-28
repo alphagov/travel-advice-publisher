@@ -42,6 +42,7 @@ describe IndexPresenter do
       expect(presented_data["format"]).to eq("placeholder_travel_advice_index")
 
       presented_data["format"] = "travel_advice_index"
+
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
     end
 
