@@ -7,7 +7,8 @@ class LinksPresenter
   def present
     {
       :links => {
-        "parent" => BreadcrumbsPresenter.present
+        "parent" => BreadcrumbsPresenter.present,
+        "related" => RelatedLinksPresenter.present
       }
     }
   end
