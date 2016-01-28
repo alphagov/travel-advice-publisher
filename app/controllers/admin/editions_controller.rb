@@ -14,6 +14,7 @@ class Admin::EditionsController < ApplicationController
 
     if edition.save
       PublishingApiNotifier.put_content(edition)
+      PublishingApiNotifier.put_links(edition)
       redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
@@ -76,6 +77,7 @@ class Admin::EditionsController < ApplicationController
   def save_and_publish
     if @edition.update_attributes(params[:edition]) && @edition.publish_as(current_user)
       PublishingApiNotifier.put_content(@edition)
+      PublishingApiNotifier.put_links(@edition)
       PublishingApiNotifier.publish(@edition)
       PublishingApiNotifier.publish_index
 
