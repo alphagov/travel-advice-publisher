@@ -33,7 +33,7 @@ private
   end
 
   def format
-    "placeholder_travel_advice"
+    TravelAdvicePublisher::COUNTRY_FORMAT
   end
 
   def body

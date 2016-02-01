@@ -27,6 +27,10 @@ module TravelAdvicePublisher
 
   EMAIL_SIGNUP_URL = "https://public.govdelivery.com/accounts/UKGOVUK/subscriber/topics?qsp=TRAVEL"
 
+  COUNTRY_FORMAT = "placeholder_travel_advice"
+
+  INDEX_FORMAT = "placeholder_travel_advice_index"
+
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
