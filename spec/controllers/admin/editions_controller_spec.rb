@@ -35,24 +35,24 @@ describe Admin::EditionsController do
 
     context "when creating a new edition fails" do
       before do
-        @ed = stub("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => false)
-        Country.any_instance.stub(:build_new_edition_as).and_return(@ed)
+        @ed = double("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => false)
+        allow_any_instance_of(Country).to receive(:build_new_edition_as).and_return(@ed)
       end
 
       it "should set a flash error" do
         post :create, :country_id => 'aruba'
-        flash[:alert].should == "Failed to create new edition"
+        expect(flash[:alert]).to eq("Failed to create new edition")
       end
 
       it "should redirect back to the country edition list" do
         post :create, :country_id => 'aruba'
-        response.should redirect_to(admin_country_path('aruba'))
+        expect(response).to redirect_to(admin_country_path('aruba'))
       end
     end
 
     it "should 404 for a non-existent country" do
       post :create, :country_id => 'wibble'
-      response.should be_missing
+      expect(response).to be_missing
     end
 
     context "cloning an existing edition" do
@@ -62,7 +62,7 @@ describe Admin::EditionsController do
 
       it "should build out a clone of the provided edition" do
         post :create, country_id: "aruba", edition_version: @published.version_number
-        edition = TravelAdviceEdition.last
+        edition = TravelAdviceEdition.order(id: 1).last
 
         expect(response).to redirect_to(edit_admin_edition_path(edition))
       end
@@ -77,26 +77,26 @@ describe Admin::EditionsController do
     describe "GET to destroy" do
       it "should delete the latest draft edition" do
         edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
-        TravelAdviceEdition.any_instance.should_receive(:destroy).and_return(true)
+        allow_any_instance_of(TravelAdviceEdition).to receive(:destroy).and_return(true)
         get :destroy, :id => edition.id
-        response.should redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
+        expect(response).to redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
       end
 
       it "wont let a published edition be deleted" do
         edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
-        TravelAdviceEdition.any_instance.should_not_receive(:destroy)
+        expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, :id => edition.id
-        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
+        expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
 
       end
 
       it "wont let an archived edition be deleted" do
         edition = FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'aruba')
-        TravelAdviceEdition.any_instance.should_not_receive(:destroy)
+        expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, :id => edition.id
-        response.should redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
+        expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
 
       end
     end
@@ -111,9 +111,9 @@ describe Admin::EditionsController do
     describe "GET to edit" do
       it "should assign an edition and country" do
         get :edit, :id => @edition._id
-        response.should be_success
-        assigns(:edition).should == @edition
-        assigns(:country).should == @country
+        expect(response).to be_success
+        expect(assigns(:edition)).to eq(@edition)
+        expect(assigns(:country)).to eq(@country)
       end
     end
 
@@ -140,8 +140,8 @@ describe Admin::EditionsController do
           },
         }
 
-        response.should be_redirect
-        assigns(:edition).parts.length.should == 2
+        expect(response).to be_redirect
+        expect(assigns(:edition).parts.length).to eq(2)
       end
 
       it "should strip out any blank or nil alert statuses" do
@@ -153,7 +153,7 @@ describe Admin::EditionsController do
           },
         }
 
-        assigns(:edition)[:alert_status].should == [ "one", "two", "three" ]
+        expect(assigns(:edition)[:alert_status]).to eq([ "one", "two", "three" ])
       end
 
       it "should add a note" do
@@ -167,8 +167,8 @@ describe Admin::EditionsController do
           },
         }
 
-        response.should be_redirect
-        assigns(:edition).actions.first.comment.should == "Test note"
+        expect(response).to be_redirect
+        expect(assigns(:edition).actions.first.comment).to eq("Test note")
       end
     end
 
@@ -196,8 +196,8 @@ describe Admin::EditionsController do
           }
         }
 
-        response.should be_success
-        flash[:alert].should == "We had some problems saving: State must be draft to modify."
+        expect(response).to be_success
+        expect(flash[:alert]).to eq("We had some problems saving: State must be draft to modify.")
       end
     end
   end
@@ -210,12 +210,12 @@ describe Admin::EditionsController do
 
     describe "publish" do
       it "should publish the edition" do
-        TravelAdviceEdition.should_receive(:find).with(@draft.to_param).and_return(@draft)
-        @draft.should_receive(:publish).and_return(true)
+        allow(TravelAdviceEdition).to receive(:find).with(@draft.to_param).and_return(@draft)
+        allow(@draft).to receive(:publish).and_return(true)
 
         post :update, :id => @draft.to_param, :edition => {}, :commit => "Save & Publish"
 
-        page.should redirect_to admin_country_path(@draft.country_slug)
+        expect(response).to redirect_to admin_country_path(@draft.country_slug)
       end
     end
   end

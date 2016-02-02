@@ -21,7 +21,7 @@ feature "Comparing two editions", :js => true do
     click_on 'History & Notes'
     click_on 'Compare with version 1'
 
-    page.should have_css('del', text: 'Advice summray')
-    page.should have_css('ins', text: 'Advice summary')
+    expect(page).to have_css('del', text: 'Advice summray')
+    expect(page).to have_css('ins', text: 'Advice summary')
   end
 end

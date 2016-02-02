@@ -4,9 +4,9 @@ module PathHelpers
   def i_should_be_on(path_with_query, options = {})
     expected = URI.parse(path_with_query)
     current = URI.parse(current_url)
-    current.path.should == expected.path
+    expect(current.path).to eq(expected.path)
     unless options[:ignore_query]
-      Rack::Utils.parse_query(current.query).should == Rack::Utils.parse_query(expected.query)
+      expect(Rack::Utils.parse_query(current.query)).to eq(Rack::Utils.parse_query(expected.query))
     end
   end
 end

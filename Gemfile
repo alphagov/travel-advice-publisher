@@ -40,7 +40,7 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.14.2'
+  gem 'rspec-rails', '3.4.2'
   gem 'capybara', '2.6.2'
   gem 'simplecov-rcov', '0.2.3'
   gem 'factory_girl', '3.3.0'
@@ -48,7 +48,7 @@ group :development, :test do
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '1.5.1'
   gem 'poltergeist', '1.8.1'
-  gem 'webmock', '1.9.0', :require => false
+  gem 'webmock', '1.22.6', :require => false
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.1.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
