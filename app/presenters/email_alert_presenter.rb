@@ -12,7 +12,7 @@ class EmailAlertPresenter
       "subject" => subject,
       "tags" => tags,
       "links" => links,
-      "format" => format,
+      "document_type" => document_type,
       "body" => body,
     }
   end
@@ -32,7 +32,7 @@ private
     { countries: [content_id] }
   end
 
-  def format
+  def document_type
     TravelAdvicePublisher::COUNTRY_FORMAT
   end
 
