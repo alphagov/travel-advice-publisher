@@ -66,4 +66,7 @@ TravelAdvicePublisher::Application.configure do
   config.logstasher.enabled = true
   config.logstasher.logger = Logger.new("#{Rails.root}/log/#{Rails.env}.json.log")
   config.logstasher.supress_app_log = true
+
+  # Feature flag to enable the sending of email alerts
+  config.send_email_alerts = (ENV["SEND_EMAIL_ALERTS"] == "true")
 end

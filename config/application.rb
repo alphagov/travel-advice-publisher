@@ -18,6 +18,7 @@ end
 module TravelAdvicePublisher
   mattr_accessor :asset_api
   mattr_accessor :publishing_api_v2
+  mattr_accessor :email_alert_api
 
   # Maslow need ID for Travel Advice Publisher
   NEED_ID = '101191'
@@ -25,6 +26,10 @@ module TravelAdvicePublisher
   INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0"
 
   EMAIL_SIGNUP_URL = "https://public.govdelivery.com/accounts/UKGOVUK/subscriber/topics?qsp=TRAVEL"
+
+  COUNTRY_FORMAT = "placeholder_travel_advice"
+
+  INDEX_FORMAT = "placeholder_travel_advice_index"
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
