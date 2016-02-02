@@ -13,6 +13,7 @@ class TravelAdviceEdition
     edition.register_with_panopticon
   end
 
+  after_validation :extract_part_errors
 
   def csv_synonyms
     CSV.generate_line(self.synonyms).chomp
@@ -33,6 +34,17 @@ class TravelAdviceEdition
   end
 
   private
+    def extract_part_errors
+      # govuk_content_models merges in the Parts errors into the main hash in a
+      # format that is not very useful for displaying in the flash. Extract them
+      # out in a more readable way.
+      return if errors.delete(:parts).blank?
+      part_errors = parts.map do |part|
+        "#{part.order}: #{part.errors.full_messages.to_sentence}" if part.errors.present?
+      end
+      errors[:part] = part_errors.select(&:present?).sort.to_sentence
+    end
+
     def self.attaches(*fields)
       fields.map(&:to_s).each do |field|
         after_initialize do
@@ -74,5 +86,4 @@ class TravelAdviceEdition
       end
     end
     attaches :image, :document
-
 end

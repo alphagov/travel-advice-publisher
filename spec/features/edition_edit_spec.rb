@@ -326,7 +326,7 @@ feature "Edit Edition page", :js => true do
 
     click_navbar_button "Save"
 
-    expect(page).to have_content("We had some problems saving: Parts is invalid.")
+    expect(page).to have_content("We had some problems saving: Part 1: Title can't be blank.")
   end
 
   scenario "updating the parts sort order" do
