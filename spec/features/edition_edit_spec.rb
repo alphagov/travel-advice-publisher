@@ -286,17 +286,14 @@ feature "Edit Edition page", :js => true do
 
     visit "/admin/editions/#{@edition._id}/edit"
 
-    click_on 'Part Two'
+    remove_part_button = "$('.remove-associated').last()";
+    page.execute_script("#{remove_part_button}.click()")
 
-    within :css, '#parts div.part:nth-of-type(2)' do
-      click_on 'Remove part'
-    end
-
-    page.should have_css('#part-two', :visible => false)
-
-    # page.execute_script("$('.remove-associated').last().prev(':input').val('1')")
+    input_value = page.evaluate_script("#{remove_part_button}.prev(':input').val()");
+    expect(input_value).to eq("1")
 
     click_navbar_button "Save"
+    page.should have_css(".alert", text: "#{@edition.title} updated")
 
     current_path.should == "/admin/editions/#{@edition._id}/edit"
 
@@ -308,20 +305,10 @@ feature "Edit Edition page", :js => true do
           { "content_type" => "text/govspeak", "content" => "Body text" },
           { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
         ],
-      },
-      {
-        "slug" => "part-two",
-        "title" => "Part Two",
-        "body" => [
-          { "content_type" => "text/govspeak", "content" => "Body text" },
-          { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
-        ],
-      },
+      }
     ])
 
-    pending "This is not setting the _destroy field on the part to '1' despite the input value changing in the browser."
-
-    page.should_not have_content("Part Two")
+    page.should have_no_content("Part Two")
   end
 
   scenario "adding an invalid part" do
