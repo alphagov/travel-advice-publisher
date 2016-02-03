@@ -29,7 +29,7 @@ class EditionPresenter
       "description" => edition.overview,
       "locale" => "en",
       "publishing_app" => "travel-advice-publisher",
-      "rendering_app" => "frontend",
+      "rendering_app" => "multipage-frontend",
       "routes" => routes,
       "public_updated_at" => public_updated_at.iso8601,
       "update_type" => update_type,
