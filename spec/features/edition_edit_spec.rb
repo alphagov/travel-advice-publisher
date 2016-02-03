@@ -56,7 +56,7 @@ feature "Edit Edition page", :js => true do
           'name' => 'Aruba travel advice',
           'kind' => 'travel-advice',
           'owning_app' => 'travel-advice-publisher',
-          'rendering_app' => 'frontend',
+          'rendering_app' => 'multipage-frontend',
           'state' => 'draft'
       ))
     end
@@ -396,7 +396,7 @@ feature "Edit Edition page", :js => true do
         'indexable_content' => 'Summary Part One Body text',
         'kind' => 'travel-advice',
         'owning_app' => 'travel-advice-publisher',
-        'rendering_app' => 'frontend',
+        'rendering_app' => 'multipage-frontend',
         'state' => 'live'
     ))
 

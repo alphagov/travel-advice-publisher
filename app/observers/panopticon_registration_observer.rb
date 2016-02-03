@@ -16,7 +16,7 @@ class PanopticonRegistrationObserver < Mongoid::Observer
 
   def register_with_panopticon(edition)
     details = RegisterableTravelAdviceEdition.new(edition)
-    registerer = GdsApi::Panopticon::Registerer.new(owning_app: 'travel-advice-publisher', rendering_app: "frontend", kind: 'travel-advice')
+    registerer = GdsApi::Panopticon::Registerer.new(owning_app: 'travel-advice-publisher', rendering_app: "multipage-frontend", kind: 'travel-advice')
     registerer.register(details)
   end
 end

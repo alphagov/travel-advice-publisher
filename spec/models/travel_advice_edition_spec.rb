@@ -65,7 +65,7 @@ describe TravelAdviceEdition do
       RegisterableTravelAdviceEdition.should_receive(:new).with(ed).and_return(registerable_edition)
       GdsApi::Panopticon::Registerer.should_receive(:new).with(
         :owning_app => 'travel-advice-publisher',
-        :rendering_app => 'frontend',
+        :rendering_app => 'multipage-frontend',
         :kind => 'travel-advice'
       ).and_return(registerer)
       registerer.should_receive(:register).with(registerable_edition)
@@ -106,7 +106,7 @@ describe TravelAdviceEdition do
       RegisterableTravelAdviceEdition.should_receive(:new).with(ed).and_return(registerable_edition)
       GdsApi::Panopticon::Registerer.should_receive(:new).with(
         :owning_app => 'travel-advice-publisher',
-        :rendering_app => 'frontend',
+        :rendering_app => 'multipage-frontend',
         :kind => 'travel-advice'
       ).and_return(registerer)
       registerer.should_receive(:register).with(registerable_edition)
