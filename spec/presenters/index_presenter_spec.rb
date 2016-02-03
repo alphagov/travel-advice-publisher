@@ -39,10 +39,7 @@ describe IndexPresenter do
     end
 
     it "is valid against the content schemas", :schema_test => true do
-      expect(presented_data["format"]).to eq("placeholder_travel_advice_index")
-
-      presented_data["format"] = "travel_advice_index"
-
+      expect(presented_data["format"]).to eq("travel_advice_index")
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
     end
 
@@ -51,7 +48,7 @@ describe IndexPresenter do
         expect(presented_data).to eq(
           "content_id" => TravelAdvicePublisher::INDEX_CONTENT_ID,
           "base_path" => "/foreign-travel-advice",
-          "format" => "placeholder_travel_advice_index",
+          "format" => "travel_advice_index",
           "title" => "Foreign travel advice",
           "description" => "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
           "locale" => "en",
