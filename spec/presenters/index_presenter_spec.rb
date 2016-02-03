@@ -43,7 +43,7 @@ describe IndexPresenter do
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
     end
 
-    it "returns a placeholder item" do
+    it "returns a presented index item" do
       Timecop.freeze do
         expect(presented_data).to eq(
           "content_id" => TravelAdvicePublisher::INDEX_CONTENT_ID,
