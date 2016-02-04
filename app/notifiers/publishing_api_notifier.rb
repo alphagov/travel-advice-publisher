@@ -12,10 +12,11 @@ module PublishingApiNotifier
       api.put_links(presenter.content_id, presenter.present)
     end
 
-    def publish(edition)
+    def publish(edition, update_type: nil)
       presenter = EditionPresenter.new(edition)
 
-      api.publish(presenter.content_id, presenter.update_type)
+      update_type = update_type || presenter.update_type
+      api.publish(presenter.content_id, update_type)
     end
 
     def publish_index
