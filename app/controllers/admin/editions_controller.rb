@@ -117,6 +117,7 @@ class Admin::EditionsController < ApplicationController
 
     if @edition.save!
       PublishingApiNotifier.put_content(@edition)
+      PublishingApiNotifier.publish(@edition, update_type: "minor")
       redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
