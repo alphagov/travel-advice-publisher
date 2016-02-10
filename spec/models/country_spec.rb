@@ -6,7 +6,7 @@ describe Country do
       expect(Country.all.size).to eq(14)
       expect(Country.all.first.name).to eq("Afghanistan")
       expect(Country.all.first.slug).to eq("afghanistan")
-      expect(Country.all.find{ |c| c.slug == "argentina" }.name).to eq("Argentina")
+      expect(Country.all.find { |c| c.slug == "argentina" }.name).to eq("Argentina")
     end
   end
 
@@ -32,17 +32,17 @@ describe Country do
     end
 
     it "should return all TravelAdviceEditions with the matching country_slug" do
-      e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
-      e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "wibble")
-      e3 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
+      e1 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug)
+      e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "wibble")
+      e3 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug)
 
       expect(@country.editions.to_a).to include(e1, e3)
     end
 
     it "should order them by descending version_number" do
-      e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 1)
-      e3 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 3)
-      e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug, :version_number => 2)
+      e1 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
+      e3 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 3)
+      e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 2)
 
       expect(@country.editions.to_a).to eq([e3, e2, e1])
     end
@@ -83,19 +83,19 @@ describe Country do
     end
 
     it "should match published editions correctly" do
-      FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug)
+      FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(true)
       expect(@country.has_draft_edition?).to eq(false)
     end
 
     it "should match draft editions correctly" do
-      FactoryGirl.create(:draft_travel_advice_edition, :country_slug => @country.slug)
+      FactoryGirl.create(:draft_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(false)
       expect(@country.has_draft_edition?).to eq(true)
     end
 
     it "should be false with editions in other states" do
-      FactoryGirl.create(:archived_travel_advice_edition, :country_slug => @country.slug)
+      FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(false)
       expect(@country.has_draft_edition?).to eq(false)
     end
@@ -141,8 +141,8 @@ describe Country do
     describe "providing an optional edition parameter" do
       before :each do
         @edition = FactoryGirl.create(:archived_travel_advice_edition,
-          :country_slug => @country.slug, :title => "A test title",
-          :overview => "Meh")
+          country_slug: @country.slug, title: "A test title",
+          overview: "Meh")
       end
 
       it "should build a clone of the provided edition" do

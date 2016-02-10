@@ -35,29 +35,29 @@ describe Admin::EditionsController do
 
     context "when creating a new edition fails" do
       before do
-        @ed = double("TravelAdviceEdition", :id => "1234", :to_param => "1234", :save => false)
+        @ed = double("TravelAdviceEdition", id: "1234", to_param: "1234", save: false)
         allow_any_instance_of(Country).to receive(:build_new_edition_as).and_return(@ed)
       end
 
       it "should set a flash error" do
-        post :create, :country_id => 'aruba'
+        post :create, country_id: 'aruba'
         expect(flash[:alert]).to eq("Failed to create new edition")
       end
 
       it "should redirect back to the country edition list" do
-        post :create, :country_id => 'aruba'
+        post :create, country_id: 'aruba'
         expect(response).to redirect_to(admin_country_path('aruba'))
       end
     end
 
     it "should 404 for a non-existent country" do
-      post :create, :country_id => 'wibble'
+      post :create, country_id: 'wibble'
       expect(response).to be_missing
     end
 
     context "cloning an existing edition" do
       before do
-        @published = FactoryGirl.create(:published_travel_advice_edition, :country_slug => @country.slug, :version_number => 17)
+        @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 17)
       end
 
       it "should build out a clone of the provided edition" do
@@ -78,7 +78,7 @@ describe Admin::EditionsController do
       it "should delete the latest draft edition" do
         edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
         allow_any_instance_of(TravelAdviceEdition).to receive(:destroy).and_return(true)
-        get :destroy, :id => edition.id
+        get :destroy, id: edition.id
         expect(response).to redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
       end
 
@@ -86,7 +86,7 @@ describe Admin::EditionsController do
         edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
-        get :destroy, :id => edition.id
+        get :destroy, id: edition.id
         expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
 
       end
@@ -95,7 +95,7 @@ describe Admin::EditionsController do
         edition = FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'aruba')
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
-        get :destroy, :id => edition.id
+        get :destroy, id: edition.id
         expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
 
       end
@@ -110,7 +110,7 @@ describe Admin::EditionsController do
 
     describe "GET to edit" do
       it "should assign an edition and country" do
-        get :edit, :id => @edition._id
+        get :edit, id: @edition._id
         expect(response).to be_success
         expect(assigns(:edition)).to eq(@edition)
         expect(assigns(:country)).to eq(@country)
@@ -149,11 +149,11 @@ describe Admin::EditionsController do
           commit: "Save",
           id: @edition._id,
           edition: {
-            alert_status: [ "", nil, "   ", "one", "two", "three" ]
+            alert_status: ["", nil, "   ", "one", "two", "three"]
           },
         }
 
-        expect(assigns(:edition)[:alert_status]).to eq([ "one", "two", "three" ])
+        expect(assigns(:edition)[:alert_status]).to eq(%w{one two three})
       end
 
       it "should add a note" do
@@ -179,7 +179,7 @@ describe Admin::EditionsController do
           commit: "Save",
           id: @edition._id,
           edition: {
-            :parts_attributes => {
+            parts_attributes: {
               "0" => {
                 title: "Part One",
                 body: "Body text",
@@ -205,7 +205,7 @@ describe Admin::EditionsController do
   describe "workflow" do
     before do
       login_as_stub_user
-      @draft = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
+      @draft = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
     end
 
     describe "publish" do
@@ -213,7 +213,7 @@ describe Admin::EditionsController do
         allow(TravelAdviceEdition).to receive(:find).with(@draft.to_param).and_return(@draft)
         allow(@draft).to receive(:publish).and_return(true)
 
-        post :update, :id => @draft.to_param, :edition => {}, :commit => "Save & Publish"
+        post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
 
         expect(response).to redirect_to admin_country_path(@draft.country_slug)
       end

@@ -1,17 +1,17 @@
 TravelAdvicePublisher::Application.routes.draw do
   namespace :admin do
-    resources :countries, :only => [:index, :show] do
-      resources :editions, :only => [:create]
+    resources :countries, only: [:index, :show] do
+      resources :editions, only: [:create]
     end
 
-    resources :editions, :only => [:edit, :update, :destroy] do
-      get 'diff/:compare_id', :action => :diff, :as => :diff, :on => :member
+    resources :editions, only: [:edit, :update, :destroy] do
+      get 'diff/:compare_id', action: :diff, as: :diff, on: :member
     end
 
-    root :to => "countries#index"
+    root to: "countries#index"
   end
 
-  root :to => redirect('/admin')
+  root to: redirect('/admin')
 
   mount GovukAdminTemplate::Engine, at: "/style-guide"
 end

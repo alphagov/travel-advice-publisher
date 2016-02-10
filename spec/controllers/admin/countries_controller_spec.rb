@@ -10,8 +10,8 @@ describe Admin::CountriesController do
     it "populates an array of countries" do
       get :index
 
-      expect(assigns(:countries).map(&:slug)).to include('afghanistan','albania','algeria')
-      expect(assigns(:countries).map(&:name)).to include('Afghanistan','Albania','Algeria')
+      expect(assigns(:countries).map(&:slug)).to include('afghanistan', 'albania', 'algeria')
+      expect(assigns(:countries).map(&:name)).to include('Afghanistan', 'Albania', 'Algeria')
     end
 
     it "renders the index view" do

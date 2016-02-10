@@ -26,14 +26,14 @@ feature "Country version index" do
 
   specify "viewing a country with published editions and creating a draft" do
     country = Country.find_by_slug('aruba')
-    e1 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 1)
-    e2 = FactoryGirl.create(:archived_travel_advice_edition, :country_slug => "aruba", :version_number => 2)
-    e3 = FactoryGirl.build(:travel_advice_edition, :country_slug => "aruba", :version_number => 3,
-                            :title => "Aruba extra special travel advice", :summary => "## This is the summary",
-                            :overview => "Search description about Aruba",
-                            :alert_status => [TravelAdviceEdition::ALERT_STATUSES.first])
-    e3.parts.build(:title => "Part One", :slug => "part-one", :body => "Some text")
-    e3.parts.build(:title => "Part Two", :slug => "part-2", :body => "Some more text")
+    e1 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
+    e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
+    e3 = FactoryGirl.build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
+                            title: "Aruba extra special travel advice", summary: "## This is the summary",
+                            overview: "Search description about Aruba",
+                            alert_status: [TravelAdviceEdition::ALERT_STATUSES.first])
+    e3.parts.build(title: "Part One", slug: "part-one", body: "Some text")
+    e3.parts.build(title: "Part Two", slug: "part-2", body: "Some more text")
     e3.save!
     e3.state = 'published'
     e3.save!
@@ -71,12 +71,12 @@ feature "Country version index" do
     ])
 
     within :xpath, "//tr[contains(., 'Version 4')]" do
-      expect(page).to have_link("edit", :href => "/admin/editions/#{e4.id}/edit")
+      expect(page).to have_link("edit", href: "/admin/editions/#{e4.id}/edit")
     end
 
     within :xpath, "//tr[contains(., 'Version 2')]" do
-      expect(page).to have_link("view details", :href => "/admin/editions/#{e2.id}/edit")
-      expect(page).to have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/aruba?edition=2']", :text => "preview")
+      expect(page).to have_link("view details", href: "/admin/editions/#{e2.id}/edit")
+      expect(page).to have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/aruba?edition=2']", text: "preview")
     end
 
     expect(page).not_to have_button("Create new edition")
