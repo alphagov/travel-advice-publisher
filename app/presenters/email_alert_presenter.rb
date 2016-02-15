@@ -29,7 +29,7 @@ private
   end
 
   def links
-    { countries: [country.slug] }
+    { countries: [content_id] }
   end
 
   def document_type
