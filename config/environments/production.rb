@@ -68,5 +68,5 @@ TravelAdvicePublisher::Application.configure do
   config.logstasher.supress_app_log = true
 
   # Feature flag to enable the sending of email alerts
-  config.send_email_alerts = (ENV["SEND_EMAIL_ALERTS"] == "true")
+  config.send_email_alerts = (ENV["SEND_EMAIL_ALERTS"] == "1")
 end
