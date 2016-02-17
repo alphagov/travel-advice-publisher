@@ -26,7 +26,7 @@ RSpec.describe EmailAlertPresenter do
     end
   end
 
-  it "formats the message to include the parent link" do
+  it "formats the message as HTML" do
     expect(email_alert["subject"]).to eq("Algeria travel advice")
     expect(email_alert["tags"]).to eq({})
     expect(email_alert["links"]).to eq(countries: ["b5c8e64b-3461-4447-9144-1588e4a84fe6"])
