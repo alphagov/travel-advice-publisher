@@ -42,10 +42,8 @@ private
         <div class="rss_title" style="font-size: 120%; margin: 0 0 0.3em; padding: 0;">
           <a href="#{absolute_path}" style="font-weight: bold; ">#{link_text}</a>
         </div>
-        #{formatted_published_at}
-        #{change_description}
-        <br />
-        <div class="rss_description" style="margin: 0 0 0.3em; padding: 0;">#{description}</div>
+        <div class="rss_pub_date" style="font-size: 90%; font-style: italic; color: #666666; margin: 0 0 0.3em; padding: 0;">#{formatted_published_at}</div>
+        <div class="rss_description" style="margin: 0 0 0.3em; padding: 0;">#{change_description}</div>
       </div>
     HTML
   end
@@ -67,7 +65,7 @@ private
   end
 
   def formatted_published_at
-    edition.published_at.strftime("%l:%M%P, %-d %B %Y")
+    edition.published_at.strftime("%d-%m-%Y %H:%M %p GMT")
   end
 
   def absolute_path
