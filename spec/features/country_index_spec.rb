@@ -25,7 +25,7 @@ feature "Country Index" do
     visit "/admin/countries"
 
     rows = page.all('table tbody tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
-    rows.should == [
+    expect(rows).to eq([
       ["Afghanistan",         "advice published"],
       ["Albania",             "no advice published"],
       ["Algeria",             "advice published"],
@@ -40,6 +40,6 @@ feature "Country Index" do
       ["Australia",           "no advice published"],
       ["Austria",             "advice published"],
       ["Azerbaijan",          "no advice published"],
-    ]
+    ])
   end
 end

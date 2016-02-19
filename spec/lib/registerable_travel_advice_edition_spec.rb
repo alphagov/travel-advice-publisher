@@ -9,17 +9,17 @@ describe RegisterableTravelAdviceEdition do
 
     it "should be 'live' for a published edition" do
       @edition.state = 'published'
-      RegisterableTravelAdviceEdition.new(@edition).state.should == 'live'
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('live')
     end
 
     it "should be 'archived' for an archived edition" do
       @edition.state = 'archived'
-      RegisterableTravelAdviceEdition.new(@edition).state.should == 'archived'
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('archived')
     end
 
     it "should be 'draft' for a draft edition" do
       @edition.state = 'draft'
-      RegisterableTravelAdviceEdition.new(@edition).state.should == 'draft'
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('draft')
     end
   end
 
@@ -31,33 +31,33 @@ describe RegisterableTravelAdviceEdition do
 
     it "should return the edition's overview for description" do
       @edition.overview = 'fooey gooey kablooie'
-      @registerable.description.should == 'fooey gooey kablooie'
+      expect(@registerable.description).to eq('fooey gooey kablooie')
     end
 
     it "should return the edition's country_slug with travel_advice prepended" do
-      @registerable.slug.should == "foreign-travel-advice/#{@edition.country_slug}"
+      expect(@registerable.slug).to eq("foreign-travel-advice/#{@edition.country_slug}")
     end
 
     it "should return the edition's title" do
       @edition.title = "Aruba travel advice"
-      @registerable.title.should == "Aruba travel advice"
+      expect(@registerable.title).to eq("Aruba travel advice")
     end
 
     it "should return the edition's indexable_content" do
       @edition.parts << Part.new(:title => "Foo", :body => "Bar")
-      @registerable.indexable_content.should == @edition.indexable_content
+      expect(@registerable.indexable_content).to eq(@edition.indexable_content)
     end
 
     it "should return ['101191'] for the need_ids" do
-      @registerable.need_ids.should == ['101191']
+      expect(@registerable.need_ids).to eq(['101191'])
     end
 
     it "should return /<slug>.atom for the paths" do
-      @registerable.paths.should == ["/foreign-travel-advice/#{@edition.country_slug}.atom"]
+      expect(@registerable.paths).to eq(["/foreign-travel-advice/#{@edition.country_slug}.atom"])
     end
 
     it "should return /<slug> for the prefix routes" do
-      @registerable.prefixes.should == ["/foreign-travel-advice/#{@edition.country_slug}"]
+      expect(@registerable.prefixes).to eq(["/foreign-travel-advice/#{@edition.country_slug}"])
     end
   end
 
@@ -69,12 +69,12 @@ describe RegisterableTravelAdviceEdition do
 
     it "should return the content_id of the corresponding country" do
       @edition.country_slug = 'albania'
-      @registerable.content_id.should == '2a3938e1-d588-45fc-8c8f-0f51814d5409' # From countries.yml fixture
+      expect(@registerable.content_id).to eq('2a3938e1-d588-45fc-8c8f-0f51814d5409') # From countries.yml fixture
     end
 
     it "should return nil if there is no corresponding country" do
       @edition.country_slug = 'non-existent'
-      @registerable.content_id.should be_nil
+      expect(@registerable.content_id).to be_nil
     end
   end
 end

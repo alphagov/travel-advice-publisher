@@ -57,6 +57,23 @@ class Admin::EditionsController < ApplicationController
   end
 
   private
+  def permitted_edition_attributes
+    params[:edition].permit(
+      :minor_update,
+      :change_description,
+      :title,
+      :overview,
+      :csv_synonyms,
+      :summary,
+      :note,
+      :image,
+      :document,
+      :remove_document,
+      :remove_image,
+      alert_status: [],
+      parts_attributes: [:title, :body, :slug, :order, :id, :_destroy]
+    )
+  end
 
   def load_country_and_edition
     @edition = TravelAdviceEdition.find(params[:id])
@@ -75,7 +92,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def save_and_publish
-    if @edition.update_attributes(params[:edition]) && @edition.publish_as(current_user)
+    if @edition.update_attributes(permitted_edition_attributes) && @edition.publish_as(current_user)
       PublishingApiNotifier.put_content(@edition)
       PublishingApiNotifier.put_links(@edition)
       PublishingApiNotifier.publish(@edition)
@@ -95,7 +112,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def save(&block)
-    if @edition.update_attributes(params[:edition])
+    if @edition.update_attributes(permitted_edition_attributes)
       PublishingApiNotifier.put_content(@edition)
 
       block.call and return if block_given?

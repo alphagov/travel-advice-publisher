@@ -10,14 +10,14 @@ describe Admin::CountriesController do
     it "populates an array of countries" do
       get :index
 
-      assigns(:countries).map(&:slug).should include('afghanistan','albania','algeria')
-      assigns(:countries).map(&:name).should include('Afghanistan','Albania','Algeria')
+      expect(assigns(:countries).map(&:slug)).to include('afghanistan', 'albania', 'algeria')
+      expect(assigns(:countries).map(&:name)).to include('Afghanistan', 'Albania', 'Algeria')
     end
 
     it "renders the index view" do
       get :index
 
-      response.should render_template :index
+      expect(response).to render_template :index
     end
   end
 
@@ -26,14 +26,14 @@ describe Admin::CountriesController do
       it "assigns the request country" do
         get :show, id: "australia"
 
-        assigns(:country).name.should eq('Australia')
-        assigns(:country).slug.should eq('australia')
+        expect(assigns(:country).name).to eq('Australia')
+        expect(assigns(:country).slug).to eq('australia')
       end
 
       it "renders the show view" do
         get :show, id: "australia"
 
-        response.should render_template :show
+        expect(response).to render_template :show
       end
     end
 
@@ -41,7 +41,7 @@ describe Admin::CountriesController do
       it "returns a 404" do
         get :show, id: "the-shire"
 
-        response.should be_not_found
+        expect(response).to be_not_found
       end
     end
   end

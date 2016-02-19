@@ -44,7 +44,7 @@ RSpec.describe EmailAlertApiNotifier do
 
   context "when Rails.config.send_email_alerts is false" do
     before do
-      Rails.application.config.stub(:send_email_alerts).and_return(false)
+      allow(Rails.application.config).to receive(:send_email_alerts).and_return(false)
     end
 
     it "does nothing" do

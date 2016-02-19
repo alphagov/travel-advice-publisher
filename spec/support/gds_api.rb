@@ -2,7 +2,7 @@ require "gds_api/test_helpers/panopticon"
 
 module GdsApiHelpers
   def stub_panopticon_registration
-    GdsApi::Panopticon::Registerer.any_instance.stub(:register)
+    allow_any_instance_of(GdsApi::Panopticon::Registerer).to receive(:register)
   end
 
   # Fallback to using WebMock so that we can filter on draft registrations only.
