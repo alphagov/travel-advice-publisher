@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/alphagov/govuk_content_models.git
-  revision: 135fca7e6974449f216972010d127521d7f7a7af
-  branch: rails-mongoid-upgrade
+  revision: fcf23d867a5c7e2c174d5c72b72ad0858589d948
+  ref: fcf23d867a5c7e2c174d5c72b72ad0858589d948
   specs:
     govuk_content_models (32.2.0)
       bson_ext
@@ -66,7 +66,7 @@ GEM
     bootstrap-sass (3.3.6)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
-    bson (4.0.1)
+    bson (4.0.2)
     bson_ext (1.5.1)
     builder (3.2.2)
     byebug (8.2.2)
@@ -106,7 +106,7 @@ GEM
       actionpack (>= 3.0)
     formtastic-bootstrap (3.0.0)
       formtastic (>= 2.2)
-    gds-api-adapters (27.2.0)
+    gds-api-adapters (27.2.2)
       link_header
       lrucache (~> 0.1.1)
       null_logger
@@ -170,12 +170,12 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
-    mime-types (2.99)
+    mime-types (2.99.1)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
-    mongo (2.2.2)
+    mongo (2.2.3)
       bson (~> 4.0)
-    mongoid (5.1.0)
+    mongoid (5.1.1)
       activemodel (~> 4.0)
       mongo (~> 2.1)
       origin (~> 2.2)
