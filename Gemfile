@@ -52,8 +52,10 @@ group :development, :test do
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.1.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.3.0'
-  gem 'test-unit'
   gem 'govuk-lint', '~> 0.5.3'
   gem 'pry-rails'
   gem "pry-byebug"
 end
+
+# FIXME: move back into the `test` group once we're on Rails 4
+gem 'test-unit'
