@@ -2,681 +2,908 @@
 - name: Afghanistan
   slug: afghanistan
   content_id: 5a292f20-a9b6-46ea-b35f-584f8b3d7392
+  email_signup_content_id: 46a855db-51ff-4bf2-b31b-a61bceb9ab43
 - name: Albania
   slug: albania
   content_id: 2a3938e1-d588-45fc-8c8f-0f51814d5409
+  email_signup_content_id: cf1af8db-e05f-4a40-8087-cbcf147b1dc4
 - name: Algeria
   slug: algeria
   content_id: b5c8e64b-3461-4447-9144-1588e4a84fe6
+  email_signup_content_id: 19394f01-f611-49da-ab01-09798923b60f
 - name: American Samoa
   slug: american-samoa
   content_id: 3b54054f-c22a-4e3a-8c10-19d0667b5718
+  email_signup_content_id: 4f447f20-ab0a-46ae-be1e-8ee07a205134
 - name: Andorra
   slug: andorra
   content_id: 196a0c49-e844-4246-ab7c-a5c4197dfdad
+  email_signup_content_id: 403459a1-953b-47b2-86d3-047f52ea75b4
 - name: Angola
   slug: angola
   content_id: 9738a4db-236d-4116-8d19-1373987b7889
+  email_signup_content_id: 98802c3a-f76c-41a4-a616-4d97153532b1
 - name: Anguilla
   slug: anguilla
   content_id: fb061c13-3130-4338-b4c3-df3a2ab4c112
+  email_signup_content_id: 85a39245-5f42-42a3-9321-4bc0c4b3dcff
 - name: Antigua and Barbuda
   slug: antigua-and-barbuda
   content_id: 269db8e5-9fef-4840-aca4-4896c66b8329
+  email_signup_content_id: 5c49a017-c268-485d-9627-afeeca1aa766
 - name: Argentina
   slug: argentina
   content_id: 5393a385-63f9-466f-a851-422f249d06f8
+  email_signup_content_id: ef8221de-f5e2-4137-aadb-a2e7cf17879f
 - name: Armenia
   slug: armenia
   content_id: a306037b-bed2-4607-aab6-eb5a8fa51882
+  email_signup_content_id: c88b9c47-bc6e-42fb-84cd-b1fc8593a7c4
 - name: Aruba
   slug: aruba
   content_id: 56bae85b-a57c-4ca2-9dbd-68361a086bb3
+  email_signup_content_id: 45b318a5-3dde-4898-b6d6-c93e65866f4e
 - name: Australia
   slug: australia
   content_id: 48baf826-7d71-4fea-a9c4-9730fd30eb9e
+  email_signup_content_id: 4cddf3bd-5de2-490b-9d9d-f5c078d1e9fc
 - name: Austria
   slug: austria
   content_id: b662d0a3-c20d-4167-8056-b9c7d058d860
+  email_signup_content_id: 1f652510-4e2b-4b51-b489-1ea9ea3a7666
 - name: Azerbaijan
   slug: azerbaijan
   content_id: f68b6778-cb3b-4c0b-82a0-b90613fdda26
+  email_signup_content_id: e6506691-92ac-4ef0-b084-32dd1e9aa6fb
 - name: Bahamas
   slug: bahamas
   content_id: ac5f0376-62ef-4f8f-8fbe-6dc6c2e4a671
+  email_signup_content_id: 11d2143b-3be2-483c-bb77-0be2b7a15bfe
 - name: Bahrain
   slug: bahrain
   content_id: 66c3e499-0a63-42e0-833d-8b847e70e229
+  email_signup_content_id: ef88309d-b4e1-4fab-97fa-5a7f98554892
 - name: Bangladesh
   slug: bangladesh
   content_id: 266ca3b6-752f-400b-91c0-8b9c3c433d2d
+  email_signup_content_id: e111981e-2b4f-41f2-b873-978437b708f4
 - name: Barbados
   slug: barbados
   content_id: d37300da-5fca-4247-b9fc-7ae770ee992b
+  email_signup_content_id: 4a372284-5bf1-4de9-a0ee-6510bf8c68c1
 - name: Belarus
   slug: belarus
   content_id: a73a1811-a1a0-474c-ad2c-30dc0ab74495
+  email_signup_content_id: c2f38aa6-0f48-4eb6-80ab-d9a1a5b3ea6f
 - name: Belgium
   slug: belgium
   content_id: 7631e836-3295-403d-b031-09d563322511
+  email_signup_content_id: 9615b472-3f29-4145-ac81-6e770eccd0e3
 - name: Belize
   slug: belize
   content_id: 7e521913-0947-4c45-afc0-9ee91efd9434
+  email_signup_content_id: 99ca23f2-8608-413f-81fc-805b9ecd34c5
 - name: Benin
   slug: benin
   content_id: 9ce921df-748d-4efe-99b0-fc5bcd2ec045
+  email_signup_content_id: 01698f6f-ea15-46a3-8f54-d2c819a35aae
 - name: Bermuda
   slug: bermuda
   content_id: 186abab7-2e5c-40cd-a4f2-e3f5cfcdbde9
+  email_signup_content_id: f4c4c870-8683-4378-9094-a8cfedd07ea4
 - name: Bhutan
   slug: bhutan
   content_id: f53a97fb-4bc3-46d2-898b-d2a1e460cd0e
+  email_signup_content_id: 01ee55e9-f759-46be-8126-f1b39ef12769
 - name: Bolivia
   slug: bolivia
   content_id: 2f6708c2-9a26-4949-8eb7-824e601ee377
+  email_signup_content_id: cdfa1b33-e8d0-45f8-b902-000569d05b25
 - name: Bonaire/St Eustatius/Saba
   slug: bonaire-st-eustatius-saba
   content_id: a33df5a7-34ec-4ff1-ad23-656f3d7d0331
+  email_signup_content_id: 9855e249-bf30-4654-9f32-95e540bb539f
 - name: Bosnia and Herzegovina
   slug: bosnia-and-herzegovina
   content_id: 49bcb1b3-69b8-4351-84af-adb907ce3d2b
+  email_signup_content_id: 8a17073a-8a3d-420e-84b4-e3c966685498
 - name: Botswana
   slug: botswana
   content_id: 72181a48-c553-45e4-aa5a-ebe232acea00
+  email_signup_content_id: 9dd23f79-44db-4cbb-aceb-1ce784a0920b
 - name: Brazil
   slug: brazil
   content_id: eaec959e-d3e2-4e69-9caa-a5fbf117c790
+  email_signup_content_id: 13a9d11b-098b-417d-af76-05b9246b5b31
 - name: British Antarctic Territory
   slug: british-antarctic-territory
   content_id: 7a2554bd-9dc5-4a2e-953c-263c65ced66b
+  email_signup_content_id: ae345eb9-a881-4165-ae21-75759f27086e
 - name: British Indian Ocean Territory
   slug: british-indian-ocean-territory
   content_id: 081268be-3cc3-4ced-9488-066532b7dea1
+  email_signup_content_id: e16fea1d-b1c2-4f2a-97a4-72f98c01db3b
 - name: British Virgin Islands
   slug: british-virgin-islands
   content_id: 59bfd21e-90ee-414f-acc8-696b641d4363
+  email_signup_content_id: 2192cb48-0e81-4d0f-8128-dc1024cd73d8
 - name: Brunei
   slug: brunei
   content_id: 65a38090-2d1c-4e45-9ebd-8638085933f1
+  email_signup_content_id: 8a4e5eb3-0d98-4386-ad3e-cb96d38e8cd5
 - name: Bulgaria
   slug: bulgaria
   content_id: 94aa06ba-2d58-4299-88ba-8861acc18729
+  email_signup_content_id: e52e86a4-82c9-4427-a884-84c2fa85626a
 - name: Burkina Faso
   slug: burkina-faso
   content_id: 9ac225d7-ea48-401b-b255-7f281d2c4168
+  email_signup_content_id: 4c7c89ff-23b5-41ba-a104-6e2b629ba4d1
 - name: Burma
   slug: burma
   content_id: ed343e59-83ca-496b-84b1-8f85c71a747d
+  email_signup_content_id: 38913925-e2e8-473a-a9ff-012f3eb6f2bf
 - name: Burundi
   slug: burundi
   content_id: d13008f0-a794-47e2-a9fe-773ffe6bc0b5
+  email_signup_content_id: 18ccdb81-7f0c-4a30-aee9-e073581ea1f4
 - name: Cambodia
   slug: cambodia
   content_id: 8f98f704-65d6-44bc-8047-915066809df5
+  email_signup_content_id: b9465a18-71b7-49b1-aef8-cd56be1b826c
 - name: Cameroon
   slug: cameroon
   content_id: 677b18e8-cec2-4d2b-b978-708d14565c94
+  email_signup_content_id: 713fd348-5c57-470e-a010-f9cd7b25bbb7
 - name: Canada
   slug: canada
   content_id: f402b8de-2e99-4ff3-949f-31fe65796cae
+  email_signup_content_id: b27de732-21c3-4ba7-94bc-210b185f3bf7
 - name: Cape Verde
   slug: cape-verde
   content_id: a9296394-be3d-4bf2-a443-20d09a628bce
+  email_signup_content_id: 644c3965-76fb-4af5-84c6-baea4db93881
 - name: Cayman Islands
   slug: cayman-islands
   content_id: 317ef779-a84c-422f-9497-ccd0bf3174ef
+  email_signup_content_id: fdfb8467-1012-4a48-95ca-9bb74d10aa70
 - name: Central African Republic
   slug: central-african-republic
   content_id: f52ed25a-1c8f-497b-938e-066d008d5d73
+  email_signup_content_id: 89b8d603-2cc3-4575-ae06-ec817383fa59
 - name: Chad
   slug: chad
   content_id: 5b3924c1-2907-4549-9fea-499ca43e66b4
+  email_signup_content_id: bef1647f-5fd8-42c0-89e6-fec1d2e1b1f3
 - name: Chile
   slug: chile
   content_id: 09921127-6706-4893-874f-5c943b3f1c38
+  email_signup_content_id: b836f05d-a146-4788-8bea-6dabb7ccdbf3
 - name: China
   slug: china
   content_id: cb91b5b1-d4af-43d6-a9ea-48d56fe03300
+  email_signup_content_id: 490ed8b2-e44e-4614-bc9e-95feda727c17
 - name: Colombia
   slug: colombia
   content_id: 8c40f35a-ff29-4d28-93cf-90e4432de4e5
+  email_signup_content_id: 268986ba-7e48-48f4-b0ab-64ef0f9f9484
 - name: Comoros
   slug: comoros
   content_id: 8236701c-0e96-4cfe-b315-2bd6b3e3b028
+  email_signup_content_id: ae79007f-5dc6-43d7-98ac-14e9993dee9e
 - name: Congo
   slug: congo
   content_id: 438a3cd3-5936-462d-b7ed-fff0ea485af1
+  email_signup_content_id: 6abaef77-d1f6-4ad8-b955-d96196f66039
 - name: Costa Rica
   slug: costa-rica
   content_id: f47beb28-e218-4b1a-bd4b-3c4165d056b5
+  email_signup_content_id: 4bbd57c0-c2dd-4df5-b41c-ae157c9e0eb0
 - name: "Côte d'Ivoire"
   slug: cote-d-ivoire
   content_id: 9652542c-e5bd-4416-bbbd-5e3e19609863
+  email_signup_content_id: 8ec647e8-a3eb-47c7-b1a9-13bb75400053
 - name: Croatia
   slug: croatia
   content_id: f531e87f-78f5-4d67-9515-79c7cedbd5c4
+  email_signup_content_id: 5791b93b-e377-4dda-88c3-20e836e71cb8
 - name: Cuba
   slug: cuba
   content_id: d1055857-ece4-4862-9fe1-493545e9fede
+  email_signup_content_id: 2933f36a-d9a0-4984-9eb2-325730b0e2bd
 - name: "Curaçao"
   slug: curacao
   content_id: 60f02e47-4f6b-4873-8819-1dd913cd5df2
+  email_signup_content_id: d7b280e0-2432-4f12-ae7d-d3e57c65fcb4
 - name: Cyprus
   slug: cyprus
   content_id: d35026df-3ea6-452e-870b-71bdfb7cf73e
+  email_signup_content_id: 0e18d148-9ec3-4694-8d3d-5783bbdac399
 - name: Czech Republic
   slug: czech-republic
   content_id: b5e5c48e-dac9-4443-a7cc-8042ccdf8404
+  email_signup_content_id: 14303daa-ff18-4cdb-bd07-d81ce5ae78ea
 - name: Democratic Republic of Congo
   slug: democratic-republic-of-congo
   content_id: 88122213-1a2f-420f-94f9-c622147d4300
+  email_signup_content_id: 30bd8028-c26f-4db3-aadf-2b30b577e872
 - name: Denmark
   slug: denmark
   content_id: 8d0d439c-dcf3-4239-8049-4a7c465baad6
+  email_signup_content_id: 5a002655-96e7-453f-8805-501db368e443
 - name: Djibouti
   slug: djibouti
   content_id: 0b95dd6d-7234-4d04-a7a6-b412447cc2d5
+  email_signup_content_id: 3e9d2235-bbcf-4060-b0a2-170d113993c6
 - name: Dominica
   slug: dominica
   content_id: f0615634-9fbf-46f5-8435-5ae2d23698b6
+  email_signup_content_id: df21cc0f-9cce-4547-b920-bfc032851528
 - name: Dominican Republic
   slug: dominican-republic
   content_id: 38051402-bf94-47ab-9ad7-a468280f3d9e
+  email_signup_content_id: f9d521b3-1613-410b-a2ba-409b5103e54f
 - name: Ecuador
   slug: ecuador
   content_id: aa3bb093-06ac-4423-b242-e62ba4a4cf7d
+  email_signup_content_id: 8b138da3-d75a-4209-96a2-57f8c011dc30
 - name: Egypt
   slug: egypt
   content_id: 52e41c89-6f2c-4db6-9370-6d41fb44fd0f
+  email_signup_content_id: e2948486-1715-4a14-a224-89ec2378faef
 - name: El Salvador
   slug: el-salvador
   content_id: 68964c7a-351f-41ae-a7f1-ecfa94263c56
+  email_signup_content_id: 164feed1-6312-40cd-b266-67cc045226a3
 - name: Equatorial Guinea
   slug: equatorial-guinea
   content_id: 1907e0cd-778e-49d6-95f1-1d9b3e790c2e
+  email_signup_content_id: 92ede538-a432-4402-b603-b11ee88d497d
 - name: Eritrea
   slug: eritrea
   content_id: 6b47e9b9-0942-48b5-8ee1-778699ac95f0
+  email_signup_content_id: f64da5d9-3033-4bf0-9f7c-76d1e8df6629
 - name: Estonia
   slug: estonia
   content_id: 16ae2d80-d6e0-4380-a358-ccd03c2bd7f7
+  email_signup_content_id: 98ecb293-6a7e-459c-8ec8-8c799d9094ac
 - name: Ethiopia
   slug: ethiopia
   content_id: d36e7377-4160-4e4d-a103-83980eaf9dc9
+  email_signup_content_id: 68d0bf44-f70b-413e-b0ac-1bdcc0b0a21f
 - name: Falkland Islands
   slug: falkland-islands
   content_id: 61a1542f-d196-42a0-9605-ad667b60504e
+  email_signup_content_id: 14d80b15-93f6-49aa-aa44-9dd2ae3626eb
 - name: Fiji
   slug: fiji
   content_id: 4b79ee8f-0217-486b-bcc9-5f0ef9c16b54
+  email_signup_content_id: 97364515-59ef-417f-8800-0bb8f6dbe26a
 - name: Finland
   slug: finland
   content_id: f14f4107-1731-4dd8-a890-8defe459e15a
+  email_signup_content_id: 176894a1-b486-418d-a43a-1d2cf5f05984
 - name: France
   slug: france
   content_id: 05a8e85c-5a65-406e-923d-79c04a4433f6
+  email_signup_content_id: a8bed492-2ccb-4a86-beb2-22fb163fc31d
 - name: French Guiana
   slug: french-guiana
   content_id: 020d58a7-f069-4eb8-bdf2-9979e7196ba4
+  email_signup_content_id: f9e2e7e8-816d-4f7b-90b9-379d0bc3157f
 - name: French Polynesia
   slug: french-polynesia
   content_id: 8dae3061-8bc3-4deb-8ac5-723957597716
+  email_signup_content_id: 698f1de5-6f32-466d-b366-8f9055e96749
 - name: Gabon
   slug: gabon
   content_id: fe2044fc-4201-4116-89fd-126aaff9a987
+  email_signup_content_id: 8d1fdfed-429e-4a07-94fe-f278bc7d20f0
 - name: Gambia
   slug: gambia
   content_id: 35007dbc-65c9-418b-9ce8-3d28832eb8ee
+  email_signup_content_id: 118e350b-2915-4310-8931-4913b48da12f
 - name: Georgia
   slug: georgia
   content_id: 05b21330-97be-45f0-9ddf-778c722bd116
+  email_signup_content_id: 464ea8a4-6310-4928-93a9-e04a45aecccb
 - name: Germany
   slug: germany
   content_id: c3d72e08-e00f-4b62-98d5-010ea1520e50
+  email_signup_content_id: 3d653664-8613-4742-b5ef-e64d328fb3eb
 - name: Ghana
   slug: ghana
   content_id: eca820fa-0cb2-4d26-a642-be0c041da22d
+  email_signup_content_id: d5448b78-8557-4127-a565-55f7c01ab8b2
 - name: Gibraltar
   slug: gibraltar
   content_id: 726afbd8-e8d1-4ef8-a3a8-9d0a4c467014
+  email_signup_content_id: 6642d59d-c9a7-4836-801b-081438270df7
 - name: Greece
   slug: greece
   content_id: c5018a34-3aaa-40e4-b90f-cf73539a0978
+  email_signup_content_id: 93906fda-29d1-4766-b1eb-38e58cef7338
 - name: Grenada
   slug: grenada
   content_id: 674324d7-8cb1-4a4d-8480-112b0ab776c9
+  email_signup_content_id: 475a96d1-73be-4649-a8d0-bf1ab5c74900
 - name: Guadeloupe
   slug: guadeloupe
   content_id: faad8241-f19d-4762-ba38-3b8871b5b10b
+  email_signup_content_id: 3641f1e5-1015-4707-b52f-6867e3ca95da
 - name: Guatemala
   slug: guatemala
   content_id: 4c5a2c31-5e39-413b-ba7c-b87e86f8b2b4
+  email_signup_content_id: 072b7460-4379-4856-a77b-4837e87a76d4
 - name: Guinea
   slug: guinea
   content_id: 1986f9ec-a8dc-4e07-8f93-cd10d65a3e10
+  email_signup_content_id: 00773bda-0677-4676-8350-3af4d71b47e8
 - name: Guinea-Bissau
   slug: guinea-bissau
   content_id: b9f2cdf8-140e-4c97-9fcf-2e308798a294
+  email_signup_content_id: f092c7f8-bd65-487a-9072-2ac66f59de59
 - name: Guyana
   slug: guyana
   content_id: b2e8eed8-96d7-45e4-8c7b-20d263e6487e
+  email_signup_content_id: 6d10b222-466f-48a4-a95a-6a603746d74d
 - name: Haiti
   slug: haiti
   content_id: a6d54a9d-12f7-49e4-84bc-3b5167489ce5
+  email_signup_content_id: cbecf198-1daf-4f6d-8fcc-6c0e0623f02b
 - name: Holy See
   slug: holy-see
   content_id: 2b2966b7-dbff-44b0-80e3-e3f6013e19e0
+  email_signup_content_id: 54a9d3e2-5782-4b4b-b0e2-ad6d3a3dee9e
 - name: Honduras
   slug: honduras
   content_id: 80d80224-d917-4d7a-881e-1122fe1e7799
+  email_signup_content_id: 7471cf8c-b4f5-4263-9437-d8ab97978838
 - name: Hong Kong
   slug: hong-kong
   content_id: 78fe3dfe-d561-434d-9db6-970c70597b3d
+  email_signup_content_id: 9c649f2e-0473-4ed6-aed9-d62026c768de
 - name: Hungary
   slug: hungary
   content_id: 715dc6fa-15fe-40fc-a4ba-f5274142d921
+  email_signup_content_id: 200f4863-5e5c-4fc8-83d4-4681020e7236
 - name: Iceland
   slug: iceland
   content_id: 0e0f3be9-5805-43c5-9535-b42a88219ea6
+  email_signup_content_id: 8d39388a-22ca-4ce3-974f-c9cedb178f98
 - name: India
   slug: india
   content_id: ea7e300b-24dd-40af-afde-fd690a2df678
+  email_signup_content_id: 685571ab-4fc4-49c2-bd21-a0c78f405c19
 - name: Indonesia
   slug: indonesia
   content_id: e2c44bf1-0b96-4034-9ac8-96f6e0181a80
+  email_signup_content_id: 95af23ac-8856-4b5e-9760-9982eba317f0
 - name: Iran
   slug: iran
   content_id: 05bc5265-c585-4b5c-b813-c8f245ddfc7f
+  email_signup_content_id: a1bcb248-9ce7-4ca2-9ff5-d8099946ad86
 - name: Iraq
   slug: iraq
   content_id: bba7f111-b07f-461d-9bab-8a7366aabd40
+  email_signup_content_id: 3261e302-72fd-4fbd-99ee-7d420928e0b8
 - name: Ireland
   slug: ireland
   content_id: 9affaaf6-e7b5-416d-b806-d8e7c0cb0cbf
+  email_signup_content_id: 237005af-ce3f-4c46-b0fc-4b3bf2519ef0
 - name: Israel
   slug: israel
   content_id: 250a060b-d764-4e0c-b131-dc2d10c3160e
+  email_signup_content_id: bdf47a76-5f78-450a-941a-78acc0bbbe27
 - name: Italy
   slug: italy
   content_id: 00a2d263-f4cc-4ed1-9ae8-ce5e73ce4d30
+  email_signup_content_id: 2c7d15f6-f294-4ca8-9ad7-f8f8f636f85c
 - name: Jamaica
   slug: jamaica
   content_id: 1def455a-6ee1-4235-b109-3b485a208b84
+  email_signup_content_id: 982ef790-4f6d-47e8-8456-940aaa4a70d0
 - name: Japan
   slug: japan
   content_id: 8a8de3c7-0b94-4670-87a7-f110d789d3d3
+  email_signup_content_id: 1d3c10bc-4799-47de-ad58-e41d704641b9
 - name: Jerusalem
   slug: jerusalem
   content_id: ed9e128f-2672-463b-bd24-f7dee3ddfe10
+  email_signup_content_id: b4ece83d-0549-42ce-be85-1e0357c3c4dd
 - name: Jordan
   slug: jordan
   content_id: a03f9a35-51a9-47a8-95b5-2e4bcdaa5dd8
+  email_signup_content_id: 06ef4a28-e638-4cd2-ab85-af64187832a1
 - name: Kazakhstan
   slug: kazakhstan
   content_id: 172402e4-e1c9-4739-bae5-80bf1d1005c3
+  email_signup_content_id: 6df48aeb-f84d-428a-90b0-291319e5e08d
 - name: Kenya
   slug: kenya
   content_id: 47d7619a-8621-49bc-8e67-75e06b3fb610
+  email_signup_content_id: ff53b405-0a4c-4a56-85af-8ad86330844f
 - name: Kiribati
   slug: kiribati
   content_id: d68b6113-2270-41a2-85cc-97b494d65cb6
+  email_signup_content_id: 5513d9e0-fe96-4d93-a0cd-3515ebb85865
 - name: Kosovo
   slug: kosovo
   content_id: 261a33bd-bf2f-401e-b5e1-31d0b085f4ae
+  email_signup_content_id: ff213d73-848d-489a-9c22-496f4b306989
 - name: Kuwait
   slug: kuwait
   content_id: bb97fe15-ec47-4968-a2e8-1922e5916cb4
+  email_signup_content_id: ec38a6df-0367-43df-96c7-710e666122b8
 - name: Kyrgyzstan
   slug: kyrgyzstan
   content_id: 6cd1bdd0-0afc-492f-bae9-6cc219213b87
+  email_signup_content_id: 1a7dade4-bbc2-4c73-a589-3a27815737a0
 - name: Laos
   slug: laos
   content_id: 602e34bf-8222-4391-96d9-548dbe1e1799
+  email_signup_content_id: e673b131-8073-4836-bd4e-73aee5a62dba
 - name: Latvia
   slug: latvia
   content_id: ba3b46db-c2eb-404d-bcdd-63ccd956cebc
+  email_signup_content_id: b32630f5-8786-40d3-a364-afc7244a638c
 - name: Lebanon
   slug: lebanon
   content_id: d1ee9570-46b5-421f-a36c-68b5f30b9742
+  email_signup_content_id: bfd4407d-e793-418e-8ebf-73a623f3efeb
 - name: Lesotho
   slug: lesotho
   content_id: 1bda9310-85a5-491b-8d33-fc494daeb83e
+  email_signup_content_id: 467b9fca-661d-40ff-a20c-fd5d7dc9f755
 - name: Liberia
   slug: liberia
   content_id: 2bb95e1c-fdf2-4210-8047-210d5c0d6044
+  email_signup_content_id: 594196e8-bc5d-40e1-899d-4973b3a6eb90
 - name: Libya
   slug: libya
   content_id: 83ed7690-9249-41c3-8525-12a15e46f6ba
+  email_signup_content_id: 1c069a3b-2942-49c6-9071-b9098087726f
 - name: Liechtenstein
   slug: liechtenstein
   content_id: c8a0bcf9-ddf9-4906-9457-cd179d70ed57
+  email_signup_content_id: 89080a3d-4f0e-409e-a3c1-8e6f281c25a0
 - name: Lithuania
   slug: lithuania
   content_id: b6321337-80c2-4f1b-910a-aad4852dc7d7
+  email_signup_content_id: c23d53d1-3bdb-4372-8996-8b73faae47a3
 - name: Luxembourg
   slug: luxembourg
   content_id: bfff46a6-c3d8-4881-af8e-e62af3f5a03a
+  email_signup_content_id: d06071db-f9a2-4cd5-bd6e-e84128f699aa
 - name: Macao
   slug: macao
   content_id: c442b539-cc27-4637-af33-c5d51e0727a8
+  email_signup_content_id: b29b49cd-b2ef-4df2-aac5-f76da0bad1b3
 - name: Macedonia
   slug: macedonia
   content_id: 269306a3-45ab-4d96-a004-9abfcb7f7972
+  email_signup_content_id: ffa0b225-dcee-4aa1-bed3-d70f397109b3
 - name: Madagascar
   slug: madagascar
   content_id: ee0ba11b-98de-4dd5-b66a-b54dfe55cde6
+  email_signup_content_id: d52a6821-ef3d-473c-98b0-bcaa648fbca6
 - name: Malawi
   slug: malawi
   content_id: 5911a0b5-1d96-49c5-9e83-3ed20a815995
+  email_signup_content_id: cba74d0a-b482-4bdf-841e-3efab1927c1b
 - name: Malaysia
   slug: malaysia
   content_id: 126d47f7-5fd2-41ff-af17-b23564355e03
+  email_signup_content_id: 9b6d286e-70ca-47de-b106-13e9322e9105
 - name: Maldives
   slug: maldives
   content_id: 99e0a892-9daa-443c-b96c-97ba9e28a2c8
+  email_signup_content_id: 1cccf0b7-e52e-436f-96b4-8a4b15812b0f
 - name: Mali
   slug: mali
   content_id: 19793ecb-fdaf-4b00-a3b8-bab6805c5205
+  email_signup_content_id: 6f06407d-4a68-4596-a2ea-456808238402
 - name: Malta
   slug: malta
   content_id: 0b04ef72-ed4f-427c-82fb-851004d9a4d9
+  email_signup_content_id: e46f808b-fba7-4f92-8aae-f02ba2bc7666
 - name: Marshall Islands
   slug: marshall-islands
   content_id: d8aaa1cd-85d2-4ba6-a825-b13319efa4d8
+  email_signup_content_id: aacb2b85-5db1-40fd-810c-bd2c1956ad9e
 - name: Martinique
   slug: martinique
   content_id: 21c92da9-777e-4dcd-a6fc-dc73b6bb0099
+  email_signup_content_id: 3f947223-c23d-43c7-9603-a66c5916a792
 - name: Mauritania
   slug: mauritania
   content_id: 15469fdc-d0d1-4a9f-a59e-b3d3acdea226
+  email_signup_content_id: 564ec64c-9614-428b-815e-f117ac1c1232
 - name: Mauritius
   slug: mauritius
   content_id: 51cc8ddf-0dc6-453a-b721-940068671aff
+  email_signup_content_id: 47ffca86-3fb7-4a0c-b58c-63511d6d2b43
 - name: Mayotte
   slug: mayotte
   content_id: 61c6b7aa-a4d1-43a6-8f69-99dd9596ab2d
+  email_signup_content_id: 83d9b467-8d5e-4d94-af92-8c3aef4edfb8
 - name: Mexico
   slug: mexico
   content_id: 34dafa2b-24e5-4625-b542-bf5e0bb8cd80
+  email_signup_content_id: 5e97d048-633a-4ed5-9244-c94f267d592e
 - name: Micronesia
   slug: micronesia
   content_id: d010fd00-bf63-42f0-ba7b-0982f49cb3d4
+  email_signup_content_id: d79f8657-c943-4952-b87d-d968917d4079
 - name: Moldova
   slug: moldova
   content_id: 4064154c-ef7e-4edf-9f98-8f747ce39471
+  email_signup_content_id: d54f8844-0cc2-4bd6-af68-0daf928a725f
 - name: Monaco
   slug: monaco
   content_id: 09c1d197-d95b-44ea-bc64-489b126c2246
+  email_signup_content_id: fc1dd0ab-15b0-4679-a382-610f2bd87f04
 - name: Mongolia
   slug: mongolia
   content_id: c5501de2-f581-450d-bdb9-0cfda75b7502
+  email_signup_content_id: 6ecceacc-848e-485b-9dde-8ca2078aaad0
 - name: Montenegro
   slug: montenegro
   content_id: ec6dceb9-de27-496d-be5d-da7f1dfc25bb
+  email_signup_content_id: 81b280fd-d730-4d76-8cea-c972eaea3929
 - name: Montserrat
   slug: montserrat
   content_id: 03a790cd-d685-4569-a1c6-bf4157f4777d
+  email_signup_content_id: d8514e40-41cf-438f-8de0-0de4aa1927b5
 - name: Morocco
   slug: morocco
   content_id: 7584a0dd-accf-4901-a8a6-bc964dc1412f
+  email_signup_content_id: 81718042-9a1b-43c7-affe-f24d4aadb673
 - name: Mozambique
   slug: mozambique
   content_id: eb77a950-bd40-4a8d-8f3b-1f92d126930d
+  email_signup_content_id: 753ce9ff-afda-452e-bc9c-0f17d00d162a
 - name: Namibia
   slug: namibia
   content_id: 5a2d153e-efc6-4dbc-b3ac-d81e51e4f1f7
+  email_signup_content_id: 959b1f76-ce8a-4439-9268-9eab0545397b
 - name: Nauru
   slug: nauru
   content_id: 6f2af041-91cb-408a-8377-1b41c9d59f23
+  email_signup_content_id: de1c2feb-a773-41bb-9dc9-f1ee55b00959
 - name: Nepal
   slug: nepal
   content_id: d2ac8d41-054a-4a47-a8f5-9f9a5bb37ad9
+  email_signup_content_id: e804a1f1-d3ea-4de8-b4ef-7fe9a430f20b
 - name: Netherlands
   slug: netherlands
   content_id: 98641f11-0391-4679-a033-6d79db918d05
+  email_signup_content_id: 867f92fd-5991-41f5-a2db-0764f19e40a0
 - name: New Caledonia
   slug: new-caledonia
   content_id: a6b88bf7-e78f-4c0e-9de6-e291ee8a5305
+  email_signup_content_id: 986d280c-07d0-47e6-a948-aa9b9dc45a2a
 - name: New Zealand
   slug: new-zealand
   content_id: 9221e19e-95ea-4045-bafa-1b22671e227c
+  email_signup_content_id: 79b3f9ed-8118-4b81-ac87-331c5c8cb8d0
 - name: Nicaragua
   slug: nicaragua
   content_id: 864d9605-b3f8-4ed4-a846-0cf948cfea44
+  email_signup_content_id: 26d75f63-c3d0-4ffc-b4bc-c9afcd9cb2dd
 - name: Niger
   slug: niger
   content_id: 06c5b994-2e2e-41d8-bf14-75885e3887fb
+  email_signup_content_id: 1f9b7f86-fee9-4eb5-8308-1ec7cb3502c1
 - name: Nigeria
   slug: nigeria
   content_id: 7ba86fb6-c102-4d5f-bdcd-39f7702ae0cc
+  email_signup_content_id: 36c26cad-9ea7-43b5-b038-caab20fe3720
 - name: North Korea
   slug: north-korea
   content_id: 277fdb72-8046-490f-8076-b3203e20c467
+  email_signup_content_id: 75395209-f115-4894-b9ac-6124de925b32
 - name: Norway
   slug: norway
   content_id: 5db38510-b08a-4e4c-b84f-ca2d62353ab6
+  email_signup_content_id: 6953a7da-0c05-49d2-a51a-f7a1cc56cc67
 - name: The Occupied Palestinian Territories
   slug: the-occupied-palestinian-territories
   content_id: 1db59f95-ea74-4cb0-b5c3-9b0724001e17
+  email_signup_content_id: c9222b56-dd59-4bcd-aabd-7101848161cb
 - name: Oman
   slug: oman
   content_id: aa62bc84-6fd0-4665-8b9a-4c4ab5977e8a
+  email_signup_content_id: feed73a9-6cfe-4a83-9d24-cc8553dba634
 - name: Pakistan
   slug: pakistan
   content_id: ea339677-8843-4a8a-b5ad-dff327d70ce3
+  email_signup_content_id: 1cbb18b1-7388-4c7e-b7df-416940532607
 - name: Palau
   slug: palau
   content_id: fb9351aa-1fc4-4df1-8d9f-504a89ea5856
+  email_signup_content_id: e8275a44-36ce-4347-91a2-5261785c75a4
 - name: Panama
   slug: panama
   content_id: a15edf3a-5af1-45b3-8a10-31fcf4bfdbea
+  email_signup_content_id: 921f8e8e-c9a9-466f-b8d3-a125944897d7
 - name: Papua New Guinea
   slug: papua-new-guinea
   content_id: a55aacc4-9c01-4257-8a72-4cd5c972dceb
+  email_signup_content_id: 9faa8f9d-43c1-465b-b963-4fd329951e18
 - name: Paraguay
   slug: paraguay
   content_id: 4a24839c-226b-4f19-8026-c88c4fca3988
+  email_signup_content_id: 686ab655-56c8-454b-9c2a-4f25d99140af
 - name: Peru
   slug: peru
   content_id: a1c8c919-6d66-41cf-ba90-5f51a0b0eb3f
+  email_signup_content_id: 61ff1d36-e3d7-44c0-8260-86f147a87afe
 - name: Philippines
   slug: philippines
   content_id: 9a7fcd1d-1be5-4342-89ff-a4bd8ecf93e3
+  email_signup_content_id: a31d8d52-7078-48a3-b778-2b8bf06f9de5
 - name: Pitcairn Island
   slug: pitcairn-island
   content_id: c925efa1-bbda-455a-b45b-7109ab384247
+  email_signup_content_id: 2bb36e38-979a-4e22-b347-fb4a95b651f3
 - name: Poland
   slug: poland
   content_id: 5931cad1-dc75-4c21-b84e-c176441e0190
+  email_signup_content_id: 3cca7d6d-abd9-4ded-a1eb-d0028910b74d
 - name: Portugal
   slug: portugal
   content_id: 84647e7e-66d3-4b91-b562-b2a65c3c0be6
+  email_signup_content_id: 7f885d27-21b4-468e-be82-a0f1eeb54bcc
 - name: Qatar
   slug: qatar
   content_id: 3d94082a-6e41-4c09-ba52-1b282943caae
+  email_signup_content_id: 5af879d6-aa90-4e8f-970c-161c164bdb00
 - name: "Réunion"
   slug: reunion
   content_id: 150b2c9a-8958-43a8-a9e8-a24045071289
+  email_signup_content_id: fce849b9-1458-430b-897b-9e01e8531543
 - name: Romania
   slug: romania
   content_id: ddf42429-0853-4737-b75d-2aeaf16b30a0
+  email_signup_content_id: d693388c-241d-4988-8975-301827b28edc
 - name: Russia
   slug: russia
   content_id: 821537bc-8189-4347-b04d-3c3029f8c947
+  email_signup_content_id: 1319d5dd-a2e9-4256-a956-6e45101b1b5c
 - name: Rwanda
   slug: rwanda
   content_id: 25d2eeab-5494-4fe7-b558-b478c873923d
+  email_signup_content_id: cdaedce1-9891-44e5-adfc-ef1c4042a097
 - name: Samoa
   slug: samoa
   content_id: c3c1f5ef-9041-46ab-a8e2-400d183e8c59
+  email_signup_content_id: 85ab3bc0-6d8b-4c0e-9cd7-1ebbb5076605
 - name: San Marino
   slug: san-marino
   content_id: b2967d73-df09-43db-bc64-9d90e468c6b5
+  email_signup_content_id: 6274a339-1e95-483e-9971-bbb44be5ec2d
 - name: "São Tomé and Principe"
   slug: sao-tome-and-principe
   content_id: a3605d0c-bf86-41f9-9f50-7bd577052c4c
+  email_signup_content_id: fd5d03e5-cf63-4664-b865-667cfb32a464
 - name: Saudi Arabia
   slug: saudi-arabia
   content_id: a83fb6ba-7c3c-4e32-afe0-d7dce1ea5e6b
+  email_signup_content_id: c5848e9e-3a64-4bba-a63e-24076caa34d1
 - name: Senegal
   slug: senegal
   content_id: 4ac15add-d794-4b65-9dfe-3488dcc04fa1
+  email_signup_content_id: 9f0bcca3-c3a7-4a9a-889e-e21666428b13
 - name: Serbia
   slug: serbia
   content_id: e21957c3-680e-4b4a-bc04-589abc3a2b60
+  email_signup_content_id: 43f4001d-14b7-4bbb-938c-08fad41fbf8a
 - name: Seychelles
   slug: seychelles
   content_id: 969f0558-e381-4a34-a8a5-91d106d89050
+  email_signup_content_id: 4c860411-1808-40ed-a09b-03c5aa4283fc
 - name: Sierra Leone
   slug: sierra-leone
   content_id: b53b8c14-ae32-46ed-af66-04a6eb350c7a
+  email_signup_content_id: 945bb7f2-676b-4fb7-adb0-bba84566a356
 - name: Singapore
   slug: singapore
   content_id: 06ffd544-1097-41b1-90b6-b9a74f78669e
+  email_signup_content_id: 58d4ee2f-5fff-4d4f-9fcc-4f7c9101c44d
 - name: Slovakia
   slug: slovakia
   content_id: 9ae32c04-25b7-4627-8ddc-5d5dc7746825
+  email_signup_content_id: 169efeb0-cbb6-4c38-b80f-67e3abc995d6
 - name: Slovenia
   slug: slovenia
   content_id: e380b607-2886-4103-90b8-a044af29772e
+  email_signup_content_id: d7651e5f-fe6a-4da5-85f8-c62123688689
 - name: Solomon Islands
   slug: solomon-islands
   content_id: 44e13401-96f0-4ac1-bfdd-9f0cc0111b40
+  email_signup_content_id: 20f4df63-1ebe-4ffa-b893-8656b9fe57e4
 - name: Somalia
   slug: somalia
   content_id: 992befc4-32a3-4a1a-a034-c9cb2ff42bad
+  email_signup_content_id: b22bb30c-54a7-47a4-8ed5-afaa17d3dd18
 - name: South Africa
   slug: south-africa
   content_id: e4649806-d58a-40f7-b86d-09a4376c25a0
+  email_signup_content_id: 286f9cde-3e89-4f62-b0de-7458d2c6586b
 - name: South Georgia and the South Sandwich Islands
   slug: south-georgia-and-south-sandwich-islands
   content_id: 4b0ade17-81e9-4ab2-af5c-c33df84fc0dd
+  email_signup_content_id: 1bc4e2e8-86e7-44b7-8785-47978cd5a6de
 - name: South Korea
   slug: south-korea
   content_id: 78f22c79-1f19-4ce2-ab69-2a221c770e52
+  email_signup_content_id: 5c9181f6-a3fe-4ffb-86db-22f6b64426b6
 - name: South Sudan
   slug: south-sudan
   content_id: 86224eb2-3686-4558-8405-491d544be4db
+  email_signup_content_id: e7b33be8-b2c9-4e53-86f5-f39422835e4a
 - name: Spain
   slug: spain
   content_id: 24df0bb1-0ca1-4675-9237-528ecd3d17a5
+  email_signup_content_id: 3ed73aa6-53c7-4f7d-afd9-6fc5412981af
 - name: Sri Lanka
   slug: sri-lanka
   content_id: c90dd329-ea2a-413a-b927-a67bd3cbbb84
+  email_signup_content_id: da83c80e-e1d4-4b34-b3dc-4dc8b43af38d
 - name: St Helena, Ascension and Tristan da Cunha
   slug: st-helena-ascension-and-tristan-da-cunha
   content_id: ab5bb8cb-92d9-440d-90dc-889d301675af
+  email_signup_content_id: 3b37457f-69ed-42eb-897c-9416a0d7ed59
 - name: St Kitts and Nevis
   slug: st-kitts-and-nevis
   content_id: e07d2af5-f1a8-47e9-b4ff-33d7ff1178ef
+  email_signup_content_id: c1e299c4-b46e-4e65-b426-8de80338b48b
 - name: St Lucia
   slug: st-lucia
   content_id: 5a9e154c-e1dc-4fde-8182-58c5b6e69efa
+  email_signup_content_id: c7113009-92a9-4a6f-8641-b00001588af1
 - name: St Maarten
   slug: st-maarten
   content_id: f752255c-de89-4b61-af7a-6233dd44a58a
+  email_signup_content_id: c0348945-a135-4134-b10d-b4014f080ee8
 - name: St Pierre & Miquelon
   slug: st-pierre-and-miquelon
   content_id: 31b8bebb-c8a6-4634-acd7-4e073e23826b
+  email_signup_content_id: 7e21448b-e809-4c01-b08a-e252366a8281
 - name: St Vincent and the Grenadines
   slug: st-vincent-and-the-grenadines
   content_id: c04c4008-678c-43c0-b4f6-bd542f77fda8
+  email_signup_content_id: 94b35987-9842-49af-bb83-e724ff099af4
 - name: Sudan
   slug: sudan
   content_id: deee5c29-5006-4280-bb46-44c0bd7a6a11
+  email_signup_content_id: 9c469104-61e8-4891-8b23-4fc877071ab1
 - name: Suriname
   slug: suriname
   content_id: 0e50ddd6-ee02-4d1c-815b-7f35a8777f72
+  email_signup_content_id: 867edcb5-a7d8-4975-84c4-7c4d93b2e2a2
 - name: Swaziland
   slug: swaziland
   content_id: cb0448b6-91b4-44fd-b54f-508b554971d1
+  email_signup_content_id: 19a89e1f-962e-4666-917e-2c865a33287e
 - name: Sweden
   slug: sweden
   content_id: 9772ac3f-b0ea-4787-b859-9a091e1f8af6
+  email_signup_content_id: b1aca97e-d2b8-412d-b094-700c8fa962dd
 - name: Switzerland
   slug: switzerland
   content_id: 3985ac9b-d0c0-423b-9936-94a3ac3bed62
+  email_signup_content_id: a4154e30-b37e-4e3a-a5e9-d73d384a0771
 - name: Syria
   slug: syria
   content_id: 85c16f75-3380-497e-a915-4d77256cde37
+  email_signup_content_id: 8d23308c-fb9d-4945-9adf-f4741073b6a0
 - name: Taiwan
   slug: taiwan
   content_id: b486e8b6-fbe2-443d-acaa-cc0c5a8b4cfe
+  email_signup_content_id: 5df4defe-feab-4109-a429-de5e587f1a58
 - name: Tajikistan
   slug: tajikistan
   content_id: 1a06c5d2-9457-477a-a3ea-1ce3b8b44fc1
+  email_signup_content_id: f35b93df-daf0-4467-b6fc-9d2c98da37bf
 - name: Tanzania
   slug: tanzania
   content_id: 203432b1-e296-4ffe-9fc9-dcfe110c0d67
+  email_signup_content_id: 6c0ca59f-d641-4eb6-b07d-7e05c604530e
 - name: Thailand
   slug: thailand
   content_id: 724a37c1-2f81-40b2-8640-d3d06e74d2bb
+  email_signup_content_id: b10d0adf-af42-4c9d-87c1-350aab28f28b
 - name: Timor-Leste
   slug: timor-leste
   content_id: 0b059300-5933-4123-a27a-af603904c8be
+  email_signup_content_id: 7498ed6f-eb9f-417e-b60e-4ca07c8b890e
 - name: Togo
   slug: togo
   content_id: 68ee5e60-28d7-40ae-90eb-3d917ece53de
+  email_signup_content_id: a3483a69-4bba-4fb8-8bed-7c318138549b
 - name: Tonga
   slug: tonga
   content_id: 96f71287-395b-435b-94ef-855b0f14e2c6
+  email_signup_content_id: 632e4643-f055-424c-83fe-54bb130846e2
 - name: Trinidad and Tobago
   slug: trinidad-and-tobago
   content_id: 2cacdc4c-913b-463a-b29e-4a5f45b67e4e
+  email_signup_content_id: f939cde0-fd77-4577-a5c8-990a66ad05ee
 - name: Tunisia
   slug: tunisia
   content_id: 29351cb7-7523-4ab7-8adf-8d2e2c8768b1
+  email_signup_content_id: 6237108b-2c11-4615-a894-9589d8d8d106
 - name: Turkey
   slug: turkey
   content_id: 385d62b6-1fb3-4b29-80f3-cef2efa73cce
+  email_signup_content_id: 13fea509-3f26-4583-acd1-7a6718d2cbe7
 - name: Turkmenistan
   slug: turkmenistan
   content_id: ac173bb7-97ce-4dc3-b8a9-dae920d595db
+  email_signup_content_id: f58c62f4-0e2d-41b1-af89-e3bc00960e3a
 - name: Turks and Caicos Islands
   slug: turks-and-caicos-islands
   content_id: f931c121-e8be-4b50-ab51-762e9741834e
+  email_signup_content_id: d0d48b18-bcba-4664-9a6e-bed7f20f282d
 - name: Tuvalu
   slug: tuvalu
   content_id: b60c33a7-0d98-4d98-a79d-fe48735a2116
+  email_signup_content_id: d1f947d5-bf41-4b2f-bd34-5bae069419ed
 - name: Uganda
   slug: uganda
   content_id: 77488676-da3d-4752-a6b2-f99c7691bf67
+  email_signup_content_id: 09220728-6fe0-4abd-87ec-e3f2efcc475b
 - name: Ukraine
   slug: ukraine
   content_id: ed654721-0bf5-415e-ad51-4fe93e6b3a0b
+  email_signup_content_id: 7588934e-b136-4df2-a4c4-2d44109defcf
 - name: United Arab Emirates
   slug: united-arab-emirates
   content_id: 753268f3-f9fb-44bb-bcb2-84a570ea637e
+  email_signup_content_id: c2da2d13-c143-428c-a6b0-c88c0b695c2b
 - name: USA
   slug: usa
   content_id: f2cecaae-77ce-4df3-bf27-7783c3975706
+  email_signup_content_id: 5f41de2f-6dfb-452a-8276-9bfb1490570f
 - name: Uruguay
   slug: uruguay
   content_id: 67ab9201-cd93-4ebe-bc2b-085f540705f7
+  email_signup_content_id: 95e80b1e-d45e-4438-afb7-091fb3712288
 - name: Uzbekistan
   slug: uzbekistan
   content_id: 2f79a772-583b-4f01-adc1-5dc832eddcec
+  email_signup_content_id: 092ca3d1-5cb2-42c9-a8a8-af5c84848aea
 - name: Vanuatu
   slug: vanuatu
   content_id: 89ce38b7-40fa-46e6-9073-235ac6923425
+  email_signup_content_id: 4c66be0e-ceed-4554-b6e7-0bcc38ee8e15
 - name: Venezuela
   slug: venezuela
   content_id: ca3a5c2c-1c6a-483d-88a1-5feb813ba4f3
+  email_signup_content_id: fcc8caca-3cc9-4b8d-bcd5-f53b75d93bb4
 - name: Vietnam
   slug: vietnam
   content_id: 8f6e7323-3d10-46da-a1a7-c50b5fc5a5ea
+  email_signup_content_id: ff8bb0f2-431d-494a-94ea-c2a503f79232
 - name: Wallis and Futuna
   slug: wallis-and-futuna
   content_id: 714e5775-6655-449e-ac16-2897f8a14f73
+  email_signup_content_id: 4b575884-eeda-4167-830e-dc90a08dbe48
 - name: Western Sahara
   slug: western-sahara
   content_id: 18d6ade3-900d-44ab-b251-ee5f791ba4b4
+  email_signup_content_id: 05e30912-bbe4-48bb-bace-4cb82d1c634e
 - name: Yemen
   slug: yemen
   content_id: 73891fe3-3a92-4c2e-a1a6-b63f00186ce8
+  email_signup_content_id: 6e30298f-1bba-4a38-8c2d-9dfcdbd5658f
 - name: Zambia
   slug: zambia
   content_id: 7e2beff5-a1ee-4ed4-ad63-c9a72bb0dc17
+  email_signup_content_id: 45b69e3c-7b2c-4761-931c-28d5cbb23d06
 - name: Zimbabwe
   slug: zimbabwe
   content_id: d38db404-4291-4088-951a-1b8d5b696f1e
+  email_signup_content_id: 0beadd14-c763-4dea-8e81-cf9ed8128d01

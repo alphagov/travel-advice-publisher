@@ -15,3 +15,13 @@ Published travel advice is made exposed through the [content api](https://github
 Each country can have one or more editions. At any one time, there can be a single edition in draft, a single published edition and any number of archived editions. When an edition is published, the existing published edition will be archived.
 
 When published, unless the 'minor update' checkbox is checked, a change description must be provided. This is exposed in the api response and likely will be displayed on the frontend in the future.
+
+## Adding or Renaming a Country
+
+To add or rename a country, update the `lib/data/countries.yml` file. You will then need to:
+
+- Publish the content item for the country to Publishing API
+- Publish the email signup content item for the country to Publishing API
+- Publish an artefact for the country to Panopticon
+
+See `lib/tasks/publishing_api.rake` and `lib/tasks/panopticon.rake` for details on how to do this.

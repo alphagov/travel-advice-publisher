@@ -1,10 +1,11 @@
 class Country
-  attr_reader :name, :slug, :content_id
+  attr_reader :name, :slug, :content_id, :email_signup_content_id
 
   def initialize(attrs)
     @name = attrs.fetch("name")
     @slug = attrs.fetch("slug")
     @content_id = attrs.fetch("content_id")
+    @email_signup_content_id = attrs.fetch("email_signup_content_id")
   end
 
   def editions
