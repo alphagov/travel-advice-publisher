@@ -2,42 +2,56 @@
 - name: Afghanistan
   slug: afghanistan
   content_id: 5a292f20-a9b6-46ea-b35f-584f8b3d7392
+  email_signup_content_id: 46a855db-51ff-4bf2-b31b-a61bceb9ab43
 - name: Albania
   slug: albania
   content_id: 2a3938e1-d588-45fc-8c8f-0f51814d5409
+  email_signup_content_id: cf1af8db-e05f-4a40-8087-cbcf147b1dc4
 - name: Algeria
   slug: algeria
   content_id: b5c8e64b-3461-4447-9144-1588e4a84fe6
+  email_signup_content_id: 19394f01-f611-49da-ab01-09798923b60f
 - name: American Samoa
   slug: american-samoa
   content_id: 3b54054f-c22a-4e3a-8c10-19d0667b5718
+  email_signup_content_id: 4f447f20-ab0a-46ae-be1e-8ee07a205134
 - name: Andorra
   slug: andorra
   content_id: 196a0c49-e844-4246-ab7c-a5c4197dfdad
+  email_signup_content_id: 403459a1-953b-47b2-86d3-047f52ea75b4
 - name: Angola
   slug: angola
   content_id: 9738a4db-236d-4116-8d19-1373987b7889
+  email_signup_content_id: 98802c3a-f76c-41a4-a616-4d97153532b1
 - name: Anguilla
   slug: anguilla
   content_id: fb061c13-3130-4338-b4c3-df3a2ab4c112
+  email_signup_content_id: 85a39245-5f42-42a3-9321-4bc0c4b3dcff
 - name: Antigua and Barbuda
   slug: antigua-and-barbuda
   content_id: 269db8e5-9fef-4840-aca4-4896c66b8329
+  email_signup_content_id: 5c49a017-c268-485d-9627-afeeca1aa766
 - name: Argentina
   slug: argentina
   content_id: 5393a385-63f9-466f-a851-422f249d06f8
+  email_signup_content_id: ef8221de-f5e2-4137-aadb-a2e7cf17879f
 - name: Armenia
   slug: armenia
   content_id: a306037b-bed2-4607-aab6-eb5a8fa51882
+  email_signup_content_id: c88b9c47-bc6e-42fb-84cd-b1fc8593a7c4
 - name: Aruba
   slug: aruba
   content_id: 56bae85b-a57c-4ca2-9dbd-68361a086bb3
+  email_signup_content_id: 45b318a5-3dde-4898-b6d6-c93e65866f4e
 - name: Australia
   slug: australia
   content_id: 48baf826-7d71-4fea-a9c4-9730fd30eb9e
+  email_signup_content_id: 4cddf3bd-5de2-490b-9d9d-f5c078d1e9fc
 - name: Austria
   slug: austria
   content_id: b662d0a3-c20d-4167-8056-b9c7d058d860
+  email_signup_content_id: 1f652510-4e2b-4b51-b489-1ea9ea3a7666
 - name: Azerbaijan
   slug: azerbaijan
   content_id: f68b6778-cb3b-4c0b-82a0-b90613fdda26
+  email_signup_content_id: e6506691-92ac-4ef0-b084-32dd1e9aa6fb
