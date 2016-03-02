@@ -51,6 +51,7 @@ module EmailAlertSignup
 
     def details
       {
+        subscriber_list_document_type: "travel_advice",
         signup_tags: tags,
         summary: summary,
         breadcrumbs: breadcrumbs,

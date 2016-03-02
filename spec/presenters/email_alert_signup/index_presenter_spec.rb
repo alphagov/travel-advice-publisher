@@ -31,6 +31,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
       details: {
         summary: "You'll get an email each time a country is updated.",
         govdelivery_title: "Foreign travel advice",
+        subscriber_list_document_type: "travel_advice",
         signup_tags: {},
         breadcrumbs: [
           {
