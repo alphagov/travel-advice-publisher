@@ -44,9 +44,11 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
       details: {
         summary: "You'll get an email each time Aruba Travel Advice is updated.",
         govdelivery_title: "Aruba Travel Advice",
-        subscriber_list_document_type: "travel_advice",
-        signup_tags: {
-          countries: [edition_content_id],
+        subscriber_list: {
+          document_type: "travel_advice",
+          links: {
+            countries: [edition_content_id],
+          },
         },
         breadcrumbs: [
           {
