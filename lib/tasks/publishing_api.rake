@@ -30,8 +30,8 @@ namespace :publishing_api do
 
   desc "republish email signup content items for the index and all countries"
   task republish_email_signups: [
-    "republish_email_signups::index",
-    "republish_email_signups::editions"
+    "republish_email_signups:index",
+    "republish_email_signups:editions"
   ]
 
   namespace :republish_email_signups do
