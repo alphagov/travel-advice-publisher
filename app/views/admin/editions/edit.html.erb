@@ -122,16 +122,16 @@
       <div class="navbar-inner">
         <div class="container">
           <div class="navbar-btn">
-            <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft? %>
+            <%= f.submit "Save", :class => 'btn btn-success', :disabled => ! @edition.draft?, data: { disable_with: "Saving..." } %>
             <%= link_to "Delete", admin_edition_path(@edition), :method => :delete, :class => 'btn btn-danger', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
             <span class="navbar-right">
               <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn btn-default", :target => "blank" %>
               <% if @edition.published? %>
-                <%= f.submit "Update review date", :class => "btn btn-success" %>
+                <%= f.submit "Update review date", :class => "btn btn-success", data: { disable_with: "Updating..." } %>
               <% end %>
               <% if @edition.draft? %>
-                <%= f.submit "Save & Publish", :class => "btn btn-danger" %>
+                <%= f.submit "Save & Publish", :class => "btn btn-danger", data: { disable_with: "Please wait..." } %>
               <% elsif !@country.has_draft_edition? %>
                 <%= link_to "Create new edition", "#", :class => "btn btn-success", :id => "new-from-existing-edition" %>
               <% end %>
