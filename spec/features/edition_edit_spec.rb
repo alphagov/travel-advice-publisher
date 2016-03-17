@@ -121,6 +121,15 @@ feature "Edit Edition page", js: true do
         expect(page).not_to have_link("Create new edition")
       end
     end
+
+    scenario "preventing double submits by using the Rails 'disable_with' feature" do
+      @edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
+
+      visit "/admin/editions/#{@edition._id}/edit"
+
+      button = page.find("input[value='Save']")
+      expect(button[:'data-disable-with']).to be_present
+    end
   end
 
   scenario "inspecting the edit form, and adding content" do
