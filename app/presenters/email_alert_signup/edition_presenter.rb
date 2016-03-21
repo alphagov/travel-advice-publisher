@@ -51,15 +51,17 @@ module EmailAlertSignup
 
     def details
       {
-        subscriber_list_document_type: "travel_advice",
-        signup_tags: tags,
+        subscriber_list: {
+          document_type: "travel_advice",
+          links: subscriber_list_links,
+        },
         summary: summary,
         breadcrumbs: breadcrumbs,
         govdelivery_title: edition.title,
       }
     end
 
-    def tags
+    def subscriber_list_links
       { countries: [country.content_id] }
     end
 

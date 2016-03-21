@@ -45,8 +45,9 @@ module EmailAlertSignup
 
     def details
       {
-        subscriber_list_document_type: "travel_advice",
-        signup_tags: {},
+        subscriber_list: {
+          document_type: "travel_advice",
+        },
         summary: summary,
         breadcrumbs: breadcrumbs,
         govdelivery_title: "Foreign travel advice",
