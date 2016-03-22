@@ -10,7 +10,7 @@ class IndexPresenter
   def render_for_publishing_api
     {
       "content_id" => content_id,
-      "base_path" => "/foreign-travel-advice",
+      "base_path" => base_path,
       "format" => TravelAdvicePublisher::INDEX_FORMAT,
       "title" => "Foreign travel advice",
       "description" => "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
@@ -25,13 +25,18 @@ class IndexPresenter
       "public_updated_at" => Time.zone.now.iso8601,
       "update_type" => update_type,
       "details" => {
-        "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
+        "email_signup_link" => "#{base_path}/email-signup",
         "countries" => countries,
       }
     }
   end
 
 private
+
+  def base_path
+    "/foreign-travel-advice"
+  end
+
   def countries
     Country.all.map do |country|
       edition = country.last_published_edition

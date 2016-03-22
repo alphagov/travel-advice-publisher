@@ -48,7 +48,7 @@ private
       "updated_at" => updated_at.iso8601,
       "reviewed_at" => reviewed_at.iso8601,
       "change_description" => edition.change_description,
-      "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
+      "email_signup_link" => "#{base_path}/email-signup",
       "parts" => parts,
       "alert_status" => edition.alert_status,
     }

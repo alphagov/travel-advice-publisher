@@ -62,7 +62,7 @@ describe IndexPresenter do
           "public_updated_at" => Time.zone.now.iso8601,
           "update_type" => "minor",
           "details" => {
-            "email_signup_link" => TravelAdvicePublisher::EMAIL_SIGNUP_URL,
+            "email_signup_link" => "/foreign-travel-advice/email-signup",
             "countries" => [
               {
                 "name" => "Andorra",
