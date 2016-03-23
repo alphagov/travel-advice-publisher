@@ -26,8 +26,6 @@ module TravelAdvicePublisher
   INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0"
   INDEX_EMAIL_SIGNUP_CONTENT_ID = "1aebfc97-7723-4cb6-82f4-434639efc185"
 
-  EMAIL_SIGNUP_URL = "https://public.govdelivery.com/accounts/UKGOVUK/subscriber/topics?qsp=TRAVEL"
-
   COUNTRY_FORMAT = "travel_advice"
 
   INDEX_FORMAT = "travel_advice_index"
