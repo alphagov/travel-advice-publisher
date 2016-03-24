@@ -1,36 +1,45 @@
-module PublishingApiNotifier
-  class << self
-    def put_content(edition)
-      presenter = EditionPresenter.new(edition)
+class PublishingApiNotifier
 
-      api.put_content(presenter.content_id, presenter.render_for_publishing_api)
-    end
+  def initialize
+    self.tasks = []
+  end
 
-    def put_links(edition)
-      presenter = LinksPresenter.new(edition)
+  def put_content(edition)
+    presenter = EditionPresenter.new(edition)
 
-      api.put_links(presenter.content_id, presenter.present)
-    end
+    tasks << [:put_content, presenter.content_id, presenter.render_for_publishing_api]
+  end
 
-    def publish(edition, update_type: nil)
-      presenter = EditionPresenter.new(edition)
+  def put_links(edition)
+    presenter = LinksPresenter.new(edition)
 
-      update_type = update_type || presenter.update_type
-      api.publish(presenter.content_id, update_type)
-    end
+    tasks << [:put_links, presenter.content_id, presenter.present]
+  end
 
-    def publish_index
-      presenter = IndexPresenter.new
+  def publish(edition, update_type: nil)
+    presenter = EditionPresenter.new(edition)
 
-      api.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      api.put_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
-      api.publish(presenter.content_id, presenter.update_type)
-    end
+    update_type = update_type || presenter.update_type
+    tasks << [:publish, presenter.content_id, update_type]
+  end
 
-  private
+  def publish_index
+    presenter = IndexPresenter.new
 
-    def api
-      TravelAdvicePublisher.publishing_api_v2
-    end
+    tasks << [:put_content, presenter.content_id, presenter.render_for_publishing_api]
+    tasks << [:put_links, presenter.content_id, IndexLinksPresenter.present]
+    tasks << [:publish, presenter.content_id, presenter.update_type]
+  end
+
+  def enqueue
+    worker.perform_async(tasks)
+  end
+
+private
+
+  attr_accessor :tasks
+
+  def worker
+    PublishingApiWorker
   end
 end
