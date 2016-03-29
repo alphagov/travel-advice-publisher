@@ -51,6 +51,7 @@ private
       "email_signup_link" => "#{base_path}/email-signup",
       "parts" => parts,
       "alert_status" => edition.alert_status,
+      "max_cache_time" => 10,
     }
 
     details.merge!("image" => image) if image
