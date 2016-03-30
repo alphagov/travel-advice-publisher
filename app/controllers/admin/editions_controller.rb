@@ -13,8 +13,9 @@ class Admin::EditionsController < ApplicationController
     end
 
     if edition.save
-      PublishingApiNotifier.put_content(edition)
-      PublishingApiNotifier.put_links(edition)
+      notifier.put_content(edition)
+      notifier.put_links(edition)
+      notifier.enqueue
       redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
@@ -93,10 +94,11 @@ class Admin::EditionsController < ApplicationController
 
   def save_and_publish
     if @edition.update_attributes(permitted_edition_attributes) && @edition.publish_as(current_user)
-      PublishingApiNotifier.put_content(@edition)
-      PublishingApiNotifier.put_links(@edition)
-      PublishingApiNotifier.publish(@edition)
-      PublishingApiNotifier.publish_index
+      notifier.put_content(@edition)
+      notifier.put_links(@edition)
+      notifier.publish(@edition)
+      notifier.publish_index
+      notifier.enqueue
       EmailAlertApiNotifier.send_alert(@edition)
 
       # catch any upload errors
@@ -113,7 +115,8 @@ class Admin::EditionsController < ApplicationController
 
   def save(&block)
     if @edition.update_attributes(permitted_edition_attributes)
-      PublishingApiNotifier.put_content(@edition)
+      notifier.put_content(@edition)
+      notifier.enqueue
 
       block.call and return if block_given?
 
@@ -133,8 +136,9 @@ class Admin::EditionsController < ApplicationController
     @edition.reviewed_at = Time.zone.now.utc
 
     if @edition.save!
-      PublishingApiNotifier.put_content(@edition)
-      PublishingApiNotifier.publish(@edition, update_type: "minor")
+      notifier.put_content(@edition)
+      notifier.publish(@edition, update_type: "minor")
+      notifier.enqueue
       redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
@@ -144,5 +148,9 @@ class Admin::EditionsController < ApplicationController
   def add_note
     @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
     save
+  end
+
+  def notifier
+    @notifier ||= PublishingApiNotifier.new
   end
 end

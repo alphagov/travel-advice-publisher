@@ -2,10 +2,17 @@
 
 require 'spec_helper'
 require 'gds_api/test_helpers/panopticon'
+require 'sidekiq/testing'
 
 feature "Edit Edition page", js: true do
-  before :each do
+  before do
     login_as_stub_user
+    Sidekiq::Testing.inline!
+    Sidekiq::Worker.clear_all
+  end
+
+  after do
+    Sidekiq::Testing.fake!
   end
 
   def assert_details_contains(content_id, key, expected_value)
