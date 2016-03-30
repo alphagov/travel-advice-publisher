@@ -1,4 +1,5 @@
 require 'spec_helper'
+require "sidekiq/testing"
 
 describe Admin::EditionsController do
   include GdsApi::TestHelpers::PublishingApiV2
@@ -216,6 +217,17 @@ describe Admin::EditionsController do
         post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
 
         expect(response).to redirect_to admin_country_path(@draft.country_slug)
+      end
+
+      it "queues two publishing API workers, one for the content and one for the index" do
+        Sidekiq::Testing.fake!
+        Sidekiq::Worker.clear_all
+
+        allow(EmailAlertApiNotifier).to receive(:send_alert)
+
+        post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
+
+        expect(PublishingApiWorker.jobs.size).to eq(2)
       end
     end
   end

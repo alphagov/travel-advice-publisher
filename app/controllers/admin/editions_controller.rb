@@ -97,9 +97,13 @@ class Admin::EditionsController < ApplicationController
       notifier.put_content(@edition)
       notifier.put_links(@edition)
       notifier.publish(@edition)
-      notifier.publish_index
       notifier.enqueue
+
       EmailAlertApiNotifier.send_alert(@edition)
+
+      index_notifier = PublishingApiNotifier.new
+      index_notifier.publish_index
+      index_notifier.enqueue
 
       # catch any upload errors
       if @edition.errors.any?
