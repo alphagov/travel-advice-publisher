@@ -27,6 +27,7 @@ class IndexPresenter
       "details" => {
         "email_signup_link" => "#{base_path}/email-signup",
         "countries" => countries,
+        "max_cache_time" => 10,
       }
     }
   end

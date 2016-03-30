@@ -81,6 +81,7 @@ describe IndexPresenter do
                 "synonyms" => ["foo", "bar"],
               },
             ],
+            "max_cache_time" => 10,
           },
         )
       end
