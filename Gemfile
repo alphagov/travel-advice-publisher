@@ -32,6 +32,8 @@ gem 'logstasher', '0.4.8'
 gem 'airbrake', '~> 4.0.0'
 gem 'govspeak', '~> 3.5.2'
 gem 'sidekiq', '3.5.1'
+gem "sidekiq-logging-json", "0.0.14"
+gem "sidekiq-statsd", "0.1.5"
 
 # Gems used only for assets and not required in production
 # environments by default.
