@@ -8,7 +8,7 @@ Travel Advice Publisher inherits its models from the [govuk_content_models](http
 
 At the present time, the list of countries is defined in `lib/data/countries.yml`, however it is expected that this will change to consume an api for countries from the [Whitehall](https://github.com/alphagov/whitehall) app in the near future.
 
-Published travel advice is made exposed through the [content api](https://github.com/alphagov/govuk_content_api) and presented in [frontend](https://github.com/alphagov/frontend). To support this, when the first edition is created, a draft artefact is created for the country in Panopticon. On publish of the first edition, the artefact is set to live.
+Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend) and [multipage-frontend](https://github.com/alphagov/multipage-frontend).
 
 ## Workflow
 
@@ -25,3 +25,8 @@ To add or rename a country, update the `lib/data/countries.yml` file. You will t
 - Publish an artefact for the country to Panopticon
 
 See `lib/tasks/publishing_api.rake` and `lib/tasks/panopticon.rake` for details on how to do this.
+
+## Publishing API
+
+Travel advice content reaches the [content-store](https://github.com/alphagov/content-store) via the [publishing-api](https://github.com/alphagov/publishing-api), editorial work is batch-enqueued with Sidekiq for processing out of request.
+Processing of travel-advice publishing-api jobs is made visible via the [sidekiq-monitoring](https://github.com/alphagov/sidekiq-monitoring) application.
