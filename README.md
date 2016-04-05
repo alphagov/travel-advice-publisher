@@ -30,3 +30,7 @@ See `lib/tasks/publishing_api.rake` and `lib/tasks/panopticon.rake` for details 
 
 Travel advice content reaches the [content-store](https://github.com/alphagov/content-store) via the [publishing-api](https://github.com/alphagov/publishing-api), editorial work is batch-enqueued with Sidekiq for processing out of request.
 Processing of travel-advice publishing-api jobs is made visible via the [sidekiq-monitoring](https://github.com/alphagov/sidekiq-monitoring) application.
+
+## Email Alert API
+
+Changes to Travel Advice content will send an email alert to subscribers via the [Email Alert API](https://github.com/alphagov/email-alert-api) unless marked as a _minor_ change. Subscription is handled via the [Email Alert Frontend](https://github.com/alphagov/email-alert-frontend) application which retrieves the correct [GovDelivery](https://www.govdelivery.com/) identifier for the country in question and forwards the user to a confirmation of their subscription.
