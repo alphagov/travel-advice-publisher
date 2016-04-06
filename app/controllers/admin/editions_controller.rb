@@ -97,9 +97,8 @@ class Admin::EditionsController < ApplicationController
       notifier.put_content(@edition)
       notifier.put_links(@edition)
       notifier.publish(@edition)
+      notifier.send_alert(@edition)
       notifier.enqueue
-
-      EmailAlertApiNotifier.send_alert(@edition)
 
       index_notifier = PublishingApiNotifier.new
       index_notifier.publish_index

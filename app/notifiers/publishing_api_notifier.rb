@@ -31,8 +31,16 @@ class PublishingApiNotifier
     tasks << [:publish, presenter.content_id, presenter.update_type]
   end
 
+  def send_alert(edition)
+    return unless send_alert?(edition)
+
+    presenter = EmailAlertPresenter.new(edition)
+    payload = presenter.present
+    tasks << [:send_alert, presenter.content_id, payload]
+  end
+
   def enqueue
-    worker.perform_async(tasks)
+    worker.perform_async(tasks) if tasks.any?
   end
 
 private
@@ -42,4 +50,10 @@ private
   def worker
     PublishingApiWorker
   end
+
+  def send_alert?(edition)
+    edition.state == "published" && !edition.minor_update
+  end
+
+  class EnqueueError < StandardError; end
 end

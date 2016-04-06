@@ -220,10 +220,7 @@ describe Admin::EditionsController do
       end
 
       it "queues two publishing API workers, one for the content and one for the index" do
-        Sidekiq::Testing.fake!
         Sidekiq::Worker.clear_all
-
-        allow(EmailAlertApiNotifier).to receive(:send_alert)
 
         post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
 

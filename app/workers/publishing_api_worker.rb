@@ -3,10 +3,14 @@ class PublishingApiWorker
 
   def perform(jobs)
     jobs.each do |endpoint, content_id, payload|
-      payload.symbolize_keys! if payload.is_a?(Hash)
+      payload = payload.symbolize_keys if payload.is_a?(Hash)
 
       begin
-        api.public_send(endpoint, content_id, payload)
+        if endpoint == "send_alert"
+          EmailAlertApiWorker.perform_async(payload)
+        else
+          api.public_send(endpoint, content_id, payload)
+        end
       rescue => e
         raise_helpful_error(e, jobs, endpoint, content_id, payload)
       end
