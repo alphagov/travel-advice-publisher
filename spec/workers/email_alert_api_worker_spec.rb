@@ -28,4 +28,16 @@ RSpec.describe EmailAlertApiWorker, :perform do
       described_class.new.perform(payload)
     end
   end
+
+  context "when a request to the email-alert-api fails" do
+    before do
+      stub_any_email_alert_api_call.to_timeout
+    end
+
+    it "raises a helpful error so that we can diagnose the problem in Errbit" do
+      expect {
+        described_class.new.perform(payload)
+      }.to raise_error(WorkerError, /=== Failed request details ===/)
+    end
+  end
 end

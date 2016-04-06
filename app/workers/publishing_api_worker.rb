@@ -24,38 +24,13 @@ private
   end
 
   def raise_helpful_error(e, jobs, endpoint, content_id, payload)
-    message = "Sidekiq job failed in #{self.class.name}."
-
-    message += "\n\n=== Job details ==="
+    message = "\n\n=== Job details ==="
     jobs.each { |j| message += "\n#{j.inspect}" }
 
     message += "\n\n=== Failed request details ==="
     message += "\n#{endpoint}, #{content_id}"
     message += "\n#{payload}"
 
-    message += "\n\n=== Error details ==="
-    message += "\n#{e.message}"
-    message += "\n#{filter_backtrace(e.backtrace).join("\n")}"
-
-    message += "\n\n=== Sidekiq queue details ==="
-    message += "\nItems on queue: #{queue_size}"
-    message += "\nItems in retry set: #{retry_set_size}"
-
-    raise Error, message
+    raise WorkerError.new(self, e, message)
   end
-
-  def filter_backtrace(backtrace)
-    backtrace.select { |l| l.include?("travel-advice-publisher") }
-  end
-
-  def queue_size
-    queue = Sidekiq::Queue.all.first
-    queue ? queue.size : "No queue found"
-  end
-
-  def retry_set_size
-    Sidekiq::RetrySet.new.size
-  end
-
-  class Error < StandardError; end
 end

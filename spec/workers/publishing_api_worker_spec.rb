@@ -21,6 +21,10 @@ RSpec.describe PublishingApiWorker, :perform do
   end
   let(:job) { [:put_content, content_id, payload] }
 
+  before do
+    Sidekiq::Worker.clear_all
+  end
+
   it "calls the endpoint with the provided content_id and payload" do
     stub_any_publishing_api_put_content
     described_class.new.perform([job])
@@ -54,9 +58,15 @@ RSpec.describe PublishingApiWorker, :perform do
     it "raises a helpful error so that we can diagnose the problem in Errbit" do
       expect {
         described_class.new.perform([job])
-      }.to raise_error(
-        PublishingApiWorker::Error, /Sidekiq job failed in PublishingApiWorker/
-      )
+      }.to raise_error(WorkerError, /=== Job details ===/)
+    end
+
+    it "does not enqueue a job to send an email alert" do
+      expect {
+        described_class.new.perform([job])
+      }.to raise_error(WorkerError)
+
+      expect(EmailAlertApiWorker.jobs).to be_empty
     end
   end
 end
