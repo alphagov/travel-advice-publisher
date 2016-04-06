@@ -1,4 +1,5 @@
 require "spec_helper"
+require "sidekiq/testing"
 require "gds_api/test_helpers/email_alert_api"
 
 RSpec.describe EmailAlertApiWorker, :perform do
@@ -10,6 +11,7 @@ RSpec.describe EmailAlertApiWorker, :perform do
 
   before do
     stub_any_email_alert_api_call.with(body: payload.to_json)
+    Sidekiq::RetrySet.new.clear
   end
 
   it "sends an alert to the email-alert-api" do
@@ -34,10 +36,20 @@ RSpec.describe EmailAlertApiWorker, :perform do
       stub_any_email_alert_api_call.to_timeout
     end
 
-    it "raises a helpful error so that we can diagnose the problem in Errbit" do
+    it "does not raise an error to safeguard against duplicate emails being sent" do
       expect {
         described_class.new.perform(payload)
-      }.to raise_error(WorkerError, /=== Failed request details ===/)
+      }.not_to raise_error
+
+      expect(Sidekiq::RetrySet.new.size).to be_zero
+    end
+
+    it "sends a helpful message to Errbit so that we can diagnose the problem" do
+      expect(Airbrake).to receive(:notify_or_ignore) do |error|
+        expect(error.message).to match(/=== Failed request details ===/)
+      end
+
+      described_class.new.perform(payload)
     end
   end
 end

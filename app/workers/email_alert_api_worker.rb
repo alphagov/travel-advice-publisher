@@ -7,7 +7,9 @@ class EmailAlertApiWorker
     message = "\n\n=== Failed request details ==="
     message += "\n#{payload}"
 
-    raise WorkerError.new(self, e, message)
+    Airbrake.notify_or_ignore(
+      WorkerError.new(self, e, message)
+    )
   end
 
 private
