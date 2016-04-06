@@ -20,16 +20,17 @@ RSpec.describe PublishingApiWorker, :perform do
     assert_publishing_api_put_content(content_id, payload)
   end
 
-  context "handling API errors" do
-    it "raises when returned an error" do
-      stub_request(:put, %r{\A#{publishing_api_endpoint}/content/}).to_return(
-        status: 422,
-        body: { "error": { "code": 422, "message": "Unprocessable entity" } }.to_json
-      )
+  context "when a request to the Publishing API fails" do
+    before do
+      stub_request(:put, %r{\A#{publishing_api_endpoint}/content/}).to_timeout
+    end
 
+    it "raises a helpful error so that we can diagnose the problem in Errbit" do
       expect {
         described_class.new.perform([job])
-      }.to raise_error(GdsApi::HTTPClientError)
+      }.to raise_error(
+        PublishingApiWorker::Error, /Sidekiq job failed in PublishingApiWorker/
+      )
     end
   end
 end
