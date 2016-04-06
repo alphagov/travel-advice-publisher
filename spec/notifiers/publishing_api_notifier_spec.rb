@@ -85,6 +85,7 @@ RSpec.describe PublishingApiNotifier do
     context "for a published edition" do
       it "enqueues a send_alert job for the publishing api worker" do
         edition.publish!
+        subject.publish(edition)
         subject.send_alert(edition)
         subject.enqueue
 
@@ -92,7 +93,7 @@ RSpec.describe PublishingApiNotifier do
         job = PublishingApiWorker.jobs.first
         tasks = job["args"].first
 
-        endpoint, content_id, payload = tasks.first
+        endpoint, content_id, payload = tasks.last
 
         expect(endpoint).to eq("send_alert")
         expect(content_id).to eq(presenter.content_id)
@@ -157,6 +158,63 @@ RSpec.describe PublishingApiNotifier do
       expect(publish_task.first).to eq("publish")
       expect(publish_task.second).to eq(presenter.content_id)
       expect(publish_task.last).to eq(presenter.update_type)
+    end
+  end
+
+  describe "enqueue" do
+    context "when the send_alert task is not last" do
+      before do
+        edition.publish!
+
+        subject.put_content(edition)
+        subject.send_alert(edition)
+        subject.publish(edition)
+      end
+
+      it "raises an error" do
+        expect {
+          subject.enqueue
+        }.to raise_error(described_class::EnqueueError, /must be last/)
+      end
+    end
+
+    context "when the send_alert task is last, but there's a duplicate" do
+      before do
+        edition.publish!
+
+        subject.send_alert(edition)
+        subject.put_content(edition)
+        subject.publish(edition)
+        subject.send_alert(edition)
+      end
+
+      it "raises an error" do
+        expect {
+          subject.enqueue
+        }.to raise_error(described_class::EnqueueError, /not be called more than once/)
+      end
+    end
+
+    context "when the send_alert task is not preceded by a publish task" do
+      before do
+        edition.publish!
+
+        subject.put_content(edition)
+        subject.send_alert(edition)
+      end
+
+      it "raises an error" do
+        expect {
+          subject.enqueue
+        }.to raise_error(described_class::EnqueueError, /immediately follow a publish/)
+      end
+    end
+
+    context "when no tasks exist in the batch" do
+      it "does not enqueue a Sidekiq job" do
+        expect(PublishingApiWorker).not_to receive(:perform_async)
+        subject.enqueue
+      end
     end
   end
 end

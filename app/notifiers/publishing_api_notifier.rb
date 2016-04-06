@@ -40,6 +40,7 @@ class PublishingApiNotifier
   end
 
   def enqueue
+    validate_tasks_order
     worker.perform_async(tasks) if tasks.any?
   end
 
@@ -53,6 +54,21 @@ private
 
   def send_alert?(edition)
     edition.state == "published" && !edition.minor_update
+  end
+
+  def validate_tasks_order
+    endpoints = tasks.map(&:first)
+    send_alert_count = endpoints.count { |e| e == :send_alert }
+
+    if send_alert_count > 1
+      message = "send_alert must not be called more than once"
+      raise EnqueueError, message
+    end
+
+    if send_alert_count == 1 && endpoints[-2..-1] != [:publish, :send_alert]
+      message = "send_alert must be last and immediately follow a publish"
+      raise EnqueueError, message
+    end
   end
 
   class EnqueueError < StandardError; end
