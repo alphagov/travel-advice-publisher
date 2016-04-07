@@ -23,9 +23,13 @@ private
   def queue_size
     queue = Sidekiq::Queue.all.first
     queue ? queue.size : "No queue found"
+  rescue
+    "Sidekiq is unreachable"
   end
 
   def retry_set_size
     Sidekiq::RetrySet.new.size
+  rescue
+    "Sidekiq is unreachable"
   end
 end
