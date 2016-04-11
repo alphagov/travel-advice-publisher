@@ -17,6 +17,10 @@ class EmailAlertPresenter
     }
   end
 
+  def content_id
+    country.content_id
+  end
+
 private
   attr_accessor :edition
 
@@ -74,10 +78,6 @@ private
 
   def base_path
     "/foreign-travel-advice/#{edition.country_slug}"
-  end
-
-  def content_id
-    country.content_id
   end
 
   def country

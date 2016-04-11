@@ -31,8 +31,17 @@ class PublishingApiNotifier
     tasks << [:publish, presenter.content_id, presenter.update_type]
   end
 
+  def send_alert(edition)
+    return unless send_alert?(edition)
+
+    presenter = EmailAlertPresenter.new(edition)
+    payload = presenter.present
+    tasks << [:send_alert, presenter.content_id, payload]
+  end
+
   def enqueue
-    worker.perform_async(tasks)
+    validate_tasks_order
+    worker.perform_async(tasks) if tasks.any?
   end
 
 private
@@ -42,4 +51,25 @@ private
   def worker
     PublishingApiWorker
   end
+
+  def send_alert?(edition)
+    edition.state == "published" && !edition.minor_update
+  end
+
+  def validate_tasks_order
+    endpoints = tasks.map(&:first)
+    send_alert_count = endpoints.count { |e| e == :send_alert }
+
+    if send_alert_count > 1
+      message = "send_alert must not be called more than once"
+      raise EnqueueError, message
+    end
+
+    if send_alert_count == 1 && endpoints[-2..-1] != [:publish, :send_alert]
+      message = "send_alert must be last and immediately follow a publish"
+      raise EnqueueError, message
+    end
+  end
+
+  class EnqueueError < StandardError; end
 end

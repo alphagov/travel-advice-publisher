@@ -54,6 +54,10 @@ describe EditionPresenter do
   describe "#render_for_publishing_api" do
     let(:presented_data) { subject.render_for_publishing_api }
 
+    around do |example|
+      Timecop.freeze { example.run }
+    end
+
     it "is valid against the content schemas", :schema_test => true do
       expect(presented_data["format"]).to eq("travel_advice")
       expect(presented_data).to be_valid_against_schema('travel_advice')
