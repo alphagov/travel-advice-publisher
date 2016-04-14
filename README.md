@@ -9,9 +9,12 @@ Travel Advice Publisher manages foreign travel advice content on GOV.UK.
 ## Technical documentation
 
 Travel Advice Publisher is a Ruby on Rails content management web application
-which provides a versioned workflow for drafting and publishing [foreign travel advice](http://www.gov.uk/foreign-travel-advice).
-The application persists content in MongoDB and in the downstream [publishing-api](https://github.com/alphagov/publishing-api).
-Travel advice content is rendered by [multipage-frontend](https://github.com/alphagov/multipage-frontend).
+which provides a versioned workflow for drafting and publishing [foreign travel
+advice](http://www.gov.uk/foreign-travel-advice).  The application persists
+content in MongoDB and in the downstream
+[publishing-api](https://github.com/alphagov/publishing-api).  Travel advice
+content is rendered by
+[multipage-frontend](https://github.com/alphagov/multipage-frontend).
 
 ## Dependencies
 
@@ -30,4 +33,5 @@ Travel advice content is rendered by [multipage-frontend](https://github.com/alp
 
 ## Further technical information
 
-Detailed technical information can be found in the [travel advice publisher documentation](docs/further-technical-information.md).
+Detailed technical information can be found in the [travel advice publisher
+documentation](docs/further-technical-information.md).
