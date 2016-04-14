@@ -30,7 +30,7 @@ RSpec.describe PublishingApiNotifier do
     end
   end
 
-  describe "put_content, put_links and enqueue" do
+  describe "put_content, patch_links and enqueue" do
     let(:content_presenter) { EditionPresenter.new(edition) }
     let(:links_presenter) { LinksPresenter.new(edition) }
 
@@ -39,7 +39,7 @@ RSpec.describe PublishingApiNotifier do
       presented_links = links_presenter.present.as_json
 
       subject.put_content(edition)
-      subject.put_links(edition)
+      subject.patch_links(edition)
       subject.enqueue
 
       expect(PublishingApiWorker.jobs.size).to eq(1)
@@ -54,7 +54,7 @@ RSpec.describe PublishingApiNotifier do
 
       endpoint, content_id, payload = tasks.second
 
-      expect(endpoint).to eq("put_links")
+      expect(endpoint).to eq("patch_links")
       expect(content_id).to eq(links_presenter.content_id)
       expect(payload).to eq(presented_links)
     end
@@ -145,11 +145,11 @@ RSpec.describe PublishingApiNotifier do
     end
 
     it "enqueues a put links job second" do
-      put_links_task = tasks.second
+      patch_links_task = tasks.second
 
-      expect(put_links_task.first).to eq("put_links")
-      expect(put_links_task.second).to eq(presenter.content_id)
-      expect(put_links_task.last).to eq(IndexLinksPresenter.present.as_json)
+      expect(patch_links_task.first).to eq("patch_links")
+      expect(patch_links_task.second).to eq(presenter.content_id)
+      expect(patch_links_task.last).to eq(IndexLinksPresenter.present.as_json)
     end
 
     it "enqueues a publish job last" do

@@ -8,7 +8,7 @@ namespace :publishing_api do
     presenter = IndexPresenter.new
 
     api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-    api_v2.put_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
+    api_v2.patch_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
     api_v2.publish(presenter.content_id, presenter.update_type)
   end
 
@@ -19,7 +19,7 @@ namespace :publishing_api do
       links_presenter = LinksPresenter.new(edition)
 
       api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      api_v2.put_links(links_presenter.content_id, links_presenter.present)
+      api_v2.patch_links(links_presenter.content_id, links_presenter.present)
       api_v2.publish(presenter.content_id, presenter.update_type)
 
       print "."
