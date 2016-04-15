@@ -1,7 +1,7 @@
 class PublishingApiNotifier
-
-  def initialize
+  def initialize(request_id:)
     self.tasks = []
+    self.request_id = request_id
   end
 
   def put_content(edition)
@@ -10,10 +10,10 @@ class PublishingApiNotifier
     tasks << [:put_content, presenter.content_id, presenter.render_for_publishing_api]
   end
 
-  def put_links(edition)
+  def patch_links(edition)
     presenter = LinksPresenter.new(edition)
 
-    tasks << [:put_links, presenter.content_id, presenter.present]
+    tasks << [:patch_links, presenter.content_id, presenter.present]
   end
 
   def publish(edition, update_type: nil)
@@ -27,7 +27,7 @@ class PublishingApiNotifier
     presenter = IndexPresenter.new
 
     tasks << [:put_content, presenter.content_id, presenter.render_for_publishing_api]
-    tasks << [:put_links, presenter.content_id, IndexLinksPresenter.present]
+    tasks << [:patch_links, presenter.content_id, IndexLinksPresenter.present]
     tasks << [:publish, presenter.content_id, presenter.update_type]
   end
 
@@ -41,12 +41,12 @@ class PublishingApiNotifier
 
   def enqueue
     validate_tasks_order
-    worker.perform_async(tasks) if tasks.any?
+    worker.perform_async(tasks, request_id: request_id) if tasks.any?
   end
 
 private
 
-  attr_accessor :tasks
+  attr_accessor :tasks, :request_id
 
   def worker
     PublishingApiWorker

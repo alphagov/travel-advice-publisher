@@ -1,7 +1,9 @@
 class EmailAlertApiWorker
   include Sidekiq::Worker
 
-  def perform(payload)
+  def perform(payload, params = {})
+    GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
+
     api.send_alert(payload) if send_alert?
   rescue => e
     message = "\n\n=== Failed request details ==="

@@ -14,7 +14,7 @@ class Admin::EditionsController < ApplicationController
 
     if edition.save
       notifier.put_content(edition)
-      notifier.put_links(edition)
+      notifier.patch_links(edition)
       notifier.enqueue
       redirect_to edit_admin_edition_path(edition)
     else
@@ -95,12 +95,12 @@ class Admin::EditionsController < ApplicationController
   def save_and_publish
     if @edition.update_attributes(permitted_edition_attributes) && @edition.publish_as(current_user)
       notifier.put_content(@edition)
-      notifier.put_links(@edition)
+      notifier.patch_links(@edition)
       notifier.publish(@edition)
       notifier.send_alert(@edition)
       notifier.enqueue
 
-      index_notifier = PublishingApiNotifier.new
+      index_notifier = PublishingApiNotifier.new(request_id: govuk_request_id)
       index_notifier.publish_index
       index_notifier.enqueue
 
@@ -154,6 +154,10 @@ class Admin::EditionsController < ApplicationController
   end
 
   def notifier
-    @notifier ||= PublishingApiNotifier.new
+    @notifier ||= PublishingApiNotifier.new(request_id: govuk_request_id)
+  end
+
+  def govuk_request_id
+    @govuk_request_id ||= GdsApi::GovukHeaders.headers[:govuk_request_id]
   end
 end
