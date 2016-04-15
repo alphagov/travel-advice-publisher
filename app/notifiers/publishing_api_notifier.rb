@@ -1,6 +1,7 @@
 class PublishingApiNotifier
-  def initialize
+  def initialize(request_id:)
     self.tasks = []
+    self.request_id = request_id
   end
 
   def put_content(edition)
@@ -40,12 +41,12 @@ class PublishingApiNotifier
 
   def enqueue
     validate_tasks_order
-    worker.perform_async(tasks) if tasks.any?
+    worker.perform_async(tasks, request_id: request_id) if tasks.any?
   end
 
 private
 
-  attr_accessor :tasks
+  attr_accessor :tasks, :request_id
 
   def worker
     PublishingApiWorker

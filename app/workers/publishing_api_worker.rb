@@ -1,13 +1,15 @@
 class PublishingApiWorker
   include Sidekiq::Worker
 
-  def perform(jobs)
+  def perform(jobs, params = {})
+    GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
+
     jobs.each do |endpoint, content_id, payload|
       payload = payload.symbolize_keys if payload.is_a?(Hash)
 
       begin
         if endpoint == "send_alert"
-          EmailAlertApiWorker.perform_async(payload)
+          EmailAlertApiWorker.perform_async(payload, request_id: params["request_id"])
         else
           api.public_send(endpoint, content_id, payload)
         end

@@ -7,6 +7,8 @@ RSpec.describe PublishingApiNotifier do
     stub_request(:put, %r{#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts.*})
   end
 
+  subject { PublishingApiNotifier.new(request_id: "12345-54321")}
+
   let(:edition) { FactoryGirl.create(:travel_advice_edition, country_slug: "aruba", published_at: Time.zone.now) }
 
   describe "put_content and enqueue" do

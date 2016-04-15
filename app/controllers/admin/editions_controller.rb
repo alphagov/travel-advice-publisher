@@ -154,6 +154,10 @@ class Admin::EditionsController < ApplicationController
   end
 
   def notifier
-    @notifier ||= PublishingApiNotifier.new
+    @notifier ||= PublishingApiNotifier.new(request_id: govuk_request_id)
+  end
+
+  def govuk_request_id
+    @govuk_request_id ||= GdsApi::GovukHeaders.headers[:govuk_request_id]
   end
 end
