@@ -4,7 +4,7 @@ The act of ‘publishing’ an edition initiates a job with an ordered sequence 
 
 The [tasks order is validated](https://github.com/alphagov/travel-advice-publisher/blob/master/app/notifiers/publishing_api_notifier.rb#L43-43) to ensure that the email notification is always the final one.
 
-The last task (delivery of email via the email-alert-api) queues up a new Sidekiq job only if the previous tasks completed successfully (publising has succeded).
+The last task (delivery of email via the email-alert-api) queues up a new Sidekiq job only if the previous tasks completed successfully (publishing has succeeded).
 
 ## The Workflow
 The publish action [builds an array of four tasks](https://github.com/alphagov/travel-advice-publisher/blob/master/app/controllers/admin/editions_controller.rb#L97-L101).
