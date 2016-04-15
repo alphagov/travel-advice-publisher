@@ -1,5 +1,4 @@
 class PublishingApiNotifier
-
   def initialize
     self.tasks = []
   end
