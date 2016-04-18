@@ -33,20 +33,29 @@ RSpec.describe PublishingApiWorker, :perform do
   end
 
   context "when an email alert task has been queued" do
-    let(:job) { ["send_alert", content_id, payload] }
+    let(:task) { ["send_alert", content_id, payload] }
+
+    before do
+      stub_any_email_alert_api_call
+    end
 
     it "enqueues an EmailAlertApiWorker job" do
-      stub_any_email_alert_api_call
+      described_class.new.perform([task])
 
-      described_class.new.perform([job])
+      job = EmailAlertApiWorker.jobs.first
+      expect(job).to be_present
+      expect(job['args'].first).to eq(payload)
+    end
 
-      jobs = EmailAlertApiWorker.jobs
+    it 'delays the execution of EmailAlertApiWorker' do
+      Timecop.freeze(Time.now) do
+        described_class.new.perform([task])
+        job = EmailAlertApiWorker.jobs.first
+        job_starts_at  = Time.at(job['at'])
+        expected_delay = 10.seconds.from_now
 
-      expect(jobs.size).to eq(1)
-
-      args = jobs.first["args"]
-
-      expect(args.first).to eq(payload)
+        expect(job_starts_at).to eq(expected_delay)
+      end
     end
   end
 
