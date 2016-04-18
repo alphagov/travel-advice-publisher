@@ -209,7 +209,7 @@ describe Admin::EditionsController do
       @draft = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
     end
 
-    describe "publish" do
+    describe "Save & Publish" do
       it "should publish the edition" do
         allow(TravelAdviceEdition).to receive(:find).with(@draft.to_param).and_return(@draft)
         allow(@draft).to receive(:publish).and_return(true)
@@ -225,6 +225,15 @@ describe Admin::EditionsController do
         post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
 
         expect(PublishingApiWorker.jobs.size).to eq(2)
+      end
+
+      it "creates a PublishRequest for that edition" do
+        request_id = '123456'
+        allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: request_id)
+        post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
+        publish_request = PublishRequest.last
+        expect(publish_request.edition_id).to eq(@draft.id)
+        expect(publish_request.request_id).to eq(request_id)
       end
     end
   end

@@ -109,6 +109,8 @@ class Admin::EditionsController < ApplicationController
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
+      PublishRequest.create(request_id: govuk_request_id, edition_id: @edition.id)
+
       redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
