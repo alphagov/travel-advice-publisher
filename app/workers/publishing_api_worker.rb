@@ -9,7 +9,7 @@ class PublishingApiWorker
 
       begin
         if endpoint == "send_alert"
-          EmailAlertApiWorker.perform_async(payload, request_id: params["request_id"])
+          EmailAlertApiWorker.perform_in(CACHE_EXPIRES_IN, payload, request_id: params["request_id"])
         else
           api.public_send(endpoint, content_id, payload)
         end
@@ -20,6 +20,8 @@ class PublishingApiWorker
   end
 
 private
+
+  CACHE_EXPIRES_IN = 10.seconds
 
   def api
     TravelAdvicePublisher.publishing_api_v2
