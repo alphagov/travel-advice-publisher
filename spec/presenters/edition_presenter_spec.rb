@@ -37,6 +37,11 @@ describe EditionPresenter do
     edition
   }
 
+  before do
+    allow(GdsApi::GovukHeaders).to receive(:headers)
+      .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
+  end
+
   subject { described_class.new(edition) }
 
   describe "#content_id" do
@@ -111,7 +116,8 @@ describe EditionPresenter do
             }
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
-          "max_cache_time" => 10
+          "max_cache_time" => 10,
+          "publishing_request_id" => "25108-1461151489.528-10.3.3.1-1066"
         },
       )
     end

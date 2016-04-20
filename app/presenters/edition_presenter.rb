@@ -52,6 +52,7 @@ private
       "parts" => parts,
       "alert_status" => edition.alert_status,
       "max_cache_time" => 10,
+      "publishing_request_id" => publishing_request_id,
     }
 
     details.merge!("image" => image) if image
@@ -99,5 +100,9 @@ private
 
   def document
     @document ||= AssetPresenter.present(edition.document)
+  end
+
+  def publishing_request_id
+    GdsApi::GovukHeaders.headers[:govuk_request_id]
   end
 end
