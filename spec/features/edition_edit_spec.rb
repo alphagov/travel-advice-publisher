@@ -373,6 +373,9 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish an edition" do
+    allow(GdsApi::GovukHeaders).to receive(:headers)
+      .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
+
     @old_edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania')
     @edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania', title: 'Albania travel advice',
                                   alert_status: TravelAdviceEdition::ALERT_STATUSES[1..0],
@@ -426,6 +429,9 @@ feature "Edit Edition page", js: true do
     assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID, {
       update_type: "minor"
     })
+
+    assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409",
+                            "publishing_request_id", "25108-1461151489.528-10.3.3.1-1066")
 
     assert_email_alert_sent("subject" => "Albania travel advice")
   end
