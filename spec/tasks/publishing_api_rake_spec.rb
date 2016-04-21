@@ -30,6 +30,40 @@ describe "publishing_api rake tasks", :type => :rake_task do
     end
   end
 
+  describe 'republish_edition' do
+    let(:country) { Country.find_by_slug('aruba') }
+    let(:task) { Rake::Task['publishing_api:republish_edition'] }
+
+    it "sends the published edition to the publishing_api with update_type of 'republish'" do
+      edition = FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
+
+      task.invoke(country.slug)
+
+      expected_request_attributes = {
+        base_path: '/foreign-travel-advice/aruba',
+        title: edition.title,
+        format: 'travel_advice',
+        update_type: 'republish',
+        public_updated_at: edition.published_at.iso8601,
+      }
+
+      assert_publishing_api_put_content(country.content_id, request_json_includes(expected_request_attributes))
+      assert_publishing_api_publish(country.content_id, { update_type: 'republish', })
+    end
+
+    it 'ignore draft items' do
+      FactoryGirl.create(:draft_travel_advice_edition, :country_slug => country.slug)
+
+      task.invoke(country.slug)
+
+      expect(a_request(:put, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}"))
+        .not_to have_been_made
+
+      expect(a_request(:post, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}/publish"))
+        .not_to have_been_made
+    end
+  end
+
   describe "republish_editions" do
     let(:task) { Rake::Task['publishing_api:republish_editions'] }
 
