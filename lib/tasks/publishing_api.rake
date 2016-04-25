@@ -28,6 +28,22 @@ namespace :publishing_api do
     puts
   end
 
+  desc 'republish a published edition to publishing-api for a country'
+  task :republish_edition, [:country_slug] => :environment do |_task, args|
+    begin
+      edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
+      presenter       = EditionPresenter.new(edition, republish: true)
+      links_presenter = LinksPresenter.new(edition)
+
+      api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      api_v2.patch_links(links_presenter.content_id, links_presenter.present)
+      api_v2.publish(presenter.content_id, presenter.update_type)
+      puts "SUCCEED: The country #{args[:country_slug]} has been republished"
+    rescue Mongoid::Errors::DocumentNotFound
+      puts "ERROR: No published country found for #{args[:country_slug]}"
+    end
+  end
+
   desc "republish email signup content items for the index and all countries"
   task republish_email_signups: [
     "republish_email_signups:index",
