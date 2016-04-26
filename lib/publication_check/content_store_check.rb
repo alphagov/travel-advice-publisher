@@ -5,7 +5,9 @@ module PublicationCheck
     def run(publish_request)
       @publish_request = publish_request
       @request_id = publish_request.request_id
-      page_has_request_id?
+      result = page_has_request_id?
+      publish_request.mark_frontend_updated if result
+      result
     end
 
   private

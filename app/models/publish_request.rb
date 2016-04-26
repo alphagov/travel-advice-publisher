@@ -20,4 +20,8 @@ class PublishRequest
     end
     save!
   end
+
+  def mark_frontend_updated
+    self.frontend_updated = true
+  end
 end

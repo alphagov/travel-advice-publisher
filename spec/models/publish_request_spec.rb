@@ -132,4 +132,14 @@ describe PublishRequest do
       end
     end
   end
+
+  describe "mark_frontend_updated" do
+    let(:publish_request){
+      PublishRequest.new
+    }
+    it "sets frontend_updated to true" do
+      publish_request.mark_frontend_updated
+      expect(publish_request.frontend_updated?).to eq(true)
+    end
+  end
 end
