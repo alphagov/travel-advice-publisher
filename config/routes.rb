@@ -1,4 +1,4 @@
-TravelAdvicePublisher::Application.routes.draw do
+Rails.application.routes.draw do
   namespace :admin do
     resources :countries, only: [:index, :show] do
       resources :editions, only: [:create]
