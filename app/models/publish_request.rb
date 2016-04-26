@@ -25,4 +25,8 @@ class PublishRequest
   def mark_email_received
     self.email_received = true
   end
+
+  def mark_frontend_updated
+    self.frontend_updated = true
+  end
 end

@@ -140,4 +140,11 @@ describe PublishRequest do
       expect(publish_request.email_received?).to eq(true)
     end
   end
+
+  describe "mark_frontend_updated" do
+    it "sets frontend_updated to true" do
+      publish_request.mark_frontend_updated
+      expect(publish_request.frontend_updated?).to eq(true)
+    end
+  end
 end

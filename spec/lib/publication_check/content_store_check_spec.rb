@@ -61,6 +61,11 @@ module PublicationCheck
         expect(content_store_check.run(publish_request))
           .to be(true)
       end
+
+      it "marks the publish request as frontend updated" do
+        expect(publish_request).to receive(:mark_frontend_updated)
+        content_store_check.run(publish_request)
+      end
     end
 
     context "a response containing a different request id" do
@@ -71,6 +76,11 @@ module PublicationCheck
       it "returns false" do
         expect(content_store_check.run(publish_request))
           .to be(false)
+      end
+
+      it "doesn't mark the publish request as frontend updated" do
+        expect(publish_request).not_to receive(:mark_frontend_updated)
+        content_store_check.run(publish_request)
       end
     end
 
@@ -88,6 +98,11 @@ module PublicationCheck
       it "returns false" do
         expect(content_store_check.run(publish_request))
           .to be(false)
+      end
+
+      it "doesn't mark the publish request as frontend updated" do
+        expect(publish_request).not_to receive(:mark_frontend_updated)
+        content_store_check.run(publish_request)
       end
     end
   end
