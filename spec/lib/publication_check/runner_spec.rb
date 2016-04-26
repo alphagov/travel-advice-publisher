@@ -2,8 +2,8 @@ require 'spec_helper'
 
 module PublicationCheck
   describe Runner do
-    let(:request_one){ double() }
-    let(:request_two){ double() }
+    let(:request_one){ double(register_check_attempt!: nil) }
+    let(:request_two){ double(register_check_attempt!: nil) }
     let(:publish_requests){ [request_one, request_two] }
     let(:check){ double(new: double(run: true)) }
 
@@ -38,6 +38,11 @@ module PublicationCheck
       expect(result).to receive(:add_checked_request).with(request_one)
       expect(result).to receive(:add_checked_request).with(request_two)
       Runner.run_check(publish_requests, [check])
+    end
+
+    it "registers a check on the PublishRequest" do
+      expect(request_one).to receive(:register_check_attempt!)
+      Runner.run_check([request_one], [check])
     end
   end
 end
