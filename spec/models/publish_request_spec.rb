@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe PublishRequest do
+  let(:publish_request){ PublishRequest.new }
+
   describe "#register_check_attempt!" do
-    let(:publish_request){ PublishRequest.new }
     context "no successful checks" do
       it "increments the check_count" do
         publish_request.register_check_attempt!
@@ -130,6 +131,13 @@ describe PublishRequest do
         publish_request.register_check_attempt!
         expect(publish_request.checks_complete?).to be(true)
       end
+    end
+  end
+
+  describe "mark_email_received" do
+    it "sets email_received to true" do
+      publish_request.mark_email_received
+      expect(publish_request.email_received?).to eq(true)
     end
   end
 end

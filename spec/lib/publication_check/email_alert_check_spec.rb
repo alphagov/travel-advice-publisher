@@ -26,23 +26,39 @@ module PublicationCheck
       end
 
       context "file exists" do
-        it "returns true" do
+        before do
           allow(client).to receive(:get_object)
             .with(
               bucket: bucket_name,
               key: object_key
           ).and_return s3_object
+        end
+
+        it "returns true" do
+          email_alert_check.run(publish_request)
+        end
+
+        it "marks the PublishRequest email_received" do
+          expect(publish_request).to receive(:mark_email_received)
           email_alert_check.run(publish_request)
         end
       end
 
       context "file doesn't exist" do
-        it "returns false" do
+        before do
           allow(client).to receive(:get_object)
             .with(
               bucket: bucket_name,
               key: object_key
           ).and_raise(Aws::S3::Errors::NoSuchKey.new(nil, "The specified key does not exist."))
+        end
+
+        it "returns false" do
+          email_alert_check.run(publish_request)
+        end
+
+        it "doesn't mark the PublishRequest email_received" do
+          expect(publish_request).not_to receive(:mark_email_received)
           email_alert_check.run(publish_request)
         end
       end

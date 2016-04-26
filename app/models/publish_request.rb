@@ -21,4 +21,8 @@ class PublishRequest
     end
     save!
   end
+
+  def mark_email_received
+    self.email_received = true
+  end
 end

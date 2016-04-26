@@ -1,8 +1,9 @@
 module PublicationCheck
   class EmailAlertCheck
-    attr_reader :govuk_request_id
+    attr_reader :govuk_request_id, :publish_request
 
     def run(publish_request)
+      @publish_request = publish_request
       @govuk_request_id = publish_request.request_id
       run_check
     end
@@ -12,6 +13,7 @@ module PublicationCheck
     def run_check
       begin
         get_object
+        publish_request.mark_email_received
         return true
       rescue Aws::S3::Errors::NoSuchKey
         return false
