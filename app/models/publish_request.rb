@@ -9,6 +9,7 @@ class PublishRequest
   field :checks_complete, type: Boolean, default: false
   field :email_received, type: Boolean, default: false
   field :frontend_updated, type: Boolean, default: false
+  field :country_slug, type: String
 
   MAX_RETRIES = 3
 
