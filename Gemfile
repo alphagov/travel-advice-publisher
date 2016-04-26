@@ -19,7 +19,7 @@ gem 'formtastic-bootstrap', '3.0.0'
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", :git => 'https://github.com/alphagov/govuk_content_models.git', :ref => 'fcf23d867a5c7e2c174d5c72b72ad0858589d948'
+  gem "govuk_content_models", '35.0.0'
 end
 
 if ENV['API_DEV']
