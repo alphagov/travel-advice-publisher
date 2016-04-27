@@ -12,6 +12,9 @@ gem 'diffy', '3.0.7'
 gem 'plek', '~> 1.9.0'
 gem 'gds-sso', '~> 11.2'
 
+gem 'uglifier', '>= 1.0.3'
+gem 'sass-rails', '5.0.4'
+
 gem 'govuk_admin_template', '3.0.0'
 gem 'formtastic', '2.3.0'
 gem 'formtastic-bootstrap', '3.0.0'
@@ -19,7 +22,7 @@ gem 'formtastic-bootstrap', '3.0.0'
 if ENV['CONTENT_MODELS_DEV']
   gem 'govuk_content_models', :path => '../govuk_content_models'
 else
-  gem "govuk_content_models", :git => 'https://github.com/alphagov/govuk_content_models.git', :ref => 'fcf23d867a5c7e2c174d5c72b72ad0858589d948'
+  gem "govuk_content_models", '35.0.0'
 end
 
 if ENV['API_DEV']
@@ -34,13 +37,6 @@ gem 'govspeak', '~> 3.5.2'
 gem 'sidekiq', '3.5.1'
 gem "sidekiq-logging-json", "0.0.14"
 gem "sidekiq-statsd", "0.1.5"
-
-# Gems used only for assets and not required in production
-# environments by default.
-group :assets do
-  gem 'uglifier', '>= 1.0.3'
-  gem 'sass-rails', '5.0.4'
-end
 
 group :development, :test do
   gem 'rspec-rails', '3.4.2'
