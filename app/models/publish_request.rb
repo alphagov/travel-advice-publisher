@@ -13,6 +13,33 @@ class PublishRequest
 
   MAX_RETRIES = 3
 
+  def self.awaiting_check
+    #returns the most recent per country_slug
+    #with checks_complete == false
+    #and created_at more than 5 minutes ago
+    ids = collection.aggregate(
+      [
+        {
+          "$group" => {
+            _id: "$country_slug",
+            maxCreatedAt: {"$max" => "$created_at"},
+            publishRequest: {
+              "$last": "$$ROOT"
+            }
+          }
+        },
+        {
+          "$group" => {
+            _id: "$publishRequest._id"
+          }
+        }
+      ]
+    ).map{|result| result["_id"]}
+    where(:_id.in => ids)
+      .where(checks_complete: false)
+      .where(:created_at.lt => 5.minutes.ago)
+  end
+
   def register_check_attempt!
     self.check_count = check_count + 1
     self.checks_complete = check_count >= MAX_RETRIES
@@ -29,5 +56,10 @@ class PublishRequest
 
   def mark_frontend_updated
     self.frontend_updated = true
+  end
+
+  def mark_superseded
+    # self.superseded = true
+    # self.checks_complete = true
   end
 end

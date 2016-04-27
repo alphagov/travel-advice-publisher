@@ -147,4 +147,44 @@ describe PublishRequest do
       expect(publish_request.frontend_updated?).to eq(true)
     end
   end
+
+  describe "awaiting_check scope" do
+    it "returns checks_complete? == false older then 5 minutes" do
+      publish_request = PublishRequest.create(
+        checks_complete: false,
+        created_at: 6.minutes.ago
+      )
+      expect(PublishRequest.awaiting_check[0]).to eq(publish_request)
+    end
+
+    it "doesn't return checks_complete? == false newer than 5 minutes" do
+      publish_request = PublishRequest.create(
+        checks_complete: false,
+        created_at: 4.minutes.ago
+      )
+      expect(PublishRequest.awaiting_check).to be_empty
+    end
+
+    context "where there are two incomplete PublishRequests for the edition" do
+      let!(:publish_request_one){
+        PublishRequest.create(
+          checks_complete: false,
+          created_at: 10.minutes.ago
+        )
+      }
+
+      let!(:publish_request_two){
+        PublishRequest.create(
+          checks_complete: false,
+          created_at: 5.minutes.ago
+        )
+      }
+
+      it "only returns the most recent one" do
+        results = PublishRequest.awaiting_check
+        expect(results.count).to eq(1)
+        expect(results[0]).to eq(publish_request_two)
+      end
+    end
+  end
 end
