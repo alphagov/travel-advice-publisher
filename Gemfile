@@ -35,6 +35,8 @@ gem 'sidekiq', '3.5.1'
 gem "sidekiq-logging-json", "0.0.14"
 gem "sidekiq-statsd", "0.1.5"
 
+gem "aws-sdk"
+
 # Gems used only for assets and not required in production
 # environments by default.
 group :assets do
