@@ -100,7 +100,7 @@ class Admin::EditionsController < ApplicationController
       notifier.send_alert(@edition)
       notifier.enqueue
 
-      index_notifier = PublishingApiNotifier.new(request_id: govuk_request_id)
+      index_notifier = PublishingApiNotifier.new
       index_notifier.publish_index
       index_notifier.enqueue
 
@@ -156,7 +156,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def notifier
-    @notifier ||= PublishingApiNotifier.new(request_id: govuk_request_id)
+    @notifier ||= PublishingApiNotifier.new
   end
 
   def govuk_request_id

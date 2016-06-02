@@ -3,6 +3,7 @@ class PublishingApiWorker
 
   def perform(jobs, params = {})
     GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
+    GdsApi::GovukHeaders.set_header(:x_govuk_authenticated_user, params["user_id"])
 
     jobs.each do |endpoint, content_id, payload|
       payload = payload.symbolize_keys if payload.is_a?(Hash)

@@ -5,9 +5,14 @@ RSpec.describe PublishingApiNotifier do
   before do
     Sidekiq::Worker.clear_all
     stub_request(:put, %r{#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts.*})
+
+    allow(GdsApi::GovukHeaders).to receive(:headers).and_return({
+      govuk_request_id: "12345-54321",
+      x_govuk_authenticated_user: "a0b1c2d3e4f5",
+    })
   end
 
-  subject { PublishingApiNotifier.new(request_id: "12345-54321")}
+  subject { PublishingApiNotifier.new }
 
   let(:edition) { FactoryGirl.create(:travel_advice_edition, country_slug: "aruba", published_at: Time.zone.now) }
 
@@ -214,6 +219,18 @@ RSpec.describe PublishingApiNotifier do
     context "when no tasks exist in the batch" do
       it "does not enqueue a Sidekiq job" do
         expect(PublishingApiWorker).not_to receive(:perform_async)
+        subject.enqueue
+      end
+    end
+
+    context "when tasks are in order and present" do
+      it "calls perform_async with request and user id arguments from headers" do
+        expect(PublishingApiWorker).to receive(:perform_async)
+          .with(anything, { request_id: "12345-54321", user_id: "a0b1c2d3e4f5" })
+
+        edition.publish!
+        subject.put_content(edition)
+        subject.publish(edition)
         subject.enqueue
       end
     end
