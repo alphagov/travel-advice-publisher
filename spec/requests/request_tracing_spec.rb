@@ -5,12 +5,15 @@ require "gds_api/test_helpers/email_alert_api"
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::EmailAlertApi
+  include AuthenticationFeatureHelpers
 
   let(:govuk_request_id) { "12345-67890" }
+  let(:govuk_authenticated_user) { "0a1b2c3d4e5f" }
   let(:edition) { FactoryGirl.create(:travel_advice_edition, country_slug: "aruba") }
 
   before do
-    FactoryGirl.create(:user)
+    user = FactoryGirl.create(:user, uid: govuk_authenticated_user)
+    login_as(user)
     stub_any_publishing_api_call
     stub_any_email_alert_api_call
     stub_request(:any, /panopticon/)
@@ -32,7 +35,8 @@ RSpec.describe "Request tracing", type: :request do
     Sidekiq::Worker.drain_all # Run all workers
 
     onward_headers = {
-      "GOVUK-Request-Id" => govuk_request_id
+      "GOVUK-Request-Id" => govuk_request_id,
+      "X-Govuk-Authenticated-User" => govuk_authenticated_user,
     }
     expect(WebMock).to have_requested(:put, /panopticon/).with(headers: onward_headers)
     expect(WebMock).to have_requested(:put, /publishing-api.*content/).with(headers: onward_headers).twice
