@@ -1,18 +1,32 @@
 require 'spec_helper'
 
 describe PublishRequest do
+  describe "#check_count" do
+    let(:publish_request){ PublishRequest.new }
+    it "returns the length of checks_attempted" do
+      publish_request.checks_attempted << Time.now
+      expect(publish_request.check_count).to eq(1)
+    end
+  end
+
   describe "#register_check_attempt!" do
     let(:publish_request){ PublishRequest.new }
-    context "no successful checks" do
-      it "increments the check_count" do
-        publish_request.register_check_attempt!
-        expect(publish_request.check_count).to eq(1)
-      end
+    before{ Timecop.freeze }
+    after{ Timecop.return }
+
+    it "adds a new timestamp to checks_attempted" do
+      publish_request.register_check_attempt!
+      expect(publish_request.checks_attempted.first).to eq(Time.now)
     end
 
     context "incremented check_count == MAX_RETRIES (3)" do
       context "no successful checks" do
-        let(:publish_request){ PublishRequest.new(check_count: 2) }
+        let(:publish_request){
+          PublishRequest.new(
+            checks_attempted: [10.minutes.ago, 5.minutes.ago]
+          )
+        }
+
         before do
           publish_request.register_check_attempt!
         end
@@ -32,7 +46,9 @@ describe PublishRequest do
 
       context "one check passed one not" do
         let(:publish_request){
-          PublishRequest.new(check_count: 2, frontend_updated: false)
+          PublishRequest.new(
+            checks_attempted: [10.minutes.ago, 5.minutes.ago],
+            frontend_updated: false)
         }
 
         before do
@@ -54,7 +70,10 @@ describe PublishRequest do
 
       context "all checks passed" do
         let(:publish_request){
-          PublishRequest.new(check_count: 2, frontend_updated: true)
+          PublishRequest.new(
+            checks_attempted: [10.minutes.ago, 5.minutes.ago],
+            frontend_updated: true
+          )
         }
 
         before do
@@ -79,7 +98,10 @@ describe PublishRequest do
   context "check_count < MAX_RETRIES" do
     context "all checks passed" do
       let(:publish_request){
-        PublishRequest.new(check_count: 0, frontend_updated: true)
+        PublishRequest.new(
+          checks_attempted: [],
+          frontend_updated: true
+        )
       }
 
       before do
@@ -101,7 +123,9 @@ describe PublishRequest do
 
     context "all checks not passed" do
       let(:publish_request){
-        PublishRequest.new(check_count: 0, frontend_updated: false)
+        PublishRequest.new(
+          checks_attempted: [],
+          frontend_updated: false)
       }
 
       before do
@@ -123,7 +147,10 @@ describe PublishRequest do
 
     context "check_count > MAX_RETRIES" do
       let(:publish_request){
-        PublishRequest.new(check_count: 5, frontend_updated: false)
+        PublishRequest.new(
+          checks_attempted: (1..5).map{ |i| i.minutes.ago },
+          frontend_updated: false
+        )
       }
 
       it "sets checks_complete? to true" do

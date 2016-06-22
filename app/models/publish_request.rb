@@ -4,7 +4,7 @@ class PublishRequest
 
   field :edition_id
   field :request_id
-  field :check_count, type: Integer, default: 0
+  field :checks_attempted, type: Array, default: []
   field :succeeded, type: Boolean, default: false
   field :checks_complete, type: Boolean, default: false
   field :frontend_updated, type: Boolean, default: false
@@ -38,7 +38,7 @@ class PublishRequest
   end
 
   def register_check_attempt!
-    self.check_count = check_count + 1
+    self.checks_attempted << Time.now
     self.checks_complete = check_count >= MAX_RETRIES
     if self.frontend_updated?
       self.succeeded = true
@@ -49,5 +49,9 @@ class PublishRequest
 
   def mark_frontend_updated
     self.frontend_updated = true
+  end
+
+  def check_count
+    checks_attempted.length
   end
 end
