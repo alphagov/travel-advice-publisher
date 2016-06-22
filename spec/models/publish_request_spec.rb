@@ -48,7 +48,7 @@ describe PublishRequest do
         let(:publish_request){
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
-            frontend_updated: false)
+            frontend_updated: nil)
         }
 
         before do
@@ -72,7 +72,7 @@ describe PublishRequest do
         let(:publish_request){
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
-            frontend_updated: true
+            frontend_updated: 5.minutes.ago
           )
         }
 
@@ -100,7 +100,7 @@ describe PublishRequest do
       let(:publish_request){
         PublishRequest.new(
           checks_attempted: [],
-          frontend_updated: true
+          frontend_updated: 1.minute.ago
         )
       }
 
@@ -125,7 +125,7 @@ describe PublishRequest do
       let(:publish_request){
         PublishRequest.new(
           checks_attempted: [],
-          frontend_updated: false)
+          frontend_updated: nil)
       }
 
       before do
@@ -149,7 +149,7 @@ describe PublishRequest do
       let(:publish_request){
         PublishRequest.new(
           checks_attempted: (1..5).map{ |i| i.minutes.ago },
-          frontend_updated: false
+          frontend_updated: nil
         )
       }
 
@@ -164,10 +164,12 @@ describe PublishRequest do
     let(:publish_request){
       PublishRequest.new
     }
+    before { Timecop.freeze( Time.new(2015,4,10,5,0,0) ) }
+    after { Timecop.return }
 
-    it "sets frontend_updated to true" do
+    it "sets frontend_updated to DateTime.now" do
       publish_request.mark_frontend_updated
-      expect(publish_request.frontend_updated?).to eq(true)
+      expect(publish_request.frontend_updated).to eq(DateTime.now.utc)
     end
   end
 

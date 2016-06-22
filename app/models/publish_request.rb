@@ -7,7 +7,7 @@ class PublishRequest
   field :checks_attempted, type: Array, default: []
   field :succeeded, type: Boolean, default: false
   field :checks_complete, type: Boolean, default: false
-  field :frontend_updated, type: Boolean, default: false
+  field :frontend_updated, type: DateTime, default: nil
   field :country_slug, type: String
 
   MAX_RETRIES = 3
@@ -40,7 +40,7 @@ class PublishRequest
   def register_check_attempt!
     self.checks_attempted << Time.now
     self.checks_complete = check_count >= MAX_RETRIES
-    if self.frontend_updated?
+    if frontend_updated.present?
       self.succeeded = true
       self.checks_complete = true
     end
@@ -48,7 +48,7 @@ class PublishRequest
   end
 
   def mark_frontend_updated
-    self.frontend_updated = true
+    self.frontend_updated = DateTime.now.utc
   end
 
   def check_count
