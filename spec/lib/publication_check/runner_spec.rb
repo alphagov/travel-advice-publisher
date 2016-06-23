@@ -16,26 +16,35 @@ module PublicationCheck
           .with(publish_request)
       end
 
-      Runner.run_check(publish_requests)
+      Runner.run_check(publish_requests: publish_requests)
     end
 
     it "uses a new check object per check" do
-      expect(ContentStoreCheck)
-        .to receive(:new).exactly(2).times
-        .and_return(double(run: true))
-      Runner.run_check(publish_requests)
+      expected_default_checks = [ContentStoreCheck]
+      expected_default_checks.each do |check|
+        expect(check)
+          .to receive(:new).exactly(2).times
+          .and_return(double(run: true))
+      end
+      Runner.run_check(publish_requests: publish_requests)
     end
 
     it "adds each checked PublishRequest to the result" do
       allow(Result).to receive(:new).and_return(result = Result.new)
       expect(result).to receive(:add_checked_request).with(request_one)
       expect(result).to receive(:add_checked_request).with(request_two)
-      Runner.run_check(publish_requests, [check])
+      Runner.run_check(publish_requests: publish_requests, checks: [check])
     end
 
     it "registers a check on the PublishRequest" do
       expect(request_one).to receive(:register_check_attempt!)
-      Runner.run_check([request_one], [check])
+      Runner.run_check(publish_requests: [request_one], checks: [check])
+    end
+
+    it "checks against PublishRequest.awaiting_check by default" do
+      allow(PublishRequest).to receive(:awaiting_check).and_return([request_one])
+      expect(request_one).to receive(:register_check_attempt!)
+      Runner.run_check(checks: [check])
     end
   end
 end

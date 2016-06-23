@@ -4,7 +4,7 @@ module PublicationCheck
       ContentStoreCheck
     ]
 
-    def self.run_check(publish_requests, checks = DEFAULT_CHECKS)
+    def self.run_check(publish_requests: PublishRequest.awaiting_check, checks: DEFAULT_CHECKS)
       Result.new.tap do |result|
         publish_requests.each do |publish_request|
           checks.map(&:new).each do |check|
