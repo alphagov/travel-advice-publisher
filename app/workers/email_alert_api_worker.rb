@@ -1,7 +1,7 @@
 class EmailAlertApiWorker
   include Sidekiq::Worker
 
-  def perform(payload, params = {})
+  def perform(payload, params = {}, _govuk_headers = nil)
     GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
 
     api.send_alert(payload) if send_alert?
