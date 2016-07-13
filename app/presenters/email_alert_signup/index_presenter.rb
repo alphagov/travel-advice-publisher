@@ -4,7 +4,8 @@ module EmailAlertSignup
       {
         content_id: content_id,
         base_path: base_path,
-        format: "email_alert_signup",
+        document_type: "email_alert_signup",
+        schema_name: "email_alert_signup",
         title: "Foreign travel advice",
         description: "Foreign travel advice email alert signup",
         public_updated_at: public_updated_at,
