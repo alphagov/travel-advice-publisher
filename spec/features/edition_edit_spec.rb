@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 require 'gds_api/test_helpers/panopticon'
-require 'sidekiq/testing'
+require 'govuk_sidekiq/testing'
 
 feature "Edit Edition page", js: true do
   before do
