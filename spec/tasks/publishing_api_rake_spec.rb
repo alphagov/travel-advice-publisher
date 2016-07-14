@@ -20,7 +20,8 @@ describe "publishing_api rake tasks", :type => :rake_task do
       assert_publishing_api_put_content(TravelAdvicePublisher::INDEX_CONTENT_ID, request_json_includes(
         base_path: "/foreign-travel-advice",
         title: "Foreign travel advice",
-        format: "travel_advice_index",
+        document_type: "travel_advice_index",
+        schema_name: "travel_advice_index",
         update_type: "minor",
       ))
 
@@ -42,7 +43,8 @@ describe "publishing_api rake tasks", :type => :rake_task do
       expected_request_attributes = {
         base_path: '/foreign-travel-advice/aruba',
         title: edition.title,
-        format: 'travel_advice',
+        document_type: 'travel_advice',
+        schema_name: 'travel_advice',
         update_type: 'republish',
         public_updated_at: edition.published_at.iso8601,
       }
@@ -76,7 +78,8 @@ describe "publishing_api rake tasks", :type => :rake_task do
       assert_publishing_api_put_content("56bae85b-a57c-4ca2-9dbd-68361a086bb3", request_json_includes(
         base_path: "/foreign-travel-advice/aruba",
         title: aruba.title,
-        format: "travel_advice",
+        document_type: "travel_advice",
+        schema_name: "travel_advice",
         update_type: "republish",
         public_updated_at: aruba.published_at.iso8601,
       ))
@@ -88,7 +91,8 @@ describe "publishing_api rake tasks", :type => :rake_task do
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
         base_path: "/foreign-travel-advice/algeria",
         title: algeria.title,
-        format: "travel_advice",
+        document_type: "travel_advice",
+        schema_name: "travel_advice",
         update_type: "republish",
         public_updated_at: algeria.published_at.iso8601,
       ))

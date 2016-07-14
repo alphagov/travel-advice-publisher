@@ -24,7 +24,8 @@ class EditionPresenter
     {
       "content_id" => content_id,
       "base_path" => base_path,
-      "format" => TravelAdvicePublisher::COUNTRY_FORMAT,
+      "document_type" => TravelAdvicePublisher::COUNTRY_FORMAT,
+      "schema_name" => TravelAdvicePublisher::COUNTRY_FORMAT,
       "title" => edition.title,
       "description" => edition.overview,
       "locale" => "en",
