@@ -140,6 +140,14 @@ describe EditionPresenter do
       end
     end
 
+    context "when the edition does not have a change_description" do
+      it "sets change_description to an empty string" do
+        edition.change_description = nil
+
+        expect(presented_data["details"]["change_description"]).to eq("")
+      end
+    end
+
     context "when republishing" do
       subject { described_class.new(edition, republish: true) }
 
