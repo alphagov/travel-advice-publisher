@@ -1,15 +1,11 @@
 class LinksPresenter
-
   def initialize(edition)
     @edition = edition
   end
 
   def present
     {
-      :links => {
-        "parent" => BreadcrumbsPresenter.present,
-        "related" => RelatedLinksPresenter.present
-      }
+      links: {}
     }
   end
 
