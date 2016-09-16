@@ -24,6 +24,8 @@ To add or rename a country, update the [`lib/data/countries.yml`](../lib/data/co
 
 See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) and [`lib/tasks/panopticon.rake`](../lib/tasks/panopticon.rake) for details on how to do this.
 
+To maintain the history of a country when renaming you will need to perform a [migration](../db/migrate/20160916161059_rename_democratic_republic_of_congo.rb) on TravelAdviceEdition
+
 ### Publishing API
 
 Travel advice content reaches the [content-store](https://github.com/alphagov/content-store) via the [publishing-api](https://github.com/alphagov/publishing-api), editorial work is batch-enqueued with Sidekiq for processing out of request.
