@@ -148,6 +148,17 @@ describe EditionPresenter do
       end
     end
 
+    context "when there is no govuk_request_id header" do
+      before do
+        allow(GdsApi::GovukHeaders).to receive(:headers)
+          .and_return({})
+      end
+
+      it "does not include a publishing_request_id key" do
+        expect(presented_data["details"]).not_to have_key("publishing_request_id")
+      end
+    end
+
     context "when republishing" do
       subject { described_class.new(edition, republish: true) }
 

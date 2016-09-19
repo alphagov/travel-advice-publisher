@@ -53,11 +53,11 @@ private
       "parts" => parts,
       "alert_status" => edition.alert_status,
       "max_cache_time" => 10,
-      "publishing_request_id" => publishing_request_id,
     }
 
     details.merge!("image" => image) if image
     details.merge!("document" => document) if document
+    details.merge!("publishing_request_id" => publishing_request_id) if publishing_request_id
 
     details
   end
