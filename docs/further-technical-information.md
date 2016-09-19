@@ -4,7 +4,7 @@
 
 Travel Advice Publisher inherits its models from the [govuk_content_models](https://github.com/alphagov/govuk_content_models) gem. In addition to this, enhancements to the `TravelAdviceEdition` model for integration with the [asset manager](https://github.com/alphagov/asset-manager) are present in the app.
 
-At the present time, the list of countries is defined in `lib/data/countries.yml`, however it is expected that this will change to consume an api for countries from the [Whitehall](https://github.com/alphagov/whitehall) app in the near future.
+At the present time, the list of countries is defined in [`lib/data/countries.yml`](../lib/data/countries.yml), however it is expected that this will change to consume an api for countries from the [Whitehall](https://github.com/alphagov/whitehall) app in the near future.
 
 Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend) and [multipage-frontend](https://github.com/alphagov/multipage-frontend).
 
@@ -16,13 +16,15 @@ When published, unless the 'minor update' checkbox is checked, a change descript
 
 ### Adding or Renaming a Country
 
-To add or rename a country, update the `lib/data/countries.yml` file. You will then need to:
+To add or rename a country, update the [`lib/data/countries.yml`](../lib/data/countries.yml) file. You will then need to:
 
 - Publish the content item for the country to Publishing API
 - Publish the email signup content item for the country to Publishing API
 - Publish an artefact for the country to Panopticon
 
-See `lib/tasks/publishing_api.rake` and `lib/tasks/panopticon.rake` for details on how to do this.
+See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) and [`lib/tasks/panopticon.rake`](../lib/tasks/panopticon.rake) for details on how to do this.
+
+To maintain the history of a country when renaming you will need to perform a [migration](../db/migrate/20160916161059_rename_democratic_republic_of_congo.rb) on TravelAdviceEdition
 
 ### Publishing API
 

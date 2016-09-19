@@ -223,8 +223,8 @@
   slug: czech-republic
   content_id: b5e5c48e-dac9-4443-a7cc-8042ccdf8404
   email_signup_content_id: 14303daa-ff18-4cdb-bd07-d81ce5ae78ea
-- name: Democratic Republic of Congo
-  slug: democratic-republic-of-congo
+- name: Democratic Republic of the Congo
+  slug: democratic-republic-of-the-congo
   content_id: 88122213-1a2f-420f-94f9-c622147d4300
   email_signup_content_id: 30bd8028-c26f-4db3-aadf-2b30b577e872
 - name: Denmark
