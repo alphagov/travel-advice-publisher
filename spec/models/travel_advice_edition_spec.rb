@@ -3,6 +3,10 @@ require "gds_api/asset_manager"
 require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
+  before do
+    class_double('RummagerNotifier').as_stubbed_const
+    allow(RummagerNotifier).to receive(:notify)
+  end
 
   describe "CSV Synonyms" do
     before do
@@ -92,6 +96,19 @@ describe TravelAdviceEdition do
       expect(GdsApi::Panopticon::Registerer).to_not receive(:new)
 
       ed.save!
+    end
+  end
+
+  describe 'indexing the page with rummager on publish' do
+    it 'should index the page' do
+      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+      registerable_edition = double("RegisterableEdition")
+
+      allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
+
+      expect(RummagerNotifier).to receive(:notify)
+
+      ed.publish
     end
   end
 

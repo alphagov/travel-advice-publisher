@@ -5,6 +5,10 @@ module GdsApiHelpers
     allow_any_instance_of(GdsApi::Panopticon::Registerer).to receive(:register)
   end
 
+  def stub_rummager
+    allow(TravelAdvicePublisher.rummager).to receive(:add_document)
+  end
+
   # Fallback to using WebMock so that we can filter on draft registrations only.
   def stub_panopticon_draft_registration
     WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
@@ -28,6 +32,7 @@ RSpec.configuration.include GdsApiHelpers, :type => :controller
 RSpec.configuration.include GdsApi::TestHelpers::Panopticon, :type => :controller
 RSpec.configuration.before :each, :type => :controller do
   stub_panopticon_registration
+  stub_rummager
 end
 
 RSpec.configuration.include GdsApiHelpers, :type => :feature
