@@ -1,10 +1,12 @@
 require "spec_helper"
 require 'sidekiq/testing'
 require "gds_api/test_helpers/email_alert_api"
+require 'gds_api/test_helpers/rummager'
 
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::EmailAlertApi
+  include GdsApi::TestHelpers::Rummager
   include AuthenticationFeatureHelpers
 
   let(:govuk_request_id) { "12345-67890" }
@@ -16,6 +18,7 @@ RSpec.describe "Request tracing", type: :request do
     login_as(user)
     stub_any_publishing_api_call
     stub_any_email_alert_api_call
+    stub_any_rummager_post_with_queueing_enabled
     stub_request(:any, /panopticon/)
   end
 
@@ -39,6 +42,7 @@ RSpec.describe "Request tracing", type: :request do
       "X-Govuk-Authenticated-User" => govuk_authenticated_user,
     }
     expect(WebMock).to have_requested(:put, /panopticon/).with(headers: onward_headers)
+    expect(WebMock).to have_requested(:post, /search.*documents/).with(headers: onward_headers)
     expect(WebMock).to have_requested(:put, /publishing-api.*content/).with(headers: onward_headers).twice
     expect(WebMock).to have_requested(:patch, /publishing-api.*links/).with(headers: onward_headers).twice
     expect(WebMock).to have_requested(:post, /publishing-api.*publish/).with(headers: onward_headers).twice

@@ -16,6 +16,7 @@ module TravelAdvicePublisher
   mattr_accessor :asset_api
   mattr_accessor :publishing_api_v2
   mattr_accessor :email_alert_api
+  mattr_accessor :rummager
 
   # Maslow need ID for Travel Advice Publisher
   NEED_ID = '101191'

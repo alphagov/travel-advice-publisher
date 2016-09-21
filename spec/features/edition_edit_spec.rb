@@ -2,9 +2,12 @@
 
 require 'spec_helper'
 require 'gds_api/test_helpers/panopticon'
+require 'gds_api/test_helpers/rummager'
 require 'govuk_sidekiq/testing'
 
 feature "Edit Edition page", js: true do
+  include GdsApi::TestHelpers::Rummager
+
   before do
     login_as_stub_user
     Sidekiq::Testing.inline!
@@ -371,6 +374,8 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish an edition" do
+    stub_any_rummager_post_with_queueing_enabled
+
     allow(GdsApi::GovukHeaders).to receive(:headers)
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
 
@@ -420,6 +425,19 @@ feature "Edit Edition page", js: true do
         'state' => 'live'
     ))
 
+    assert_rummager_posted_item(
+      _type: "edition",
+      _id: "/foreign-travel-advice/albania",
+      content_id: "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+      rendering_app: "frontend",
+      publishing_app: "travel-advice-publisher",
+      format: "custom-application",
+      title: "Albania travel advice",
+      description: "The overview",
+      indexable_content: "Summary Part One Body text",
+      link: "/foreign-travel-advice/albania"
+    )
+
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
       update_type: "major"
     })
@@ -435,6 +453,8 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish a minor update to an edition" do
+    stub_any_rummager_post_with_queueing_enabled
+
     Timecop.travel(3.days.ago) do
       @old_edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania',
                                         summary: "## The summaryy",

@@ -11,6 +11,7 @@ class TravelAdviceEdition
 
   state_machine.after_transition to: :published do |edition, _|
     edition.register_with_panopticon
+    edition.register_with_rummager
   end
 
   after_validation :extract_part_errors
@@ -31,6 +32,11 @@ class TravelAdviceEdition
     details = RegisterableTravelAdviceEdition.new(self)
     registerer = GdsApi::Panopticon::Registerer.new(owning_app: 'travel-advice-publisher', rendering_app: "multipage-frontend", kind: 'travel-advice')
     registerer.register(details)
+  end
+
+  def register_with_rummager
+    details = RegisterableTravelAdviceEdition.new(self)
+    RummagerNotifier.notify(details)
   end
 
   private
