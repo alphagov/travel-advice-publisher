@@ -63,7 +63,7 @@ describe EditionPresenter do
       Timecop.freeze { example.run }
     end
 
-    it "is valid against the content schemas", :schema_test => true do
+    it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice")
       expect(presented_data).to be_valid_against_schema('travel_advice')
     end
