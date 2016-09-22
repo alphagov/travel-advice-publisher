@@ -38,7 +38,7 @@ describe IndexPresenter do
       FactoryGirl.create(:draft_travel_advice_edition, country_slug: "argentina", version_number: 1)
     end
 
-    it "is valid against the content schemas", :schema_test => true do
+    it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice_index")
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
     end
