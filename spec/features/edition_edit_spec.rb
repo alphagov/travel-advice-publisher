@@ -374,7 +374,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish an edition" do
-    stub_any_rummager_post_with_queueing_enabled
+    stub_any_rummager_post
 
     allow(GdsApi::GovukHeaders).to receive(:headers)
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
@@ -418,7 +418,6 @@ feature "Edit Edition page", js: true do
         'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
         'name' => 'Albania travel advice',
         'description' => 'The overview',
-        'indexable_content' => 'Summary Part One Body text',
         'kind' => 'travel-advice',
         'owning_app' => 'travel-advice-publisher',
         'rendering_app' => 'multipage-frontend',
