@@ -1,0 +1,34 @@
+<header>
+  <h1 class="part-content-title">Summary</h1>
+</header>
+
+<%= render 'govuk_component/metadata',
+    other: {
+      "Still current at" => Date.today.strftime("%e %B %Y"),
+      "Updated" => (presenter.reviewed_at || presenter.updated_at).strftime("%e %B %Y"),
+      "Latest update" => simple_format(presenter.latest_update)
+    }
+%>
+
+<% if presenter.alert_status.present? %>
+  <div class="help-notice">
+    <% presenter.alert_status.each do |alert| %>
+      <p><%= raw t("travel_advice.alert_status.#{alert}") %></p>
+    <% end %>
+  </div>
+<% end %>
+
+<% if presenter.image %>
+  <p>
+    <img class="map-image" src="<%= presenter.image.file_url %>" alt="" />
+  </p>
+<% end %>
+<% if presenter.document %>
+  <div class="form-download">
+  <p>
+    <a href="<%= presenter.document.file_url %>">Download map (PDF)</a>
+  </p>
+  </div>
+<% end %>
+
+<%= render 'govuk_component/govspeak', content: presenter.summary %>

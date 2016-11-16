@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resources :editions, only: [:edit, :update, :destroy] do
       get 'diff/:compare_id', action: :diff, as: :diff, on: :member
+      get 'preview'
     end
 
     root to: "countries#index"

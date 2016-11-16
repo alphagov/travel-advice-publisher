@@ -57,6 +57,13 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+  def preview
+    edition = TravelAdviceEdition.find(params[:edition_id])
+    country = Country.find_by_slug(edition.country_slug)
+    @presenter = EditionPreviewPresenter.new(edition, country)
+    render layout: "preview"
+  end
+
   private
   def permitted_edition_attributes
     params[:edition].permit(
