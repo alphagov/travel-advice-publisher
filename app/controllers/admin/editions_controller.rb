@@ -57,6 +57,13 @@ class Admin::EditionsController < ApplicationController
     end
   end
 
+  def historical_edition
+    edition = TravelAdviceEdition.find(params[:edition_id])
+    country = Country.find_by_slug(edition.country_slug)
+    @presenter = HistoricalEditionPresenter.new(edition, country)
+    render layout: "historical_edition"
+  end
+
   private
   def permitted_edition_attributes
     params[:edition].permit(

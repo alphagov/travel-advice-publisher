@@ -237,4 +237,19 @@ describe Admin::EditionsController do
       end
     end
   end
+
+  describe "historical_edition" do
+    before do
+      login_as_stub_user
+      @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
+      @country = Country.find_by_slug('aruba')
+    end
+
+    it "shows a print preview for that edition" do
+      get :historical_edition, edition_id: @edition._id
+      expect(response).to be_success
+      expect(assigns(:presenter).edition).to eq(@edition)
+      expect(assigns(:presenter).country).to eq(@country)
+    end
+  end
 end
