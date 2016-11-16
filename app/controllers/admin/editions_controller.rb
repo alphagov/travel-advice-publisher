@@ -1,8 +1,11 @@
 class Admin::EditionsController < ApplicationController
+  include Slimmer::Headers
+  include Slimmer::GovukComponents
 
-  before_filter :load_country, :only => [:create]
-  before_filter :load_country_and_edition, :only => [:edit, :update, :destroy, :diff]
-  before_filter :strip_empty_alert_statuses, :only => :update
+  before_filter :skip_slimmer, except: :historical_edition
+  before_filter :load_country, only: [:create]
+  before_filter :load_country_and_edition, only: [:edit, :update, :destroy, :diff]
+  before_filter :strip_empty_alert_statuses, only: :update
 
   def create
     if params[:edition_version].nil?
@@ -61,6 +64,7 @@ class Admin::EditionsController < ApplicationController
     edition = TravelAdviceEdition.find(params[:edition_id])
     country = Country.find_by_slug(edition.country_slug)
     @presenter = HistoricalEditionPresenter.new(edition, country)
+    set_slimmer_headers template: "print"
     render layout: "historical_edition"
   end
 

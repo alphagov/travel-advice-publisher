@@ -3,6 +3,7 @@ require "sidekiq/testing"
 
 describe Admin::EditionsController do
   include GdsApi::TestHelpers::PublishingApiV2
+  render_views
 
   before do
     stub_panopticon_registration
