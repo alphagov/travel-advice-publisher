@@ -3,8 +3,22 @@ module ApplicationHelper
     link_to (edition.draft? ? 'edit' : 'view details'), edit_admin_edition_path(edition)
   end
 
-  def preview_edition_path(edition, cache = true)
-    "#{Plek.current.find("private-frontend")}/foreign-travel-advice/#{edition.country_slug}" + "?edition=#{edition.version_number}&cache=#{Time.now().to_i}"
+  def preview_edition_link(edition, short, options = {})
+    if !Rails.application.config.show_historical_edition_link
+      name = "Preview saved version"
+      url = "#{Plek.current.find('private-frontend')}/foreign-travel-advice/#{edition.country_slug}?edition=#{edition.version_number}&cache=#{Time.now.to_i}"
+    elsif edition.draft?
+      name = "Preview saved version"
+      url = "#{Plek.current.find('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
+    elsif edition.published?
+      name = "View on site"
+      url = "#{Plek.current.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
+    else
+      name = "Print historical version"
+      url = admin_edition_historical_edition_path(edition)
+    end
+    name = name.downcase.split(' ').first if short
+    link_to(name, url, options.merge(target: "blank"))
   end
 
   def timestamp(time)

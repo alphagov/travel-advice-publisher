@@ -39,7 +39,7 @@ class TravelAdviceEdition
     RummagerNotifier.notify(details)
   end
 
-  private
+private
 
   def extract_part_errors
     # govuk_content_models merges in the Parts errors into the main hash in a

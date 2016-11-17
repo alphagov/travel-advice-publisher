@@ -33,7 +33,7 @@
         <td><%= edition.state %></td>
         <td><%= timestamp(edition.updated_at) %></td>
         <td><%= edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" %></td>
-        <td><%= edition_edit_link(edition) %> — <%= link_to "preview", preview_edition_path(edition), :target => "blank" %></td>
+        <td><%= edition_edit_link(edition) %> — <%= preview_edition_link(edition, true, :target => "blank") %></td>
       </tr>
     <% end %>
   </tbody>

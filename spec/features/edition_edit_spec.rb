@@ -516,7 +516,7 @@ feature "Edit Edition page", js: true do
     @edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    expect(page).to have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/albania?edition=1']", text: "Preview saved version")
+    expect(page).to have_selector("a[href^='http://www.dev.gov.uk/foreign-travel-advice/albania?cache=']", text: "View on site")
   end
 
   scenario "create a note" do

@@ -35,4 +35,7 @@ TravelAdvicePublisher::Application.configure do
 
   # We should always send email alerts in development
   config.send_email_alerts = true
+
+  # Feature flag for historical edition functionality; always true in dev
+  config.show_historical_edition_link = true
 end

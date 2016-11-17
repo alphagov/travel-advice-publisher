@@ -126,7 +126,7 @@
             <%= link_to "Delete", admin_edition_path(@edition), :method => :delete, :class => 'btn btn-danger', :disabled => ! @edition.draft? %>
             <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "btn btn-primary" %>
             <span class="navbar-right">
-              <%= link_to "Preview saved version", preview_edition_path(@edition), :class => "btn btn-default", :target => "blank" %>
+              <%= preview_edition_link(@edition, false, class: "btn btn-default") %>
               <% if @edition.published? %>
                 <%= f.submit "Update review date", :class => "btn btn-success", data: { disable_with: "Updating..." } %>
               <% end %>

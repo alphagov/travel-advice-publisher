@@ -75,4 +75,7 @@ Rails.application.configure do
 
   # Feature flag to enable the sending of email alerts
   config.send_email_alerts = (ENV["SEND_EMAIL_ALERTS"] == "1")
+
+  # Feature flag for historical edition viewing functionality
+  config.show_historical_edition_link = (ENV["SHOW_HISTORICAL_EDITION_LINK"] == "1")
 end
