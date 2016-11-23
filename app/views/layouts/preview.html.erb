@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title><%= @presenter.title %> - GOV.UK</title>
+  <% if @presenter.overview.present? %>
+    <meta name="description" content="<%= @presenter.overview %>">
+  <% end %>
+
+  <%= yield :extra_headers %>
+</head>
+<body>
+  <div id="wrapper" class="travel-advice-guide">
+    <main role="main" id="content">
+    <%= yield %>
+    </main>
+  </div>
+</body>
+</html>

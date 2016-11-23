@@ -39,6 +39,14 @@ class TravelAdviceEdition
     RummagerNotifier.notify(details)
   end
 
+  def latest_sibling
+    @latest_sibling ||= TravelAdviceEdition.where(country_slug: country_slug).order_by([:version_number, :desc]).first
+  end
+
+  def latest_edition?
+    self == latest_sibling
+  end
+
   private
 
   def extract_part_errors

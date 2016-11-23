@@ -1,5 +1,8 @@
 class Admin::EditionsController < ApplicationController
+  include Slimmer::Headers
+  include Slimmer::GovukComponents
 
+  before_filter :skip_slimmer, :except => :preview
   before_filter :load_country, :only => [:create]
   before_filter :load_country_and_edition, :only => [:edit, :update, :destroy, :diff]
   before_filter :strip_empty_alert_statuses, :only => :update
@@ -55,6 +58,14 @@ class Admin::EditionsController < ApplicationController
     else
       raise ArgumentError, "params[:commit] is not recognised: #{params[:commit].inspect}"
     end
+  end
+
+  def preview
+    edition = TravelAdviceEdition.find(params[:edition_id])
+    country = Country.find_by_slug(edition.country_slug)
+    @presenter = EditionPreviewPresenter.new(edition, country)
+    set_slimmer_headers template: "print"
+    render layout: "preview"
   end
 
   private
