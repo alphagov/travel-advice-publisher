@@ -1,0 +1,3 @@
+PANOPTICON_API_CREDENTIALS = {
+  bearer_token: ENV["PANOPTICON_BEARER_TOKEN"] || "something"
+}
