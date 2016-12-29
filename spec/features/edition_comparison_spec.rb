@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'gds_api/test_helpers/panopticon'
 
 feature "Comparing two editions", :js => true do
   before :each do

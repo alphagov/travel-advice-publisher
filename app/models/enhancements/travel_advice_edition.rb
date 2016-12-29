@@ -1,16 +1,10 @@
 require "travel_advice_edition"
 require "gds_api/asset_manager"
-require "gds_api/panopticon"
 require "csv"
 
 class TravelAdviceEdition
 
-  after_create do
-    register_with_panopticon if version_number == 1
-  end
-
   state_machine.after_transition to: :published do |edition, _|
-    edition.register_with_panopticon
     edition.register_with_rummager
   end
 
@@ -26,12 +20,6 @@ class TravelAdviceEdition
     value.gsub!(/",\s+"/, '","')
     synonyms = CSV.parse_line(value) || []
     self.synonyms = synonyms.map(&:strip).reject(&:blank?)
-  end
-
-  def register_with_panopticon
-    details = RegisterableTravelAdviceEdition.new(self)
-    registerer = GdsApi::Panopticon::Registerer.new(owning_app: 'travel-advice-publisher', rendering_app: "multipage-frontend", kind: 'travel-advice')
-    registerer.register(details)
   end
 
   def register_with_rummager

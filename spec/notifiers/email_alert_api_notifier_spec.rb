@@ -6,7 +6,6 @@ RSpec.describe EmailAlertApiNotifier do
   include GdsApi::TestHelpers::EmailAlertApi
 
   before do
-    stub_panopticon_registration
     stub_any_email_alert_api_call
   end
 

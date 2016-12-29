@@ -59,46 +59,6 @@ describe TravelAdviceEdition do
     end
   end
 
-  describe "creating draft artefact in panopticon" do
-    it "should register a draft with panopticon on creating first draft" do
-      c = Country.find_by_slug('aruba')
-      ed = c.build_new_edition
-
-      registerer = double("Registerer")
-      registerable_edition = double("RegisterableEdition")
-      allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
-      allow(GdsApi::Panopticon::Registerer).to receive(:new).with(
-        :owning_app => 'travel-advice-publisher',
-        :rendering_app => 'multipage-frontend',
-        :kind => 'travel-advice'
-      ).and_return(registerer)
-      allow(registerer).to receive(:register).with(registerable_edition)
-
-      ed.save!
-    end
-
-    it "should not register on subsequent saves of the first draft" do
-      ed = FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
-
-      expect(RegisterableTravelAdviceEdition).to_not receive(:new)
-      expect(GdsApi::Panopticon::Registerer).to_not receive(:new)
-
-      ed.title += "with extra sauce"
-      ed.save!
-    end
-
-    it "should not register a draft on creating subsequent drafts" do
-      FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
-      c = Country.find_by_slug('aruba')
-      ed = c.build_new_edition
-
-      expect(RegisterableTravelAdviceEdition).to_not receive(:new)
-      expect(GdsApi::Panopticon::Registerer).to_not receive(:new)
-
-      ed.save!
-    end
-  end
-
   describe 'indexing the page with rummager on publish' do
     it 'should index the page' do
       ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
@@ -107,26 +67,6 @@ describe TravelAdviceEdition do
       allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
 
       expect(RummagerNotifier).to receive(:notify)
-
-      ed.publish
-    end
-  end
-
-  describe "registering with panopticon on publish" do
-    # This functionality implemented in an observer.
-
-    it "should register with panopticon" do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
-      registerer = double("Registerer")
-      registerable_edition = double("RegisterableEdition")
-
-      allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
-      allow(GdsApi::Panopticon::Registerer).to receive(:new).with(
-        :owning_app => 'travel-advice-publisher',
-        :rendering_app => 'multipage-frontend',
-        :kind => 'travel-advice'
-      ).and_return(registerer)
-      allow(registerer).to receive(:register).with(registerable_edition)
 
       ed.publish
     end

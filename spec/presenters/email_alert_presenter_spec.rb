@@ -3,10 +3,6 @@ require "spec_helper"
 RSpec.describe EmailAlertPresenter do
   include GdsApiHelpers
 
-  before do
-    stub_panopticon_registration
-  end
-
   let(:edition) do
     FactoryGirl.create(
       :published_travel_advice_edition,

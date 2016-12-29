@@ -19,7 +19,6 @@ RSpec.describe "Request tracing", type: :request do
     stub_any_publishing_api_call
     stub_any_email_alert_api_call
     stub_any_rummager_post_with_queueing_enabled
-    stub_request(:any, /panopticon/)
   end
 
   it "passes the govuk_request_id through all downstream workers" do
@@ -41,7 +40,6 @@ RSpec.describe "Request tracing", type: :request do
       "GOVUK-Request-Id" => govuk_request_id,
       "X-Govuk-Authenticated-User" => govuk_authenticated_user,
     }
-    expect(WebMock).to have_requested(:put, /panopticon/).with(headers: onward_headers)
     expect(WebMock).to have_requested(:post, /rummager.*documents/).with(headers: onward_headers)
     expect(WebMock).to have_requested(:put, /publishing-api.*content/).with(headers: onward_headers).twice
     expect(WebMock).to have_requested(:patch, /publishing-api.*links/).with(headers: onward_headers).twice

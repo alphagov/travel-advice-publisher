@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'gds_api/test_helpers/panopticon'
 require 'gds_api/test_helpers/rummager'
 require 'govuk_sidekiq/testing'
 
@@ -58,17 +57,6 @@ feature "Edit Edition page", js: true do
       within(:css, "#history") do
         expect(page).to have_content("New version by Joe Bloggs")
       end
-
-      expect(WebMock).to have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/aruba.json").
-        with(body: hash_including(
-          'slug' => 'foreign-travel-advice/aruba',
-          'content_id' => '56bae85b-a57c-4ca2-9dbd-68361a086bb3', # from countries.yml fixture
-          'name' => 'Aruba travel advice',
-          'kind' => 'travel-advice',
-          'owning_app' => 'travel-advice-publisher',
-          'rendering_app' => 'multipage-frontend',
-          'state' => 'draft'
-      ))
     end
 
     scenario "create an edition from an archived edition" do
@@ -385,9 +373,6 @@ feature "Edit Edition page", js: true do
                                   change_description: "Stuff changed", minor_update: false,
                                   overview: "The overview", summary: "## Summary")
 
-    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
-      to_return(status: 200, body: "{}")
-
     now = Time.now.utc
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -411,18 +396,6 @@ feature "Edit Edition page", js: true do
     action = @edition.actions.last
     expect(action.request_type).to eq Action::PUBLISH
     expect(action.comment).to eq "Stuff changed"
-
-    expect(WebMock).to have_requested(:put, "#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts/foreign-travel-advice/albania.json").
-      with(body: hash_including(
-        'slug' => 'foreign-travel-advice/albania',
-        'content_id' => '2a3938e1-d588-45fc-8c8f-0f51814d5409', # from countries.yml fixture
-        'name' => 'Albania travel advice',
-        'description' => 'The overview',
-        'kind' => 'travel-advice',
-        'owning_app' => 'travel-advice-publisher',
-        'rendering_app' => 'multipage-frontend',
-        'state' => 'live'
-    ))
 
     assert_rummager_posted_item(
       _type: "edition",
@@ -465,9 +438,6 @@ feature "Edit Edition page", js: true do
       @old_edition.reload
     end
     @edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania')
-
-    WebMock.stub_request(:put, %r{\A#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts}).
-      to_return(status: 200, body: "{}")
 
     now = Time.now.utc
     Timecop.freeze(now) do

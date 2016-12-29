@@ -6,7 +6,6 @@ RSpec.describe PublishingApiNotifier do
 
   before do
     Sidekiq::Worker.clear_all
-    stub_request(:put, %r{#{GdsApi::TestHelpers::Panopticon::PANOPTICON_ENDPOINT}/artefacts.*})
     stub_rummager
 
     allow(GdsApi::GovukHeaders).to receive(:headers).and_return({
