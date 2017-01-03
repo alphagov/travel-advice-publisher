@@ -50,5 +50,7 @@ module TravelAdvicePublisher
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
+
+    config.slimmer.use_cache = true
   end
 end

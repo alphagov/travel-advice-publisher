@@ -3,6 +3,7 @@ require "sidekiq/testing"
 
 describe Admin::EditionsController do
   include GdsApi::TestHelpers::PublishingApiV2
+  render_views
 
   before do
     stub_panopticon_registration
@@ -235,6 +236,21 @@ describe Admin::EditionsController do
         expect(publish_request.edition_id).to eq(@draft.id)
         expect(publish_request.request_id).to eq(request_id)
       end
+    end
+  end
+
+  describe "historical_edition" do
+    before do
+      login_as_stub_user
+      @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
+      @country = Country.find_by_slug('aruba')
+    end
+
+    it "shows a print preview for that edition" do
+      get :historical_edition, edition_id: @edition._id
+      expect(response).to be_success
+      expect(assigns(:presenter).edition).to eq(@edition)
+      expect(assigns(:presenter).country).to eq(@country)
     end
   end
 end

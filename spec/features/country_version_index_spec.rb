@@ -65,9 +65,9 @@ feature "Country version index" do
     expect(rows).to eq([
       ["Version", "State", "Updated", "Reviewed", ""],
       ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit — preview"],
-      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
-      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
-      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — preview"],
+      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — view"],
+      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — print"],
+      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — print"],
     ])
 
     within :xpath, "//tr[contains(., 'Version 4')]" do
@@ -76,7 +76,7 @@ feature "Country version index" do
 
     within :xpath, "//tr[contains(., 'Version 2')]" do
       expect(page).to have_link("view details", href: "/admin/editions/#{e2.id}/edit")
-      expect(page).to have_selector("a[href^='http://private-frontend.dev.gov.uk/foreign-travel-advice/aruba?edition=2']", text: "preview")
+      expect(page).to have_selector("a[href^='/admin/editions/#{e2.id}/historical_edition']", text: "print")
     end
 
     expect(page).not_to have_button("Create new edition")
