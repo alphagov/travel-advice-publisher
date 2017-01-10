@@ -20,7 +20,6 @@ content is rendered by
 
 - [asset-manager](https://github.com/alphagov/asset-manager)
 - [content-store](https://github.com/alphagov/content-store)
-- [panopticon](https://github.com/alphagov/panopticon)
 - [publishing-api](https://github.com/alphagov/publishing-api)
 
 ## Running the application

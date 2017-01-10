@@ -20,8 +20,6 @@ describe IndexPresenter do
     let(:three_days_ago) { 3.days.ago }
 
     before do
-      stub_panopticon_registration
-
       FactoryGirl.create(
         :published_travel_advice_edition,
         country_slug: "aruba",

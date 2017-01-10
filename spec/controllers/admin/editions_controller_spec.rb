@@ -6,7 +6,6 @@ describe Admin::EditionsController do
   render_views
 
   before do
-    stub_panopticon_registration
     stub_any_publishing_api_call
   end
 

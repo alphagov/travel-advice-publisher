@@ -20,10 +20,9 @@ To add or rename a country, update the [`lib/data/countries.yml`](../lib/data/co
 
 - Publish the content item for the country to Publishing API
 - Publish the email signup content item for the country to Publishing API
-- Publish an artefact for the country to Panopticon
 - Publish the document to Rummager
 
-See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake), [`lib/tasks/panopticon.rake`](../lib/tasks/panopticon.rake) and [`lib/tasks/rummager.rake`](../lib/tasks/rummager.rake) for details on how to do this.
+See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) and [`lib/tasks/rummager.rake`](../lib/tasks/rummager.rake) for details on how to do this.
 
 To maintain the history of a country when renaming you will need to perform a [migration](../db/migrate/20160916161059_rename_democratic_republic_of_congo.rb) on TravelAdviceEdition
 
