@@ -4,10 +4,7 @@ module ApplicationHelper
   end
 
   def preview_edition_link(edition, short, options = {})
-    if !Rails.application.config.show_historical_edition_link
-      name = "Preview saved version"
-      url = "#{Plek.current.find('private-frontend')}/foreign-travel-advice/#{edition.country_slug}?edition=#{edition.version_number}&cache=#{Time.now.to_i}"
-    elsif edition.draft?
+    if edition.draft?
       name = "Preview saved version"
       url = "#{Plek.current.find('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
     elsif edition.published?
