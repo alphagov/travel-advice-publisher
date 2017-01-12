@@ -37,9 +37,17 @@ describe EditionPresenter do
     edition
   }
 
+  let(:previous) {
+    FactoryGirl.build(
+      :travel_advice_edition,
+      change_description: "Stuff previously changed"
+    )
+  }
+
   before do
     allow(GdsApi::GovukHeaders).to receive(:headers)
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
+    allow(edition).to receive(:previous_version).and_return(previous)
   end
 
   subject { described_class.new(edition) }
@@ -141,10 +149,10 @@ describe EditionPresenter do
     end
 
     context "when the edition does not have a change_description" do
-      it "sets change_description to an empty string" do
+      it "sets change_description from the previous version" do
         edition.change_description = nil
 
-        expect(presented_data["details"]["change_description"]).to eq("")
+        expect(presented_data["details"]["change_description"]).to eq("Stuff previously changed")
       end
     end
 
