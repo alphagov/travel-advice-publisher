@@ -74,7 +74,7 @@ private
   end
 
   def public_updated_at
-    edition.published_at || previous.published_at || Time.zone.now
+    edition.published_at || previous.try(:published_at) || Time.zone.now
   end
 
   def updated_at
@@ -82,11 +82,11 @@ private
   end
 
   def reviewed_at
-    edition.reviewed_at || previous.reviewed_at || Time.zone.now
+    edition.reviewed_at || previous.try(:reviewed_at) || Time.zone.now
   end
 
   def change_description
-    edition.change_description.presence || previous.change_description || ""
+    edition.change_description.presence || previous.try(:change_description) || ""
   end
 
   def previous
