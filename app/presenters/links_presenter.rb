@@ -6,8 +6,7 @@ class LinksPresenter
   def present
     {
       links: {
-        # Foreign travel advice index page
-        parent: ["08d48cdd-6b50-43ff-a53b-beab47f4aab0"]
+        parent: [TravelAdvicePublisher::INDEX_CONTENT_ID]
       }
     }
   end
