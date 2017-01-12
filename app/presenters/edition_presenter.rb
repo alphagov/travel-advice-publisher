@@ -48,7 +48,7 @@ private
       },
       "updated_at" => updated_at.iso8601,
       "reviewed_at" => reviewed_at.iso8601,
-      "change_description" => edition.change_description || "",
+      "change_description" => change_description,
       "email_signup_link" => "#{base_path}/email-signup",
       "parts" => parts,
       "alert_status" => edition.alert_status,
@@ -74,7 +74,7 @@ private
   end
 
   def public_updated_at
-    edition.published_at || Time.zone.now
+    edition.published_at || previous.published_at || Time.zone.now
   end
 
   def updated_at
@@ -82,7 +82,15 @@ private
   end
 
   def reviewed_at
-    edition.reviewed_at || Time.zone.now
+    edition.reviewed_at || previous.reviewed_at || Time.zone.now
+  end
+
+  def change_description
+    edition.change_description.presence || previous.change_description || ""
+  end
+
+  def previous
+    @previous ||= edition.previous_version
   end
 
   def country
