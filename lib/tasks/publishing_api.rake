@@ -28,6 +28,30 @@ namespace :publishing_api do
     puts
   end
 
+  desc "republish hardcoded related items for all published editions to publishing-api"
+  task republish_related_items: :environment do
+    TravelAdviceEdition.published.each do |edition|
+      presenter = EditionPresenter.new(edition, republish: true)
+      links = {
+        links: {
+          ordered_related_items: [
+            "e4d06cb9-9e2e-4e82-b802-0aad013ae16c",
+            "95f9c380-30bc-44c7-86b4-e9c9ef0fc272",
+            "82248bb1-c4d6-41e0-9494-d98123475626"
+          ]
+        }
+      }
+
+      api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      api_v2.patch_links(presenter.content_id, links)
+      api_v2.publish(presenter.content_id, "minor")
+
+      print "."
+    end
+
+    puts
+  end
+
   desc 'republish a published edition to publishing-api for a country'
   task :republish_edition, [:country_slug] => :environment do |_task, args|
     begin
