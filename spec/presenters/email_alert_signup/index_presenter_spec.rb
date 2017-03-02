@@ -3,16 +3,16 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
     Timecop.freeze { example.run }
   end
 
+  subject(:presenter) { described_class.new }
+
   it "validates against the email alert signup schema" do
-    presenter = described_class.new
     expect(presenter.content_payload.as_json).to be_valid_against_schema('email_alert_signup')
   end
 
   it "presents the email signup content item for the edition" do
-    presenter = described_class.new
+    expect(presenter.content_id).to eq(TravelAdvicePublisher::INDEX_EMAIL_SIGNUP_CONTENT_ID)
 
     expect(presenter.content_payload).to eq({
-      content_id: TravelAdvicePublisher::INDEX_EMAIL_SIGNUP_CONTENT_ID,
       base_path: "/foreign-travel-advice/email-signup",
       title: "Foreign travel advice",
       description: "Foreign travel advice email alert signup",

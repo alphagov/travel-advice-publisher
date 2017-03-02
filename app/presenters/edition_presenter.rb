@@ -22,7 +22,6 @@ class EditionPresenter
 
   def render_for_publishing_api
     {
-      "content_id" => content_id,
       "base_path" => base_path,
       "document_type" => TravelAdvicePublisher::COUNTRY_FORMAT,
       "schema_name" => TravelAdvicePublisher::COUNTRY_FORMAT,

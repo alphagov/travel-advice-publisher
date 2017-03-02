@@ -16,6 +16,7 @@ describe IndexPresenter do
   end
 
   describe "#render_for_publishing_api" do
+    let(:presented_content_id) { subject.content_id }
     let(:presented_data) { subject.render_for_publishing_api }
     let(:three_days_ago) { 3.days.ago }
 
@@ -43,8 +44,9 @@ describe IndexPresenter do
 
     it "returns a presented index item" do
       Timecop.freeze do
+        expect(presented_content_id).to eq(TravelAdvicePublisher::INDEX_CONTENT_ID)
+
         expect(presented_data).to eq(
-          "content_id" => TravelAdvicePublisher::INDEX_CONTENT_ID,
           "base_path" => "/foreign-travel-advice",
           "document_type" => "travel_advice_index",
           "schema_name" => "travel_advice_index",

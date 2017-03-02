@@ -73,7 +73,7 @@ feature "Edit Edition page", js: true do
 
       assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
         title: "An archived title",
-        content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+        base_path: "/foreign-travel-advice/albania",
       ))
     end
 
@@ -215,7 +215,7 @@ feature "Edit Edition page", js: true do
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
       title: "Travel advice for Albania",
-      content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+      base_path: "/foreign-travel-advice/albania",
     ))
   end
 
@@ -460,7 +460,7 @@ feature "Edit Edition page", js: true do
     expect(action.comment).to eq "Minor update"
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-      content_id: '2a3938e1-d588-45fc-8c8f-0f51814d5409',
+      base_path: "/foreign-travel-advice/albania",
     ))
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {

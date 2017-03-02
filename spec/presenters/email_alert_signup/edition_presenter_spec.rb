@@ -24,8 +24,9 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
   it "presents the email signup content item for the edition" do
     presenter = described_class.new(edition)
 
+    expect(presenter.content_id).to eq(email_signup_content_id)
+
     expect(presenter.content_payload).to eq({
-      content_id: email_signup_content_id,
       base_path: "/foreign-travel-advice/aruba/email-signup",
       title: "Aruba Travel Advice",
       description: "Aruba Travel Advice Email Alert Signup",
