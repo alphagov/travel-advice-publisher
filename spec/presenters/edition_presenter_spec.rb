@@ -54,7 +54,7 @@ describe EditionPresenter do
 
   describe "#content_id" do
     it "returns the content_id of the edition" do
-      expect(subject.content_id).to eq("56bae85b-a57c-4ca2-9dbd-68361a086bb3")
+      expect(subject.content_id).to eq("56bae85b-a57c-4ca2-9dbd-68361a086bb3") # From countries.yml fixture
     end
   end
 
@@ -78,7 +78,6 @@ describe EditionPresenter do
 
     it "returns a travel_advice item" do
       expect(presented_data).to eq(
-        "content_id" => "56bae85b-a57c-4ca2-9dbd-68361a086bb3", # From countries.yml fixture
         "base_path" => "/foreign-travel-advice/aruba",
         "document_type" => "travel_advice",
         "schema_name" => "travel_advice",

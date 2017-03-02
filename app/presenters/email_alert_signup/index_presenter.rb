@@ -2,7 +2,6 @@ module EmailAlertSignup
   class IndexPresenter
     def content_payload
       {
-        content_id: content_id,
         base_path: base_path,
         document_type: "email_alert_signup",
         schema_name: "email_alert_signup",
