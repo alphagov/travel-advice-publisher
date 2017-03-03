@@ -111,10 +111,6 @@ class Admin::EditionsController < ApplicationController
       notifier.send_alert(@edition)
       notifier.enqueue
 
-      index_notifier = PublishingApiNotifier.new
-      index_notifier.publish_index
-      index_notifier.enqueue
-
       # catch any upload errors
       if @edition.errors.any?
         flash[:alert] = @edition.errors.full_messages.join(", ")

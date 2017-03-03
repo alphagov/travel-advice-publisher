@@ -414,10 +414,6 @@ feature "Edit Edition page", js: true do
       update_type: "major"
     })
 
-    assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID, {
-      update_type: "minor"
-    })
-
     assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409",
                             "publishing_request_id", "25108-1461151489.528-10.3.3.1-1066")
 
