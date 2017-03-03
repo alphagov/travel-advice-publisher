@@ -20,23 +20,6 @@ describe IndexPresenter do
     let(:presented_data) { subject.render_for_publishing_api }
     let(:three_days_ago) { 3.days.ago }
 
-    before do
-      FactoryGirl.create(
-        :published_travel_advice_edition,
-        country_slug: "aruba",
-        version_number: 2,
-        published_at: three_days_ago,
-        synonyms: ["foo", "bar"],
-      )
-
-      FactoryGirl.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
-
-      FactoryGirl.create(:published_travel_advice_edition, country_slug: "andorra", version_number: 2)
-      FactoryGirl.create(:draft_travel_advice_edition, country_slug: "andorra", version_number: 1)
-
-      FactoryGirl.create(:draft_travel_advice_edition, country_slug: "argentina", version_number: 1)
-    end
-
     it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice_index")
       expect(presented_data).to be_valid_against_schema('travel_advice_index')
@@ -64,24 +47,6 @@ describe IndexPresenter do
           "update_type" => "minor",
           "details" => {
             "email_signup_link" => "/foreign-travel-advice/email-signup",
-            "countries" => [
-              {
-                "name" => "Andorra",
-                "base_path" => "/foreign-travel-advice/andorra",
-                "updated_at" => Time.zone.now.iso8601,
-                "public_updated_at" => Time.zone.now.iso8601,
-                "change_description" => "Stuff changed",
-                "synonyms" => [],
-              },
-              {
-                "name" => "Aruba",
-                "base_path" => "/foreign-travel-advice/aruba",
-                "updated_at" => Time.zone.now.iso8601,
-                "public_updated_at" => three_days_ago.iso8601,
-                "change_description" => "Stuff changed",
-                "synonyms" => ["foo", "bar"],
-              },
-            ],
             "max_cache_time" => 10,
           },
         )

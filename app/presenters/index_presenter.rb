@@ -26,7 +26,6 @@ class IndexPresenter
       "update_type" => update_type,
       "details" => {
         "email_signup_link" => "#{base_path}/email-signup",
-        "countries" => countries,
         "max_cache_time" => 10,
       }
     }
@@ -36,22 +35,6 @@ private
 
   def base_path
     "/foreign-travel-advice"
-  end
-
-  def countries
-    Country.all.map do |country|
-      edition = country.last_published_edition
-      next unless edition
-
-      {
-        "name" => country.name,
-        "base_path" => "/foreign-travel-advice/#{country.slug}",
-        "updated_at" => updated_at(edition).iso8601,
-        "public_updated_at" => public_updated_at(edition).iso8601,
-        "change_description" => edition.change_description,
-        "synonyms" => edition.synonyms,
-      }
-    end.compact
   end
 
   def public_updated_at(edition)
