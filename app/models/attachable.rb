@@ -23,7 +23,7 @@ module Attachable
 
     def attaches_with_options(fields, options = {})
       fields.map(&:to_s).each do |field|
-        before_save "upload_#{field}".to_sym, :if => "#{field}_has_changed?".to_sym
+        before_save "upload_#{field}".to_sym, if: "#{field}_has_changed?".to_sym
         self.field "#{field}_id".to_sym, type: String
         if options[:with_url_field]
           self.field "#{field}_url".to_sym, type: String
@@ -32,7 +32,7 @@ module Attachable
         define_method(field) do
           raise ApiClientNotPresent unless Attachable.asset_api_client
           unless self.send("#{field}_id").nil?
-            @attachments ||= { }
+            @attachments ||= {}
             @attachments[field] ||= Attachable.asset_api_client.asset(self.send("#{field}_id"))
           end
         end
@@ -47,7 +47,7 @@ module Attachable
         end
 
         define_method("remove_#{field}=") do |value|
-          unless value.nil? or value == false or (value.respond_to?(:empty?) and value.empty?)
+          unless value.nil? || value == false || (value.respond_to?(:empty?) && value.empty?)
             self.send("#{field}_id=", nil)
           end
         end
@@ -58,7 +58,7 @@ module Attachable
             if options[:update_existing] && !self.send("#{field}_id").nil?
               response = Attachable.asset_api_client.update_asset(self.send("#{field}_id"), file: instance_variable_get("@#{field}_file"))
             else
-              response = Attachable.asset_api_client.create_asset(:file => instance_variable_get("@#{field}_file"))
+              response = Attachable.asset_api_client.create_asset(file: instance_variable_get("@#{field}_file"))
               self.send("#{field}_id=", response["id"].split('/').last)
             end
 

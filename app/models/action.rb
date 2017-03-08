@@ -20,10 +20,10 @@ class Action
   ]
 
   NON_STATUS_ACTIONS = [
-    NOTE                 = "note",
-    IMPORTANT_NOTE       = "important_note",
+    NOTE                    = "note",
+    IMPORTANT_NOTE          = "important_note",
     IMPORTANT_NOTE_RESOLVED = "important_note_resolved",
-    ASSIGN               = "assign",
+    ASSIGN                  = "assign",
   ]
 
   embedded_in :edition

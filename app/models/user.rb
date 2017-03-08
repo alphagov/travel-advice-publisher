@@ -61,15 +61,15 @@ class User
   end
 
   def create_edition(format, attributes = {})
-    GovukContentModels::ActionProcessors::CreateEditionProcessor.new(self, nil, {}, { format: format, edition_attributes: attributes }).processed_edition
+    GovukContentModels::ActionProcessors::CreateEditionProcessor.new(self, nil, {}, format: format, edition_attributes: attributes).processed_edition
   end
 
   def new_version(edition, convert_to = nil)
-    GovukContentModels::ActionProcessors::NewVersionProcessor.new(self, edition, {}, { convert_to: convert_to }).processed_edition
+    GovukContentModels::ActionProcessors::NewVersionProcessor.new(self, edition, {}, convert_to: convert_to).processed_edition
   end
 
   def assign(edition, recipient)
-    GovukContentModels::ActionProcessors::AssignProcessor.new(self, edition, { recipient_id: recipient.id }).processed_edition
+    GovukContentModels::ActionProcessors::AssignProcessor.new(self, edition, recipient_id: recipient.id).processed_edition
   end
 
   def unassign(edition)

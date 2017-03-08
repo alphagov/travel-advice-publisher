@@ -16,11 +16,11 @@ class TravelAdviceEdition
   field :overview,             type: String
   field :version_number,       type: Integer
   field :state,                type: String,    default: "draft"
-  field :alert_status,         type: Array,     default: [ ]
+  field :alert_status,         type: Array,     default: []
   field :summary,              type: String
   field :change_description,   type: String
   field :minor_update,         type: Boolean,   default: false
-  field :synonyms,             type: Array,     default: [ ]
+  field :synonyms,             type: Array,     default: []
   # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
   field :published_at,         type: Time
   field :reviewed_at,          type: Time
@@ -32,12 +32,12 @@ class TravelAdviceEdition
   attaches :image, :document
 
   GOVSPEAK_FIELDS = [:summary]
-  ALERT_STATUSES = [
-    "avoid_all_but_essential_travel_to_parts",
-    "avoid_all_but_essential_travel_to_whole_country",
-    "avoid_all_travel_to_parts",
-    "avoid_all_travel_to_whole_country",
-  ]
+  ALERT_STATUSES = %w(
+    avoid_all_but_essential_travel_to_parts
+    avoid_all_but_essential_travel_to_whole_country
+    avoid_all_travel_to_parts
+    avoid_all_travel_to_whole_country
+  )
 
   before_validation :populate_version_number, on: :create
 
@@ -65,9 +65,7 @@ class TravelAdviceEdition
         edition.published_at = Time.zone.now.utc
         edition.reviewed_at = edition.published_at
       end
-      edition.class.where(country_slug: edition.country_slug, state: 'published').each do |ed|
-        ed.archive
-      end
+      edition.class.where(country_slug: edition.country_slug, state: 'published').each(&:archive)
     end
 
     event :publish do
@@ -144,7 +142,7 @@ class TravelAdviceEdition
 private
 
   def state_for_slug_unique
-    if %w(published draft).include?(self.state) and
+    if %w(published draft).include?(self.state) &&
         self.class.where(:_id.ne => id,
                          country_slug: country_slug,
                          state: state).any?
@@ -153,7 +151,7 @@ private
   end
 
   def populate_version_number
-    if self.version_number.nil? and ! self.country_slug.nil? and ! self.country_slug.empty?
+    if self.version_number.nil? && ! self.country_slug.nil? && ! self.country_slug.empty?
       latest_edition = self.class.where(country_slug: self.country_slug).order_by(version_number: :desc).first
       self.version_number = if latest_edition
                               latest_edition.version_number + 1
@@ -164,7 +162,7 @@ private
   end
 
   def cannot_edit_published
-    if anything_other_than_state_changed?('reviewed_at') and self.state_was != 'draft'
+    if anything_other_than_state_changed?('reviewed_at') && self.state_was != 'draft'
       errors.add(:state, "must be draft to modify")
     end
   end
@@ -176,7 +174,7 @@ private
   end
 
   def anything_other_than_state_changed?(*additional_allowed_fields)
-    self.changed? and ((changes.keys - ['state'] - additional_allowed_fields) != [] or self.parts.any?(&:changed?))
+    self.changed? && ((changes.keys - ['state'] - additional_allowed_fields) != [] || self.parts.any?(&:changed?))
   end
 
   def alert_status_contains_valid_values
@@ -186,7 +184,7 @@ private
   end
 
   def first_version_cant_be_minor_update
-    if self.minor_update and self.version_number == 1
+    if self.minor_update && self.version_number == 1
       errors.add(:minor_update, "can't be set for first version")
     end
   end

@@ -4,17 +4,17 @@ module Parted
   def self.included(klass)
     klass.embeds_many :parts
     klass.accepts_nested_attributes_for :parts, allow_destroy: true,
-      reject_if: proc { |attrs| attrs["title"].blank? and attrs["body"].blank? }
+      reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
     klass.after_validation :merge_embedded_parts_errors
   end
 
-  def build_clone(target_class=nil)
+  def build_clone(target_class = nil)
     new_edition = super
 
     # If the new edition is of the same type or another type that has parts,
     # copy over the parts from this edition
-    if target_class.nil? or target_class.include? Parted
-      new_edition.parts = self.parts.map {|p| p.dup }
+    if target_class.nil? || target_class.include?(Parted)
+      new_edition.parts = self.parts.map(&:dup)
     end
 
     new_edition
@@ -31,7 +31,7 @@ module Parted
     self.parts.in_order.map { |i| %(\# #{i.title}\n\n#{i.body}) }.join("\n\n")
   end
 
-  private
+private
 
   def merge_embedded_parts_errors
     return if parts.empty?
