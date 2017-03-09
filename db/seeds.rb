@@ -1,7 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+if User.where(name: "Test user").present?
+  puts "Skipping because user already exists"
+  exit
+end
+
+gds_organisation_id = "af07d5a5-df63-4ddc-9383-6a666845ebe9"
+
+user = User.create!(
+  name: "Test user",
+  permissions: ["signin", "gds_editor"],
+  organisation_content_id: gds_organisation_id,
+)
