@@ -3,9 +3,7 @@ require_dependency "safe_html"
 class Part
   include Mongoid::Document
 
-  embedded_in :guide_edition
-  embedded_in :programme_edition
-  embedded_in :business_support_edition
+  embedded_in :travel_advice_edition
 
   scope :in_order, lambda { order_by(order: :asc) }
 
