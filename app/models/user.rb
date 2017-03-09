@@ -43,36 +43,4 @@ class User
       opts[:s] ? "?s=#{CGI.escape(opts[:s])}" : ""
     ]
   end
-
-  def progress(edition, action_attributes)
-    request_type = action_attributes.delete(:request_type)
-
-    processor = GovukContentModels::ActionProcessors::REQUEST_TYPE_TO_PROCESSOR[request_type.to_sym]
-    edition = GovukContentModels::ActionProcessors::const_get(processor).new(self, edition, action_attributes, {}).processed_edition
-    edition.save if edition
-  end
-
-  def record_note(edition, comment, type = Action::NOTE)
-    edition.new_action(self, type, comment: comment)
-  end
-
-  def resolve_important_note(edition)
-    record_note(edition, nil, Action::IMPORTANT_NOTE_RESOLVED)
-  end
-
-  def create_edition(format, attributes = {})
-    GovukContentModels::ActionProcessors::CreateEditionProcessor.new(self, nil, {}, format: format, edition_attributes: attributes).processed_edition
-  end
-
-  def new_version(edition, convert_to = nil)
-    GovukContentModels::ActionProcessors::NewVersionProcessor.new(self, edition, {}, convert_to: convert_to).processed_edition
-  end
-
-  def assign(edition, recipient)
-    GovukContentModels::ActionProcessors::AssignProcessor.new(self, edition, recipient_id: recipient.id).processed_edition
-  end
-
-  def unassign(edition)
-    GovukContentModels::ActionProcessors::AssignProcessor.new(self, edition).processed_edition
-  end
 end
