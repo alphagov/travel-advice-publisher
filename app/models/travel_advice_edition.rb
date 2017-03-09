@@ -1,14 +1,13 @@
 require 'attachable'
-require 'parted'
 require 'state_machines-mongoid'
 require "gds_api/asset_manager"
 require "csv"
 require_dependency 'safe_html'
+require_dependency "part"
 
 class TravelAdviceEdition
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Parted
   include Attachable
 
   field :country_slug,         type: String
@@ -48,6 +47,10 @@ class TravelAdviceEdition
   validate :first_version_cant_be_minor_update
   validates_with SafeHtml
   validates_with LinkValidator
+
+  embeds_many :parts
+  accepts_nested_attributes_for :parts, allow_destroy: true,
+    reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
 
   scope :published, lambda { where(state: "published") }
 
@@ -93,13 +96,19 @@ class TravelAdviceEdition
     strings.join(" ").strip
   end
 
-
-  def build_clone
+  def build_clone(target_class = nil)
     new_edition = self.class.new
     self.class.fields_to_clone.each do |attr|
       new_edition[attr] = self.read_attribute(attr)
     end
     new_edition.parts = self.parts.map(&:dup)
+
+    # If the new edition is of the same type or another type that has parts,
+    # copy over the parts from this edition
+    if target_class.nil? || target_class.include?(Parted)
+      new_edition.parts = self.parts.map(&:dup)
+    end
+
     new_edition
   end
 
@@ -137,6 +146,17 @@ class TravelAdviceEdition
   def register_with_rummager
     details = RegisterableTravelAdviceEdition.new(self)
     RummagerNotifier.notify(details)
+  end
+
+  def order_parts
+    ordered_parts = parts.sort_by { |p| p.order ? p.order : 99999 }
+    ordered_parts.each_with_index do |obj, i|
+      obj.order = i + 1
+    end
+  end
+
+  def whole_body
+    self.parts.in_order.map { |i| %(\# #{i.title}\n\n#{i.body}) }.join("\n\n")
   end
 
 private
