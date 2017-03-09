@@ -4,26 +4,13 @@ class Action
   include Mongoid::Document
 
   STATUS_ACTIONS = [
-    CREATE                      = "create",
-    REQUEST_REVIEW              = "request_review",
-    APPROVE_REVIEW              = "approve_review",
-    APPROVE_FACT_CHECK          = "approve_fact_check",
-    REQUEST_AMENDMENTS          = "request_amendments",
-    SEND_FACT_CHECK             = "send_fact_check",
-    RECEIVE_FACT_CHECK          = "receive_fact_check",
-    SKIP_FACT_CHECK             = "skip_fact_check",
     SCHEDULE_FOR_PUBLISHING     = "schedule_for_publishing",
-    CANCEL_SCHEDULED_PUBLISHING = "cancel_scheduled_publishing",
     PUBLISH                     = "publish",
-    ARCHIVE                     = "archive",
     NEW_VERSION                 = "new_version",
   ]
 
   NON_STATUS_ACTIONS = [
-    NOTE                    = "note",
-    IMPORTANT_NOTE          = "important_note",
-    IMPORTANT_NOTE_RESOLVED = "important_note_resolved",
-    ASSIGN                  = "assign",
+    NOTE = "note",
   ]
 
   embedded_in :edition
@@ -41,10 +28,6 @@ class Action
   field :customised_message, type: String
   field :created_at,         type: DateTime, default: lambda { Time.zone.now }
 
-  def container_class_name(edition)
-    edition.container.class.name.underscore.humanize
-  end
-
   def status_action?
     STATUS_ACTIONS.include?(request_type)
   end
@@ -57,10 +40,5 @@ class Action
     else
       request_type.humanize.capitalize
     end
-  end
-
-  def is_fact_check_request?
-    # SEND_FACT_CHECK is now a state - in older publications it isn't
-    request_type == SEND_FACT_CHECK || request_type == "fact_check_requested"
   end
 end
