@@ -368,10 +368,16 @@ feature "Edit Edition page", js: true do
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
 
     @old_edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania')
-    @edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania', title: 'Albania travel advice',
-                                  alert_status: TravelAdviceEdition::ALERT_STATUSES[1..0],
-                                  change_description: "Stuff changed", minor_update: false,
-                                  overview: "The overview", summary: "## Summary")
+    @edition = FactoryGirl.create(
+      :draft_travel_advice_edition,
+      country_slug: 'albania',
+      title: 'Albania travel advice',
+      alert_status: TravelAdviceEdition::ALERT_STATUSES[1..0],
+      change_description: "Stuff changed",
+      minor_update: false,
+      overview: "The overview",
+      summary: "## Summary"
+    )
 
     now = Time.now.utc
     visit "/admin/editions/#{@edition.to_param}/edit"
@@ -401,7 +407,7 @@ feature "Edit Edition page", js: true do
       _type: "edition",
       _id: "/foreign-travel-advice/albania",
       content_id: "2a3938e1-d588-45fc-8c8f-0f51814d5409",
-      rendering_app: "frontend",
+      rendering_app: "government-frontend",
       publishing_app: "travel-advice-publisher",
       format: "custom-application",
       title: "Albania travel advice",

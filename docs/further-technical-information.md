@@ -6,7 +6,7 @@ Travel Advice Publisher inherits its models from the [govuk_content_models](http
 
 At the present time, the list of countries is defined in [`lib/data/countries.yml`](../lib/data/countries.yml), however it is expected that this will change to consume an api for countries from the [Whitehall](https://github.com/alphagov/whitehall) app in the near future.
 
-Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend) and [multipage-frontend](https://github.com/alphagov/multipage-frontend).
+Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend) and [government-frontend](https://github.com/alphagov/government-frontend).
 
 ### Workflow
 

@@ -18,7 +18,7 @@ RSpec.describe SearchIndexer do
     assert_rummager_posted_item(
       _type: 'edition',
       _id: "/#{travel_advice_edition.slug}",
-      rendering_app: 'frontend',
+      rendering_app: 'government-frontend',
       publishing_app: 'travel-advice-publisher',
       format: "custom-application",
       title: travel_advice_edition.title,
