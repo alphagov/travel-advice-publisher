@@ -1,14 +1,12 @@
-require 'attachable'
-require 'state_machines-mongoid'
+require "state_machines-mongoid"
 require "gds_api/asset_manager"
 require "csv"
-require_dependency 'safe_html'
+require_dependency "safe_html"
 require_dependency "part"
 
 class TravelAdviceEdition
   include Mongoid::Document
   include Mongoid::Timestamps
-  include Attachable
 
   field :country_slug,         type: String
   field :title,                type: String
@@ -27,8 +25,6 @@ class TravelAdviceEdition
   embeds_many :actions
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
-
-  attaches :image, :document
 
   GOVSPEAK_FIELDS = [:summary]
   ALERT_STATUSES = %w(
@@ -220,13 +216,17 @@ private
     errors[:part] = part_errors.select(&:present?).sort.to_sentence
   end
 
+  after_initialize do
+    @attachments ||= {}
+  end
+
   def self.attaches(*fields)
     fields.map(&:to_s).each do |field|
       after_initialize do
         instance_variable_set("@#{field}_has_changed", false)
-        @attachments ||= {}
       end
       before_save "upload_#{field}".to_sym, if: "#{field}_has_changed?".to_sym
+      self.field "#{field}_id".to_sym, type: String
 
       define_method(field) do
         unless self.send("#{field}_id").blank?
@@ -255,6 +255,7 @@ private
           errors.add("#{field}_id".to_sym, "could not be uploaded")
         end
       end
+
       private "upload_#{field}".to_sym
     end
   end
