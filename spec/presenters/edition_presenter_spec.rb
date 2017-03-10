@@ -100,6 +100,7 @@ describe EditionPresenter do
           "country" => {
             "slug" => "aruba",
             "name" => "Aruba",
+            "synonyms" => [],
           },
           "updated_at" => Time.zone.now.iso8601,
           "reviewed_at" => Time.zone.now.iso8601,

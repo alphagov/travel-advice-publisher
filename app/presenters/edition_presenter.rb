@@ -44,6 +44,7 @@ private
       "country" => {
         "slug" => country.slug,
         "name" => country.name,
+        "synonyms" => edition.synonyms
       },
       "updated_at" => updated_at.iso8601,
       "reviewed_at" => reviewed_at.iso8601,
