@@ -206,9 +206,6 @@ private
   end
 
   def extract_part_errors
-    # govuk_content_models merges in the Parts errors into the main hash in a
-    # format that is not very useful for displaying in the flash. Extract them
-    # out in a more readable way.
     return if errors.delete(:parts).blank?
     part_errors = parts.map do |part|
       "#{part.order}: #{part.errors.full_messages.to_sentence}" if part.errors.present?
