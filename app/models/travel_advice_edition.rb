@@ -210,7 +210,7 @@ private
     part_errors = parts.map do |part|
       "#{part.order}: #{part.errors.full_messages.to_sentence}" if part.errors.present?
     end
-    errors[:part] = part_errors.select(&:present?).sort.to_sentence
+    errors.add(:part, part_errors.select(&:present?).sort.to_sentence)
   end
 
   after_initialize do
