@@ -70,7 +70,7 @@ class Admin::EditionsController < ApplicationController
 
   private
   def permitted_edition_attributes
-    params[:edition].permit(
+    params.fetch(:edition, {}).permit(
       :minor_update,
       :change_description,
       :title,
