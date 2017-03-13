@@ -2,10 +2,10 @@ class Admin::EditionsController < ApplicationController
   include Slimmer::Headers
   include Slimmer::GovukComponents
 
-  before_filter :skip_slimmer, except: :historical_edition
-  before_filter :load_country, only: [:create]
-  before_filter :load_country_and_edition, only: [:edit, :update, :destroy, :diff]
-  before_filter :strip_empty_alert_statuses, only: :update
+  before_action :skip_slimmer, except: :historical_edition
+  before_action :load_country, only: [:create]
+  before_action :load_country_and_edition, only: [:edit, :update, :destroy, :diff]
+  before_action :strip_empty_alert_statuses, only: :update
 
   def create
     if params[:edition_version].nil?

@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   include GDS::SSO::ControllerMethods
-  before_filter :authenticate_user!
-  before_filter :require_signin_permission!
-  before_filter :set_authenticated_user_header
+  before_action :authenticate_user!
+  before_action :require_signin_permission!
+  before_action :set_authenticated_user_header
 
   def error_404; error 404; end
 

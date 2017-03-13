@@ -1,6 +1,6 @@
 class Admin::CountriesController < ApplicationController
-  before_filter :skip_slimmer
-  before_filter :load_country, :only => [:show]
+  before_action :skip_slimmer
+  before_action :load_country, :only => [:show]
 
   def index
     @countries = Country.all
