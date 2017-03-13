@@ -34,6 +34,7 @@ gem 'govuk_sidekiq', '0.0.4'
 gem "slimmer", "10.1.3"
 
 group :development, :test do
+  gem 'rails-controller-testing'
   gem 'rspec-rails', '3.5.2'
   gem 'capybara', '2.6.2'
   gem 'simplecov-rcov', '0.2.3'

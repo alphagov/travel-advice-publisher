@@ -5,7 +5,7 @@ RSpec.describe SearchIndexer do
   include GdsApi::TestHelpers::Rummager
 
   before do
-    stub_any_rummager_post_with_queueing_enabled
+    stub_any_rummager_post
   end
 
   it 'indexes the travel advice page in rummager' do

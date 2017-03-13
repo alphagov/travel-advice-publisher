@@ -18,7 +18,7 @@ RSpec.describe "Request tracing", type: :request do
     login_as(user)
     stub_any_publishing_api_call
     stub_any_email_alert_api_call
-    stub_any_rummager_post_with_queueing_enabled
+    stub_any_rummager_post
   end
 
   it "passes the govuk_request_id through all downstream workers" do
@@ -32,7 +32,7 @@ RSpec.describe "Request tracing", type: :request do
       "HTTP_GOVUK_REQUEST_ID" => govuk_request_id,
     }
 
-    put "/admin/editions/#{edition.id}", params, inbound_headers
+    put "/admin/editions/#{edition.id}", params: params, headers: inbound_headers
     GdsApi::GovukHeaders.clear_headers # Simulate workers running in a separate thread
     Sidekiq::Worker.drain_all # Run all workers
 

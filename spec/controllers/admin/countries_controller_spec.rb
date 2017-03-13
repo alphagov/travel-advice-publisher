@@ -24,14 +24,14 @@ describe Admin::CountriesController do
   describe "GET show" do
     describe "given a valid country" do
       it "assigns the request country" do
-        get :show, id: "australia"
+        get :show, params: { id: "australia" }
 
         expect(assigns(:country).name).to eq('Australia')
         expect(assigns(:country).slug).to eq('australia')
       end
 
       it "renders the show view" do
-        get :show, id: "australia"
+        get :show, params: { id: "australia" }
 
         expect(response).to render_template :show
       end
@@ -39,7 +39,7 @@ describe Admin::CountriesController do
 
     describe "given an invalid country" do
       it "returns a 404" do
-        get :show, id: "the-shire"
+        get :show, params: { id: "the-shire" }
 
         expect(response).to be_not_found
       end

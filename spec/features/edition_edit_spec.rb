@@ -427,7 +427,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish a minor update to an edition" do
-    stub_any_rummager_post_with_queueing_enabled
+    stub_any_rummager_post
 
     Timecop.travel(3.days.ago) do
       @old_edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania',
