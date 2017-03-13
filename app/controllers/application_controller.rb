@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   private
 
   def error(status_code)
-    render status: status_code, text: "#{status_code} error"
+    render status: status_code, plain: "#{status_code} error"
   end
 
   def set_authenticated_user_header
