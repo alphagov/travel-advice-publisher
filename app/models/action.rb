@@ -4,6 +4,7 @@ class Action
   include Mongoid::Document
 
   STATUS_ACTIONS = [
+    CREATE                      = "create",
     SCHEDULE_FOR_PUBLISHING     = "schedule_for_publishing",
     PUBLISH                     = "publish",
     NEW_VERSION                 = "new_version",
