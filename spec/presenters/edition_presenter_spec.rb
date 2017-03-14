@@ -85,7 +85,7 @@ describe EditionPresenter do
         "description" => "Something something",
         "locale" => "en",
         "publishing_app" => "travel-advice-publisher",
-        "rendering_app" => "multipage-frontend",
+        "rendering_app" => "government-frontend",
         "public_updated_at" => edition.published_at.iso8601,
         "update_type" => "major",
         "routes" => [

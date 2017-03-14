@@ -14,7 +14,7 @@ advice](http://www.gov.uk/foreign-travel-advice).  The application persists
 content in MongoDB and in the downstream
 [publishing-api](https://github.com/alphagov/publishing-api).  Travel advice
 content is rendered by
-[multipage-frontend](https://github.com/alphagov/multipage-frontend).
+[government-frontend](https://github.com/alphagov/government-frontend).
 
 ## Dependencies
 

@@ -18,7 +18,7 @@ class SearchPayloadPresenter
   def call
     {
       content_id: content_id,
-      rendering_app: 'frontend',
+      rendering_app: 'government-frontend',
       publishing_app: 'travel-advice-publisher',
       format: 'custom-application',
       title: title,
