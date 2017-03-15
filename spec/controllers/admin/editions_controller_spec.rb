@@ -224,7 +224,7 @@ describe Admin::EditionsController do
 
         post :update, id: @draft.to_param, edition: {}, commit: "Save & Publish"
 
-        expect(PublishingApiWorker.jobs.size).to eq(2)
+        expect(PublishingApiWorker.jobs.size).to eq(1)
       end
 
       it "creates a PublishRequest for that edition" do
