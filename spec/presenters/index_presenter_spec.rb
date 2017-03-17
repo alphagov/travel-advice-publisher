@@ -39,7 +39,7 @@ describe IndexPresenter do
           "publishing_app" => "travel-advice-publisher",
           "rendering_app" => "frontend",
           "routes" => [
-            { "path"=>"/foreign-travel-advice", "type" => "exact" },
+            { "path" => "/foreign-travel-advice", "type" => "exact" },
             { "path" => "/foreign-travel-advice.atom", "type" => "exact" },
             { "path" => "/foreign-travel-advice.json", "type" => "exact" },
           ],

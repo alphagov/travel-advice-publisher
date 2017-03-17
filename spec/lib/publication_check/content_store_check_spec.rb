@@ -2,26 +2,26 @@ require 'spec_helper'
 
 module PublicationCheck
   describe ContentStoreCheck do
-    let(:edition){
+    let(:edition) {
       FactoryGirl.create(
         :published_travel_advice_edition,
         country_slug: "andorra",
         version_number: 2)
     }
-    let(:publish_request){
+    let(:publish_request) {
       PublishRequest.new(
         request_id: "25107-1461581820.634-185.22.224.96-13641",
         edition_id: edition.id
       )
     }
-    let(:content_store_check){ ContentStoreCheck.new }
-    let(:content_store_url){
+    let(:content_store_check) { ContentStoreCheck.new }
+    let(:content_store_url) {
       "http://www.dev.gov.uk/api/content/foreign-travel-advice/#{edition.country_slug}"
     }
-    let(:response_publishing_request_id){
+    let(:response_publishing_request_id) {
       "25107-1461581820.634-185.22.224.96-13641"
     }
-    let(:response_body){
+    let(:response_body) {
       <<-JSON
         {
           "base_path": "test/base/path",
@@ -53,7 +53,7 @@ module PublicationCheck
     end
 
     context "a response containing a different request id" do
-      let(:response_publishing_request_id){
+      let(:response_publishing_request_id) {
         "25107-1461581820.634-185.22.224.96-1234"
       }
 
@@ -69,7 +69,7 @@ module PublicationCheck
     end
 
     context "the response contains no request_id" do
-      let(:response_body){
+      let(:response_body) {
         <<-JSON
           {
             "base_path": "test/base/path",

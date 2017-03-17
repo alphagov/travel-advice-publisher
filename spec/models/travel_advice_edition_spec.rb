@@ -477,18 +477,18 @@ describe TravelAdviceEdition do
 
     describe "reading user input for synonyms" do
       it "should parse string input into an array for saving from view" do
-        @edition.csv_synonyms="bar,baz,boo"
+        @edition.csv_synonyms = "bar,baz,boo"
         expect(@edition.synonyms).to eq(%w{bar baz boo})
       end
 
       it "can deal with quoted input when parsing input" do
-        @edition.csv_synonyms='"some,place",bar'
+        @edition.csv_synonyms = '"some,place",bar'
         expect(@edition.csv_synonyms).to eq '"some,place",bar'
         expect(@edition.synonyms).to eq ["some,place", "bar"]
       end
 
       it "supports spaces in the input" do
-        @edition.csv_synonyms='"some place", "bar","foo"'
+        @edition.csv_synonyms = '"some place", "bar","foo"'
         expect(@edition.synonyms).to eq ["some place", "bar", "foo"]
       end
 
@@ -504,7 +504,7 @@ describe TravelAdviceEdition do
 
       it "strips leading and trailing whitespace" do
         @edition.csv_synonyms = "       foo    ,   bar    "
-        expect(@edition.synonyms).to eq ["foo","bar"]
+        expect(@edition.synonyms).to eq %w(foo bar)
       end
     end
 
@@ -523,7 +523,7 @@ describe TravelAdviceEdition do
 
   describe 'indexing the page with rummager on publish' do
     it 'should index the page' do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
       registerable_edition = double("RegisterableEdition")
 
       allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
@@ -536,18 +536,18 @@ describe TravelAdviceEdition do
 
   describe "attached fields" do
     it "retrieves the asset from the api" do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
-      asset = OpenStruct.new(:file_url => "/path/to/image")
+      asset = OpenStruct.new(file_url: "/path/to/image")
       allow_any_instance_of(GdsApi::AssetManager).to receive(:asset).with("an_image_id").and_return(asset)
 
       expect(ed.image.file_url).to eq("/path/to/image")
     end
 
     it "caches the asset from the api" do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
-      asset = OpenStruct.new(:something => "one", :something_else => "two")
+      asset = OpenStruct.new(something: "one", something_else: "two")
       expect_any_instance_of(GdsApi::AssetManager).to receive(:asset).once.with("an_image_id").and_return(asset)
 
       expect(ed.image.something).to eq("one")
@@ -556,14 +556,14 @@ describe TravelAdviceEdition do
 
     it "assigns a file and detects it has changed" do
       file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
 
       ed.image = file
       expect(ed.image_has_changed?).to be true
     end
 
     it "does not upload an asset if it has not changed" do
-      ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
       expect_any_instance_of(TravelAdviceEdition).not_to receive(:upload_image)
 
       ed.save!
@@ -571,7 +571,7 @@ describe TravelAdviceEdition do
 
     describe "saving an edition" do
       before do
-        @ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft')
+        @ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
         @file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
 
         @asset = double(id: 'http://asset-manager.dev.gov.uk/assets/an_image_id')
@@ -579,7 +579,7 @@ describe TravelAdviceEdition do
 
       it "uploads the asset" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset).
-          with({ :file => @file }).and_return(@asset)
+          with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
@@ -587,7 +587,7 @@ describe TravelAdviceEdition do
 
       it "assigns the asset id to the attachment id attribute" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset).
-          with({ :file => @file }).and_return(@asset)
+          with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
@@ -620,7 +620,7 @@ describe TravelAdviceEdition do
 
     describe "removing an asset" do
       it "removes an asset when remove_* set to true" do
-        ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+        ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
         ed.remove_image = true
         ed.save!
 
@@ -628,7 +628,7 @@ describe TravelAdviceEdition do
       end
 
       it "doesn't remove an asset when remove_* set to false or empty" do
-        ed = FactoryGirl.create(:travel_advice_edition, :state => 'draft', :image_id => "an_image_id")
+        ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
         ed.remove_image = false
         ed.remove_image = ""
         ed.remove_image = nil

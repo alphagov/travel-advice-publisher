@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Admin::CountriesController do
-
   before do
     login_as_stub_user
   end

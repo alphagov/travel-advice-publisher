@@ -1,5 +1,4 @@
-module PoltergeistHelpers 
-
+module PoltergeistHelpers
   def click_navbar_button(label)
     unfix_navbar
     within(:css, "div.navbar") do
@@ -7,7 +6,7 @@ module PoltergeistHelpers
     end
   end
 
-  private
+private
 
   # The bootstrap css class .navbar-fixed-bottom contains the style rule
   # position : 'fixed'
@@ -22,4 +21,4 @@ module PoltergeistHelpers
   end
 end
 
-RSpec.configuration.include PoltergeistHelpers, :type => :feature
+RSpec.configuration.include PoltergeistHelpers, type: :feature

@@ -72,8 +72,8 @@ feature "Edit Edition page", js: true do
       expect(current_path).not_to eq("/admin/editions/#{@edition._id}/edit")
 
       assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-        title: "An archived title",
-        base_path: "/foreign-travel-advice/albania",
+                                                                                  title: "An archived title",
+                                                                                  base_path: "/foreign-travel-advice/albania",
       ))
     end
 
@@ -214,8 +214,8 @@ feature "Edit Edition page", js: true do
     expect(two.order).to eq(2)
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-      title: "Travel advice for Albania",
-      base_path: "/foreign-travel-advice/albania",
+                                                                                title: "Travel advice for Albania",
+                                                                                base_path: "/foreign-travel-advice/albania",
     ))
   end
 
@@ -229,9 +229,7 @@ feature "Edit Edition page", js: true do
 
       expect(page).to have_content "Updated review date"
       assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "reviewed_at", Time.zone.now.iso8601)
-      assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
-        update_type: "minor"
-      })
+      assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
     end
   end
 
@@ -416,9 +414,7 @@ feature "Edit Edition page", js: true do
       link: "/foreign-travel-advice/albania"
     )
 
-    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
-      update_type: "major"
-    })
+    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "major")
 
     assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409",
                             "publishing_request_id", "25108-1461151489.528-10.3.3.1-1066")
@@ -462,12 +458,10 @@ feature "Edit Edition page", js: true do
     expect(action.comment).to eq "Minor update"
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-      base_path: "/foreign-travel-advice/albania",
+                                                                                base_path: "/foreign-travel-advice/albania",
     ))
 
-    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", {
-      update_type: "minor"
-    })
+    assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
   end
 
   scenario "attempting to edit a published edition" do
@@ -522,10 +516,9 @@ feature "Edit Edition page", js: true do
 
     click_navbar_button "Save"
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", [
-      "avoid_all_travel_to_parts",
-      "avoid_all_but_essential_travel_to_parts",
-    ])
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", %w(
+avoid_all_travel_to_parts
+avoid_all_but_essential_travel_to_parts))
 
     expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
     expect(page).to have_checked_field("The FCO advise against all travel to parts of the country")
@@ -551,8 +544,8 @@ feature "Edit Edition page", js: true do
   scenario "managing images for an edition" do
     @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
 
-    file_one = File.open(Rails.root.join("spec","fixtures","uploads","image.jpg"))
-    file_two = File.open(Rails.root.join("spec","fixtures","uploads","image_two.jpg"))
+    file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "image.jpg"))
+    file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "image_two.jpg"))
 
     asset_one = OpenStruct.new(
       id: 'http://asset-manager.dev.gov.uk/assets/an_image_id',
@@ -582,10 +575,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_one.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
-      "url" => "http://path/to/image_one.jpg",
-      "content_type" => "image/jpeg"
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg")
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
@@ -597,10 +588,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_one.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
-      "url" => "http://path/to/image_one.jpg",
-      "content_type" => "image/jpeg"
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg")
 
     # replace image
     expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_two)
@@ -616,10 +605,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_two.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", {
-      "url" => "http://path/to/image_two.jpg",
-      "content_type" => "image/jpeg"
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_two.jpg",
+      "content_type" => "image/jpeg")
 
     # remove image
     check "Remove image?"
@@ -637,8 +624,8 @@ feature "Edit Edition page", js: true do
   scenario "managing documents for an edition" do
     @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
 
-    file_one = File.open(Rails.root.join("spec","fixtures","uploads","document.pdf"))
-    file_two = File.open(Rails.root.join("spec","fixtures","uploads","document_two.pdf"))
+    file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "document.pdf"))
+    file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "document_two.pdf"))
 
     asset_one = OpenStruct.new(
       id: 'http://asset-manager.dev.gov.uk/assets/a_document_id',
@@ -670,10 +657,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
-      "url" => "http://path/to/document_one.pdf",
-      "content_type" => "application/pdf",
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf")
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
@@ -685,10 +670,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
-      "url" => "http://path/to/document_one.pdf",
-      "content_type" => "application/pdf",
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf")
 
     # replace document
     expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_two)
@@ -704,10 +687,8 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_two.pdf", href: "http://path/to/document_two.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", {
-      "url" => "http://path/to/document_two.pdf",
-      "content_type" => "application/pdf",
-    })
+    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document", "url" => "http://path/to/document_two.pdf",
+      "content_type" => "application/pdf")
 
     # remove document
     check "Remove PDF?"

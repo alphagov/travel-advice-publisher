@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 feature "Country version index" do
-
   before do
     login_as_stub_user
   end
@@ -61,7 +60,7 @@ feature "Country version index" do
 
     expect(page).to have_content("Aruba")
 
-    rows = page.all('table tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
+    rows = page.all('table tr').map { |r| r.all('th, td').map(&:text).map(&:strip) }
     expect(rows).to eq([
       ["Version", "State", "Updated", "Reviewed", ""],
       ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit — preview"],

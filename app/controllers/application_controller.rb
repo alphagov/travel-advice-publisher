@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   def error_404; error 404; end
 
-  private
+private
 
   def error(status_code)
     render status: status_code, plain: "#{status_code} error"

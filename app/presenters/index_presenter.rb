@@ -18,9 +18,9 @@ class IndexPresenter
       "publishing_app" => "travel-advice-publisher",
       "rendering_app" => "frontend",
       "routes" => [
-        {"path" => "/foreign-travel-advice", "type" => "exact"},
-        {"path" => "/foreign-travel-advice.atom", "type" => "exact"},
-        {"path" => "/foreign-travel-advice.json", "type" => "exact"},
+        { "path" => "/foreign-travel-advice", "type" => "exact" },
+        { "path" => "/foreign-travel-advice.atom", "type" => "exact" },
+        { "path" => "/foreign-travel-advice.json", "type" => "exact" },
       ],
       "public_updated_at" => Time.zone.now.iso8601,
       "update_type" => update_type,

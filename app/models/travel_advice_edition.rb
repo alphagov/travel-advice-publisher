@@ -26,13 +26,13 @@ class TravelAdviceEdition
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
 
-  GOVSPEAK_FIELDS = [:summary]
+  GOVSPEAK_FIELDS = [:summary].freeze
   ALERT_STATUSES = %w(
     avoid_all_but_essential_travel_to_parts
     avoid_all_but_essential_travel_to_whole_country
     avoid_all_travel_to_parts
     avoid_all_travel_to_whole_country
-  )
+  ).freeze
 
   before_validation :populate_version_number, on: :create
 

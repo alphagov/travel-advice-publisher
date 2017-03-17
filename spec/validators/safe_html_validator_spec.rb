@@ -6,7 +6,7 @@ describe SafeHtml do
 
     field :i_am_govspeak, type: String
 
-    GOVSPEAK_FIELDS = [:i_am_govspeak]
+    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
 
     validates_with SafeHtml
 
@@ -20,7 +20,7 @@ describe SafeHtml do
 
     field :i_am_govspeak, type: String
 
-    GOVSPEAK_FIELDS = [:i_am_govspeak]
+    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
 
     validates_with SafeHtml
   end
@@ -67,7 +67,7 @@ describe SafeHtml do
   end
 
   context "only specified fields as Govspeak" do
-    let(:i_am_govspeak) { %q{[Numberwang](script:nasty(); "Wangernum")} }
+    let(:i_am_govspeak) { '[Numberwang](script:nasty(); "Wangernum")' }
     let(:doc) { Govspeak::Document.new(i_am_govspeak) }
 
     it "should have an invalid document" do

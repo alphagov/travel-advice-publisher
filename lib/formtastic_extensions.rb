@@ -1,7 +1,5 @@
 module Formtastic #:nodoc:
-
   class FormBuilder < ActionView::Helpers::FormBuilder
-
     def association_name(class_name)
       @object.respond_to?("#{class_name}_attributes=") ? class_name : class_name.pluralize
     end
@@ -54,9 +52,9 @@ module Formtastic #:nodoc:
     #
     #   NOTE: remove_link must be put in the partial, not in main template
     #
-    def remove_link(name, *args)
+    def remove_link(_name, *args)
       options = args.extract_options!
-      css_selector = options.delete(:selector) || ".#{@object.class.name.split("::").last.underscore}"
+      css_selector = options.delete(:selector) || ".#{@object.class.name.split('::').last.underscore}"
       link = '<a href="#" class="btn btn-danger pull-right remove-associated" data-selector="' + css_selector + '">Remove part</a>'
       output = hidden_field(:_destroy) + link.html_safe
       output
@@ -67,7 +65,7 @@ module Formtastic #:nodoc:
       associated_name = extract_option_or_class_name(opts, :name, object)
       partial = opts.delete(:partial) || associated_name
 
-      form = render_associated_form(object, :partial => partial, :associated_name => associated_name, :locals => opts[:locals])
+      form = render_associated_form(object, partial: partial, associated_name: associated_name, locals: opts[:locals])
       form.gsub!(/attributes_(\d+)/, 'attributes_{{index}}')
       form.gsub!(/\[(\d+)\]/, '[{{index}}]')
 
@@ -143,10 +141,10 @@ module Formtastic #:nodoc:
 
       opts.symbolize_keys!
 
-      (opts[:new] - associated.select(&:new_record?).length).times  { associated.build } if opts[:new]  and @object.new_record? == true
-      if opts[:edit] and @object.new_record? == false
+      (opts[:new] - associated.count(&:new_record?)).times { associated.build } if opts[:new] && @object.new_record? == true
+      if opts[:edit] && @object.new_record? == false
         (opts[:edit] - associated.count).times { associated.build }
-      elsif opts[:new_in_edit] and @object.new_record? == false
+      elsif opts[:new_in_edit] && @object.new_record? == false
         opts[:new_in_edit].times { associated.build }
       end
 
@@ -162,13 +160,13 @@ module Formtastic #:nodoc:
         index = -1
         index_variable_name = "#{associated_name}_counter".to_sym
         output = associated.map do |element|
-          fields_for(association_name(name), element, (opts[:fields_for] || {}).merge(:name => name)) do |f|
+          fields_for(association_name(name), element, (opts[:fields_for] || {}).merge(name: name)) do |f|
             local_assignments = {
               index_variable_name => index += 1,
               local_assign_name.to_sym => element,
               :f => f
             }.merge(opts[:locals])
-            template.render({:partial => "#{partial}", :locals => local_assignments}.merge(opts[:render]))
+            template.render({ partial: partial.to_s, locals: local_assignments }.merge(opts[:render]))
           end
         end
         output.join

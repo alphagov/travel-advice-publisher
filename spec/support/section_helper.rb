@@ -15,4 +15,4 @@ module SectionHelper
   end
 end
 
-RSpec.configuration.include SectionHelper, :type => :feature
+RSpec.configuration.include SectionHelper, type: :feature

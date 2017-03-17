@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe RegisterableTravelAdviceEdition do
-
   describe "state" do
     before :each do
       @edition = FactoryGirl.build(:travel_advice_edition)
@@ -44,7 +43,7 @@ describe RegisterableTravelAdviceEdition do
     end
 
     it "should return the edition's indexable_content" do
-      @edition.parts << Part.new(:title => "Foo", :body => "Bar")
+      @edition.parts << Part.new(title: "Foo", body: "Bar")
       expect(@registerable.indexable_content).to eq(@edition.indexable_content)
     end
 

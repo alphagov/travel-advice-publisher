@@ -11,7 +11,7 @@ class Admin::EditionsController < ApplicationController
     if params[:edition_version].nil?
       edition = @country.build_new_edition_as(current_user)
     else
-      old_edition = @country.editions.where(:version_number => params[:edition_version]).first
+      old_edition = @country.editions.where(version_number: params[:edition_version]).first
       edition = @country.build_new_edition_as(current_user, old_edition)
     end
 
@@ -21,7 +21,7 @@ class Admin::EditionsController < ApplicationController
       notifier.enqueue
       redirect_to edit_admin_edition_path(edition)
     else
-      redirect_to admin_country_path(@country.slug), :alert => "Failed to create new edition"
+      redirect_to admin_country_path(@country.slug), alert: "Failed to create new edition"
     end
   end
 
@@ -36,12 +36,12 @@ class Admin::EditionsController < ApplicationController
     country_slug = @edition.country_slug
     if @edition.draft?
       if @edition.destroy
-        redirect_to admin_country_path(country_slug, :alert => "Edition deleted")
+        redirect_to admin_country_path(country_slug, alert: "Edition deleted")
       else
-        redirect_to admin_country_path(country_slug, :alert => "Failed to delete draft edition")
+        redirect_to admin_country_path(country_slug, alert: "Failed to delete draft edition")
       end
     else
-      redirect_to edit_admin_edition_path(@edition, :alert => "Can't delete a published or archived edition")
+      redirect_to edit_admin_edition_path(@edition, alert: "Can't delete a published or archived edition")
     end
   end
 
@@ -68,7 +68,8 @@ class Admin::EditionsController < ApplicationController
     render layout: "historical_edition"
   end
 
-  private
+private
+
   def permitted_edition_attributes
     params.fetch(:edition, {}).permit(
       :minor_update,
@@ -98,7 +99,7 @@ class Admin::EditionsController < ApplicationController
   end
 
   def strip_empty_alert_statuses
-    if params[:edition] and params[:edition][:alert_status]
+    if params[:edition] && params[:edition][:alert_status]
       params[:edition][:alert_status].reject!(&:blank?)
     end
   end
@@ -122,28 +123,28 @@ class Admin::EditionsController < ApplicationController
         country_slug: @edition.country_slug
       )
 
-      redirect_to admin_country_path(@edition.country_slug), :alert => "#{@edition.title} published."
+      redirect_to admin_country_path(@edition.country_slug), alert: "#{@edition.title} published."
     else
-      flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(", ")}."
+      flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
       render "/admin/editions/edit"
     end
   end
 
-  def save(&block)
+  def save
     if @edition.update_attributes(permitted_edition_attributes)
       notifier.put_content(@edition)
       notifier.enqueue
 
-      block.call and return if block_given?
+      yield && return if block_given?
 
       # catch any upload errors
       if @edition.errors.any?
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      redirect_to edit_admin_edition_path(@edition), :alert => "#{@edition.title} updated."
+      redirect_to edit_admin_edition_path(@edition), alert: "#{@edition.title} updated."
     else
-      flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(", ")}."
+      flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render "/admin/editions/edit"
     end
   end
@@ -155,9 +156,9 @@ class Admin::EditionsController < ApplicationController
       notifier.put_content(@edition)
       notifier.publish(@edition, update_type: "minor")
       notifier.enqueue
-      redirect_to admin_country_path(@edition.country_slug), :alert => "Updated review date"
+      redirect_to admin_country_path(@edition.country_slug), alert: "Updated review date"
     else
-      redirect_to edit_admin_edition_path(@edition), :alert => "Failed to update the review date"
+      redirect_to edit_admin_edition_path(@edition), alert: "Failed to update the review date"
     end
   end
 

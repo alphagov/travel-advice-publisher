@@ -26,8 +26,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
 
     expect(presenter.content_id).to eq(email_signup_content_id)
 
-    expect(presenter.content_payload).to eq({
-      base_path: "/foreign-travel-advice/aruba/email-signup",
+    expect(presenter.content_payload).to eq(base_path: "/foreign-travel-advice/aruba/email-signup",
       title: "Aruba Travel Advice",
       description: "Aruba Travel Advice Email Alert Signup",
       document_type: "email_alert_signup",
@@ -58,7 +57,6 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
             link: "/foreign-travel-advice/aruba",
           },
         ]
-      },
-    })
+      })
   end
 end

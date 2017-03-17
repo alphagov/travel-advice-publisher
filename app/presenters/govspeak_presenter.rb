@@ -8,6 +8,7 @@ module GovspeakPresenter
     end
 
   private
+
     def html(govspeak)
       Govspeak::Document.new(govspeak).to_html
     end

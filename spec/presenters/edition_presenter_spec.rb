@@ -6,12 +6,12 @@ describe EditionPresenter do
   let(:edition) {
     edition = FactoryGirl.build(
       :travel_advice_edition,
-      :country_slug => 'aruba',
-      :title => "Aruba travel advice",
-      :overview => "Something something",
-      :published_at => 5.minutes.ago,
-      :summary => "### Summary",
-      :alert_status => [TravelAdviceEdition::ALERT_STATUSES.first],
+      country_slug: 'aruba',
+      title: "Aruba travel advice",
+      overview: "Something something",
+      published_at: 5.minutes.ago,
+      summary: "### Summary",
+      alert_status: [TravelAdviceEdition::ALERT_STATUSES.first],
     )
 
     edition.parts.build(
@@ -89,8 +89,8 @@ describe EditionPresenter do
         "public_updated_at" => edition.published_at.iso8601,
         "update_type" => "major",
         "routes" => [
-          {"path" => "/foreign-travel-advice/aruba", "type" => "prefix"},
-          {"path" => "/foreign-travel-advice/aruba.atom", "type" => "exact"}
+          { "path" => "/foreign-travel-advice/aruba", "type" => "prefix" },
+          { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" }
         ],
         "details" => {
           "summary" => [

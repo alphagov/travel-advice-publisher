@@ -89,7 +89,6 @@ describe Admin::EditionsController do
 
         get :destroy, params: { id: edition.id }
         expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
-
       end
 
       it "wont let an archived edition be deleted" do
@@ -98,7 +97,6 @@ describe Admin::EditionsController do
 
         get :destroy, params: { id: edition.id }
         expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition");
-
       end
     end
   end
@@ -214,7 +212,7 @@ describe Admin::EditionsController do
         allow(TravelAdviceEdition).to receive(:find).with(@draft.to_param).and_return(@draft)
         allow(@draft).to receive(:publish).and_return(true)
 
-        post :update, params: {id: @draft.to_param, edition: {}, commit: "Save & Publish"}
+        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
 
         expect(response).to redirect_to admin_country_path(@draft.country_slug)
       end
@@ -222,7 +220,7 @@ describe Admin::EditionsController do
       it "queues two publishing API workers, one for the content and one for the index" do
         Sidekiq::Worker.clear_all
 
-        post :update, params: {id: @draft.to_param, edition: {}, commit: "Save & Publish"}
+        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
 
         expect(PublishingApiWorker.jobs.size).to eq(1)
       end
@@ -230,7 +228,7 @@ describe Admin::EditionsController do
       it "creates a PublishRequest for that edition" do
         request_id = '123456'
         allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: request_id)
-        post :update, params: {id: @draft.to_param, edition: {}, commit: "Save & Publish"}
+        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
         publish_request = PublishRequest.last
         expect(publish_request.edition_id).to eq(@draft.id)
         expect(publish_request.request_id).to eq(request_id)

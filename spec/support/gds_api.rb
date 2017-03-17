@@ -9,17 +9,17 @@ module GdsApiHelpers
   end
 end
 
-RSpec.configuration.include GdsApiHelpers, :type => :model
+RSpec.configuration.include GdsApiHelpers, type: :model
 
-RSpec.configuration.include GdsApiHelpers, :type => :controller
-RSpec.configuration.before :each, :type => :controller do
+RSpec.configuration.include GdsApiHelpers, type: :controller
+RSpec.configuration.before :each, type: :controller do
   stub_rummager
   stub_shared_templates
 end
 
-RSpec.configuration.include GdsApiHelpers, :type => :feature
-RSpec.configuration.before :each, :type => :feature do
+RSpec.configuration.include GdsApiHelpers, type: :feature
+RSpec.configuration.before :each, type: :feature do
   stub_shared_templates
 end
 
-RSpec.configuration.include GdsApiHelpers, :type => :rake_task
+RSpec.configuration.include GdsApiHelpers, type: :rake_task

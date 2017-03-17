@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe HistoricalEditionPresenter do
-
   let(:country) {
     Country.new(
       "name" => "Aruba",

@@ -2,7 +2,7 @@ module PublicationCheck
   class Runner
     DEFAULT_CHECKS = [
       ContentStoreCheck
-    ]
+    ].freeze
 
     def self.run_check(publish_requests: PublishRequest.awaiting_check, checks: DEFAULT_CHECKS)
       Result.new.tap do |result|
