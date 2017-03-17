@@ -81,16 +81,10 @@ describe SafeHtml do
     it "should use this validator" do
       models_dir = File.expand_path("../../app/models/*", File.dirname(__FILE__))
 
-      classes = Dir[models_dir]
-        .map { |file|
-          File.basename(file, ".rb").camelize.constantize
-        }
-        .select { |klass|
-          klass.included_modules.include?(Mongoid::Document) && klass.const_defined?(:GOVSPEAK_FIELDS)
-        }
-        .each { |klass|
-          expect(klass.validators.map(&:class)).to include(SafeHtml)
-        }
+      Dir[models_dir]
+        .map { |file| File.basename(file, ".rb").camelize.constantize }
+        .select { |klass| klass.included_modules.include?(Mongoid::Document) && klass.const_defined?(:GOVSPEAK_FIELDS) }
+        .each { |klass| expect(klass.validators.map(&:class)).to include(SafeHtml) }
     end
   end
 end

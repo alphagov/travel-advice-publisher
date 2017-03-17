@@ -97,8 +97,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it "ignores draft items" do
-      aruba = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      algeria = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
+      FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
 
       task.invoke
 

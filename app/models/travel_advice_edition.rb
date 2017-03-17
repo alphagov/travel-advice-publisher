@@ -256,6 +256,7 @@ private
       private "upload_#{field}".to_sym
     end
   end
+  private_class_method :attaches
 
   attaches :image, :document
 end

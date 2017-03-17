@@ -277,14 +277,14 @@ feature "Edit Edition page", js: true do
     @edition.save!
 
     @edition.parts.build
-    p1 = @edition.parts.first.update_attributes(
+    @edition.parts.first.update_attributes(
       title: 'Part One',
       slug: 'part-one',
       body: 'Body text',
     )
 
     @edition.parts.build
-    p2 = @edition.parts.second.update_attributes(
+    @edition.parts.second.update_attributes(
       title: 'Part Two',
       slug: 'part-two',
       body: 'Body text',

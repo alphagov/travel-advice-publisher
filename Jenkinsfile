@@ -69,7 +69,7 @@ node('mongodb-2.4') {
     }
 
     stage("rubylinter") {
-      govuk.rubyLinter("app test lib")
+      govuk.rubyLinter("app config lib spec")
     }
 
     stage("Precompile assets") {

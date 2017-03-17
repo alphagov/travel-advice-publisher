@@ -33,10 +33,10 @@ describe Country do
 
     it "should return all TravelAdviceEditions with the matching country_slug" do
       e1 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug)
-      e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "wibble")
+      _e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "wibble")
       e3 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: @country.slug)
 
-      expect(@country.editions.to_a).to include(e1, e3)
+      expect(@country.editions.to_a).to match_array([e1, e3])
     end
 
     it "should order them by descending version_number" do
