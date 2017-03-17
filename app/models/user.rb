@@ -8,9 +8,7 @@ class User
   include Mongoid::Timestamps
   include GDS::SSO::User
 
-  def self.collection_name
-    "travel_advice_publisher_users"
-  end
+  store_in collection: "travel_advice_publisher_users"
 
   field "name",                    type: String
   field "uid",                     type: String
