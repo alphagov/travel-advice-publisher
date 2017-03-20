@@ -17,7 +17,7 @@ RSpec.describe PublishingApiWorker, :perform do
 
   let(:content_id) { SecureRandom.uuid }
   let(:payload) do
-    { "details" => { "foo" => "bar"} }
+    { "details" => { "foo" => "bar" } }
   end
   let(:job) { [:put_content, content_id, payload] }
 

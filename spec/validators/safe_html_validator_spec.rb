@@ -6,7 +6,7 @@ describe SafeHtml do
 
     field :i_am_govspeak, type: String
 
-    GOVSPEAK_FIELDS = [:i_am_govspeak]
+    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
 
     validates_with SafeHtml
 
@@ -20,7 +20,7 @@ describe SafeHtml do
 
     field :i_am_govspeak, type: String
 
-    GOVSPEAK_FIELDS = [:i_am_govspeak]
+    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
 
     validates_with SafeHtml
   end
@@ -67,7 +67,7 @@ describe SafeHtml do
   end
 
   context "only specified fields as Govspeak" do
-    let(:i_am_govspeak) { %q{[Numberwang](script:nasty(); "Wangernum")} }
+    let(:i_am_govspeak) { '[Numberwang](script:nasty(); "Wangernum")' }
     let(:doc) { Govspeak::Document.new(i_am_govspeak) }
 
     it "should have an invalid document" do
@@ -81,16 +81,10 @@ describe SafeHtml do
     it "should use this validator" do
       models_dir = File.expand_path("../../app/models/*", File.dirname(__FILE__))
 
-      classes = Dir[models_dir]
-        .map { |file|
-          File.basename(file, ".rb").camelize.constantize
-        }
-        .select { |klass|
-          klass.included_modules.include?(Mongoid::Document) && klass.const_defined?(:GOVSPEAK_FIELDS)
-        }
-        .each { |klass|
-          expect(klass.validators.map(&:class)).to include(SafeHtml)
-        }
+      Dir[models_dir]
+        .map { |file| File.basename(file, ".rb").camelize.constantize }
+        .select { |klass| klass.included_modules.include?(Mongoid::Document) && klass.const_defined?(:GOVSPEAK_FIELDS) }
+        .each { |klass| expect(klass.validators.map(&:class)).to include(SafeHtml) }
     end
   end
 end

@@ -8,10 +8,8 @@ RSpec.describe PublishingApiNotifier do
     Sidekiq::Worker.clear_all
     stub_rummager
 
-    allow(GdsApi::GovukHeaders).to receive(:headers).and_return({
-      govuk_request_id: "12345-54321",
-      x_govuk_authenticated_user: "a0b1c2d3e4f5",
-    })
+    allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: "12345-54321",
+      x_govuk_authenticated_user: "a0b1c2d3e4f5")
   end
 
   subject { PublishingApiNotifier.new }
@@ -228,7 +226,7 @@ RSpec.describe PublishingApiNotifier do
     context "when tasks are in order and present" do
       it "calls perform_async with request and user id arguments from headers" do
         expect(PublishingApiWorker).to receive(:perform_async)
-          .with(anything, { request_id: "12345-54321", user_id: "a0b1c2d3e4f5" })
+          .with(anything, request_id: "12345-54321", user_id: "a0b1c2d3e4f5")
 
         edition.publish!
         subject.put_content(edition)

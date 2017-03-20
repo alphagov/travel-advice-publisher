@@ -12,8 +12,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
   it "presents the email signup content item for the edition" do
     expect(presenter.content_id).to eq(TravelAdvicePublisher::INDEX_EMAIL_SIGNUP_CONTENT_ID)
 
-    expect(presenter.content_payload).to eq({
-      base_path: "/foreign-travel-advice/email-signup",
+    expect(presenter.content_payload).to eq(base_path: "/foreign-travel-advice/email-signup",
       title: "Foreign travel advice",
       description: "Foreign travel advice email alert signup",
       document_type: "email_alert_signup",
@@ -41,7 +40,6 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
             link: "/foreign-travel-advice",
           },
         ]
-      },
-    })
+      })
   end
 end

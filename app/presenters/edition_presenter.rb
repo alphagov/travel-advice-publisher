@@ -1,5 +1,4 @@
 class EditionPresenter
-
   def initialize(edition, republish: false)
     @edition = edition
     @republish = republish
@@ -38,6 +37,7 @@ class EditionPresenter
   end
 
 private
+
   def details
     details = {
       "summary" => GovspeakPresenter.present(edition.summary),
@@ -55,9 +55,9 @@ private
       "max_cache_time" => 10,
     }
 
-    details.merge!("image" => image) if image
-    details.merge!("document" => document) if document
-    details.merge!("publishing_request_id" => publishing_request_id) if publishing_request_id
+    details["image"] = image if image
+    details["document"] = document if document
+    details["publishing_request_id"] = publishing_request_id if publishing_request_id
 
     details
   end
@@ -68,8 +68,8 @@ private
 
   def routes
     [
-      {"path" => base_path, "type" => "prefix"},
-      {"path" => "#{base_path}.atom", "type" => "exact"},
+      { "path" => base_path, "type" => "prefix" },
+      { "path" => "#{base_path}.atom", "type" => "exact" },
     ]
   end
 

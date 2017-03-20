@@ -6,7 +6,7 @@ describe LinkValidator do
 
     field "body", type: String
     field "assignee", type: String
-    GOVSPEAK_FIELDS = [:body]
+    GOVSPEAK_FIELDS = [:body].freeze
 
     validates_with LinkValidator
   end
@@ -59,7 +59,7 @@ describe LinkValidator do
   end
 
   context "smart quotes as normal quotes" do
-    let(:body) { %q<abc [foobar](http://foobar.com “hover”)> }
+    let(:body) { 'abc [foobar](http://foobar.com “hover”)' }
     include_examples "is invalid"
   end
 

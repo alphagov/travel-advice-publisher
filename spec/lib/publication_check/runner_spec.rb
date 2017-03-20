@@ -2,16 +2,16 @@ require 'spec_helper'
 
 module PublicationCheck
   describe Runner do
-    let(:request_one){ double(register_check_attempt!: nil) }
-    let(:request_two){ double(register_check_attempt!: nil) }
-    let(:publish_requests){ [request_one, request_two] }
-    let(:check){ double(new: double(run: true)) }
+    let(:request_one) { double(register_check_attempt!: nil) }
+    let(:request_two) { double(register_check_attempt!: nil) }
+    let(:publish_requests) { [request_one, request_two] }
+    let(:check) { double(new: double(run: true)) }
 
     it "passes each request to each check's run method" do
       allow(ContentStoreCheck).to receive(:new)
-        .and_return(content_store_check = double())
+        .and_return(content_store_check = double)
 
-      publish_requests.each do | publish_request |
+      publish_requests.each do |publish_request|
         expect(content_store_check).to receive(:run)
           .with(publish_request)
       end
@@ -48,4 +48,3 @@ module PublicationCheck
     end
   end
 end
-

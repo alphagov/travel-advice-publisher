@@ -13,7 +13,7 @@ class Part
   field :slug,       type: String
   field :created_at, type: DateTime, default: lambda { Time.zone.now }
 
-  GOVSPEAK_FIELDS = [:body]
+  GOVSPEAK_FIELDS = [:body].freeze
 
   validates_presence_of :title
   validates_presence_of :slug

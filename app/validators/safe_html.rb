@@ -10,7 +10,7 @@ class SafeHtml < ActiveModel::Validator
     # Hardcode production URLs so that content copied from production is valid
     'www.gov.uk',
     'assets.digital.cabinet-office.gov.uk'
-  ]
+  ].freeze
 
   def validate(record)
     record.changes.each do |field_name, (_old_value, new_value)|

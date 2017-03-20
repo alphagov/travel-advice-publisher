@@ -4,19 +4,19 @@ class Action
   include Mongoid::Document
 
   STATUS_ACTIONS = [
-    CREATE                      = "create",
-    SCHEDULE_FOR_PUBLISHING     = "schedule_for_publishing",
-    PUBLISH                     = "publish",
-    NEW_VERSION                 = "new_version",
-  ]
+    CREATE                      = "create".freeze,
+    SCHEDULE_FOR_PUBLISHING     = "schedule_for_publishing".freeze,
+    PUBLISH                     = "publish".freeze,
+    NEW_VERSION                 = "new_version".freeze,
+  ].freeze
 
   NON_STATUS_ACTIONS = [
-    NOTE = "note",
-  ]
+    NOTE = "note".freeze,
+  ].freeze
 
   embedded_in :edition
 
-  belongs_to :recipient, class_name: "User"
+  belongs_to :recipient, class_name: "User", optional: true
   belongs_to :requester, class_name: "User"
 
   field :approver_id,        type: Integer

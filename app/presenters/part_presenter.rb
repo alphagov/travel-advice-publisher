@@ -16,5 +16,6 @@ class PartPresenter
   end
 
 private
+
   attr_accessor :part
 end

@@ -39,7 +39,7 @@ class RegisterableTravelAdviceEdition
     ["/#{slug}"]
   end
 
-  private
+private
 
   def country
     Country.find_by_slug(@edition.country_slug)

@@ -26,13 +26,13 @@ class TravelAdviceEdition
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
 
-  GOVSPEAK_FIELDS = [:summary]
+  GOVSPEAK_FIELDS = [:summary].freeze
   ALERT_STATUSES = %w(
     avoid_all_but_essential_travel_to_parts
     avoid_all_but_essential_travel_to_whole_country
     avoid_all_travel_to_parts
     avoid_all_travel_to_whole_country
-  )
+  ).freeze
 
   before_validation :populate_version_number, on: :create
 
@@ -210,7 +210,7 @@ private
     part_errors = parts.map do |part|
       "#{part.order}: #{part.errors.full_messages.to_sentence}" if part.errors.present?
     end
-    errors[:part] = part_errors.select(&:present?).sort.to_sentence
+    errors.add(:part, part_errors.select(&:present?).sort.to_sentence)
   end
 
   after_initialize do
@@ -256,6 +256,7 @@ private
       private "upload_#{field}".to_sym
     end
   end
+  private_class_method :attaches
 
   attaches :image, :document
 end

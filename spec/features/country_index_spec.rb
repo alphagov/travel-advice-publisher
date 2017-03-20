@@ -7,24 +7,24 @@ feature "Country Index" do
   end
 
   scenario "inspecting the country index" do
-    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'albania')
-    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'algeria')
-    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'angola')
+    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania')
+    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria')
+    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'angola')
 
-    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'aruba')
-    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'aruba')
+    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
 
-    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'afghanistan')
-    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'afghanistan')
-    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'afghanistan')
-    FactoryGirl.create(:draft_travel_advice_edition, :country_slug => 'afghanistan')
+    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'afghanistan')
 
-    FactoryGirl.create(:published_travel_advice_edition, :country_slug => 'austria')
-    FactoryGirl.create(:archived_travel_advice_edition, :country_slug => 'austria')
+    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'austria')
+    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'austria')
 
     visit "/admin/countries"
 
-    rows = page.all('table tbody tr').map {|r| r.all('th, td').map(&:text).map(&:strip) }
+    rows = page.all('table tbody tr').map { |r| r.all('th, td').map(&:text).map(&:strip) }
     expect(rows).to eq([
       ["Afghanistan",         "advice published"],
       ["Albania",             "no advice published"],

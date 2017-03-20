@@ -17,5 +17,6 @@ class AssetPresenter
   end
 
 private
+
   attr_accessor :asset
 end

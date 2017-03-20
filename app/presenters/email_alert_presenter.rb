@@ -22,6 +22,7 @@ class EmailAlertPresenter
   end
 
 private
+
   attr_accessor :edition
 
   def subject

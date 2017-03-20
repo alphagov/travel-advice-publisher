@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 # Pick the frameworks you want:
 # require "active_record/railtie"
@@ -19,14 +19,14 @@ module TravelAdvicePublisher
   mattr_accessor :rummager
 
   # Maslow need ID for Travel Advice Publisher
-  NEED_ID = '101191'
+  NEED_ID = '101191'.freeze
 
-  INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0"
-  INDEX_EMAIL_SIGNUP_CONTENT_ID = "1aebfc97-7723-4cb6-82f4-434639efc185"
+  INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0".freeze
+  INDEX_EMAIL_SIGNUP_CONTENT_ID = "1aebfc97-7723-4cb6-82f4-434639efc185".freeze
 
-  COUNTRY_FORMAT = "travel_advice"
+  COUNTRY_FORMAT = "travel_advice".freeze
 
-  INDEX_FORMAT = "travel_advice_index"
+  INDEX_FORMAT = "travel_advice_index".freeze
 
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -35,18 +35,6 @@ module TravelAdvicePublisher
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib)
-
-    # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
-
-    # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
-    config.i18n.enforce_available_locales = true
-
-    # Enable escaping HTML in JSON.
-    config.active_support.escape_html_entities_in_json = true
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
