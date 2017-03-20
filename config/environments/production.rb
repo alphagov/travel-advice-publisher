@@ -92,5 +92,5 @@ Rails.application.configure do
   config.send_email_alerts = (ENV["SEND_EMAIL_ALERTS"] == "1")
 
   # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  # config.active_record.dump_schema_after_migration = false
 end
