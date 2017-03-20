@@ -1,12 +1,12 @@
 development:
   clients:
     default:
-      uri: <%= ENV["MONGODB_URI"] || "mongodb://localhost/govuk_content_development" %>
+      uri: <%= ENV["MONGODB_URI"] || "mongodb://localhost/travel_advice_publisher_development" %>
 
 test:
   clients:
     default:
-      uri: <%= ENV["TEST_MONGODB_URI"] || "mongodb://localhost/govuk_travel_advice_publisher_test" %>
+      uri: <%= ENV["TEST_MONGODB_URI"] || "mongodb://localhost/travel_advice_publisher_test" %>
 
 # set these environment variables on your prod server
 production:
