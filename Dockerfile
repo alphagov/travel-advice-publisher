@@ -4,6 +4,7 @@ RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essenti
 # for capybara-webkit
 RUN apt-get update -qq && apt-get install -y libqt4-webkit libqt4-dev xvfb
 
+ENV GOVUK_APP_NAME travel-advice-publisher
 ENV MONGODB_URI mongodb://mongo/travel-advice-publisher
 ENV PORT 3035
 ENV RAILS_ENV development
