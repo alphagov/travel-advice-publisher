@@ -89,8 +89,11 @@ describe EditionPresenter do
         "public_updated_at" => edition.published_at.iso8601,
         "update_type" => "major",
         "routes" => [
-          { "path" => "/foreign-travel-advice/aruba", "type" => "prefix" },
-          { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" }
+          { "path" => "/foreign-travel-advice/aruba", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/print", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
         ],
         "details" => {
           "summary" => [

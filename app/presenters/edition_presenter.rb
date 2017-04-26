@@ -66,11 +66,22 @@ private
     "/foreign-travel-advice/#{edition.country_slug}"
   end
 
-  def routes
+  def base_routes
     [
-      { "path" => base_path, "type" => "prefix" },
+      { "path" => base_path, "type" => "exact" },
       { "path" => "#{base_path}.atom", "type" => "exact" },
+      { "path" => "#{base_path}/print", "type" => "exact" },
     ]
+  end
+
+  def part_routes
+    edition.parts.map do |part|
+      { "path" => "#{base_path}/#{part.slug}", "type" => "exact" }
+    end
+  end
+
+  def routes
+    base_routes + part_routes
   end
 
   def public_updated_at
