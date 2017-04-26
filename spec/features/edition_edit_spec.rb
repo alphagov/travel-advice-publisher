@@ -309,7 +309,6 @@ feature "Edit Edition page", js: true do
         "title" => "Part One",
         "body" => [
           { "content_type" => "text/govspeak", "content" => "Body text" },
-          { "content_type" => "text/html", "content" => "<p>Body text</p>\n" },
         ],
       }
     ])

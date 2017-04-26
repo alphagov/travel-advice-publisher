@@ -4,14 +4,16 @@ class PartPresenter
   end
 
   def initialize(part)
-    self.part = part
+    @part = part
   end
 
   def present
     {
       "slug" => part.slug,
       "title" => part.title,
-      "body" => GovspeakPresenter.present(part.body),
+      "body" => [
+        { "content_type" => "text/govspeak", "content" => part.body },
+      ],
     }
   end
 
