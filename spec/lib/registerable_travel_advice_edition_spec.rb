@@ -51,12 +51,27 @@ describe RegisterableTravelAdviceEdition do
       expect(@registerable.need_ids).to eq(['101191'])
     end
 
-    it "should return /<slug>.atom for the paths" do
-      expect(@registerable.paths).to eq(["/foreign-travel-advice/#{@edition.country_slug}.atom"])
+    context "paths" do
+      it "should include /<slug>.atom" do
+        expect(@registerable.paths).to include("/foreign-travel-advice/#{@edition.country_slug}.atom")
+      end
+
+      it "should include /<slug>" do
+        expect(@registerable.paths).to include("/foreign-travel-advice/#{@edition.country_slug}")
+      end
+
+      it "should include /<slug>/print" do
+        expect(@registerable.paths).to include("/foreign-travel-advice/#{@edition.country_slug}/print")
+      end
+
+      it "should include /<slug>/<part.slug>" do
+        @edition.parts << Part.new(title: "Foo", body: "Bar", slug: "foo")
+        expect(@registerable.paths).to include("/foreign-travel-advice/#{@edition.country_slug}/foo")
+      end
     end
 
-    it "should return /<slug> for the prefix routes" do
-      expect(@registerable.prefixes).to eq(["/foreign-travel-advice/#{@edition.country_slug}"])
+    it "should have no prefix paths" do
+      expect(@registerable.prefixes).to be_empty
     end
   end
 
