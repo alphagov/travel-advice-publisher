@@ -40,7 +40,9 @@ private
 
   def details
     details = {
-      "summary" => GovspeakPresenter.present(edition.summary),
+      "summary" => [
+        { "content_type" => "text/govspeak", "content" => edition.summary },
+      ],
       "country" => {
         "slug" => country.slug,
         "name" => country.name,

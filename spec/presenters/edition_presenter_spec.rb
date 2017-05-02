@@ -98,7 +98,6 @@ describe EditionPresenter do
         "details" => {
           "summary" => [
             { "content_type" => "text/govspeak", "content" => "### Summary" },
-            { "content_type" => "text/html", "content" => "<h3 id=\"summary\">Summary</h3>\n" },
           ],
           "country" => {
             "slug" => "aruba",
@@ -115,7 +114,6 @@ describe EditionPresenter do
               "title" => "Safety and security",
               "body" => [
                 { "content_type" => "text/govspeak", "content" => "Keep your valuables safely stored ..." },
-                { "content_type" => "text/html", "content" => "<p>Keep your valuables safely stored &hellip;</p>\n" },
               ],
             },
             {
@@ -123,7 +121,6 @@ describe EditionPresenter do
               "title" => "Terrorism",
               "body" => [
                 { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
-                { "content_type" => "text/html", "content" => "<p>There is an underlying threat from &hellip;</p>\n" },
               ],
             }
           ],
