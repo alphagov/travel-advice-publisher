@@ -32,14 +32,20 @@ class RegisterableTravelAdviceEdition
   end
 
   def paths
-    ["/#{slug}.atom"]
+    ["/#{slug}", "/#{slug}.atom", "/#{slug}/print"] + part_paths
   end
 
   def prefixes
-    ["/#{slug}"]
+    []
   end
 
 private
+
+  def part_paths
+    @edition.parts.map do |part|
+      "/#{slug}/#{part.slug}"
+    end
+  end
 
   def country
     Country.find_by_slug(@edition.country_slug)
