@@ -26,9 +26,8 @@ module PublicationCheck
         {
           "base_path": "test/base/path",
           "content_id": "7a2554bd-9dc5-4a2e-953c-263c65ced66b",
-          "details": {
-            "publishing_request_id": "#{response_publishing_request_id}"
-          }
+          "details": { },
+          "publishing_request_id": "#{response_publishing_request_id}"
         }
       JSON
     }
