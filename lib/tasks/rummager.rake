@@ -7,7 +7,8 @@ namespace :rummager do
       content_id: TravelAdvicePublisher::INDEX_CONTENT_ID,
       title: "Foreign travel advice",
       description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
-      indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health"
+      indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
+      rendering_app: "frontend",
     )
 
     RummagerNotifier.notify(record)
