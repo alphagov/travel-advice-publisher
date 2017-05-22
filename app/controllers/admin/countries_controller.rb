@@ -11,10 +11,6 @@ class Admin::CountriesController < ApplicationController
 
 private
 
-  def artefact_slug_for_country(country)
-    "foreign-travel-advice/#{country}"
-  end
-
   def load_country
     @country = Country.find_by_slug(params[:id]) || error_404
   end
