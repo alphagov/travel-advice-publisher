@@ -35,7 +35,7 @@ module PublicationCheck
 
     def page_has_request_id?
       response_json = JSON.parse(page_response.body)
-      content_store_request_id = response_json["details"]["publishing_request_id"]
+      content_store_request_id = response_json["details"].fetch("publishing_request_id", response_json["publishing_request_id"])
       content_store_request_id.present? &&
         content_store_request_id == request_id
     end

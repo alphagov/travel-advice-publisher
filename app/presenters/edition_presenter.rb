@@ -59,7 +59,6 @@ private
 
     details["image"] = image if image
     details["document"] = document if document
-    details["publishing_request_id"] = publishing_request_id if publishing_request_id
 
     details
   end
@@ -122,9 +121,5 @@ private
 
   def document
     @document ||= AssetPresenter.present(edition.document)
-  end
-
-  def publishing_request_id
-    GdsApi::GovukHeaders.headers[:govuk_request_id]
   end
 end

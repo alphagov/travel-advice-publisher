@@ -126,7 +126,6 @@ describe EditionPresenter do
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
           "max_cache_time" => 10,
-          "publishing_request_id" => "25108-1461151489.528-10.3.3.1-1066"
         },
       )
     end
@@ -153,17 +152,6 @@ describe EditionPresenter do
         edition.change_description = nil
 
         expect(presented_data["details"]["change_description"]).to eq("Stuff previously changed")
-      end
-    end
-
-    context "when there is no govuk_request_id header" do
-      before do
-        allow(GdsApi::GovukHeaders).to receive(:headers)
-          .and_return({})
-      end
-
-      it "does not include a publishing_request_id key" do
-        expect(presented_data["details"]).not_to have_key("publishing_request_id")
       end
     end
 
