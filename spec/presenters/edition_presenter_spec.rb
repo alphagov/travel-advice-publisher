@@ -6,7 +6,7 @@ describe EditionPresenter do
   let(:edition) {
     edition = FactoryGirl.build(
       :travel_advice_edition,
-      country_slug: 'aruba',
+      country_slug: "aruba",
       title: "Aruba travel advice",
       overview: "Something something",
       published_at: 5.minutes.ago,
@@ -38,10 +38,20 @@ describe EditionPresenter do
   }
 
   let(:previous) {
-    FactoryGirl.build(
+    previous = FactoryGirl.create(
       :travel_advice_edition,
+      country_slug: "aruba",
       change_description: "Stuff previously changed"
     )
+
+    previous.parts.create(
+      slug: "money",
+      title: "Money",
+      body: "Use a piggy bank ...",
+      order: 1,
+    )
+
+    previous
   }
 
   before do
@@ -92,6 +102,7 @@ describe EditionPresenter do
           { "path" => "/foreign-travel-advice/aruba", "type" => "exact" },
           { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" },
           { "path" => "/foreign-travel-advice/aruba/print", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/money", "type" => "exact" },
           { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
           { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
         ],

@@ -75,9 +75,25 @@ private
     ]
   end
 
+  def previous_part_slugs
+    TravelAdviceEdition.where(country_slug: edition.country_slug)
+      .pluck("parts.slug")
+      .compact
+      .flat_map { |slugs| slugs.map { |slug| slug["slug"] } }
+      .uniq
+  end
+
+  def current_part_slugs
+    edition.parts.map(&:slug)
+  end
+
+  def all_part_slugs
+    (previous_part_slugs + current_part_slugs).uniq
+  end
+
   def part_routes
-    edition.parts.map do |part|
-      { "path" => "#{base_path}/#{part.slug}", "type" => "exact" }
+    all_part_slugs.map do |slug|
+      { "path" => "#{base_path}/#{slug}", "type" => "exact" }
     end
   end
 
