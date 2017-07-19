@@ -2,6 +2,7 @@
 
 REPOSITORY = 'travel-advice-publisher'
 DEFAULT_SCHEMA_BRANCH = 'deployed-to-production'
+DEFAULT_PUBLISHING_E2E_TESTS_BRANCH = 'test-against'
 
 node('mongodb-2.4') {
   def govuk = load '/var/lib/jenkins/groovy_scripts/govuk_jenkinslib.groovy'
@@ -78,6 +79,14 @@ node('mongodb-2.4') {
 
     stage("Run tests") {
       govuk.runRakeTask("ci:setup:rspec default")
+    }
+
+    stage("End-to-end tests") {
+      govuk.runPublishingE2ETests(
+        "TRAVEL_ADVICE_PUBLISHER_COMMITTISH",
+        DEFAULT_PUBLISHING_E2E_TESTS_BRANCH,
+        REPOSITORY
+      )
     }
 
     stage("Push release tag") {
