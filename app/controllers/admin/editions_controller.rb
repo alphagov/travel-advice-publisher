@@ -154,7 +154,7 @@ private
 
     if @edition.save!
       notifier.put_content(@edition)
-      notifier.publish(@edition, update_type: "minor")
+      notifier.publish(@edition)
       notifier.enqueue
       redirect_to admin_country_path(@edition.country_slug), alert: "Updated review date"
     else
