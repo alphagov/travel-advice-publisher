@@ -9,7 +9,7 @@ namespace :publishing_api do
 
     api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
     api_v2.patch_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
-    api_v2.publish(presenter.content_id, presenter.update_type)
+    api_v2.publish(presenter.content_id)
   end
 
   desc "republish all published editions to publishing-api"
