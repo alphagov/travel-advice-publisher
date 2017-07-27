@@ -539,24 +539,24 @@ describe TravelAdviceEdition do
       ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
       asset = {
-        file_url: "/path/to/image"
+        "file_url" => "/path/to/image"
       }
       allow_any_instance_of(GdsApi::AssetManager).to receive(:asset).with("an_image_id").and_return(asset)
 
-      expect(ed.image[:file_url]).to eq("/path/to/image")
+      expect(ed.image["file_url"]).to eq("/path/to/image")
     end
 
     it "caches the asset from the api" do
       ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
       asset = {
-        something: "one",
-        something_else: "two"
+        "something" => "one",
+        "something_else" => "two"
       }
       expect_any_instance_of(GdsApi::AssetManager).to receive(:asset).once.with("an_image_id").and_return(asset)
 
-      expect(ed.image[:something]).to eq("one")
-      expect(ed.image[:something_else]).to eq("two")
+      expect(ed.image["something"]).to eq("one")
+      expect(ed.image["something_else"]).to eq("two")
     end
 
     it "assigns a file and detects it has changed" do
@@ -579,7 +579,7 @@ describe TravelAdviceEdition do
         @ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
         @file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
 
-        @asset = { id: 'http://asset-manager.dev.gov.uk/assets/an_image_id' }
+        @asset = { "id" => 'http://asset-manager.dev.gov.uk/assets/an_image_id' }
       end
 
       it "uploads the asset" do
