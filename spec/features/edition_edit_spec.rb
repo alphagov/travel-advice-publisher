@@ -229,7 +229,7 @@ feature "Edit Edition page", js: true do
 
       expect(page).to have_content "Updated review date"
       assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "reviewed_at", Time.zone.now.iso8601)
-      assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409")
+      assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
     end
   end
 
