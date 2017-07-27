@@ -543,17 +543,17 @@ avoid_all_but_essential_travel_to_parts))
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "image.jpg"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "image_two.jpg"))
 
-    asset_one = OpenStruct.new(
+    asset_one = {
       id: 'http://asset-manager.dev.gov.uk/assets/an_image_id',
       file_url: 'http://path/to/image_one.jpg',
       content_type: "image/jpeg",
-    )
+    }
 
-    asset_two = OpenStruct.new(
+    asset_two = {
       id: 'http://asset-manager.dev.gov.uk/assets/another_image_id',
       file_url: 'http://path/to/image_two.jpg',
       content_type: "image/jpeg",
-    )
+    }
 
     expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_one)
 
@@ -623,19 +623,19 @@ avoid_all_but_essential_travel_to_parts))
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "document.pdf"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "document_two.pdf"))
 
-    asset_one = OpenStruct.new(
+    asset_one = {
       id: 'http://asset-manager.dev.gov.uk/assets/a_document_id',
       name: "document_one.pdf",
       file_url: 'http://path/to/document_one.pdf',
       content_type: "application/pdf",
-    )
+    }
 
-    asset_two = OpenStruct.new(
+    asset_two = {
       id: 'http://asset-manager.dev.gov.uk/assets/another_document_id',
       name: "document_two.pdf",
       file_url: 'http://path/to/document_two.pdf',
       content_type: "application/pdf",
-    )
+    }
 
     expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_one)
 
