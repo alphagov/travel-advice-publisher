@@ -3,8 +3,8 @@ require "spec_helper"
 RSpec.describe AssetPresenter do
   let(:asset) do
     {
-      file_url: "http://example.com/image.jpg",
-      content_type: "image/jpeg",
+      "file_url" => "http://example.com/image.jpg",
+      "content_type" => "image/jpeg",
     }
   end
 
