@@ -25,7 +25,7 @@ describe "publishing_api rake tasks", type: :rake_task do
                                                                                    update_type: "minor",
       ))
 
-      assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID)
+      assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID, update_type: "minor")
     end
   end
 
