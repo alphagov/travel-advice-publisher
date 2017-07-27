@@ -10,8 +10,8 @@ class AssetPresenter
   def present
     if asset
       {
-        "url" => asset.file_url,
-        "content_type" => asset.content_type,
+        "url" => asset[:file_url],
+        "content_type" => asset[:content_type],
       }
     end
   end

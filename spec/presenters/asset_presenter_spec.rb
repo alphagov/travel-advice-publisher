@@ -2,10 +2,10 @@ require "spec_helper"
 
 RSpec.describe AssetPresenter do
   let(:asset) do
-    OpenStruct.new(
+    {
       file_url: "http://example.com/image.jpg",
       content_type: "image/jpeg",
-    )
+    }
   end
 
   it "presents the asset" do
