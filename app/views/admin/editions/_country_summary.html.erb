@@ -20,13 +20,13 @@
 
 <% if presenter.image %>
   <p>
-    <img class="map-image" src="<%= presenter.image.file_url %>" alt="" />
+    <img class="map-image" src="<%= presenter.image['file_url'] %>" alt="" />
   </p>
 <% end %>
 <% if presenter.document %>
   <div class="form-download">
   <p>
-    <a href="<%= presenter.document.file_url %>">Download map (PDF)</a>
+    <a href="<%= presenter.document['file_url'] %>">Download map (PDF)</a>
   </p>
   </div>
 <% end %>
