@@ -1,0 +1,10 @@
+require "spec_helper"
+
+RSpec.describe "/healthcheck", type: :request do
+  it "should respond with 'OK'" do
+    get "/healthcheck"
+
+    expect(response.status).to eq(200)
+    expect(response.body).to eq("OK")
+  end
+end
