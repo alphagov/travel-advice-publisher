@@ -401,7 +401,7 @@ DEPENDENCIES
   factory_girl_rails
   formtastic (= 2.3.0)
   formtastic-bootstrap (= 3.0.0)
-  gds-api-adapters (~> 47.2)
+  gds-api-adapters (~> 47.9.1)
   gds-sso (~> 13.2)
   govspeak (~> 3.5.2)
   govuk-content-schema-test-helpers (~> 1.4.0)
