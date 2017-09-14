@@ -28,7 +28,6 @@ else
 end
 
 gem 'logstasher', '0.4.8'
-gem 'airbrake', '~> 4.0.0'
 gem 'govspeak', '~> 3.5.2'
 gem 'govuk_sidekiq', '0.0.4'
 gem "slimmer", "10.1.3"

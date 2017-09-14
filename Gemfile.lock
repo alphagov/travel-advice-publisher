@@ -383,7 +383,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake (~> 4.0.0)
   capybara (= 2.6.2)
   ci_reporter_rspec
   database_cleaner (= 1.5.1)
@@ -422,4 +421,4 @@ DEPENDENCIES
   webmock (= 1.22.6)
 
 BUNDLED WITH
-   1.15.1
+   1.15.4
