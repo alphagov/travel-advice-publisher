@@ -9,7 +9,7 @@ class EmailAlertApiWorker
     message = "\n\n=== Failed request details ==="
     message += "\n#{payload}"
 
-    Airbrake.notify_or_ignore(
+    GovukError.notify(
       WorkerError.new(self, e, message)
     )
   end

@@ -24,14 +24,14 @@ gem 'formtastic-bootstrap', '3.0.0'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 47.2'
+  gem 'gds-api-adapters', '~> 47.9.1'
 end
 
 gem 'logstasher', '0.4.8'
-gem 'airbrake', '~> 4.0.0'
 gem 'govspeak', '~> 3.5.2'
-gem 'govuk_sidekiq', '0.0.4'
-gem "slimmer", "10.1.3"
+gem 'govuk_app_config', '~> 0.2.0'
+gem 'govuk_sidekiq', '2.0.0'
+gem "slimmer", "11.0.2"
 
 group :development, :test do
   gem 'rails-controller-testing'
