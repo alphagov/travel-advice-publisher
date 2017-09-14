@@ -45,7 +45,7 @@ RSpec.describe EmailAlertApiWorker, :perform do
     end
 
     it "sends a helpful message to Errbit so that we can diagnose the problem" do
-      expect(Airbrake).to receive(:notify_or_ignore) do |error|
+      expect(GovukError).to receive(:notify) do |error|
         expect(error.message).to match(/=== Failed request details ===/)
       end
 
