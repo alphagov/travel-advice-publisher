@@ -29,7 +29,7 @@ end
 
 gem 'logstasher', '0.4.8'
 gem 'govspeak', '~> 3.5.2'
-gem 'govuk_sidekiq', '0.0.4'
+gem 'govuk_sidekiq', '2.0.0'
 gem "slimmer", "10.1.3"
 
 group :development, :test do
