@@ -85,7 +85,8 @@ node('mongodb-2.4') {
       govuk.runPublishingE2ETests(
         "TRAVEL_ADVICE_PUBLISHER_COMMITTISH",
         DEFAULT_PUBLISHING_E2E_TESTS_BRANCH,
-        REPOSITORY
+        REPOSITORY,
+        "test-travel-advice-publisher",
       )
     }
 
