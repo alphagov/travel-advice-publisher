@@ -1,3 +1,5 @@
+$light-yellow: #ff9;
+
 .ui-sortable .panel {
   margin-bottom: 5px;
 }
@@ -8,24 +10,24 @@
 
 @-webkit-keyframes yellow-fade {
   5% {
-    background-color:#ff9;
+    background-color: $light-yellow;
   }
 }
 
 @-moz-keyframes yellow-fade {
   5% {
-    background-color:#ff9;
+    background-color: $light-yellow;
   }
 }
 
 @keyframes yellow-fade {
   5% {
-    background-color:#ff9;
+    background-color: $light-yellow;
   }
 }
 
 .yellow-fade {
-  -webkit-animation:yellow-fade 3s;
-     -moz-animation:yellow-fade 3s;
-          animation:yellow-fade 3s;
+  -webkit-animation: yellow-fade 3s;
+  -moz-animation: yellow-fade 3s;
+  animation: yellow-fade 3s;
 }

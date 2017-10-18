@@ -1,19 +1,22 @@
-// Increase padding on footer to account for
-// fixed navbar
+$medium-dark-grey: #555;
+
+// Increase padding on footer to account for fixed navbar
 .page-footer {
   margin-bottom: 63px;
 }
 
 // Override the font-size for main textareas
+// scss-lint:disable QualifyingElement
 .formtastic textarea.form-control {
   font-size: 17px;
   line-height: 26px;
-  color: #555;
+  color: $medium-dark-grey;
 }
 
 fieldset.inputs {
   @include add-top-margin;
 }
+// scss-lint:enable QualifyingElement
 
 .govspeak-help {
   height: 200px;
