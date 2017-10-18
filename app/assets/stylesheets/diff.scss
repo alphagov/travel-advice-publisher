@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Diff of two editions
-   ========================================================================== */
+// Diff of two editions
 
 $added-color: #dfd;
 $strong-added-color: #77f177;
@@ -30,12 +28,12 @@ $strong-removed-color: #faa;
       }
     }
 
-    li.del,
-    li.ins {
+    .del,
+    .ins {
       padding-top: 2px;
     }
 
-    li.del {
+    .del {
       background-color: $removed-color;
 
       strong {
@@ -44,7 +42,7 @@ $strong-removed-color: #faa;
       }
     }
 
-    li.ins {
+    .ins {
       background-color: $added-color;
 
       strong {
@@ -53,8 +51,8 @@ $strong-removed-color: #faa;
       }
     }
 
-    li.del:before,
-    li.ins:before {
+    .del:before,
+    .ins:before {
       position: absolute;
       font-weight: bold;
       margin-left: -55px;
@@ -65,13 +63,13 @@ $strong-removed-color: #faa;
       bottom: 0;
     }
 
-    li.del:before {
+    .del:before {
       color: $state-danger-text;
       background-color: $removed-color;
       content: "-";
     }
 
-    li.ins:before {
+    .ins:before {
       color: $state-success-text;
       background-color: $added-color;
       content: "+";
