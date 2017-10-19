@@ -34,6 +34,12 @@ describe Admin::EditionsController do
       expect(response).to redirect_to(edit_admin_edition_path(edition))
     end
 
+    it "doesn't draft content in the publishing API" do
+      expect_any_instance_of(PublishingApiNotifier).not_to receive(:enqueue)
+
+      post :create, params: { country_id: "aruba" }
+    end
+
     context "when creating a new edition fails" do
       before do
         @ed = double("TravelAdviceEdition", id: "1234", to_param: "1234", save: false)
@@ -56,6 +62,20 @@ describe Admin::EditionsController do
       expect(response).to be_missing
     end
 
+    context "creating another edition" do
+      before do
+        @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug)
+      end
+
+      it "drafts content in the publishing API" do
+        expect_any_instance_of(PublishingApiNotifier).to receive(:put_content)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:patch_links)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:enqueue)
+
+        post :create, params: { country_id: "aruba" }
+      end
+    end
+
     context "cloning an existing edition" do
       before do
         @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 17)
@@ -66,6 +86,14 @@ describe Admin::EditionsController do
         edition = TravelAdviceEdition.order(id: 1).last
 
         expect(response).to redirect_to(edit_admin_edition_path(edition))
+      end
+
+      it "drafts content in the publishing API" do
+        expect_any_instance_of(PublishingApiNotifier).to receive(:put_content)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:patch_links)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:enqueue)
+
+        post :create, params: { country_id: "aruba", edition_version: @published.version_number }
       end
     end
   end
