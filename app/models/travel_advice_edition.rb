@@ -22,6 +22,8 @@ class TravelAdviceEdition
   field :published_at,         type: Time
   field :reviewed_at,          type: Time
 
+  attr_accessor :first_draft
+
   embeds_many :actions
 
   index({ country_slug: 1, version_number: -1 }, unique: true)

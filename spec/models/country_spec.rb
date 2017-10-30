@@ -121,6 +121,7 @@ describe Country do
       expect(ed).to be_new_record
       expect(ed.country_slug).to eq('aruba')
       expect(ed.title).to eq("Aruba travel advice")
+      expect(ed.first_draft).to be true
     end
   end
 

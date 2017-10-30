@@ -22,7 +22,7 @@ class Country
     elsif (latest_edition = editions.first)
       latest_edition.build_clone
     else
-      TravelAdviceEdition.new(country_slug: slug, title: "#{name} travel advice")
+      TravelAdviceEdition.new(country_slug: slug, title: "#{name} travel advice", first_draft: true)
     end
   end
 

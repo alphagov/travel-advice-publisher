@@ -16,9 +16,11 @@ class Admin::EditionsController < ApplicationController
     end
 
     if edition.save
-      notifier.put_content(edition)
-      notifier.patch_links(edition)
-      notifier.enqueue
+      unless edition.first_draft
+        notifier.put_content(edition)
+        notifier.patch_links(edition)
+        notifier.enqueue
+      end
       redirect_to edit_admin_edition_path(edition)
     else
       redirect_to admin_country_path(@country.slug), alert: "Failed to create new edition"
