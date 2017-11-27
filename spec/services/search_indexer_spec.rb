@@ -20,7 +20,7 @@ RSpec.describe SearchIndexer do
       _id: "/#{travel_advice_edition.slug}",
       rendering_app: 'government-frontend',
       publishing_app: 'travel-advice-publisher',
-      format: "custom-application",
+      format: "travel_advice",
       title: travel_advice_edition.title,
       description: travel_advice_edition.description,
       indexable_content: travel_advice_edition.indexable_content,

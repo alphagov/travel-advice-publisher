@@ -9,6 +9,7 @@ namespace :rummager do
       description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
       rendering_app: "frontend",
+      format: "custom-application",
     )
 
     RummagerNotifier.notify(record)
