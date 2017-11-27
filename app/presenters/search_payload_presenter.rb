@@ -20,7 +20,7 @@ class SearchPayloadPresenter
       content_id: content_id,
       rendering_app: travel_advice_page.try(:rendering_app) || 'government-frontend',
       publishing_app: 'travel-advice-publisher',
-      format: 'custom-application',
+      format: travel_advice_page.try(:format) || 'travel_advice',
       title: title,
       description: description,
       indexable_content: indexable_content,

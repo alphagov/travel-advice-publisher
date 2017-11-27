@@ -406,7 +406,7 @@ feature "Edit Edition page", js: true do
       content_id: "2a3938e1-d588-45fc-8c8f-0f51814d5409",
       rendering_app: "government-frontend",
       publishing_app: "travel-advice-publisher",
-      format: "custom-application",
+      format: "travel_advice",
       title: "Albania travel advice",
       description: "The overview",
       indexable_content: "Summary Part One Body text",
