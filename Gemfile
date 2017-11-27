@@ -43,7 +43,7 @@ group :development, :test do
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '1.5.1'
   gem 'poltergeist', '1.8.1'
-  gem 'webmock', '1.22.6', :require => false
+  gem 'webmock', '~> 2.3.0', :require => false
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.5.2'
   gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
