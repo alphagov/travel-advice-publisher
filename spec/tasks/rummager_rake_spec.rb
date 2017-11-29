@@ -23,7 +23,7 @@ describe "rummager rake tasks", type: :rake_task do
         _id: "/foreign-travel-advice",
         rendering_app: 'frontend',
         publishing_app: 'travel-advice-publisher',
-        format: "custom-application",
+        format: "travel_advice_index",
         title: "Foreign travel advice",
         description: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
         indexable_content: "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
