@@ -35,7 +35,8 @@ module PublicationCheck
     before do
       ENV["AUTH_USERNAME"] = "dave"
       ENV["AUTH_PASSWORD"] = "lemmein"
-      stub_request(:get, "http://dave:lemmein@www.dev.gov.uk/api/content/foreign-travel-advice/andorra")
+      stub_request(:get, "http://www.dev.gov.uk/api/content/foreign-travel-advice/andorra")
+        .with(basic_auth: %w[dave lemmein])
         .to_return(status: 200, body: response_body, headers: {})
     end
 
