@@ -18,9 +18,8 @@ To add or rename a country, update the [`lib/data/countries.yml`](../lib/data/co
 
 - Publish the content item for the country to Publishing API
 - Publish the email signup content item for the country to Publishing API
-- Publish the document to Rummager
 
-See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) and [`lib/tasks/rummager.rake`](../lib/tasks/rummager.rake) for details on how to do this.
+See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) for details on how to do this.
 
 To maintain the history of a country when renaming you will need to perform a [migration](../db/migrate/20160916161059_rename_democratic_republic_of_congo.rb) on TravelAdviceEdition
 
@@ -32,3 +31,7 @@ Processing of travel-advice publishing-api jobs is made visible via the [sidekiq
 ### Email Alert API
 
 Changes to Travel Advice content will send an email alert to subscribers via the [Email Alert API](https://github.com/alphagov/email-alert-api) unless marked as a _minor_ change. Subscription is handled via the [Email Alert Frontend](https://github.com/alphagov/email-alert-frontend) application which retrieves the correct [GovDelivery](https://www.govdelivery.com/) identifier for the country in question and forwards the user to a confirmation of their subscription.
+
+### Search indexing
+
+Changes to Travel Advice content will update our elasticsearch index via [Rummager](https://github.com/alphagov/rummager).

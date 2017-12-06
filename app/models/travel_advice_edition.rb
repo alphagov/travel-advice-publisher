@@ -84,14 +84,6 @@ class TravelAdviceEdition
     end
   end
 
-  def indexable_content
-    strings = [Govspeak::Document.new(self.summary).to_text]
-    parts.each do |part|
-      strings << part.title << Govspeak::Document.new(part.body).to_text
-    end
-    strings.join(" ").strip
-  end
-
   def build_clone(target_class = nil)
     new_edition = self.class.new
     self.class.fields_to_clone.each do |attr|
@@ -121,10 +113,6 @@ class TravelAdviceEdition
     self.class.where(country_slug: self.country_slug, :version_number.lt => self.version_number).order_by(version_number: :desc).first
   end
 
-  state_machine.after_transition to: :published do |edition, _|
-    edition.register_with_rummager
-  end
-
   after_validation :extract_part_errors
 
   def csv_synonyms
@@ -137,11 +125,6 @@ class TravelAdviceEdition
     value.gsub!(/",\s+"/, '","')
     synonyms = CSV.parse_line(value) || []
     self.synonyms = synonyms.map(&:strip).reject(&:blank?)
-  end
-
-  def register_with_rummager
-    details = RegisterableTravelAdviceEdition.new(self)
-    RummagerNotifier.notify(details)
   end
 
   def order_parts

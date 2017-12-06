@@ -6,7 +6,6 @@ RSpec.describe PublishingApiNotifier do
 
   before do
     Sidekiq::Worker.clear_all
-    stub_rummager
 
     allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: "12345-54321",
       x_govuk_authenticated_user: "a0b1c2d3e4f5")

@@ -3,11 +3,6 @@ require "gds_api/asset_manager"
 require "gds_api/exceptions"
 
 describe TravelAdviceEdition do
-  before do
-    class_double('RummagerNotifier').as_stubbed_const
-    allow(RummagerNotifier).to receive(:notify)
-  end
-
   describe('fields') do
     it "has correct fields" do
       ed = TravelAdviceEdition.new
@@ -386,23 +381,6 @@ describe TravelAdviceEdition do
     end
   end
 
-  context "indexable content" do
-    let(:edition) { FactoryGirl.build(:travel_advice_edition) }
-
-    it "returns summary and all part titles and bodies" do
-      edition.summary = "The Summary"
-      edition.parts << Part.new(title: "Part One", body: "Some text")
-      edition.parts << Part.new(title: "More info", body: "Some more information")
-      expect(edition.indexable_content).to eq("The Summary Part One Some text More info Some more information")
-    end
-
-    it "converts govspeak to plain text" do
-      edition.summary = "## The Summary"
-      edition.parts << Part.new(title: "Part One", body: "* Some text")
-      expect(edition.indexable_content).to eq("The Summary Part One Some text")
-    end
-  end
-
   context "actions" do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:old) { FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo") }
@@ -518,19 +496,6 @@ describe TravelAdviceEdition do
         @edition.synonyms = ["some, thing", "foo"]
         expect(@edition.csv_synonyms).to eq '"some, thing",foo'
       end
-    end
-  end
-
-  describe 'indexing the page with rummager on publish' do
-    it 'should index the page' do
-      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
-      registerable_edition = double("RegisterableEdition")
-
-      allow(RegisterableTravelAdviceEdition).to receive(:new).with(ed).and_return(registerable_edition)
-
-      expect(RummagerNotifier).to receive(:notify)
-
-      ed.publish
     end
   end
 

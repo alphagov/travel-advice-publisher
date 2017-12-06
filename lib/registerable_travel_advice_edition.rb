@@ -1,7 +1,7 @@
 class RegisterableTravelAdviceEdition
   extend Forwardable
 
-  def_delegators :@edition, :title, :indexable_content
+  def_delegators :@edition, :title
 
   def initialize(edition)
     @edition = edition
