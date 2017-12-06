@@ -42,11 +42,6 @@ describe RegisterableTravelAdviceEdition do
       expect(@registerable.title).to eq("Aruba travel advice")
     end
 
-    it "should return the edition's indexable_content" do
-      @edition.parts << Part.new(title: "Foo", body: "Bar")
-      expect(@registerable.indexable_content).to eq(@edition.indexable_content)
-    end
-
     it "should return ['101191'] for the need_ids" do
       expect(@registerable.need_ids).to eq(['101191'])
     end
