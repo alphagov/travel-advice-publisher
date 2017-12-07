@@ -31,12 +31,13 @@ module TravelAdvicePublisher
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
-
     # Custom directories with classes and modules you want to be autoloadable.
     config.eager_load_paths += %W(#{config.root}/lib)
 
     # Disable Rack::Cache
     config.action_dispatch.rack_cache = nil
+
+    config.action_view.form_with_generates_remote_forms = false
 
     config.slimmer.use_cache = true
   end
