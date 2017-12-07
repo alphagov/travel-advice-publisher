@@ -9,7 +9,7 @@ gem 'mongoid_rails_migrations', '1.1.0'
 gem 'state_machines', '~> 0.4'
 gem 'state_machines-mongoid', '~> 0.1'
 
-gem 'diffy', '3.0.7'
+gem 'diffy', '3.2.0'
 
 gem 'plek', '~> 2.0'
 gem 'gds-sso', '~> 13.2'
