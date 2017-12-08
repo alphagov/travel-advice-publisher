@@ -27,7 +27,7 @@ else
   gem 'gds-api-adapters', '~> 47.9.1'
 end
 
-gem 'logstasher', '0.4.8'
+gem 'logstasher', '1.2.2'
 gem 'govspeak', '~> 3.5.2'
 gem 'govuk_app_config', '~> 0.3.0'
 gem 'govuk_sidekiq', '2.0.0'
