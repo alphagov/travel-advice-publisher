@@ -71,7 +71,7 @@ GEM
     crass (1.0.3)
     database_cleaner (1.5.1)
     diff-lcs (1.3)
-    diffy (3.0.7)
+    diffy (3.2.0)
     docile (1.1.5)
     domain_name (0.5.20170404)
       unf (>= 0.0.5, < 1.0.0)
@@ -404,7 +404,7 @@ DEPENDENCIES
   capybara (= 2.6.2)
   ci_reporter_rspec
   database_cleaner (= 1.5.1)
-  diffy (= 3.0.7)
+  diffy (= 3.2.0)
   factory_girl (= 3.3.0)
   factory_girl_rails
   formtastic (= 2.3.0)
