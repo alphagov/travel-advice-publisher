@@ -17,7 +17,7 @@ gem 'gds-sso', '~> 13.2'
 gem 'uglifier', '>= 1.0.3'
 gem 'sass-rails', '5.0.6'
 
-gem 'govuk_admin_template', '5.0.1'
+gem 'govuk_admin_template', '6.4.0'
 gem 'formtastic', '2.3.0'
 gem 'formtastic-bootstrap', '3.0.0'
 
