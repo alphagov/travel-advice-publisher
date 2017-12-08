@@ -211,10 +211,9 @@ GEM
       ast (~> 2.3)
     phantomjs (2.1.1.0)
     plek (2.0.0)
-    poltergeist (1.8.1)
+    poltergeist (1.16.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
-      multi_json (~> 1.0)
       websocket-driver (>= 0.2.0)
     power_assert (1.1.1)
     powerpack (0.1.1)
@@ -421,7 +420,7 @@ DEPENDENCIES
   mongoid (~> 6.1)
   mongoid_rails_migrations (= 1.1.0)
   plek (~> 2.0)
-  poltergeist (= 1.8.1)
+  poltergeist (= 1.16.0)
   pry-byebug
   pry-rails
   rails (= 5.1.4)
