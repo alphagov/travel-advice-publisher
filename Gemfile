@@ -12,7 +12,7 @@ gem 'state_machines-mongoid', '~> 0.1'
 gem 'diffy', '3.2.0'
 
 gem 'plek', '~> 2.0'
-gem 'gds-sso', '~> 13.2'
+gem 'gds-sso', '~> 13.3'
 
 gem 'uglifier', '>= 1.0.3'
 gem 'sass-rails', '5.0.6'
