@@ -15,7 +15,7 @@ gem 'plek', '~> 2.0'
 gem 'gds-sso', '~> 13.4'
 
 gem 'uglifier', '>= 1.0.3'
-gem 'sass-rails', '5.0.6'
+gem 'sass-rails', '5.0.7'
 
 gem 'govuk_admin_template', '6.4.0'
 gem 'formtastic', '2.3.0'
