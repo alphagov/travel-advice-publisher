@@ -341,7 +341,7 @@ GEM
     simplecov-html (0.10.2)
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    slimmer (11.0.2)
+    slimmer (11.1.1)
       activesupport
       json
       nokogiri (~> 1.7)
@@ -428,7 +428,7 @@ DEPENDENCIES
   rspec-rails (= 3.7.2)
   sass-rails (= 5.0.6)
   simplecov-rcov (= 0.2.3)
-  slimmer (= 11.0.2)
+  slimmer (= 11.1.1)
   state_machines (~> 0.4)
   state_machines-mongoid (~> 0.1)
   test-unit

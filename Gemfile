@@ -31,7 +31,7 @@ gem 'logstasher', '0.4.8'
 gem 'govspeak', '~> 3.5.2'
 gem 'govuk_app_config', '~> 0.3.0'
 gem 'govuk_sidekiq', '2.0.0'
-gem "slimmer", "11.0.2"
+gem "slimmer", "11.1.1"
 
 group :development, :test do
   gem 'rails-controller-testing'
