@@ -4,7 +4,7 @@ gem 'rails', '5.1.4'
 
 gem 'unicorn', '5.3.1'
 
-gem 'mongoid', '~> 6.1'
+gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', '1.1.0'
 gem 'state_machines', '~> 0.4'
 gem 'state_machines-mongoid', '~> 0.1'
