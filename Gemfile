@@ -38,7 +38,7 @@ group :development, :test do
   gem 'rspec-rails', '3.7.2'
   gem 'capybara', '2.16.1'
   gem 'simplecov-rcov', '0.2.3'
-  gem 'factory_girl', '3.3.0'
+  gem 'factory_girl', '4.9.0'
   gem 'factory_girl_rails'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '1.5.1'
