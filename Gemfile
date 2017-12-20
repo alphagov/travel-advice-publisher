@@ -42,7 +42,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '1.5.1'
-  gem 'poltergeist', '1.16.0'
+  gem 'poltergeist', '1.17.0'
   gem 'webmock', '~> 3.1.1', :require => false
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.5.2'
