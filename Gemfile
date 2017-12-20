@@ -45,7 +45,7 @@ group :development, :test do
   gem 'poltergeist', '1.17.0'
   gem 'webmock', '~> 3.1.1', :require => false
   gem 'timecop', '0.5.9.2'
-  gem 'jasmine', '2.5.2'
+  gem 'jasmine', '2.8.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.4.0'
   gem 'govuk-lint', '~> 3.4.0'
   gem 'pry-rails'
