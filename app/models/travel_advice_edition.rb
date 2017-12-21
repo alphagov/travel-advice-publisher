@@ -23,6 +23,7 @@ class TravelAdviceEdition
   field :reviewed_at,          type: Time
 
   embeds_many :actions
+  embeds_many :link_check_reports
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
 

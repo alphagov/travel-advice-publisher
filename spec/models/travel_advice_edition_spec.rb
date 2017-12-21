@@ -448,6 +448,24 @@ describe TravelAdviceEdition do
     end
   end
 
+  context "link_check_reports" do
+    it "does not have any link_check_reports by default" do
+      edition = FactoryGirl.create(:travel_advice_edition)
+      expect(edition.link_check_reports.size).to eq(0)
+    end
+
+    it "adds a new link_check_report" do
+      edition = FactoryGirl.create(:travel_advice_edition)
+      edition.link_check_reports.build(
+        links: [{ uri: "http://www.example.com", status: "error" }],
+        batch_id: 1,
+        status: "broken",
+        completed_at: Time.parse("2017-12-01")
+      )
+      expect(edition.link_check_reports.size).to eq(1)
+    end
+  end
+
   describe "CSV Synonyms" do
     before do
       @edition = Country.find_by_slug('aruba').build_new_edition
