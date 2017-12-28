@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.1.4'
 
-gem 'unicorn', '5.3.1'
+gem 'unicorn', '5.4.0'
 
 gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', '1.1.0'
