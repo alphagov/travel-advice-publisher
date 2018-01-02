@@ -36,4 +36,47 @@ FactoryGirl.define do
       tae.save!
     end
   end
+
+  factory :travel_advice_edition_with_pending_link_checks, parent: :published_travel_advice_edition do
+    transient do
+      batch_id 1
+      link_uris []
+    end
+
+    link_check_reports do
+      [FactoryGirl.build(:link_check_report, :with_pending_links,
+                                             batch_id: batch_id,
+                                             link_uris: link_uris)]
+    end
+  end
+
+  factory :link_check_report do
+    batch_id 1
+    status "in_progress"
+    completed_at Time.now
+    links { [FactoryGirl.build(:link)] }
+
+    trait :completed do
+      status "completed"
+    end
+
+    trait :with_pending_links do
+      transient do
+        link_uris []
+      end
+
+      links do
+        link_uris.map { |uri| FactoryGirl.build(:link, :pending, uri: uri) }
+      end
+    end
+  end
+
+  factory :link do
+    uri "http://www.example.com"
+    status "ok"
+
+    trait :pending do
+      status "pending"
+    end
+  end
 end
