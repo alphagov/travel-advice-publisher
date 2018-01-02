@@ -1,10 +1,4 @@
 class LinkCheckReportUpdater
-  class InvalidReport < RuntimeError
-    def initialize(original_error)
-      @message = original_error.message
-    end
-  end
-
   def initialize(report:, payload:)
     @report = report
     @payload = payload
@@ -14,8 +8,6 @@ class LinkCheckReportUpdater
     update_report!
     links = payload.fetch("links", [])
     update_links!(links)
-  rescue Mongoid::Errors::Validations => e
-    raise InvalidReport.new(e)
   end
 
 private
