@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     root to: "countries#index"
   end
 
+  post "/link-checker-api-callback" => "link_checker_api#callback", as: "link_checker_api_callback"
+
   root to: redirect('/admin')
 
   mount GovukAdminTemplate::Engine, at: "/style-guide"
