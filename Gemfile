@@ -36,7 +36,7 @@ gem "slimmer", "11.0.2"
 group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-rails', '3.7.2'
-  gem 'capybara', '2.16.1'
+  gem 'capybara', '2.17.0'
   gem 'simplecov-rcov', '0.2.3'
   gem 'factory_girl', '4.9.0'
   gem 'factory_girl_rails'
