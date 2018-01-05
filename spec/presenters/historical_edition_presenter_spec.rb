@@ -46,8 +46,8 @@ describe HistoricalEditionPresenter do
 
     it "renders the parts as govspeak" do
       expect(subject.parts.length).to eq(2)
-      expect(subject.parts.first.body).to eq("<p>There is an underlying threat from &hellip;</p>\n")
-      expect(subject.parts.second.body).to eq("<p>Keep your valuables safely stored &hellip;</p>\n")
+      expect(subject.parts.first.body).to eq("<p>There is an underlying threat from …</p>\n")
+      expect(subject.parts.second.body).to eq("<p>Keep your valuables safely stored …</p>\n")
     end
   end
 
