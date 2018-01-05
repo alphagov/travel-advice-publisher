@@ -10,13 +10,13 @@ describe SafeHtml do
 
     validates_with SafeHtml
 
-    embeds_one :dummy_embedded_single, class_name: 'SafeHtmlTest::DummyEmbeddedSingle'
+    embeds_one :dummy_embedded_single, class_name: 'DummyEmbeddedSingle'
   end
 
   class DummyEmbeddedSingle
     include Mongoid::Document
 
-    embedded_in :dummy, class_name: 'SafeHtmlTest::Dummy'
+    embedded_in :dummy, class_name: 'Dummy'
 
     field :i_am_govspeak, type: String
 
@@ -42,8 +42,15 @@ describe SafeHtml do
   subject(:dummy) { Dummy.new(i_am_govspeak: i_am_govspeak) }
 
   context "with an invalid embedded document" do
-    let(:i_am_govspeak) { DummyEmbeddedSingle.new(i_am_govspeak: "<script>") }
-    include_examples "is invalid"
+    let(:i_am_govspeak) { "" }
+
+    before do
+      dummy.dummy_embedded_single = DummyEmbeddedSingle.new(i_am_govspeak: "<script>")
+    end
+
+    it "should be invalid" do
+      expect(dummy).to be_invalid
+    end
   end
 
   context "clean content in nested fields" do
