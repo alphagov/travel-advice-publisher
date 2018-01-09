@@ -94,6 +94,10 @@
           <% end %>
         </div>
 
+        <div class="col-md-4 link-check-report">
+          <%= render "admin/link_check_reports/link_check_report", edition: @edition, report: @edition.latest_link_check_report %>
+        </div>
+
         <div class="col-md-4 govspeak-container">
           <h3>Govspeak help</h3>
 

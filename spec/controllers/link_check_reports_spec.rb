@@ -23,7 +23,7 @@ describe LinkCheckReportsController, type: :controller do
 
     context "#create" do
       it "should create a link report and redirect on a normal request" do
-        subject = post :create, params: { travel_advice_edition_id: travel_advice_edition.id }
+        subject = post :create, params: { edition_id: travel_advice_edition.id }
         travel_advice_edition.reload
 
         expect(travel_advice_edition.link_check_reports.any?).to eq(true)
@@ -31,7 +31,7 @@ describe LinkCheckReportsController, type: :controller do
       end
 
       it "should create and render the template on AJAX" do
-        subject = post :create, params: { travel_advice_edition_id: travel_advice_edition.id }, xhr: true
+        subject = post :create, params: { edition_id: travel_advice_edition.id }, xhr: true
         travel_advice_edition.reload
 
         expect(response.status).to eq(200)
