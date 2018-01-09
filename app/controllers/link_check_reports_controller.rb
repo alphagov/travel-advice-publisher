@@ -1,17 +1,22 @@
 class LinkCheckReportsController < ApplicationController
+  before_action :find_reportable
+
   def create
     service = LinkCheckReportCreator.new(
-      travel_advice_edition_id: link_reportable_params[:travel_advice_edition_id]
+      travel_advice_edition_id: @reportable
     )
 
-    service.call
+    @report = service.call
 
-    head :created
+    respond_to do |format|
+      format.js { render 'link_check_reports/create' }
+      format.html { redirect_to edit_admin_edition_url(@reportable.id) }
+    end
   end
 
 private
 
-  def link_reportable_params
-    params.require(:link_reportable).permit(:travel_advice_edition_id)
+  def find_reportable
+    @reportable = TravelAdviceEdition.find(params[:travel_advice_edition_id])
   end
 end
