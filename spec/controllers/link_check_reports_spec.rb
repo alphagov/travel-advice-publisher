@@ -38,6 +38,7 @@ describe LinkCheckReportsController, type: :controller do
     end
 
     before do
+      login_as_stub_user
       allow(TravelAdvicePublisher.link_checker_api).to receive(:create_batch).and_return(link_checker_api_response)
     end
 
