@@ -53,13 +53,18 @@ FactoryGirl.define do
   end
 
   factory :travel_advice_edition_with_broken_links, parent: :published_travel_advice_edition do
+    id "a-edition-id"
     transient do
+      status "in_progress"
       link_uris []
+      batch_id 1
     end
 
     link_check_reports do
       [FactoryGirl.build(:link_check_report, :with_broken_links,
-                                             link_uris: link_uris)]
+                                             status: status,
+                                             link_uris: link_uris,
+                                             batch_id: batch_id)]
     end
   end
 

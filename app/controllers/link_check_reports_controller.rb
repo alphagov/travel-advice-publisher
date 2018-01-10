@@ -14,6 +14,15 @@ class LinkCheckReportsController < ApplicationController
     end
   end
 
+  def show
+    @report = @edition.link_check_reports.find_by(id: params[:id])
+
+    respond_to do |format|
+      format.js { render "admin/link_check_reports/show" }
+      format.html { redirect_to edit_admin_edition_url(@edition.id) }
+    end
+  end
+
 private
 
   def find_edition

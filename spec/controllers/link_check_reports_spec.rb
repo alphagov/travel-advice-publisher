@@ -41,5 +41,28 @@ describe LinkCheckReportsController, type: :controller do
         expect(travel_advice_edition.latest_link_check_report.batch_id).to eq(5)
       end
     end
+
+    context "#show" do
+      let(:travel_advice_edition_id) { "a-edition-id" }
+      let(:link_check_report) do
+        FactoryGirl.create(:travel_advice_edition_with_broken_links,
+                           batch_id: 5,
+                           link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
+      end
+
+      it "GET redirects back to the edit edition page" do
+        get :show, params: { id: link_check_report.id, edition_id: travel_advice_edition_id }
+
+        expect(response).to redirect_to(edit_admin_edition_path(travel_advice_edition_id))
+      end
+
+      it "AJAX GET assigns the LinkCheckReport and renders the show template" do
+        get :show, params: { id: link_check_report.id, edition_id: travel_advice_edition_id }, xhr: true
+
+        expect(response).to render_template("admin/link_check_reports/show")
+        expect(assigns(:report)).to eq(link_check_report)
+        expect(assigns(:edition)).to eq(link_check_report.travel_advice_edition)
+      end
+    end
   end
 end
