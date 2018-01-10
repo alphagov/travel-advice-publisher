@@ -47,7 +47,7 @@ group :development, :test do
   gem 'timecop', '0.5.9.2'
   gem 'jasmine', '2.8.0'
   gem 'govuk-content-schema-test-helpers', '~> 1.6.0'
-  gem 'govuk-lint', '~> 3.4.0'
+  gem 'govuk-lint', '~> 3.5.0'
   gem 'pry-rails'
   gem "pry-byebug"
 end
