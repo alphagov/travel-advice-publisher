@@ -79,6 +79,18 @@ FactoryGirl.define do
     end
   end
 
+  factory :travel_advice_edition_with_parts, parent: :travel_advice_edition do
+    summary "This is [link](https://www.gov.uk) text."
+
+    after :create do |getp|
+      getp.parts.build(title: "Some Part Title!",
+                       body: "This is some **version** text.", slug: "part-one")
+      getp.parts.build(title: "Another Part Title",
+                       body: "This is [link](http://www.example.com) text.",
+                       slug: "part-two")
+    end
+  end
+
   factory :link_check_report do
     batch_id 1
     status "in_progress"
