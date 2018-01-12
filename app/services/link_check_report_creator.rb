@@ -11,6 +11,8 @@ class LinkCheckReportCreator
   end
 
   def call
+    return if uris.empty?
+
     link_report = call_link_checker_api.deep_symbolize_keys
 
     report = travel_advice_edition.link_check_reports.new(
@@ -43,12 +45,8 @@ private
     )
   end
 
-  def govspeak_document
-    Govspeak::Document.new(travel_advice_edition.summary)
-  end
-
   def uris
-    govspeak_document.extracted_links
+    @uris ||= EditionLinkExtractor.new(edition: travel_advice_edition).call
   end
 
   def map_link_attrs(link)

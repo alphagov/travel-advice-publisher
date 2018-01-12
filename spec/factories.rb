@@ -53,13 +53,18 @@ FactoryGirl.define do
   end
 
   factory :travel_advice_edition_with_broken_links, parent: :published_travel_advice_edition do
+    id "a-edition-id"
     transient do
+      status "in_progress"
       link_uris []
+      batch_id 1
     end
 
     link_check_reports do
       [FactoryGirl.build(:link_check_report, :with_broken_links,
-                                             link_uris: link_uris)]
+                                             status: status,
+                                             link_uris: link_uris,
+                                             batch_id: batch_id)]
     end
   end
 
@@ -71,6 +76,18 @@ FactoryGirl.define do
     link_check_reports do
       [FactoryGirl.build(:link_check_report, :with_caution_links,
                                              link_uris: link_uris)]
+    end
+  end
+
+  factory :travel_advice_edition_with_parts, parent: :travel_advice_edition do
+    summary "This is [link](https://www.gov.uk) text."
+
+    after :create do |getp|
+      getp.parts.build(title: "Some Part Title!",
+                       body: "This is some **version** text.", slug: "part-one")
+      getp.parts.build(title: "Another Part Title",
+                       body: "This is [link](http://www.example.com) text.",
+                       slug: "part-two")
     end
   end
 
