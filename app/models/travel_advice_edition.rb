@@ -139,6 +139,10 @@ class TravelAdviceEdition
     self.parts.in_order.map { |i| %(\# #{i.title}\n\n#{i.body}) }.join("\n\n")
   end
 
+  def latest_link_check_report
+    link_check_reports.last
+  end
+
 private
 
   def state_for_slug_unique

@@ -41,11 +41,35 @@ FactoryGirl.define do
     transient do
       batch_id 1
       link_uris []
+      status "pending"
     end
 
     link_check_reports do
       [FactoryGirl.build(:link_check_report, :with_pending_links,
                                              batch_id: batch_id,
+                                             link_uris: link_uris,
+                                             status: status)]
+    end
+  end
+
+  factory :travel_advice_edition_with_broken_links, parent: :published_travel_advice_edition do
+    transient do
+      link_uris []
+    end
+
+    link_check_reports do
+      [FactoryGirl.build(:link_check_report, :with_broken_links,
+                                             link_uris: link_uris)]
+    end
+  end
+
+  factory :travel_advice_edition_with_caution_links, parent: :published_travel_advice_edition do
+    transient do
+      link_uris []
+    end
+
+    link_check_reports do
+      [FactoryGirl.build(:link_check_report, :with_caution_links,
                                              link_uris: link_uris)]
     end
   end
@@ -67,6 +91,26 @@ FactoryGirl.define do
 
       links do
         link_uris.map { |uri| FactoryGirl.build(:link, :pending, uri: uri) }
+      end
+    end
+
+    trait :with_broken_links do
+      transient do
+        link_uris []
+      end
+
+      links do
+        link_uris.map { |uri| FactoryGirl.build(:link, uri: uri, status: "broken") }
+      end
+    end
+
+    trait :with_caution_links do
+      transient do
+        link_uris []
+      end
+
+      links do
+        link_uris.map { |uri| FactoryGirl.build(:link, uri: uri, status: "caution") }
       end
     end
   end

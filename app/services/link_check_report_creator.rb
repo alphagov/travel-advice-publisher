@@ -11,7 +11,7 @@ class LinkCheckReportCreator
   end
 
   def call
-    link_report = call_link_checker_api
+    link_report = call_link_checker_api.deep_symbolize_keys
 
     report = travel_advice_edition.link_check_reports.new(
       batch_id: link_report.fetch(:id),
@@ -21,6 +21,8 @@ class LinkCheckReportCreator
     )
 
     report.save!
+
+    report
   end
 
 private

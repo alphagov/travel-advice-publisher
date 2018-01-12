@@ -626,4 +626,19 @@ describe TravelAdviceEdition do
       end
     end
   end
+
+  context "latest_link_check_report" do
+    it "should be nil for no reports" do
+      edition = FactoryGirl.create(:published_travel_advice_edition)
+      expect(edition.latest_link_check_report).to eq(nil)
+    end
+
+    it "should return the last report created" do
+      edition = FactoryGirl.create(:published_travel_advice_edition)
+      edition.link_check_reports.create(FactoryGirl.attributes_for(:link_check_report))
+      latest_report = edition.link_check_reports.create(FactoryGirl.attributes_for(:link_check_report, batch_id: 2))
+
+      expect(edition.latest_link_check_report).to eq(latest_report)
+    end
+  end
 end

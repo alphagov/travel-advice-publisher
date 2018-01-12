@@ -1,20 +1,22 @@
 class LinkCheckReportsController < ApplicationController
-  skip_before_action :authenticate_user!
-  skip_before_action :require_signin_permission!
+  before_action :find_edition
 
   def create
     service = LinkCheckReportCreator.new(
-      travel_advice_edition_id: link_reportable_params[:travel_advice_edition_id]
+      travel_advice_edition_id: @edition.id
     )
 
-    service.call
+    @report = service.call
 
-    head :created
+    respond_to do |format|
+      format.js { render "admin/link_check_reports/create" }
+      format.html { redirect_to edit_admin_edition_url(@edition.id) }
+    end
   end
 
 private
 
-  def link_reportable_params
-    params.require(:link_reportable).permit(:travel_advice_edition_id)
+  def find_edition
+    @edition = TravelAdviceEdition.find(params[:edition_id])
   end
 end
