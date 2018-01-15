@@ -24,7 +24,7 @@ gem 'formtastic-bootstrap', '3.1.1'
 if ENV['API_DEV']
   gem 'gds-api-adapters', :path => '../gds-api-adapters'
 else
-  gem 'gds-api-adapters', '~> 50.9.1'
+  gem 'gds-api-adapters', '~> 51.0.0'
 end
 
 gem 'logstasher', '0.4.8'
