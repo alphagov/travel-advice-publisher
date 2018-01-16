@@ -32,6 +32,10 @@ Processing of travel-advice publishing-api jobs is made visible via the [sidekiq
 
 Changes to Travel Advice content will send an email alert to subscribers via the [Email Alert API](https://github.com/alphagov/email-alert-api) unless marked as a _minor_ change. Subscription is handled via the [Email Alert Frontend](https://github.com/alphagov/email-alert-frontend) application which retrieves the correct [GovDelivery](https://www.govdelivery.com/) identifier for the country in question and forwards the user to a confirmation of their subscription.
 
+### LinkCheckerAPI
+
+The `link-checker-api` has been integrated on the edit page for TravelAdviceEditions. It extracts all links from within any GovSpeak fields and sends them to the `/batch` endpoint of the API. In this request it also sends across a `webhook_callback` which then populates any information about broken/warning links. More reading about the endpoints can be found [here](https://docs.publishing.service.gov.uk/apis/link-checker-api.html)
+
 ### Search indexing
 
 Changes to Travel Advice content will update our elasticsearch index via [Rummager](https://github.com/alphagov/rummager).

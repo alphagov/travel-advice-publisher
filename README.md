@@ -21,6 +21,7 @@ content is rendered by
 - [asset-manager](https://github.com/alphagov/asset-manager)
 - [content-store](https://github.com/alphagov/content-store)
 - [publishing-api](https://github.com/alphagov/publishing-api)
+- [link-checker-api](https://github.com/alphagov/link-checker-api)
 
 ## Running the application
 
