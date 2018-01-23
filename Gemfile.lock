@@ -92,7 +92,7 @@ GEM
       actionpack (>= 3.2.13)
     formtastic-bootstrap (3.1.1)
       formtastic (>= 3.0)
-    gds-api-adapters (51.1.0)
+    gds-api-adapters (51.1.1)
       addressable
       link_header
       lrucache (~> 0.1.1)
@@ -419,7 +419,7 @@ DEPENDENCIES
   factory_girl_rails
   formtastic (= 3.1.5)
   formtastic-bootstrap (= 3.1.1)
-  gds-api-adapters (~> 51.1.0)
+  gds-api-adapters (~> 51.1.1)
   gds-sso (~> 13.5)
   govspeak (~> 5.4.0)
   govuk-content-schema-test-helpers (~> 1.6.0)
