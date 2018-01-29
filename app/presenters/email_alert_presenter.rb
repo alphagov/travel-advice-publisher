@@ -23,6 +23,7 @@ class EmailAlertPresenter
       "public_updated_at" => public_updated_at,
       "publishing_app" => "travel-advice-publisher",
       "base_path" => base_path,
+      "priority" => "high",
     }
   end
 
