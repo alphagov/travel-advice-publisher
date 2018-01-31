@@ -195,6 +195,10 @@
   slug: congo
   content_id: 438a3cd3-5936-462d-b7ed-fff0ea485af1
   email_signup_content_id: 6abaef77-d1f6-4ad8-b955-d96196f66039
+- name: Cook Islands, Tokelau and Nieu
+  slug: cook-islands-tokelau-and-nieu
+  content_id: f961f58b-3a4e-439a-b820-7ddab77e3758
+  email_signup_content_id: 76e992a5-db34-4c3c-afa6-6ef78bbb611a
 - name: Costa Rica
   slug: costa-rica
   content_id: f47beb28-e218-4b1a-bd4b-3c4165d056b5
