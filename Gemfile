@@ -11,7 +11,7 @@ gem 'state_machines-mongoid', '~> 0.1'
 
 gem 'diffy', '3.2.0'
 
-gem 'plek', '~> 2.0'
+gem 'plek', '~> 2.1'
 gem 'gds-sso', '~> 13.5'
 
 gem 'uglifier', '>= 1.0.3'
