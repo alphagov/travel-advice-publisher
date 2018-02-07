@@ -9,6 +9,13 @@ class PublishingApiNotifier
     tasks << [:put_content, presenter.content_id, presenter.render_for_publishing_api]
   end
 
+  def email_signup(edition)
+    presenter = EmailAlertSignup::EditionPresenter.new(edition)
+
+    tasks << [:put_content, presenter.content_id, presenter.content_payload]
+    tasks << [:publish, presenter.content_id, presenter.update_type]
+  end
+
   def patch_links(edition)
     presenter = LinksPresenter.new(edition)
 
