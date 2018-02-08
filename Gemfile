@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.1.4'
 
+gem 'mongo', '~> 2.4.3'
 gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', '~> 1.1'
 gem 'state_machines', '~> 0.4'
@@ -10,7 +11,7 @@ gem 'state_machines-mongoid', '~> 0.1'
 gem 'diffy', '~> 3.2'
 gem 'formtastic', '~> 3.1'
 gem 'formtastic-bootstrap', '~> 3.1'
-gem 'logstasher', '~> 0.4'
+gem 'logstasher', '~> 0.4.8'
 gem 'unicorn', '~> 5.4'
 
 gem 'uglifier', '~> 4.1'
