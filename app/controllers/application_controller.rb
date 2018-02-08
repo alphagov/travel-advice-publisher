@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   include GDS::SSO::ControllerMethods
   before_action :authenticate_user!
-  before_action :require_signin_permission!
   before_action :set_authenticated_user_header
 
   def error_404; error 404; end
