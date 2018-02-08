@@ -7,7 +7,7 @@ describe LinkCheckReportsController, type: :controller do
 
   describe "#create" do
     let(:travel_advice_edition) do
-      FactoryGirl.create(:travel_advice_edition,
+      FactoryBot.create(:travel_advice_edition,
                          summary: "[link](http://www.example.com)[link_two](http://www.gov.uk)")
     end
 
@@ -45,7 +45,7 @@ describe LinkCheckReportsController, type: :controller do
     context "#show" do
       let(:travel_advice_edition_id) { "a-edition-id" }
       let(:link_check_report) do
-        FactoryGirl.create(:travel_advice_edition_with_broken_links,
+        FactoryBot.create(:travel_advice_edition_with_broken_links,
                            batch_id: 5,
                            link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
       end

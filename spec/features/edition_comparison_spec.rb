@@ -5,7 +5,7 @@ require 'spec_helper'
 feature "Comparing two editions", js: true do
   before :each do
     login_as stub_user
-    @edition_1 = FactoryGirl.create(:published_travel_advice_edition,
+    @edition_1 = FactoryBot.create(:published_travel_advice_edition,
                                     country_slug: "aruba",
                                     summary: 'Advice summray',
                                     version_number: 1)

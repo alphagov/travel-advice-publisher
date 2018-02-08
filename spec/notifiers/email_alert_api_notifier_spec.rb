@@ -10,7 +10,7 @@ RSpec.describe EmailAlertApiNotifier do
   end
 
   let(:edition) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :published_travel_advice_edition,
       country_slug: "albania",
       title: "Albania travel advice",
@@ -23,7 +23,7 @@ RSpec.describe EmailAlertApiNotifier do
   end
 
   context "when the edition is a draft" do
-    let(:edition) { FactoryGirl.create(:draft_travel_advice_edition) }
+    let(:edition) { FactoryBot.create(:draft_travel_advice_edition) }
 
     it "does nothing" do
       expect(subject.send_alert(edition)).to be_nil

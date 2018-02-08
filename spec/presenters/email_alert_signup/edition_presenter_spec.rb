@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe EmailAlertSignup::EditionPresenter do
   let(:edition) do
-    FactoryGirl.build(
+    FactoryBot.build(
       :travel_advice_edition,
       country_slug: "aruba",
       title: "Aruba Travel Advice",

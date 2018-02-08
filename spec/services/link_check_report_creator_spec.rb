@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe LinkCheckReportCreator do
   let(:travel_advice_edition) do
-    FactoryGirl.create(:travel_advice_edition,
+    FactoryBot.create(:travel_advice_edition,
                        summary: "[link](http://www.example.com)[link_two](http://www.gov.com)")
   end
 
@@ -37,7 +37,7 @@ RSpec.describe LinkCheckReportCreator do
   end
 
   let(:link_check_report) do
-    FactoryGirl.create(:travel_advice_edition_with_pending_link_checks,
+    FactoryBot.create(:travel_advice_edition_with_pending_link_checks,
                        batch_id: 1,
                        link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
   end

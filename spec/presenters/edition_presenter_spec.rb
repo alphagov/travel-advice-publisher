@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe EditionPresenter do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:edition) {
-    edition = FactoryGirl.build(
+    edition = FactoryBot.build(
       :travel_advice_edition,
       country_slug: "aruba",
       title: "Aruba travel advice",
@@ -38,7 +38,7 @@ describe EditionPresenter do
   }
 
   let(:previous) {
-    previous = FactoryGirl.create(
+    previous = FactoryBot.create(
       :travel_advice_edition,
       country_slug: "aruba",
       change_description: "Stuff previously changed"

@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe LinksPresenter do
-  let(:edition) { FactoryGirl.build(:travel_advice_edition, country_slug: 'aruba') }
+  let(:edition) { FactoryBot.build(:travel_advice_edition, country_slug: 'aruba') }
 
   subject { described_class.new(edition) }
 

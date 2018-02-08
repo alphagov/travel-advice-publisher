@@ -34,7 +34,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     let(:task) { Rake::Task['publishing_api:republish_edition'] }
 
     it "sends the published edition to the publishing_api with update_type of 'republish'" do
-      edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+      edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba')
 
       task.invoke(country.slug)
 
@@ -52,7 +52,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it 'ignore draft items' do
-      FactoryGirl.create(:draft_travel_advice_edition, country_slug: country.slug)
+      FactoryBot.create(:draft_travel_advice_edition, country_slug: country.slug)
 
       task.invoke(country.slug)
 
@@ -68,8 +68,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     let(:task) { Rake::Task['publishing_api:republish_editions'] }
 
     it "sends all published editions to the publishing_api with update_type of 'republish'" do
-      aruba = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      algeria = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      aruba = FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
+      algeria = FactoryBot.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
 
       task.invoke
 
@@ -97,8 +97,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it "ignores draft items" do
-      FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      FactoryBot.create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
+      FactoryBot.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
 
       task.invoke
 
