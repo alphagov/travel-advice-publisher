@@ -11,8 +11,6 @@ gem 'state_machines-mongoid', '~> 0.1'
 gem 'diffy', '~> 3.2'
 gem 'formtastic', '~> 3.1'
 gem 'formtastic-bootstrap', '~> 3.1'
-gem 'logstasher', '~> 0.4.8'
-gem 'unicorn', '~> 5.4'
 
 gem 'uglifier', '~> 4.1'
 gem 'sass-rails', '~> 5.0'
@@ -22,8 +20,8 @@ gem 'gds-api-adapters', '~> 51.2'
 gem 'gds-sso', '~> 13.5'
 gem 'govspeak', '~> 5.4'
 gem 'govuk_admin_template', '~> 6.5'
-gem 'govuk_app_config', '~> 0.3'
-gem 'govuk_sidekiq', '~> 2.0'
+gem 'govuk_app_config', '~> 1.3'
+gem 'govuk_sidekiq', '~> 3.0'
 gem "slimmer", "~> 11.0"
 
 group :development, :test do
