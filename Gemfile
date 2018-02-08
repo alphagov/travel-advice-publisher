@@ -31,7 +31,7 @@ group :development, :test do
   gem 'database_cleaner', '~> 1.6'
   gem 'factory_girl', '~> 4.9'
   gem 'factory_girl_rails'
-  gem 'jasmine', '~> 2.9'
+  gem 'jasmine', '~> 3.0'
   gem 'poltergeist', '~> 1.17'
   gem 'pry-rails'
   gem 'pry-byebug'
