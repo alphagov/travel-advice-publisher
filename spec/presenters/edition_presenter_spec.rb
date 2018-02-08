@@ -78,7 +78,7 @@ describe EditionPresenter do
     let(:presented_data) { subject.render_for_publishing_api }
 
     around do |example|
-      Timecop.freeze { example.run }
+      travel_to(Time.current) { example.run }
     end
 
     it "is valid against the content schemas" do
@@ -145,9 +145,7 @@ describe EditionPresenter do
       it "sets public_updated_at to now if published_at isn't set" do
         edition.published_at = nil
 
-        Timecop.freeze do
-          expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
-        end
+        expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
       end
     end
 

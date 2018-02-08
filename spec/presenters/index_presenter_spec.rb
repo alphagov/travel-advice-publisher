@@ -26,7 +26,7 @@ describe IndexPresenter do
     end
 
     it "returns a presented index item" do
-      Timecop.freeze do
+      travel_to(Time.current) do
         expect(presented_content_id).to eq(TravelAdvicePublisher::INDEX_CONTENT_ID)
 
         expect(presented_data).to eq(

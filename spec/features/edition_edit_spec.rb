@@ -217,7 +217,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Updating the reviewed at date for a published edition" do
-    Timecop.freeze do
+    travel_to(Time.current) do
       @edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania')
       visit "/admin/editions/#{@edition._id}/edit"
       click_on "Update review date"
@@ -401,20 +401,19 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "save and publish a minor update to an edition" do
-    Timecop.travel(3.days.ago) do
+    travel_to(3.days.ago) do
       @old_edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'albania',
                                         summary: "## The summaryy",
                                         change_description: "Some things changed", minor_update: false)
     end
-    Timecop.travel(2.days.ago) do
+    travel_to(2.days.ago) do
       @old_edition.reviewed_at = Time.zone.now.utc
       @old_edition.save!
       @old_edition.reload
     end
     @edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania')
 
-    now = Time.now.utc
-    Timecop.freeze(now) do
+    travel_to(Time.current) do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
       fill_in "Summary", with: "## The summary"

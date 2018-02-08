@@ -318,7 +318,7 @@ describe TravelAdviceEdition do
 
     context "setting the published date" do
       it "sets the published_at to now for a normal update" do
-        Timecop.freeze(1.day.from_now) do
+        travel_to(1.day.from_now) do
           ed.publish!
           expect(ed.published_at.to_i).to eq(Time.zone.now.utc.to_i)
         end
@@ -344,7 +344,7 @@ describe TravelAdviceEdition do
       @published.reviewed_at = 2.days.ago
       @published.save!
       @published.reload
-      Timecop.freeze(1.days.ago) do
+      travel_to(1.days.ago) do
         @ed = FactoryGirl.create(:travel_advice_edition, country_slug: "aruba")
       end
     end
@@ -363,7 +363,7 @@ describe TravelAdviceEdition do
 
     it "is able to be updated without affecting other dates" do
       published_at = @ed.published_at
-      Timecop.freeze(1.day.from_now) do
+      travel_to(1.day.from_now) do
         @ed.reviewed_at = Time.zone.now
         expect(@ed.published_at).to eq(published_at)
       end
@@ -372,7 +372,7 @@ describe TravelAdviceEdition do
     it "is able to update reviewed_at on a published edition" do
       @ed.minor_update = true
       @ed.publish!
-      Timecop.freeze(1.day.from_now) do
+      travel_to(1.day.from_now) do
         new_time = Time.zone.now
         @ed.reviewed_at = new_time
         @ed.save!

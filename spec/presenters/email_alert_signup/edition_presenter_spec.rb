@@ -13,7 +13,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
   let(:edition_content_id) { "56bae85b-a57c-4ca2-9dbd-68361a086bb3" }
 
   around do |example|
-    Timecop.freeze { example.run }
+    travel_to(Time.current) { example.run }
   end
 
   it "validates against the email alert signup schema" do
