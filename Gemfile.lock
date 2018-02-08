@@ -411,43 +411,43 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara (= 2.17.0)
+  capybara (~> 2.17)
   ci_reporter_rspec
-  database_cleaner (= 1.6.2)
-  diffy (= 3.2.0)
-  factory_girl (= 4.9.0)
+  database_cleaner (~> 1.6)
+  diffy (~> 3.2)
+  factory_girl (~> 4.9)
   factory_girl_rails
-  formtastic (= 3.1.5)
-  formtastic-bootstrap (= 3.1.1)
-  gds-api-adapters (~> 51.2.0)
+  formtastic (~> 3.1)
+  formtastic-bootstrap (~> 3.1)
+  gds-api-adapters (~> 51.2)
   gds-sso (~> 13.5)
-  govspeak (~> 5.4.0)
-  govuk-content-schema-test-helpers (~> 1.6.0)
-  govuk-lint (~> 3.6.0)
-  govuk_admin_template (= 6.5.0)
-  govuk_app_config (~> 0.3.0)
-  govuk_sidekiq (= 2.0.0)
-  jasmine (= 2.9.0)
-  logstasher (= 0.4.8)
+  govspeak (~> 5.4)
+  govuk-content-schema-test-helpers (~> 1.6)
+  govuk-lint (~> 3.6)
+  govuk_admin_template (~> 6.5)
+  govuk_app_config (~> 0.3)
+  govuk_sidekiq (~> 2.0)
+  jasmine (~> 2.9)
+  logstasher (~> 0.4)
   mongoid (~> 6.2)
-  mongoid_rails_migrations (= 1.1.0)
+  mongoid_rails_migrations (~> 1.1)
   plek (~> 2.1)
-  poltergeist (= 1.17.0)
+  poltergeist (~> 1.17)
   pry-byebug
   pry-rails
   rails (= 5.1.4)
   rails-controller-testing
-  rspec-rails (= 3.7.2)
-  sass-rails (= 5.0.7)
-  simplecov-rcov (= 0.2.3)
-  slimmer (= 11.0.2)
+  rspec-rails (~> 3.7)
+  sass-rails (~> 5.0)
+  simplecov-rcov (~> 0.2)
+  slimmer (~> 11.0)
   state_machines (~> 0.4)
   state_machines-mongoid (~> 0.1)
   test-unit
-  timecop (= 0.5.9.2)
-  uglifier (>= 1.0.3)
-  unicorn (= 5.4.0)
-  webmock (~> 3.3.0)
+  timecop (~> 0.5)
+  uglifier (~> 4.1)
+  unicorn (~> 5.4)
+  webmock (~> 3.3)
 
 BUNDLED WITH
-   1.15.4
+   1.16.0
