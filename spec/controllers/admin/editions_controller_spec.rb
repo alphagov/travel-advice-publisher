@@ -202,25 +202,25 @@ describe Admin::EditionsController do
   end
 
   describe "workflow" do
+    let(:draft) { FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba') }
     before do
       login_as_stub_user
-      @draft = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
     end
 
     describe "Save & Publish" do
       it "should publish the edition" do
-        allow(TravelAdviceEdition).to receive(:find).with(@draft.to_param).and_return(@draft)
-        allow(@draft).to receive(:publish).and_return(true)
+        allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+        allow(draft).to receive(:publish).and_return(true)
 
-        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
+        post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 
-        expect(response).to redirect_to admin_country_path(@draft.country_slug)
+        expect(response).to redirect_to admin_country_path(draft.country_slug)
       end
 
       it "queues two publishing API workers, one for the content and one for the index" do
         Sidekiq::Worker.clear_all
 
-        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
+        post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 
         expect(PublishingApiWorker.jobs.size).to eq(1)
       end
@@ -228,10 +228,47 @@ describe Admin::EditionsController do
       it "creates a PublishRequest for that edition" do
         request_id = '123456'
         allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: request_id)
-        post :update, params: { id: @draft.to_param, edition: {}, commit: "Save & Publish" }
+        post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
         publish_request = PublishRequest.last
-        expect(publish_request.edition_id).to eq(@draft.id)
+        expect(publish_request.edition_id).to eq(draft.id)
         expect(publish_request.request_id).to eq(request_id)
+      end
+
+      context "when this is the first edition for the country" do
+        it "creates a PublishRequest for the email signup page" do
+          Sidekiq::Worker.clear_all
+
+          post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
+
+          expect(PublishingApiWorker.jobs.size).to eq(1)
+          actions = PublishingApiWorker.jobs[0]['args'][0]
+          expect(actions.count).to eq(6)
+          signup_email = actions.detect do |_, _, details|
+            details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
+          end
+          expect(signup_email).not_to be_nil
+        end
+      end
+
+      context "when previous edition exist for the country" do
+        before do
+          FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+          draft.update_attributes(version_number: 2)
+        end
+
+        it "doesn't create a PublishRequest for the email signup page" do
+          Sidekiq::Worker.clear_all
+
+          post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
+
+          expect(PublishingApiWorker.jobs.size).to eq(1)
+          actions = PublishingApiWorker.jobs[0]['args'][0]
+          expect(actions.count).to eq(4)
+          signup_email = actions.detect do |_, _, details|
+            details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
+          end
+          expect(signup_email).to be_nil
+        end
       end
     end
   end

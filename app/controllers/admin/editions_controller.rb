@@ -108,6 +108,7 @@ private
     if @edition.update_attributes(permitted_edition_attributes) && @edition.publish_as(current_user)
       notifier.put_content(@edition)
       notifier.patch_links(@edition)
+      notifier.email_signup(@edition) if @edition.previous_version.nil?
       notifier.publish(@edition)
       notifier.send_alert(@edition)
       notifier.enqueue
