@@ -5,7 +5,7 @@ class EmailAlertApiWorker
     GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
 
     api.send_alert(payload) if send_alert?
-  rescue => e
+  rescue StandardError => e
     message = "\n\n=== Failed request details ==="
     message += "\n#{payload}"
 

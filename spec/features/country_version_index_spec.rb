@@ -1,4 +1,5 @@
 #encoding: utf-8
+
 require 'spec_helper'
 
 feature "Country version index" do

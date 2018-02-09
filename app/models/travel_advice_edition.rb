@@ -52,7 +52,7 @@ class TravelAdviceEdition
   scope :published, lambda { where(state: "published") }
 
   class << self; attr_accessor :fields_to_clone end
-  @fields_to_clone = [:title, :country_slug, :overview, :alert_status, :summary, :image_id, :document_id, :synonyms]
+  @fields_to_clone = %i[title country_slug overview alert_status summary image_id document_id synonyms]
 
   state_machine initial: :draft do
     before_transition draft: :published do |edition, _|
@@ -206,7 +206,7 @@ private
   end
 
   def self.attaches(*fields)
-    fields.map(&:to_s).each do |field|
+    fields.map(&:to_s).each do |field| # rubocop:disable Style/BlockLength
       after_initialize do
         instance_variable_set("@#{field}_has_changed", false)
       end

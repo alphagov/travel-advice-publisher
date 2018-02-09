@@ -47,7 +47,8 @@ describe PublishRequest do
         let(:publish_request) {
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
-            frontend_updated: nil)
+            frontend_updated: nil
+          )
         }
 
         before do
@@ -124,7 +125,8 @@ describe PublishRequest do
       let(:publish_request) {
         PublishRequest.new(
           checks_attempted: [],
-          frontend_updated: nil)
+          frontend_updated: nil
+        )
       }
 
       before do
@@ -167,7 +169,7 @@ describe PublishRequest do
 
     it "sets frontend_updated to DateTime.now" do
       publish_request.mark_frontend_updated
-      expect(publish_request.frontend_updated).to eq(DateTime.now.utc)
+      expect(publish_request.frontend_updated).to eq(Time.now.utc)
     end
   end
 

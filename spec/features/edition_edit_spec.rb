@@ -15,7 +15,7 @@ feature "Edit Edition page", js: true do
   end
 
   def assert_details_contains(content_id, key, expected_value)
-    assert_publishing_api_put_content(content_id, -> (response) {
+    assert_publishing_api_put_content(content_id, ->(response) {
       payload = JSON.parse(response.body)
       details = payload.fetch("details")
       actual_value = details.fetch(key)
@@ -25,7 +25,7 @@ feature "Edit Edition page", js: true do
   end
 
   def assert_details_does_not_contain(content_id, key)
-    assert_publishing_api_put_content(content_id, -> (response) {
+    assert_publishing_api_put_content(content_id, ->(response) {
       payload = JSON.parse(response.body)
       details = payload.fetch("details")
 
@@ -491,9 +491,11 @@ feature "Edit Edition page", js: true do
 
     click_navbar_button "Save"
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", %w(
-avoid_all_travel_to_parts
-avoid_all_but_essential_travel_to_parts))
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "alert_status",
+      %w(avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts)
+    )
 
     expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
     expect(page).to have_checked_field("The FCO advise against all travel to parts of the country")
