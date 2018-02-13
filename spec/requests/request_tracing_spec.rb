@@ -9,10 +9,10 @@ RSpec.describe "Request tracing", type: :request do
 
   let(:govuk_request_id) { "12345-67890" }
   let(:govuk_authenticated_user) { "0a1b2c3d4e5f" }
-  let(:edition) { FactoryGirl.create(:travel_advice_edition, country_slug: "aruba") }
+  let(:edition) { FactoryBot.create(:travel_advice_edition, country_slug: "aruba") }
 
   before do
-    user = FactoryGirl.create(:user, uid: govuk_authenticated_user)
+    user = FactoryBot.create(:user, uid: govuk_authenticated_user)
     login_as(user)
     stub_any_publishing_api_call
     stub_any_email_alert_api_call

@@ -7,20 +7,20 @@ feature "Country Index" do
   end
 
   scenario "inspecting the country index" do
-    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'albania')
-    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'algeria')
-    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'angola')
+    FactoryBot.create(:draft_travel_advice_edition, country_slug: 'albania')
+    FactoryBot.create(:published_travel_advice_edition, country_slug: 'algeria')
+    FactoryBot.create(:archived_travel_advice_edition, country_slug: 'angola')
 
-    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
-    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
+    FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba')
+    FactoryBot.create(:draft_travel_advice_edition, country_slug: 'aruba')
 
-    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
-    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
-    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'afghanistan')
-    FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryBot.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryBot.create(:archived_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryBot.create(:published_travel_advice_edition, country_slug: 'afghanistan')
+    FactoryBot.create(:draft_travel_advice_edition, country_slug: 'afghanistan')
 
-    FactoryGirl.create(:published_travel_advice_edition, country_slug: 'austria')
-    FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'austria')
+    FactoryBot.create(:published_travel_advice_edition, country_slug: 'austria')
+    FactoryBot.create(:archived_travel_advice_edition, country_slug: 'austria')
 
     visit "/admin/countries"
 

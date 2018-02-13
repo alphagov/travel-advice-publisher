@@ -4,7 +4,7 @@ RSpec.describe EmailAlertPresenter do
   include GdsApiHelpers
 
   let(:edition) do
-    FactoryGirl.create(
+    FactoryBot.create(
       :published_travel_advice_edition,
       country_slug: "algeria",
       title: "Algeria travel advice",
@@ -15,11 +15,7 @@ RSpec.describe EmailAlertPresenter do
   let(:email_alert) { described_class.present(edition) }
 
   around do |example|
-    january_1st = Time.local(2016, 1, 1, 1, 1, 1)
-
-    Timecop.travel(january_1st) do
-      example.run
-    end
+    travel_to(Time.local(2016, 1, 1, 1, 1, 1)) { example.run }
   end
 
   it "formats the message as HTML" do

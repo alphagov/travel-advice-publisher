@@ -39,9 +39,9 @@ module PublicationCheck
       end
 
       context "for a complete successful check" do
-        let(:updated_time) { DateTime.now }
+        let(:updated_time) { Time.now }
         it "returns 'SUCCESS: <id> <country_slug> checked. checks_count: <n>, frontend_updated: <date>" do
-          expected = "SUCCESS: 1234 scotland checked. check_count: 1, frontend_updated: #{updated_time}"
+          expected = "SUCCESS: 1234 scotland checked. check_count: 1, frontend_updated: #{updated_time.strftime('%FT%T%:z')}"
           request = PublishRequest.new(
             edition_id: 1234,
             country_slug: "scotland",

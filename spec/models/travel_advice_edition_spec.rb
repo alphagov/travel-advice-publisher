@@ -39,7 +39,7 @@ describe TravelAdviceEdition do
   end
 
   describe "validations" do
-    let(:ta) { FactoryGirl.build(:travel_advice_edition) }
+    let(:ta) { FactoryBot.build(:travel_advice_edition) }
 
     it "requires a country slug" do
       ta.country_slug = ""
@@ -55,21 +55,21 @@ describe TravelAdviceEdition do
 
     context "on state" do
       it "only allows one edition in draft per slug" do
-        FactoryGirl.create(:travel_advice_edition, country_slug: ta.country_slug)
+        FactoryBot.create(:travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "draft"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:state]).to include("is already taken")
       end
 
       it "only allows one edition in published per slug" do
-        FactoryGirl.create(:published_travel_advice_edition, country_slug: ta.country_slug)
+        FactoryBot.create(:published_travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "published"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:state]).to include("is already taken")
       end
 
       it "allows multiple editions in archived per slug" do
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: ta.country_slug)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: ta.country_slug)
         ta.save!
         ta.state = "archived"
         expect(ta).to be_valid
@@ -84,37 +84,37 @@ describe TravelAdviceEdition do
 
     context "preventing editing of non-draft" do
       it "does not allow published editions to be edited" do
-        ta = FactoryGirl.create(:published_travel_advice_edition)
+        ta = FactoryBot.create(:published_travel_advice_edition)
         ta.title = "Fooey"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:state]).to include("must be draft to modify")
       end
 
       it "does not allow archived editions to be edited" do
-        ta = FactoryGirl.create(:archived_travel_advice_edition)
+        ta = FactoryBot.create(:archived_travel_advice_edition)
         ta.title = "Fooey"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:state]).to include("must be draft to modify")
       end
 
       it "allows publishing draft editions" do
-        ta = FactoryGirl.create(:travel_advice_edition)
+        ta = FactoryBot.create(:travel_advice_edition)
         expect(ta.publish).to be true
       end
 
       it "allows 'save & publish'" do
-        ta = FactoryGirl.create(:travel_advice_edition)
+        ta = FactoryBot.create(:travel_advice_edition)
         ta.title = "Foo"
         expect(ta.publish).to be true
       end
 
       it "allows archiving published editions" do
-        ta = FactoryGirl.create(:published_travel_advice_edition)
+        ta = FactoryBot.create(:published_travel_advice_edition)
         expect(ta.archive).to be true
       end
 
       it "does NOT allow 'save & archive'" do
-        ta = FactoryGirl.create(:published_travel_advice_edition)
+        ta = FactoryBot.create(:published_travel_advice_edition)
         ta.title = "Foo"
         expect(ta.archive).to be false
         expect(ta.errors.messages[:state]).to include("must be draft to modify")
@@ -152,14 +152,14 @@ describe TravelAdviceEdition do
       end
 
       it "requires a unique version_number per slug" do
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: ta.country_slug, version_number: 3)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: ta.country_slug, version_number: 3)
         ta.version_number = 3
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:version_number]).to include("is already taken")
       end
 
       it "allows matching version_numbers for different slugs" do
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: "wibble", version_number: 3)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: "wibble", version_number: 3)
         ta.version_number = 3
         expect(ta).to be_valid
       end
@@ -173,7 +173,7 @@ describe TravelAdviceEdition do
       end
 
       it "allow other versions to be minor updates" do
-        FactoryGirl.create(:published_travel_advice_edition, country_slug: ta.country_slug)
+        FactoryBot.create(:published_travel_advice_edition, country_slug: ta.country_slug)
         ta.minor_update = true
         expect(ta).to be_valid
       end
@@ -189,7 +189,7 @@ describe TravelAdviceEdition do
       end
 
       it "is not required on publish for a minor update" do
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: ta.country_slug)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: ta.country_slug)
         ta.version_number = 2
         ta.save!
         ta.change_description = ""
@@ -206,10 +206,10 @@ describe TravelAdviceEdition do
   end
 
   it "has a published scope" do
-    _e1 = FactoryGirl.create(:draft_travel_advice_edition)
-    e2 = FactoryGirl.create(:published_travel_advice_edition)
-    _e3 = FactoryGirl.create(:archived_travel_advice_edition)
-    e4 = FactoryGirl.create(:published_travel_advice_edition)
+    _e1 = FactoryBot.create(:draft_travel_advice_edition)
+    e2 = FactoryBot.create(:published_travel_advice_edition)
+    _e3 = FactoryBot.create(:archived_travel_advice_edition)
+    e4 = FactoryBot.create(:published_travel_advice_edition)
     expect(TravelAdviceEdition.published.to_a.sort).to eq([e2, e4].sort)
   end
 
@@ -226,9 +226,9 @@ describe TravelAdviceEdition do
       end
 
       it "sets version_number to the next available version" do
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo", version_number: 1)
-        FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo", version_number: 2)
-        FactoryGirl.create(:published_travel_advice_edition, country_slug: "foo", version_number: 4)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo", version_number: 1)
+        FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo", version_number: 2)
+        FactoryBot.create(:published_travel_advice_edition, country_slug: "foo", version_number: 4)
         ed = TravelAdviceEdition.new(country_slug: "foo")
         ed.valid?
         expect(ed.version_number).to eq(5)
@@ -254,7 +254,7 @@ describe TravelAdviceEdition do
 
   context "building a new version" do
     let(:ed) {
-      FactoryGirl.create(:travel_advice_edition, title: "Aruba", overview: "Aruba is not near Wales", country_slug: "aruba", summary: "## The summary", alert_status: %w(avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts), image_id: "id_from_the_asset_manager_for_an_image", document_id: "id_from_the_asset_manager_for_a_document")
+      FactoryBot.create(:travel_advice_edition, title: "Aruba", overview: "Aruba is not near Wales", country_slug: "aruba", summary: "## The summary", alert_status: %w(avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts), image_id: "id_from_the_asset_manager_for_an_image", document_id: "id_from_the_asset_manager_for_a_document")
     }
 
     before do
@@ -284,9 +284,9 @@ describe TravelAdviceEdition do
   end
 
   context "previous_version" do
-    let!(:ed1) { FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo") }
-    let!(:ed2) { FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo") }
-    let!(:ed3) { FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo") }
+    let!(:ed1) { FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo") }
+    let!(:ed2) { FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo") }
+    let!(:ed3) { FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo") }
 
     it "returns the previous version" do
       expect(ed3.previous_version).to eq(ed2)
@@ -300,10 +300,10 @@ describe TravelAdviceEdition do
 
   context "publishing" do
     let!(:published) {
-      FactoryGirl.create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
+      FactoryBot.create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
     }
     let!(:ed) {
-      FactoryGirl.create(:travel_advice_edition, country_slug: "aruba")
+      FactoryBot.create(:travel_advice_edition, country_slug: "aruba")
     }
     before do
       published.reload
@@ -318,7 +318,7 @@ describe TravelAdviceEdition do
 
     context "setting the published date" do
       it "sets the published_at to now for a normal update" do
-        Timecop.freeze(1.day.from_now) do
+        travel_to(1.day.from_now) do
           ed.publish!
           expect(ed.published_at.to_i).to eq(Time.zone.now.utc.to_i)
         end
@@ -340,12 +340,12 @@ describe TravelAdviceEdition do
 
   context "setting the reviewed at date" do
     before do
-      @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
+      @published = FactoryBot.create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
       @published.reviewed_at = 2.days.ago
       @published.save!
       @published.reload
-      Timecop.freeze(1.days.ago) do
-        @ed = FactoryGirl.create(:travel_advice_edition, country_slug: "aruba")
+      travel_to(1.days.ago) do
+        @ed = FactoryBot.create(:travel_advice_edition, country_slug: "aruba")
       end
     end
 
@@ -363,7 +363,7 @@ describe TravelAdviceEdition do
 
     it "is able to be updated without affecting other dates" do
       published_at = @ed.published_at
-      Timecop.freeze(1.day.from_now) do
+      travel_to(1.day.from_now) do
         @ed.reviewed_at = Time.zone.now
         expect(@ed.published_at).to eq(published_at)
       end
@@ -372,7 +372,7 @@ describe TravelAdviceEdition do
     it "is able to update reviewed_at on a published edition" do
       @ed.minor_update = true
       @ed.publish!
-      Timecop.freeze(1.day.from_now) do
+      travel_to(1.day.from_now) do
         new_time = Time.zone.now
         @ed.reviewed_at = new_time
         @ed.save!
@@ -382,9 +382,9 @@ describe TravelAdviceEdition do
   end
 
   context "actions" do
-    let!(:user) { FactoryGirl.create(:user) }
-    let!(:old) { FactoryGirl.create(:archived_travel_advice_edition, country_slug: "foo") }
-    let!(:edition) { FactoryGirl.create(:draft_travel_advice_edition, country_slug: "foo") }
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:old) { FactoryBot.create(:archived_travel_advice_edition, country_slug: "foo") }
+    let!(:edition) { FactoryBot.create(:draft_travel_advice_edition, country_slug: "foo") }
 
     it "does not have any actions by default" do
       expect(edition.actions.size).to eq(0)
@@ -429,7 +429,7 @@ describe TravelAdviceEdition do
 
   context "parts" do
     it "should merge part validation errors with parent document's errors" do
-      edition = FactoryGirl.create(:travel_advice_edition)
+      edition = FactoryBot.create(:travel_advice_edition)
       edition.parts.build(_id: '54c10d4d759b743528000010', order: '1', title: "", slug: "overview")
       edition.parts.build(_id: '54c10d4d759b743528000011', order: '2', title: "Prepare for your appointment", slug: "")
       edition.parts.build(_id: '54c10d4d759b743528000012', order: '3', title: "Valid", slug: "valid")
@@ -440,7 +440,7 @@ describe TravelAdviceEdition do
     end
 
     it "#whole_body returns ordered parts" do
-      edition = FactoryGirl.create(:travel_advice_edition)
+      edition = FactoryBot.create(:travel_advice_edition)
       edition.parts.build(_id: '54c10d4d759b743528000010', order: '1', title: "Part 1", slug: "part_1")
       edition.parts.build(_id: '54c10d4d759b743528000011', order: '3', title: "Part 3", slug: "part_3")
       edition.parts.build(_id: '54c10d4d759b743528000012', order: '2', title: "Part 2", slug: "part_2")
@@ -450,12 +450,12 @@ describe TravelAdviceEdition do
 
   context "link_check_reports" do
     it "does not have any link_check_reports by default" do
-      edition = FactoryGirl.create(:travel_advice_edition)
+      edition = FactoryBot.create(:travel_advice_edition)
       expect(edition.link_check_reports.size).to eq(0)
     end
 
     it "adds a new link_check_report" do
-      edition = FactoryGirl.create(:travel_advice_edition)
+      edition = FactoryBot.create(:travel_advice_edition)
       edition.link_check_reports.build(
         links: [{ uri: "http://www.example.com", status: "error" }],
         batch_id: 1,
@@ -519,7 +519,7 @@ describe TravelAdviceEdition do
 
   describe "attached fields" do
     it "retrieves the asset from the api" do
-      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+      ed = FactoryBot.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
       asset = {
         "file_url" => "/path/to/image"
@@ -530,7 +530,7 @@ describe TravelAdviceEdition do
     end
 
     it "caches the asset from the api" do
-      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+      ed = FactoryBot.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
 
       asset = {
         "something" => "one",
@@ -544,14 +544,14 @@ describe TravelAdviceEdition do
 
     it "assigns a file and detects it has changed" do
       file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
-      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
+      ed = FactoryBot.create(:travel_advice_edition, state: 'draft')
 
       ed.image = file
       expect(ed.image_has_changed?).to be true
     end
 
     it "does not upload an asset if it has not changed" do
-      ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
+      ed = FactoryBot.create(:travel_advice_edition, state: 'draft')
       expect_any_instance_of(TravelAdviceEdition).not_to receive(:upload_image)
 
       ed.save!
@@ -559,7 +559,7 @@ describe TravelAdviceEdition do
 
     describe "saving an edition" do
       before do
-        @ed = FactoryGirl.create(:travel_advice_edition, state: 'draft')
+        @ed = FactoryBot.create(:travel_advice_edition, state: 'draft')
         @file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
 
         @asset = { "id" => 'http://asset-manager.dev.gov.uk/assets/an_image_id' }
@@ -608,7 +608,7 @@ describe TravelAdviceEdition do
 
     describe "removing an asset" do
       it "removes an asset when remove_* set to true" do
-        ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+        ed = FactoryBot.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
         ed.remove_image = true
         ed.save!
 
@@ -616,7 +616,7 @@ describe TravelAdviceEdition do
       end
 
       it "doesn't remove an asset when remove_* set to false or empty" do
-        ed = FactoryGirl.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+        ed = FactoryBot.create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
         ed.remove_image = false
         ed.remove_image = ""
         ed.remove_image = nil
@@ -629,14 +629,14 @@ describe TravelAdviceEdition do
 
   context "latest_link_check_report" do
     it "should be nil for no reports" do
-      edition = FactoryGirl.create(:published_travel_advice_edition)
+      edition = FactoryBot.create(:published_travel_advice_edition)
       expect(edition.latest_link_check_report).to eq(nil)
     end
 
     it "should return the last report created" do
-      edition = FactoryGirl.create(:published_travel_advice_edition)
-      edition.link_check_reports.create(FactoryGirl.attributes_for(:link_check_report))
-      latest_report = edition.link_check_reports.create(FactoryGirl.attributes_for(:link_check_report, batch_id: 2))
+      edition = FactoryBot.create(:published_travel_advice_edition)
+      edition.link_check_reports.create(FactoryBot.attributes_for(:link_check_report))
+      latest_report = edition.link_check_reports.create(FactoryBot.attributes_for(:link_check_report, batch_id: 2))
 
       expect(edition.latest_link_check_report).to eq(latest_report)
     end

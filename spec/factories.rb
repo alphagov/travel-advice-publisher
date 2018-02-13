@@ -1,6 +1,4 @@
-require "factory_girl"
-
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     sequence(:uid) { |n| "uid-#{n}" }
     sequence(:name) { |n| "Joe Bloggs #{n}" }
@@ -18,7 +16,7 @@ FactoryGirl.define do
     change_description "Stuff changed"
   end
 
-  # These factories only work when used with FactoryGirl.create
+  # These factories only work when used with FactoryBot.create
   factory :draft_travel_advice_edition, parent: :travel_advice_edition do
   end
 
@@ -45,7 +43,7 @@ FactoryGirl.define do
     end
 
     link_check_reports do
-      [FactoryGirl.build(:link_check_report, :with_pending_links,
+      [FactoryBot.build(:link_check_report, :with_pending_links,
                                              batch_id: batch_id,
                                              link_uris: link_uris,
                                              status: status)]
@@ -61,7 +59,7 @@ FactoryGirl.define do
     end
 
     link_check_reports do
-      [FactoryGirl.build(:link_check_report, :with_broken_links,
+      [FactoryBot.build(:link_check_report, :with_broken_links,
                                              status: status,
                                              link_uris: link_uris,
                                              batch_id: batch_id)]
@@ -74,7 +72,7 @@ FactoryGirl.define do
     end
 
     link_check_reports do
-      [FactoryGirl.build(:link_check_report, :with_caution_links,
+      [FactoryBot.build(:link_check_report, :with_caution_links,
                                              link_uris: link_uris)]
     end
   end
@@ -95,7 +93,7 @@ FactoryGirl.define do
     batch_id 1
     status "in_progress"
     completed_at Time.now
-    links { [FactoryGirl.build(:link)] }
+    links { [FactoryBot.build(:link)] }
 
     trait :completed do
       status "completed"
@@ -107,7 +105,7 @@ FactoryGirl.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryGirl.build(:link, :pending, uri: uri) }
+        link_uris.map { |uri| FactoryBot.build(:link, :pending, uri: uri) }
       end
     end
 
@@ -117,7 +115,7 @@ FactoryGirl.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryGirl.build(:link, uri: uri, status: "broken") }
+        link_uris.map { |uri| FactoryBot.build(:link, uri: uri, status: "broken") }
       end
     end
 
@@ -127,7 +125,7 @@ FactoryGirl.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryGirl.build(:link, uri: uri, status: "caution") }
+        link_uris.map { |uri| FactoryBot.build(:link, uri: uri, status: "caution") }
       end
     end
   end

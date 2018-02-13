@@ -11,8 +11,7 @@ describe PublishRequest do
 
   describe "#register_check_attempt!" do
     let(:publish_request) { PublishRequest.new }
-    before { Timecop.freeze }
-    after { Timecop.return }
+    around { |example| travel_to(Time.current) { example.run } }
 
     it "adds a new timestamp to checks_attempted" do
       publish_request.register_check_attempt!
@@ -48,7 +47,8 @@ describe PublishRequest do
         let(:publish_request) {
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
-            frontend_updated: nil)
+            frontend_updated: nil
+          )
         }
 
         before do
@@ -125,7 +125,8 @@ describe PublishRequest do
       let(:publish_request) {
         PublishRequest.new(
           checks_attempted: [],
-          frontend_updated: nil)
+          frontend_updated: nil
+        )
       }
 
       before do
@@ -161,15 +162,14 @@ describe PublishRequest do
   end
 
   describe "mark_frontend_updated" do
-    let(:publish_request) {
-      PublishRequest.new
-    }
-    before { Timecop.freeze(Time.new(2015, 4, 10, 5, 0, 0)) }
-    after { Timecop.return }
+    let(:publish_request) { PublishRequest.new }
+    around do |example|
+      travel_to(Time.new(2015, 4, 10, 5, 0, 0)) { example.run }
+    end
 
     it "sets frontend_updated to DateTime.now" do
       publish_request.mark_frontend_updated
-      expect(publish_request.frontend_updated).to eq(DateTime.now.utc)
+      expect(publish_request.frontend_updated).to eq(Time.now.utc)
     end
   end
 

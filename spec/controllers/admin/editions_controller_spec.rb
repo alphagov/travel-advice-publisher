@@ -58,7 +58,7 @@ describe Admin::EditionsController do
 
     context "cloning an existing edition" do
       before do
-        @published = FactoryGirl.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 17)
+        @published = FactoryBot.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 17)
       end
 
       it "should build out a clone of the provided edition" do
@@ -77,14 +77,14 @@ describe Admin::EditionsController do
 
     describe "GET to destroy" do
       it "should delete the latest draft edition" do
-        edition = FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba')
+        edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: 'aruba')
         allow_any_instance_of(TravelAdviceEdition).to receive(:destroy).and_return(true)
         get :destroy, params: { id: edition.id }
         expect(response).to redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
       end
 
       it "wont let a published edition be deleted" do
-        edition = FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+        edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba')
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
@@ -92,7 +92,7 @@ describe Admin::EditionsController do
       end
 
       it "wont let an archived edition be deleted" do
-        edition = FactoryGirl.create(:archived_travel_advice_edition, country_slug: 'aruba')
+        edition = FactoryBot.create(:archived_travel_advice_edition, country_slug: 'aruba')
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
@@ -103,7 +103,7 @@ describe Admin::EditionsController do
   describe "edit, update" do
     before do
       login_as_stub_user
-      @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
+      @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'aruba')
       @country = Country.find_by_slug('aruba')
     end
 
@@ -202,7 +202,7 @@ describe Admin::EditionsController do
   end
 
   describe "workflow" do
-    let(:draft) { FactoryGirl.create(:draft_travel_advice_edition, country_slug: 'aruba') }
+    let(:draft) { FactoryBot.create(:draft_travel_advice_edition, country_slug: 'aruba') }
     before do
       login_as_stub_user
     end
@@ -252,7 +252,7 @@ describe Admin::EditionsController do
 
       context "when previous edition exist for the country" do
         before do
-          FactoryGirl.create(:published_travel_advice_edition, country_slug: 'aruba')
+          FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba')
           draft.update_attributes(version_number: 2)
         end
 
@@ -276,7 +276,7 @@ describe Admin::EditionsController do
   describe "historical_edition" do
     before do
       login_as_stub_user
-      @edition = FactoryGirl.create(:travel_advice_edition, country_slug: 'aruba')
+      @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'aruba')
       @country = Country.find_by_slug('aruba')
     end
 

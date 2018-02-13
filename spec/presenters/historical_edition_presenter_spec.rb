@@ -11,7 +11,7 @@ describe HistoricalEditionPresenter do
   }
 
   let(:edition) {
-    FactoryGirl.build(
+    FactoryBot.build(
       :travel_advice_edition,
       country_slug: 'aruba',
       title: "Aruba travel advice",

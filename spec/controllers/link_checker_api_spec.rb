@@ -19,7 +19,7 @@ RSpec.describe LinkCheckerApiController, type: :controller do
 
   let(:link_check_report_batch_id) { 5 }
   let!(:link_check_report) do
-    FactoryGirl.create(:travel_advice_edition_with_pending_link_checks,
+    FactoryBot.create(:travel_advice_edition_with_pending_link_checks,
                        batch_id: 5,
                        link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
   end

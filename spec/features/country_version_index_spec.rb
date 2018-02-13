@@ -1,4 +1,5 @@
 #encoding: utf-8
+
 require 'spec_helper'
 
 feature "Country version index" do
@@ -25,9 +26,9 @@ feature "Country version index" do
 
   specify "viewing a country with published editions and creating a draft" do
     country = Country.find_by_slug('aruba')
-    e1 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
-    e2 = FactoryGirl.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
-    e3 = FactoryGirl.build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
+    e1 = FactoryBot.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
+    e2 = FactoryBot.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
+    e3 = FactoryBot.build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
                             title: "Aruba extra special travel advice", summary: "## This is the summary",
                             overview: "Search description about Aruba",
                             alert_status: [TravelAdviceEdition::ALERT_STATUSES.first])

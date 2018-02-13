@@ -13,7 +13,7 @@ RSpec.describe PublishingApiNotifier do
 
   subject { PublishingApiNotifier.new }
 
-  let(:edition) { FactoryGirl.create(:travel_advice_edition, country_slug: "aruba") }
+  let(:edition) { FactoryBot.create(:travel_advice_edition, country_slug: "aruba") }
 
   describe "put_content and enqueue" do
     let(:presenter) { EditionPresenter.new(edition) }

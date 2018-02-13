@@ -6,8 +6,7 @@ class Admin::CountriesController < ApplicationController
     @countries = Country.all
   end
 
-  def show
-  end
+  def show; end
 
 private
 

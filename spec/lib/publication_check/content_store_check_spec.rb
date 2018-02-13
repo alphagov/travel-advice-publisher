@@ -3,10 +3,11 @@ require 'spec_helper'
 module PublicationCheck
   describe ContentStoreCheck do
     let(:edition) {
-      FactoryGirl.create(
+      FactoryBot.create(
         :published_travel_advice_edition,
         country_slug: "andorra",
-        version_number: 2)
+        version_number: 2
+      )
     }
     let(:publish_request) {
       PublishRequest.new(

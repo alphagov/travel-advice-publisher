@@ -4,7 +4,7 @@ class Admin::EditionsController < ApplicationController
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
-  before_action :load_country_and_edition, only: [:edit, :update, :destroy, :diff]
+  before_action :load_country_and_edition, only: %i[edit update destroy diff]
   before_action :strip_empty_alert_statuses, only: :update
 
   def create
@@ -29,8 +29,7 @@ class Admin::EditionsController < ApplicationController
     @comparison = @country.editions.find(params[:compare_id])
   end
 
-  def edit
-  end
+  def edit; end
 
   def destroy
     country_slug = @edition.country_slug
@@ -84,7 +83,7 @@ private
       :remove_document,
       :remove_image,
       alert_status: [],
-      parts_attributes: [:title, :body, :slug, :order, :id, :_destroy]
+      parts_attributes: %i[title body slug order id _destroy]
     )
   end
 

@@ -14,7 +14,7 @@ class PublishingApiWorker
         else
           api.public_send(endpoint, content_id, payload)
         end
-      rescue => e
+      rescue StandardError => e
         raise_helpful_error(e, jobs, endpoint, content_id, payload)
       end
     end

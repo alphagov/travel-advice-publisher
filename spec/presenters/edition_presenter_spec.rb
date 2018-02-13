@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe EditionPresenter do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
 
   let(:edition) {
-    edition = FactoryGirl.build(
+    edition = FactoryBot.build(
       :travel_advice_edition,
       country_slug: "aruba",
       title: "Aruba travel advice",
@@ -38,7 +38,7 @@ describe EditionPresenter do
   }
 
   let(:previous) {
-    previous = FactoryGirl.create(
+    previous = FactoryBot.create(
       :travel_advice_edition,
       country_slug: "aruba",
       change_description: "Stuff previously changed"
@@ -78,7 +78,7 @@ describe EditionPresenter do
     let(:presented_data) { subject.render_for_publishing_api }
 
     around do |example|
-      Timecop.freeze { example.run }
+      travel_to(Time.current) { example.run }
     end
 
     it "is valid against the content schemas" do
@@ -145,9 +145,7 @@ describe EditionPresenter do
       it "sets public_updated_at to now if published_at isn't set" do
         edition.published_at = nil
 
-        Timecop.freeze do
-          expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
-        end
+        expect(presented_data["public_updated_at"]).to eq(Time.zone.now.iso8601)
       end
     end
 
