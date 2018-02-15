@@ -6,7 +6,7 @@ module ApplicationHelper
   def preview_edition_link(edition, short, options = {})
     if edition.draft?
       name = "Preview saved version"
-      url = "#{Plek.current.find('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
+      url = "#{Plek.new.external_url_for('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
     elsif edition.published?
       name = "View on site"
       url = "#{Plek.current.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.now.to_i}"
