@@ -5,13 +5,8 @@ class EmailAlertApiWorker
     GdsApi::GovukHeaders.set_header(:govuk_request_id, params["request_id"])
 
     api.send_alert(payload) if send_alert?
-  rescue StandardError => e
-    message = "\n\n=== Failed request details ==="
-    message += "\n#{payload}"
-
-    GovukError.notify(
-      WorkerError.new(self, e, message)
-    )
+  rescue GdsApi::HTTPConflict
+    logger.info("email-alert-api returned 409 conflict for #{payload}")
   end
 
 private

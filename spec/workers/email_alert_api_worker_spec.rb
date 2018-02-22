@@ -31,25 +31,27 @@ RSpec.describe EmailAlertApiWorker, :perform do
     end
   end
 
-  context "when a request to the email-alert-api fails" do
+  context "when a request to the email-alert-api times out" do
     before do
       stub_any_email_alert_api_call.to_timeout
     end
 
-    it "does not raise an error to safeguard against duplicate emails being sent" do
+    it "raises the error which will trigger a retry" do
+      expect {
+        described_class.new.perform(payload)
+      }.to raise_error(GdsApi::TimedOutException)
+    end
+  end
+
+  context "when a request to email-alert-api conflicts" do
+    before do
+      stub_any_email_alert_api_call.and_raise(GdsApi::HTTPConflict.new(409))
+    end
+
+    it "swallows the error" do
       expect {
         described_class.new.perform(payload)
       }.not_to raise_error
-
-      expect(Sidekiq::RetrySet.new.size).to be_zero
-    end
-
-    it "sends a helpful message to Errbit so that we can diagnose the problem" do
-      expect(GovukError).to receive(:notify) do |error|
-        expect(error.message).to match(/=== Failed request details ===/)
-      end
-
-      described_class.new.perform(payload)
     end
   end
 end
