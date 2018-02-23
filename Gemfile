@@ -9,7 +9,6 @@ gem 'state_machines', '~> 0.4'
 gem 'state_machines-mongoid', '~> 0.1'
 
 gem 'diffy', '~> 3.2'
-gem 'foreman', '~> 0.84', require: false
 gem 'formtastic', '~> 3.1'
 gem 'formtastic-bootstrap', '~> 3.1'
 
