@@ -48,4 +48,8 @@ RSpec.describe EmailAlertPresenter do
       public_updated_at publishing_app base_path priority
     ))
   end
+
+  it "ensures the description is blank" do
+    expect(email_alert["description"]).to eq("")
+  end
 end

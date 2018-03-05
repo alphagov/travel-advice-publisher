@@ -10,7 +10,7 @@ class EmailAlertPresenter
   def present
     {
       "title" => title,
-      "description" => description,
+      "description" => "",
       "change_note" => change_description,
       "subject" => subject,
       "body" => body,
@@ -77,10 +77,6 @@ private
 
   def change_description
     edition.change_description
-  end
-
-  def description
-    edition.summary
   end
 
   def formatted_published_at
