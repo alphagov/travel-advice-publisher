@@ -40,5 +40,5 @@ group :development, :test do
   gem 'webmock', '~> 3.3', :require => false
 
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
-  gem 'govuk-lint', '~> 3.6'
+  gem 'govuk-lint', '~> 3.7'
 end
