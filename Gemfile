@@ -25,7 +25,7 @@ gem 'govuk_sidekiq', '~> 3.0'
 gem "slimmer", "~> 12.0"
 
 group :development, :test do
-  gem 'capybara', '~> 2.17'
+  gem 'capybara', '~> 2.18'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '~> 1.6'
   gem 'factory_bot_rails', '~> 4.8'
