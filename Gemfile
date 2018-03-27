@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.1.5'
 
-gem 'mongo', '~> 2.4.3'
+gem 'mongo', '~> 2.5.1'
 gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', '~> 1.1'
 gem 'state_machines', '~> 0.4'
