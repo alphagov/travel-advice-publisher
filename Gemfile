@@ -22,7 +22,7 @@ gem 'govspeak', '~> 5.6'
 gem 'govuk_admin_template', '~> 6.6'
 gem 'govuk_app_config', '~> 1.4'
 gem 'govuk_sidekiq', '~> 3.0'
-gem "slimmer", "~> 12.0"
+gem "slimmer", "~> 12.1"
 
 group :development, :test do
   gem 'capybara', '~> 2.18'
