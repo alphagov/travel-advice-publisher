@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.6'
+gem 'rails', '5.2.0'
 
 gem 'mongo', '~> 2.4.3'
 gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', '~> 1.1'
 gem 'state_machines', '~> 0.4'
-gem 'state_machines-mongoid', '~> 0.1'
+gem 'state_machines-mongoid', '~> 0.2'
 
 gem 'diffy', '~> 3.2'
 gem 'formtastic', '~> 3.1'
