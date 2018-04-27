@@ -6,7 +6,8 @@ class LinksPresenter
   def present
     {
       links: {
-        parent: [TravelAdvicePublisher::INDEX_CONTENT_ID]
+        parent: [TravelAdvicePublisher::INDEX_CONTENT_ID],
+        meets_user_needs: [TravelAdvicePublisher::NEED_CONTENT_ID]
       }
     }
   end
