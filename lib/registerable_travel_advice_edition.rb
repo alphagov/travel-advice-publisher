@@ -27,10 +27,6 @@ class RegisterableTravelAdviceEdition
     country.try(:content_id)
   end
 
-  def need_ids
-    [TravelAdvicePublisher::NEED_ID]
-  end
-
   def paths
     ["/#{slug}", "/#{slug}.atom", "/#{slug}/print"] + part_paths
   end

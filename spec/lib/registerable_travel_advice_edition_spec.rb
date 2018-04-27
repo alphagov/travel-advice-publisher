@@ -42,10 +42,6 @@ describe RegisterableTravelAdviceEdition do
       expect(@registerable.title).to eq("Aruba travel advice")
     end
 
-    it "should return ['101191'] for the need_ids" do
-      expect(@registerable.need_ids).to eq(['101191'])
-    end
-
     context "paths" do
       it "should include /<slug>.atom" do
         expect(@registerable.paths).to include("/foreign-travel-advice/#{@edition.country_slug}.atom")

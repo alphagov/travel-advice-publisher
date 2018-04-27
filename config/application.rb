@@ -19,7 +19,7 @@ module TravelAdvicePublisher
   mattr_accessor :link_checker_api
 
   # Maslow need ID for Travel Advice Publisher
-  NEED_ID = '101191'.freeze
+  NEED_CONTENT_ID = '5118d7b4-215d-45e6-bd20-15d7bc21314f'.freeze
 
   INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0".freeze
   INDEX_EMAIL_SIGNUP_CONTENT_ID = "1aebfc97-7723-4cb6-82f4-434639efc185".freeze

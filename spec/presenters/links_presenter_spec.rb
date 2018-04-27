@@ -16,7 +16,8 @@ RSpec.describe LinksPresenter do
 
     it "returns travel advice breadcrumbs data" do
       expect(presented_data).to eq(links: {
-        parent: ["08d48cdd-6b50-43ff-a53b-beab47f4aab0"]
+        parent: ["08d48cdd-6b50-43ff-a53b-beab47f4aab0"],
+        meets_user_needs: ["5118d7b4-215d-45e6-bd20-15d7bc21314f"]
       })
     end
   end
