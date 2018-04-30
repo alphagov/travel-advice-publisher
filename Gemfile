@@ -37,7 +37,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'simplecov-rcov', '~> 0.2'
   gem 'test-unit'
-  gem 'webmock', '~> 3.3', :require => false
+  gem 'webmock', '~> 3.4', :require => false
 
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
   gem 'govuk-lint', '~> 3.8'
