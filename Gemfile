@@ -20,7 +20,7 @@ gem 'gds-api-adapters', '~> 52.5'
 gem 'gds-sso', '~> 13.5'
 gem 'govspeak', '~> 5.6'
 gem 'govuk_admin_template', '~> 6.6'
-gem 'govuk_app_config', '~> 1.4'
+gem 'govuk_app_config', '~> 1.5'
 gem 'govuk_sidekiq', '~> 3.0'
 gem "slimmer", "~> 12.1"
 
