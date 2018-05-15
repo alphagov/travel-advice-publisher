@@ -395,7 +395,7 @@ GEM
       mongoid (>= 4.0.0)
       state_machines-activemodel (>= 0.5.0)
     statsd-ruby (1.4.0)
-    test-unit (3.2.7)
+    test-unit (3.2.8)
       power_assert
     thor (0.20.0)
     thread_safe (0.3.6)
