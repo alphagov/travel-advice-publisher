@@ -2,7 +2,8 @@ class IndexLinksPresenter
   def self.present
     {
       links: {
-        "parent" => ["b9849cd6-61a7-42dc-8124-362d2c7d48b0"]
+        "parent" => [TravelAdvicePublisher::INDEX_PARENT_CONTENT_ID],
+        "primary_publishing_organisation" => [TravelAdvicePublisher::PRIMARY_ORG_CONTENT_ID]
       }
     }
   end

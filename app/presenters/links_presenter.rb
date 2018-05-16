@@ -7,7 +7,8 @@ class LinksPresenter
     {
       links: {
         parent: [TravelAdvicePublisher::INDEX_CONTENT_ID],
-        meets_user_needs: [TravelAdvicePublisher::NEED_CONTENT_ID]
+        meets_user_needs: [TravelAdvicePublisher::NEED_CONTENT_ID],
+        primary_publishing_organisation: [TravelAdvicePublisher::PRIMARY_ORG_CONTENT_ID],
       }
     }
   end
