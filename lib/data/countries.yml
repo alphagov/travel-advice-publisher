@@ -271,6 +271,10 @@
   slug: estonia
   content_id: 16ae2d80-d6e0-4380-a358-ccd03c2bd7f7
   email_signup_content_id: 98ecb293-6a7e-459c-8ec8-8c799d9094ac
+- name: Eswatini
+  slug: eswatini
+  content_id: cb0448b6-91b4-44fd-b54f-508b554971d1
+  email_signup_content_id: 19a89e1f-962e-4666-917e-2c865a33287e
 - name: Ethiopia
   slug: ethiopia
   content_id: d36e7377-4160-4e4d-a103-83980eaf9dc9
@@ -787,10 +791,6 @@
   slug: suriname
   content_id: 0e50ddd6-ee02-4d1c-815b-7f35a8777f72
   email_signup_content_id: 867edcb5-a7d8-4975-84c4-7c4d93b2e2a2
-- name: Swaziland
-  slug: swaziland
-  content_id: cb0448b6-91b4-44fd-b54f-508b554971d1
-  email_signup_content_id: 19a89e1f-962e-4666-917e-2c865a33287e
 - name: Sweden
   slug: sweden
   content_id: 9772ac3f-b0ea-4787-b859-9a091e1f8af6

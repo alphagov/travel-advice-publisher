@@ -1,7 +1,7 @@
 FROM ruby:2.4.4
 RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essential nodejs && apt-get clean
 # for capybara-webkit
-RUN apt-get update -qq && apt-get install -y libqt4-webkit libqt4-dev xvfb
+RUN apt-get update -qq && apt-get install -y libqtwebkit4 libqt4-dev xvfb
 RUN gem install foreman
 
 ENV GOVUK_APP_NAME travel-advice-publisher
