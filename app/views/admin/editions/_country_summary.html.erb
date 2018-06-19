@@ -2,7 +2,7 @@
   <h1 class="part-content-title">Summary</h1>
 </header>
 
-<%= render 'govuk_component/metadata',
+<%= render 'govuk_publishing_components/components/metadata',
     other: {
       "Still current at" => Date.today.strftime("%e %B %Y"),
       "Updated" => (presenter.reviewed_at || presenter.updated_at).strftime("%e %B %Y"),
@@ -31,4 +31,4 @@
   </div>
 <% end %>
 
-<%= render 'govuk_component/govspeak', content: presenter.summary %>
+<%= render 'govuk_publishing_components/components/govspeak', content: presenter.summary %>
