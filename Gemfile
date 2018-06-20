@@ -29,7 +29,7 @@ group :development, :test do
   gem 'capybara', '~> 3.2'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '~> 1.7'
-  gem 'factory_bot_rails', '~> 4.8'
+  gem 'factory_bot_rails', '~> 4.10'
   gem 'jasmine', '~> 3.1'
   gem 'poltergeist', '~> 1.18'
   gem 'pry-rails'
