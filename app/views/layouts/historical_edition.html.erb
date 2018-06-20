@@ -6,7 +6,7 @@
   <% if @presenter.overview.present? %>
     <meta name="description" content="<%= @presenter.overview %>">
   <% end %>
-
+  <%= stylesheet_link_tag "historical-edition", media: "all" %>
   <%= yield :extra_headers %>
 </head>
 <body>
