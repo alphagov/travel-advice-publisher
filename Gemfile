@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '5.2.0'
 
-gem 'mongo', '~> 2.4.3'
+gem 'mongo', '~> 2.6.0'
 gem 'mongoid', '~> 6.2'
 gem 'mongoid_rails_migrations', git: 'git://github.com/adacosta/mongoid_rails_migrations.git', ref: 'a386b9af342503e61b39d1421c17c948d1225ae2'
 gem 'state_machines', '~> 0.4'
