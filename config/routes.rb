@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get "/healthcheck", to: proc { [200, {}, ["OK"]] }
-
   namespace :admin do
     resources :countries, only: [:index, :show] do
       resources :editions, only: [:create]
@@ -21,4 +19,8 @@ Rails.application.routes.draw do
   root to: redirect('/admin')
 
   mount GovukAdminTemplate::Engine, at: "/style-guide"
+
+  get "/healthcheck", to: GovukHealthcheck.rack_response(
+    GovukHealthcheck::SidekiqRedis,
+  )
 end
