@@ -202,7 +202,7 @@ describe PublishRequest do
       let!(:publish_request_two) {
         PublishRequest.create(
           checks_complete: false,
-          created_at: 5.minutes.ago,
+          created_at: 6.minutes.ago,
           country_slug: 'denmark'
         )
       }
