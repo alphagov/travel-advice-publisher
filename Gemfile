@@ -26,21 +26,23 @@ gem 'govuk_sidekiq', '~> 3.0'
 gem 'slimmer', '~> 13.0'
 
 group :development, :test do
+  gem 'govuk-lint', '~> 3.8'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+end
+
+group :test do
   gem 'capybara', '~> 3.6'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails', '~> 4.10'
+  gem 'govuk_test'
+  gem 'govuk-content-schema-test-helpers', '~> 1.6'
   gem 'jasmine', '~> 3.2'
-  gem 'poltergeist', '1.18.1'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 3.8'
   gem 'simplecov-rcov', '~> 0.2'
   gem 'test-unit'
-  gem 'webmock', '~> 3.4', :require => false
-
-  gem 'govuk-content-schema-test-helpers', '~> 1.6'
-  gem 'govuk-lint', '~> 3.8'
   gem 'timecop'
+  gem 'webmock', '~> 3.4', :require => false
 end
