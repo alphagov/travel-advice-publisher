@@ -255,7 +255,7 @@ GEM
       ast (~> 2.4.0)
     phantomjs (2.1.1.0)
     plek (2.1.1)
-    poltergeist (1.18.0)
+    poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
@@ -419,6 +419,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    timecop (0.9.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.15)
@@ -469,7 +470,7 @@ DEPENDENCIES
   mongoid (~> 6.2)
   mongoid_rails_migrations!
   plek (~> 2.1)
-  poltergeist (~> 1.18)
+  poltergeist (= 1.18.1)
   pry-byebug
   pry-rails
   rails (= 5.2.0)
@@ -481,8 +482,9 @@ DEPENDENCIES
   state_machines (~> 0.4)
   state_machines-mongoid (~> 0.2)
   test-unit
+  timecop
   uglifier (~> 4.1)
   webmock (~> 3.4)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

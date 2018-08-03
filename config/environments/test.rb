@@ -42,4 +42,8 @@ Rails.application.configure do
 
   # We should always send email alerts in test
   config.send_email_alerts = true
+
+  config.after_initialize do
+    Timecop.freeze(2011, 11, 11, 11, 11, 11)
+  end
 end

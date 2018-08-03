@@ -31,7 +31,7 @@ group :development, :test do
   gem 'database_cleaner', '~> 1.7'
   gem 'factory_bot_rails', '~> 4.10'
   gem 'jasmine', '~> 3.1'
-  gem 'poltergeist', '~> 1.18'
+  gem 'poltergeist', '1.18.1'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rails-controller-testing'
@@ -42,4 +42,5 @@ group :development, :test do
 
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
   gem 'govuk-lint', '~> 3.8'
+  gem 'timecop'
 end

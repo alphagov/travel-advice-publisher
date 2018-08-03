@@ -307,8 +307,8 @@
   slug: gabon
   content_id: fe2044fc-4201-4116-89fd-126aaff9a987
   email_signup_content_id: 8d1fdfed-429e-4a07-94fe-f278bc7d20f0
-- name: Gambia
-  slug: gambia
+- name: The Gambia
+  slug: the-gambia
   content_id: 35007dbc-65c9-418b-9ce8-3d28832eb8ee
   email_signup_content_id: 118e350b-2915-4310-8931-4913b48da12f
 - name: Georgia
