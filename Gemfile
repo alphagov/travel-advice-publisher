@@ -35,7 +35,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 3.8'
   gem 'simplecov-rcov', '~> 0.2'
   gem 'test-unit'
   gem 'webmock', '~> 3.4', :require => false
