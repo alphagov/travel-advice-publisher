@@ -23,6 +23,13 @@ See [`lib/tasks/publishing_api.rake`](../lib/tasks/publishing_api.rake) for deta
 
 To maintain the history of a country when renaming you will need to perform a [migration](../db/migrate/20160916161059_rename_democratic_republic_of_congo.rb) on TravelAdviceEdition.
 
+### Removing a country
+
+If a country's foreign travel advice is being subsumed into another country's page:
+
+1. Remove the country from the [`lib/data/countries.yml`](../lib/data/countries.yml) file.
+2. Run the `publishing_api:unpublish_published_edition_and_email_signup_content_item['country_slug', 'new_country_slug']` rake task, providing the slug of the country being removed, and the slug of the country that it should be redirected to.
+
 ### Publishing API
 
 Travel advice content reaches the [content-store](https://github.com/alphagov/content-store) via the [publishing-api](https://github.com/alphagov/publishing-api), editorial work is batch-enqueued with Sidekiq for processing out of request.

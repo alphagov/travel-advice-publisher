@@ -12,6 +12,14 @@ namespace :publishing_api do
     api_v2.publish(presenter.content_id)
   end
 
+  desc "unpublish a published edition and email signup content item for a country and redirect"
+  task :unpublish_published_edition_and_email_signup_content_item, %i(country_slug new_country_slug) => :environment do |_task, args|
+    country = Country.find_by_slug(args[:country_slug])
+    alternative_path = "/foreign-travel-advice/#{args[:new_country_slug]}"
+    api_v2.unpublish(country.email_signup_content_id, type: "redirect", alternative_path: "#{alternative_path}/email-signup")
+    api_v2.unpublish(country.content_id, type: "redirect", alternative_path: alternative_path)
+  end
+
   desc "republish all published editions to publishing-api"
   task republish_editions: :environment do
     TravelAdviceEdition.published.each do |edition|
