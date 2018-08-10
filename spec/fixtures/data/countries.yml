@@ -11,10 +11,6 @@
   slug: algeria
   content_id: b5c8e64b-3461-4447-9144-1588e4a84fe6
   email_signup_content_id: 19394f01-f611-49da-ab01-09798923b60f
-- name: American Samoa
-  slug: american-samoa
-  content_id: 3b54054f-c22a-4e3a-8c10-19d0667b5718
-  email_signup_content_id: 4f447f20-ab0a-46ae-be1e-8ee07a205134
 - name: Andorra
   slug: andorra
   content_id: 196a0c49-e844-4246-ab7c-a5c4197dfdad
