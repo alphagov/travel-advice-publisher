@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Country do
   describe "Country.all" do
     it "should return a list of Countries" do
-      expect(Country.all.size).to eq(14)
+      expect(Country.all.size).to eq(13)
       expect(Country.all.first.name).to eq("Afghanistan")
       expect(Country.all.first.slug).to eq("afghanistan")
       expect(Country.all.find { |c| c.slug == "argentina" }.name).to eq("Argentina")

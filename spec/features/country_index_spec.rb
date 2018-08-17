@@ -29,7 +29,6 @@ feature "Country Index" do
       ["Afghanistan",         "advice published"],
       ["Albania",             "no advice published"],
       ["Algeria",             "advice published"],
-      ["American Samoa",      "no advice published"],
       ["Andorra",             "no advice published"],
       ["Angola",              "no advice published"],
       ["Anguilla",            "no advice published"],
