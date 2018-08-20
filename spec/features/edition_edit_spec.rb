@@ -699,7 +699,7 @@ feature "Edit Edition page", js: true do
     end
   end
 
-  scenario "disallowing hover text on links in govsepak fields" do
+  scenario "disallowing hover text on links in govspeak fields" do
     @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
