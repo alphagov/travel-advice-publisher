@@ -34,6 +34,11 @@ feature "Edit Edition page", js: true do
     })
   end
 
+  def reorder_parts(index, new_index)
+    find(:css, "input#edition_parts_attributes_#{index}_order", visible: false)
+      .execute_script("this.value = '#{new_index}'")
+  end
+
   context "creating new editions" do
     scenario "when no editions are present, create a new edition" do
       visit "/admin/countries/aruba"
@@ -344,9 +349,9 @@ feature "Edit Edition page", js: true do
     expect(page).to have_selector("#parts div.part:nth-of-type(2) .panel-title a", text: 'Gromit')
     expect(page).to have_selector("#parts div.part:nth-of-type(3) .panel-title a", text: 'Cheese')
 
-    find(:css, "input#edition_parts_attributes_0_order", visible: false).set "2"
-    find(:css, "input#edition_parts_attributes_1_order", visible: false).set "0"
-    find(:css, "input#edition_parts_attributes_2_order", visible: false).set "1"
+    reorder_parts(0, 2)
+    reorder_parts(1, 0)
+    reorder_parts(2, 1)
 
     click_navbar_button "Save"
 
@@ -694,7 +699,7 @@ feature "Edit Edition page", js: true do
     end
   end
 
-  scenario "disallowing hover text on links in govsepak fields" do
+  scenario "disallowing hover text on links in govspeak fields" do
     @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
