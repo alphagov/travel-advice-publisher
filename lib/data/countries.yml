@@ -767,6 +767,10 @@
   slug: st-lucia
   content_id: 5a9e154c-e1dc-4fde-8182-58c5b6e69efa
   email_signup_content_id: c7113009-92a9-4a6f-8641-b00001588af1
+- name: "St Martin and St Barthélemy"
+  slug: st-martin-and-st-barthelemy
+  content_id: 98c0a9e6-54b0-4c67-8007-43bde256e8ad
+  email_signup_content_id: c41428d3-bc45-4d3c-b07f-049fd72a35a5
 - name: St Maarten
   slug: st-maarten
   content_id: f752255c-de89-4b61-af7a-6233dd44a58a
