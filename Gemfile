@@ -35,7 +35,7 @@ group :test do
   gem 'capybara', '~> 3.6'
   gem 'ci_reporter_rspec'
   gem 'database_cleaner', '~> 1.7'
-  gem 'factory_bot_rails', '~> 4.10'
+  gem 'factory_bot_rails', '~> 4.11'
   gem 'govuk_test'
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
   gem 'jasmine', '~> 3.2'
