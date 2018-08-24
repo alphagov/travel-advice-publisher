@@ -27,8 +27,10 @@ gem 'slimmer', '~> 13.0'
 
 group :development, :test do
   gem 'govuk-lint', '~> 3.8'
+  gem 'jasmine', '~> 3.2'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'rspec-rails', '~> 3.8'
 end
 
 group :test do
@@ -38,9 +40,7 @@ group :test do
   gem 'factory_bot_rails', '~> 4.11'
   gem 'govuk_test'
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
-  gem 'jasmine', '~> 3.2'
   gem 'rails-controller-testing'
-  gem 'rspec-rails', '~> 3.8'
   gem 'simplecov-rcov', '~> 0.2'
   gem 'test-unit'
   gem 'timecop'

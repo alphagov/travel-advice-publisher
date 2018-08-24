@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   get "/healthcheck", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::SidekiqRedis,
   )
+
+  get "/healthcheck/recently-published-editions" => "healthcheck#recently_published_editions"
 end
