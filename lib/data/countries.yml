@@ -191,8 +191,8 @@
   slug: congo
   content_id: 438a3cd3-5936-462d-b7ed-fff0ea485af1
   email_signup_content_id: 6abaef77-d1f6-4ad8-b955-d96196f66039
-- name: Cook Islands, Tokelau and Nieu
-  slug: cook-islands-tokelau-and-nieu
+- name: Cook Islands, Tokelau and Niue
+  slug: cook-islands-tokelau-and-niue
   content_id: f961f58b-3a4e-439a-b820-7ddab77e3758
   email_signup_content_id: 76e992a5-db34-4c3c-afa6-6ef78bbb611a
 - name: Costa Rica
@@ -767,6 +767,10 @@
   slug: st-lucia
   content_id: 5a9e154c-e1dc-4fde-8182-58c5b6e69efa
   email_signup_content_id: c7113009-92a9-4a6f-8641-b00001588af1
+- name: "St Martin and St Barthélemy"
+  slug: st-martin-and-st-barthelemy
+  content_id: 98c0a9e6-54b0-4c67-8007-43bde256e8ad
+  email_signup_content_id: c41428d3-bc45-4d3c-b07f-049fd72a35a5
 - name: St Maarten
   slug: st-maarten
   content_id: f752255c-de89-4b61-af7a-6233dd44a58a
