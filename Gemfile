@@ -26,7 +26,7 @@ gem 'govuk_sidekiq', '~> 3.0'
 gem 'slimmer', '~> 13.0'
 
 group :development, :test do
-  gem 'govuk-lint', '~> 3.8'
+  gem 'govuk-lint', '~> 3.9'
   gem 'jasmine', '~> 3.2'
   gem 'pry-byebug'
   gem 'pry-rails'
