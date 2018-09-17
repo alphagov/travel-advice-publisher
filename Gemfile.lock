@@ -460,7 +460,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara (~> 3.7)
   ci_reporter_rspec
   database_cleaner (~> 1.7)
   diffy (~> 3.2)
