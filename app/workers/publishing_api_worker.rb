@@ -9,11 +9,7 @@ class PublishingApiWorker
       payload = payload.symbolize_keys if payload.is_a?(Hash)
 
       begin
-        if endpoint == "send_alert"
-          EmailAlertApiWorker.perform_in(CACHE_EXPIRES_IN, payload, request_id: params["request_id"])
-        else
-          api.public_send(endpoint, content_id, payload)
-        end
+        api.public_send(endpoint, content_id, payload)
       rescue StandardError => e
         raise_helpful_error(e, jobs, endpoint, content_id, payload)
       end
@@ -21,8 +17,6 @@ class PublishingApiWorker
   end
 
 private
-
-  CACHE_EXPIRES_IN = 10.seconds
 
   def api
     TravelAdvicePublisher.publishing_api_v2

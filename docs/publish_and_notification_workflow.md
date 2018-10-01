@@ -12,7 +12,6 @@ The publish action [builds an array of four tasks](https://github.com/alphagov/t
 - [put_content](https://github.com/alphagov/travel-advice-publisher/blob/master/app/notifiers/publishing_api_notifier.rb#L7-7)
 - [put_links](https://github.com/alphagov/travel-advice-publisher/blob/master/app/notifiers/publishing_api_notifier.rb#L13)
 - [publish](https://github.com/alphagov/travel-advice-publisher/blob/master/app/notifiers/publishing_api_notifier.rb#L19)
-- [send_alert](https://github.com/alphagov/travel-advice-publisher/blob/master/app/notifiers/publishing_api_notifier.rb#L34)
 
 If one of the first three actions fails for whatever reason, the [Sidekiq](http://sidekiq.org/) job fails and the retry mechanism kicks in (retries at exponentially increasing intervals up to 25 times in 21 days before being moved to the ‘dead’ queue).
 

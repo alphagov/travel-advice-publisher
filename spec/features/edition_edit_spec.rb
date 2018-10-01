@@ -401,8 +401,6 @@ feature "Edit Edition page", js: true do
     expect(action.comment).to eq "Stuff changed"
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "major")
-
-    assert_email_alert_sent("subject" => "Albania travel advice")
   end
 
   scenario "save and publish a minor update to an edition" do
