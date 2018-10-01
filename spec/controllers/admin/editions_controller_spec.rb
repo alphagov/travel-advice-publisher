@@ -242,7 +242,7 @@ describe Admin::EditionsController do
 
           expect(PublishingApiWorker.jobs.size).to eq(1)
           actions = PublishingApiWorker.jobs[0]['args'][0]
-          expect(actions.count).to eq(6)
+          expect(actions.count).to eq(5)
           signup_email = actions.detect do |_, _, details|
             details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
           end
@@ -263,7 +263,7 @@ describe Admin::EditionsController do
 
           expect(PublishingApiWorker.jobs.size).to eq(1)
           actions = PublishingApiWorker.jobs[0]['args'][0]
-          expect(actions.count).to eq(4)
+          expect(actions.count).to eq(3)
           signup_email = actions.detect do |_, _, details|
             details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
           end

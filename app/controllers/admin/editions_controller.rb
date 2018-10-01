@@ -108,7 +108,6 @@ private
       notifier.patch_links(@edition)
       notifier.email_signup(@edition) if @edition.previous_version.nil?
       notifier.publish(@edition)
-      notifier.send_alert(@edition)
       notifier.enqueue
 
       # catch any upload errors

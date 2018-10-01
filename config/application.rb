@@ -15,7 +15,6 @@ Bundler.require(*Rails.groups)
 module TravelAdvicePublisher
   mattr_accessor :asset_api
   mattr_accessor :publishing_api_v2
-  mattr_accessor :email_alert_api
   mattr_accessor :link_checker_api
 
   # Maslow need ID for Travel Advice Publisher

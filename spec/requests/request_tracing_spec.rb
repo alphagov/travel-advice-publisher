@@ -1,10 +1,8 @@
 require "spec_helper"
 require 'govuk_sidekiq/testing'
-require "gds_api/test_helpers/email_alert_api"
 
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApiV2
-  include GdsApi::TestHelpers::EmailAlertApi
   include AuthenticationFeatureHelpers
 
   let(:govuk_request_id) { "12345-67890" }
@@ -15,7 +13,6 @@ RSpec.describe "Request tracing", type: :request do
     user = FactoryBot.create(:user, uid: govuk_authenticated_user)
     login_as(user)
     stub_any_publishing_api_call
-    stub_any_email_alert_api_call
   end
 
   it "passes the govuk_request_id through all downstream workers" do
@@ -40,6 +37,5 @@ RSpec.describe "Request tracing", type: :request do
     expect(WebMock).to have_requested(:put, /publishing-api.*content/).with(headers: onward_headers).twice
     expect(WebMock).to have_requested(:patch, /publishing-api.*links/).with(headers: onward_headers)
     expect(WebMock).to have_requested(:post, /publishing-api.*publish/).with(headers: onward_headers).twice
-    expect(WebMock).to have_requested(:post, /email-alert-api/).with(headers: onward_headers)
   end
 end
