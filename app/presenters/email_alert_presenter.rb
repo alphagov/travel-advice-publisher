@@ -54,10 +54,6 @@ private
     TravelAdvicePublisher::COUNTRY_FORMAT
   end
 
-  def message_identifier
-    Digest::SHA1.hexdigest(edition.title + formatted_published_at)
-  end
-
   def link_text
     edition.title
   end
@@ -72,10 +68,6 @@ private
 
   def public_updated_at
     edition.published_at.to_time.iso8601
-  end
-
-  def absolute_path
-    Plek.new.website_root + base_path
   end
 
   def base_path
