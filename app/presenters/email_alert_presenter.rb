@@ -13,7 +13,6 @@ class EmailAlertPresenter
       "description" => "",
       "change_note" => change_description,
       "subject" => subject,
-      "body" => body,
       "tags" => tags,
       "links" => links,
       "document_type" => document_type,
@@ -53,18 +52,6 @@ private
 
   def document_type
     TravelAdvicePublisher::COUNTRY_FORMAT
-  end
-
-  def body
-    <<-HTML
-      <div class="rss_item" data-message-id="#{message_identifier}" style="margin-bottom: 2em;">
-        <div class="rss_title" style="font-size: 120%; margin: 0 0 0.3em; padding: 0;">
-          <a href="#{absolute_path}" style="font-weight: bold; ">#{link_text}</a>
-        </div>
-        <div class="rss_pub_date" style="font-size: 90%; font-style: italic; color: #666666; margin: 0 0 0.3em; padding: 0;">#{formatted_published_at}</div>
-        <div class="rss_description" style="margin: 0 0 0.3em; padding: 0;">#{change_description}</div>
-      </div>
-    HTML
   end
 
   def message_identifier
