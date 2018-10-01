@@ -33,6 +33,7 @@ class EditionPresenter
       "public_updated_at" => public_updated_at.iso8601,
       "update_type" => update_type,
       "details" => details,
+      "change_note" => change_description,
     }
   end
 

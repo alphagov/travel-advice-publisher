@@ -106,6 +106,7 @@ describe EditionPresenter do
           { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
           { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
         ],
+        "change_note" => "Stuff changed",
         "details" => {
           "summary" => [
             { "content_type" => "text/govspeak", "content" => "### Summary" },
@@ -161,6 +162,7 @@ describe EditionPresenter do
         edition.change_description = nil
 
         expect(presented_data["details"]["change_description"]).to eq("Stuff previously changed")
+        expect(presented_data["change_note"]).to eq("Stuff previously changed")
       end
     end
 
