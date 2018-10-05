@@ -40,7 +40,7 @@ group :test do
   gem 'govuk_test'
   gem 'govuk-content-schema-test-helpers', '~> 1.6'
   gem 'rails-controller-testing'
-  gem 'simplecov-rcov', '~> 0.2'
+  gem 'simplecov'
   gem 'test-unit'
   gem 'timecop'
   gem 'webmock', '~> 3.4', :require => false
