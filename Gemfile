@@ -27,7 +27,7 @@ gem 'slimmer', '~> 13.0'
 
 group :development, :test do
   gem 'govuk-lint', '~> 3.9'
-  gem 'jasmine', '~> 3.2'
+  gem 'jasmine', '~> 3.3'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.8'
