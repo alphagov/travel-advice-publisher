@@ -8,7 +8,7 @@ gem 'mongoid_rails_migrations'
 gem 'state_machines', '~> 0.4'
 gem 'state_machines-mongoid', '~> 0.2'
 
-gem 'diffy', '~> 3.2'
+gem 'diffy', '~> 3.3'
 gem 'formtastic', '~> 3.1'
 gem 'formtastic-bootstrap', '~> 3.1'
 
