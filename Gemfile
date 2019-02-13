@@ -23,7 +23,7 @@ gem 'govuk_admin_template', '~> 6.6'
 gem 'govuk_app_config', '~> 1.11'
 gem 'govuk_publishing_components', '~> 15.0.0'
 gem 'govuk_sidekiq', '~> 3.0'
-gem 'slimmer', '~> 13.0'
+gem 'slimmer', '~> 13.1'
 
 group :development, :test do
   gem 'govuk-lint', '~> 3.10'
