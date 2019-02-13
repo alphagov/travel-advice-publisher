@@ -483,10 +483,6 @@
   slug: macao
   content_id: c442b539-cc27-4637-af33-c5d51e0727a8
   email_signup_content_id: b29b49cd-b2ef-4df2-aac5-f76da0bad1b3
-- name: Macedonia
-  slug: macedonia
-  content_id: 269306a3-45ab-4d96-a004-9abfcb7f7972
-  email_signup_content_id: ffa0b225-dcee-4aa1-bed3-d70f397109b3
 - name: Madagascar
   slug: madagascar
   content_id: ee0ba11b-98de-4dd5-b66a-b54dfe55cde6
@@ -607,6 +603,10 @@
   slug: north-korea
   content_id: 277fdb72-8046-490f-8076-b3203e20c467
   email_signup_content_id: 75395209-f115-4894-b9ac-6124de925b32
+- name: North Macedonia
+  slug: north-macedonia
+  content_id: 269306a3-45ab-4d96-a004-9abfcb7f7972
+  email_signup_content_id: ffa0b225-dcee-4aa1-bed3-d70f397109b3
 - name: Norway
   slug: norway
   content_id: 5db38510-b08a-4e4c-b84f-ca2d62353ab6
