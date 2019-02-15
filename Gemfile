@@ -21,7 +21,7 @@ gem 'gds-sso', '~> 14.0'
 gem 'govspeak', '~> 5.9'
 gem 'govuk_admin_template', '~> 6.6'
 gem 'govuk_app_config', '~> 1.11'
-gem 'govuk_publishing_components', '~> 15.1.0'
+gem 'govuk_publishing_components', '~> 15.2.0'
 gem 'govuk_sidekiq', '~> 3.0'
 gem 'slimmer', '~> 13.1'
 
