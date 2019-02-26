@@ -27,8 +27,8 @@ To maintain the history of a country when renaming you will need to perform a [m
 
 If a country's foreign travel advice is being subsumed into another country's page:
 
+1. Run the `publishing_api:unpublish_published_edition_and_email_signup_content_item['country_slug', 'new_country_slug']` rake task, providing the slug of the country being removed, and the slug of the country that it should be redirected to.
 1. Remove the country from the [`lib/data/countries.yml`](../lib/data/countries.yml) file.
-2. Run the `publishing_api:unpublish_published_edition_and_email_signup_content_item['country_slug', 'new_country_slug']` rake task, providing the slug of the country being removed, and the slug of the country that it should be redirected to.
 
 ### Publishing API
 
