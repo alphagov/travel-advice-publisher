@@ -13,7 +13,7 @@ FactoryBot.define do
     sequence(:country_slug) { |n| "test-country-#{n}" }
     sequence(:title) { |n| "Test Country #{n}" }
     sequence(:summary) { |n| "Travel advice about Test Country #{n}" }
-    change_description "Stuff changed"
+    change_description { "Stuff changed" }
   end
 
   # These factories only work when used with FactoryBot.create
@@ -37,9 +37,9 @@ FactoryBot.define do
 
   factory :travel_advice_edition_with_pending_link_checks, parent: :published_travel_advice_edition do
     transient do
-      batch_id 1
-      link_uris []
-      status "pending"
+      batch_id { 1 }
+      link_uris { [] }
+      status { "pending" }
     end
 
     link_check_reports do
@@ -51,11 +51,11 @@ FactoryBot.define do
   end
 
   factory :travel_advice_edition_with_broken_links, parent: :published_travel_advice_edition do
-    id "a-edition-id"
+    id { "a-edition-id" }
     transient do
-      status "in_progress"
-      link_uris []
-      batch_id 1
+      status { "in_progress" }
+      link_uris { [] }
+      batch_id { 1 }
     end
 
     link_check_reports do
@@ -68,7 +68,7 @@ FactoryBot.define do
 
   factory :travel_advice_edition_with_caution_links, parent: :published_travel_advice_edition do
     transient do
-      link_uris []
+      link_uris { [] }
     end
 
     link_check_reports do
@@ -78,7 +78,7 @@ FactoryBot.define do
   end
 
   factory :travel_advice_edition_with_parts, parent: :travel_advice_edition do
-    summary "This is [link](https://www.gov.uk) text."
+    summary { "This is [link](https://www.gov.uk) text." }
 
     after :create do |getp|
       getp.parts.build(title: "Some Part Title!",
@@ -90,18 +90,18 @@ FactoryBot.define do
   end
 
   factory :link_check_report do
-    batch_id 1
-    status "in_progress"
-    completed_at Time.now
+    batch_id { 1 }
+    status { "in_progress" }
+    completed_at { Time.now }
     links { [FactoryBot.build(:link)] }
 
     trait :completed do
-      status "completed"
+      status { "completed" }
     end
 
     trait :with_pending_links do
       transient do
-        link_uris []
+        link_uris { [] }
       end
 
       links do
@@ -111,7 +111,7 @@ FactoryBot.define do
 
     trait :with_broken_links do
       transient do
-        link_uris []
+        link_uris { [] }
       end
 
       links do
@@ -121,7 +121,7 @@ FactoryBot.define do
 
     trait :with_caution_links do
       transient do
-        link_uris []
+        link_uris { [] }
       end
 
       links do
@@ -131,11 +131,11 @@ FactoryBot.define do
   end
 
   factory :link do
-    uri "http://www.example.com"
-    status "ok"
+    uri { "http://www.example.com" }
+    status { "ok" }
 
     trait :pending do
-      status "pending"
+      status { "pending" }
     end
   end
 end
