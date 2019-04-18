@@ -16,7 +16,7 @@ gem 'uglifier', '~> 4.1'
 gem 'sass-rails', '~> 5.0'
 
 gem 'plek', '~> 2.1'
-gem 'gds-api-adapters', '~> 59.0'
+gem 'gds-api-adapters', '~> 59.1'
 gem 'gds-sso', '~> 14.0'
 gem 'govspeak', '~> 6.0'
 gem 'govuk_admin_template', '~> 6.7'
