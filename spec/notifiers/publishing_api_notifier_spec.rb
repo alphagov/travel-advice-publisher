@@ -221,17 +221,5 @@ RSpec.describe PublishingApiNotifier do
         subject.enqueue
       end
     end
-
-    context "when tasks are in order and present" do
-      it "calls perform_async with request and user id arguments from headers" do
-        expect(PublishingApiWorker).to receive(:perform_async)
-          .with(anything, request_id: "12345-54321", user_id: "a0b1c2d3e4f5")
-
-        edition.publish!
-        subject.put_content(edition)
-        subject.publish(edition)
-        subject.enqueue
-      end
-    end
   end
 end
