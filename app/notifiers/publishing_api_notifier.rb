@@ -47,7 +47,7 @@ class PublishingApiNotifier
 
   def enqueue
     validate_tasks_order
-    worker.perform_async(tasks, request_id: request_id, user_id: user_id) if tasks.any?
+    worker.perform_async(tasks) if tasks.any?
   end
 
 private
@@ -75,14 +75,6 @@ private
       message = "send_alert must be last and immediately follow a publish"
       raise EnqueueError, message
     end
-  end
-
-  def request_id
-    GdsApi::GovukHeaders.headers[:govuk_request_id]
-  end
-
-  def user_id
-    GdsApi::GovukHeaders.headers[:x_govuk_authenticated_user]
   end
 
   class EnqueueError < StandardError; end
