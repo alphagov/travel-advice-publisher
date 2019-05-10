@@ -1,10 +1,7 @@
-require "spec_helper"
-
 RSpec.describe LinkCheckReportUpdater do
   let(:link_check_report) do
-    FactoryBot.create(:travel_advice_edition_with_pending_link_checks,
-                       batch_id: 1,
-                       link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
+    create(:travel_advice_edition_with_pending_link_checks,
+           batch_id: 1, link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
   end
 
   let(:completed_at) { Time.now }

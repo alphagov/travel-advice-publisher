@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe SafeHtml do
   class Dummy
     include Mongoid::Document

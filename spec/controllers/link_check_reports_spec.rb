@@ -1,14 +1,10 @@
-require "spec_helper"
-require "gds_api/test_helpers/link_checker_api"
-
 describe LinkCheckReportsController, type: :controller do
   include GdsApi::TestHelpers::LinkCheckerApi
   include Rails.application.routes.url_helpers
 
   describe "#create" do
     let(:travel_advice_edition) do
-      FactoryBot.create(:travel_advice_edition,
-                         summary: "[link](http://www.example.com)[link_two](http://www.gov.uk)")
+      create(:travel_advice_edition, summary: "[link](http://www.example.com)[link_two](http://www.gov.uk)")
     end
 
     before do
@@ -45,9 +41,9 @@ describe LinkCheckReportsController, type: :controller do
     context "#show" do
       let(:travel_advice_edition_id) { "a-edition-id" }
       let(:link_check_report) do
-        FactoryBot.create(:travel_advice_edition_with_broken_links,
-                           batch_id: 5,
-                           link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
+        create(:travel_advice_edition_with_broken_links,
+               batch_id: 5,
+               link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
       end
 
       it "GET redirects back to the edit edition page" do

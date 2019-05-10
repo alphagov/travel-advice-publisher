@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe IndexPresenter do
   include GdsApiHelpers
 

@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'rake'
 
 describe "publishing_api rake tasks", type: :rake_task do
@@ -49,7 +48,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     let(:task) { Rake::Task['publishing_api:republish_edition'] }
 
     it "sends the published edition to the publishing_api with update_type of 'republish'" do
-      edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba')
+      edition = create(:published_travel_advice_edition, country_slug: 'aruba')
 
       task.invoke(country.slug)
 
@@ -67,7 +66,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it 'ignore draft items' do
-      FactoryBot.create(:draft_travel_advice_edition, country_slug: country.slug)
+      create(:draft_travel_advice_edition, country_slug: country.slug)
 
       task.invoke(country.slug)
 
@@ -83,8 +82,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     let(:task) { Rake::Task['publishing_api:republish_editions'] }
 
     it "sends all published editions to the publishing_api with update_type of 'republish'" do
-      aruba = FactoryBot.create(:published_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      algeria = FactoryBot.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      aruba = create(:published_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
+      algeria = create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
 
       task.invoke
 
@@ -112,8 +111,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it "ignores draft items" do
-      FactoryBot.create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      FactoryBot.create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
+      create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
 
       task.invoke
 

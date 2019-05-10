@@ -1,4 +1,3 @@
-require "spec_helper"
 require "rake"
 
 describe "Email alert rake tasks", type: :rake_task do
@@ -15,7 +14,7 @@ describe "Email alert rake tasks", type: :rake_task do
     let(:country_slug) { "aruba" }
 
     it "triggers an email notification for the given edition ID" do
-      edition = FactoryBot.create(:published_travel_advice_edition, country_slug: country_slug)
+      edition = create(:published_travel_advice_edition, country_slug: country_slug)
 
       task.invoke(edition.id)
 

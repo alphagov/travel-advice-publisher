@@ -1,6 +1,3 @@
-require "spec_helper"
-require "sidekiq/testing"
-
 RSpec.describe PublishingApiNotifier do
   include GdsApiHelpers
 
@@ -13,7 +10,7 @@ RSpec.describe PublishingApiNotifier do
 
   subject { PublishingApiNotifier.new }
 
-  let(:edition) { FactoryBot.create(:travel_advice_edition, country_slug: "aruba") }
+  let(:edition) { create(:travel_advice_edition, country_slug: "aruba") }
 
   describe "put_content and enqueue" do
     let(:presenter) { EditionPresenter.new(edition) }

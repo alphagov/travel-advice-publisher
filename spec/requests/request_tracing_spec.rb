@@ -1,7 +1,3 @@
-require "spec_helper"
-require 'govuk_sidekiq/testing'
-require "gds_api/test_helpers/email_alert_api"
-
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::EmailAlertApi
@@ -9,10 +5,10 @@ RSpec.describe "Request tracing", type: :request do
 
   let(:govuk_request_id) { "12345-67890" }
   let(:govuk_authenticated_user) { "0a1b2c3d4e5f" }
-  let(:edition) { FactoryBot.create(:travel_advice_edition, country_slug: "aruba") }
+  let(:edition) { create(:travel_advice_edition, country_slug: "aruba") }
 
   before do
-    user = FactoryBot.create(:user, uid: govuk_authenticated_user)
+    user = create(:user, uid: govuk_authenticated_user)
     login_as(user)
     stub_any_publishing_api_call
     stub_any_email_alert_api_call

@@ -43,10 +43,7 @@ FactoryBot.define do
     end
 
     link_check_reports do
-      [FactoryBot.build(:link_check_report, :with_pending_links,
-                                             batch_id: batch_id,
-                                             link_uris: link_uris,
-                                             status: status)]
+      [build(:link_check_report, :with_pending_links, batch_id: batch_id, link_uris: link_uris, status: status)]
     end
   end
 
@@ -59,10 +56,7 @@ FactoryBot.define do
     end
 
     link_check_reports do
-      [FactoryBot.build(:link_check_report, :with_broken_links,
-                                             status: status,
-                                             link_uris: link_uris,
-                                             batch_id: batch_id)]
+      [build(:link_check_report, :with_broken_links, status: status, link_uris: link_uris, batch_id: batch_id)]
     end
   end
 
@@ -72,8 +66,7 @@ FactoryBot.define do
     end
 
     link_check_reports do
-      [FactoryBot.build(:link_check_report, :with_caution_links,
-                                             link_uris: link_uris)]
+      [build(:link_check_report, :with_caution_links, link_uris: link_uris)]
     end
   end
 
@@ -93,7 +86,7 @@ FactoryBot.define do
     batch_id { 1 }
     status { "in_progress" }
     completed_at { Time.now }
-    links { [FactoryBot.build(:link)] }
+    links { [build(:link)] }
 
     trait :completed do
       status { "completed" }
@@ -105,7 +98,7 @@ FactoryBot.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryBot.build(:link, :pending, uri: uri) }
+        link_uris.map { |uri| build(:link, :pending, uri: uri) }
       end
     end
 
@@ -115,7 +108,7 @@ FactoryBot.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryBot.build(:link, uri: uri, status: "broken") }
+        link_uris.map { |uri| build(:link, uri: uri, status: "broken") }
       end
     end
 
@@ -125,7 +118,7 @@ FactoryBot.define do
       end
 
       links do
-        link_uris.map { |uri| FactoryBot.build(:link, uri: uri, status: "caution") }
+        link_uris.map { |uri| build(:link, uri: uri, status: "caution") }
       end
     end
   end

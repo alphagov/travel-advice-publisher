@@ -1,7 +1,3 @@
-#encoding: utf-8
-
-require 'spec_helper'
-
 feature "Country version index" do
   before do
     login_as_stub_user
@@ -26,12 +22,12 @@ feature "Country version index" do
 
   specify "viewing a country with published editions and creating a draft" do
     country = Country.find_by_slug('aruba')
-    e1 = FactoryBot.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
-    e2 = FactoryBot.create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
-    e3 = FactoryBot.build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
-                            title: "Aruba extra special travel advice", summary: "## This is the summary",
-                            overview: "Search description about Aruba",
-                            alert_status: [TravelAdviceEdition::ALERT_STATUSES.first])
+    e1 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
+    e2 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
+    e3 = build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
+               title: "Aruba extra special travel advice", summary: "## This is the summary",
+               overview: "Search description about Aruba",
+               alert_status: [TravelAdviceEdition::ALERT_STATUSES.first])
     e3.parts.build(title: "Part One", slug: "part-one", body: "Some text")
     e3.parts.build(title: "Part Two", slug: "part-2", body: "Some more text")
     e3.save!

@@ -1,6 +1,3 @@
-require "spec_helper"
-require "gds_api/test_helpers/email_alert_api"
-
 RSpec.describe EmailAlertApiNotifier do
   include GdsApiHelpers
   include GdsApi::TestHelpers::EmailAlertApi
@@ -10,7 +7,7 @@ RSpec.describe EmailAlertApiNotifier do
   end
 
   let(:edition) do
-    FactoryBot.create(
+    create(
       :published_travel_advice_edition,
       country_slug: "albania",
       title: "Albania travel advice",
@@ -23,7 +20,7 @@ RSpec.describe EmailAlertApiNotifier do
   end
 
   context "when the edition is a draft" do
-    let(:edition) { FactoryBot.create(:draft_travel_advice_edition) }
+    let(:edition) { create(:draft_travel_advice_edition) }
 
     it "does nothing" do
       expect(subject.send_alert(edition)).to be_nil

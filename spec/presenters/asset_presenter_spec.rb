@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe AssetPresenter do
   let(:asset) do
     {
