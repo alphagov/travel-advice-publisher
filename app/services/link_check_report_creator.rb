@@ -38,7 +38,7 @@ private
   def call_link_checker_api
     callback = link_checker_api_callback_url(host: CALLBACK_HOST)
 
-    TravelAdvicePublisher.link_checker_api.create_batch(
+    GdsApi.link_checker_api.create_batch(
       uris,
       webhook_uri: callback,
       webhook_secret_token: Rails.application.secrets.link_checker_api_secret_token

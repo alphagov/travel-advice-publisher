@@ -15,7 +15,6 @@ Bundler.require(*Rails.groups)
 module TravelAdvicePublisher
   mattr_accessor :publishing_api_v2
   mattr_accessor :email_alert_api
-  mattr_accessor :link_checker_api
 
   # Maslow need ID for Travel Advice Publisher
   NEED_CONTENT_ID = '5118d7b4-215d-45e6-bd20-15d7bc21314f'.freeze
