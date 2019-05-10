@@ -1,7 +1,3 @@
-require "spec_helper"
-require 'govuk_sidekiq/testing'
-require "gds_api/test_helpers/email_alert_api"
-
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApiV2
   include GdsApi::TestHelpers::EmailAlertApi

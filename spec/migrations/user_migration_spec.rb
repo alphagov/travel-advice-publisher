@@ -1,4 +1,3 @@
-require 'spec_helper'
 require Rails.root.join('db', 'migrate', '20190227101824_archive_american_samoa.rb')
 
 describe ArchiveAmericanSamoa, type: :migration do

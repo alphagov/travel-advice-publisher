@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe EditionLinkExtractor do
   context ".call" do
     let(:edition_with_no_links) { FactoryBot.create(:travel_advice_edition) }

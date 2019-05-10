@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module PublicationCheck
   describe Result do
     describe "#failed?" do

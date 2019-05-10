@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe "/healthcheck", type: :request do
   def data(body = response.body)
     JSON.parse(body).deep_symbolize_keys

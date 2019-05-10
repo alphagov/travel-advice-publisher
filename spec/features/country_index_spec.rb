@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 feature "Country Index" do
   before :each do
     login_as_stub_user

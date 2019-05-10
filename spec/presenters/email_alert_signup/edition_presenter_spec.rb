@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe EmailAlertSignup::EditionPresenter do
   let(:edition) do
     FactoryBot.build(

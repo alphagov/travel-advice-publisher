@@ -1,6 +1,3 @@
-require "spec_helper"
-require "gds_api/test_helpers/link_checker_api"
-
 describe LinkCheckReportsController, type: :controller do
   include GdsApi::TestHelpers::LinkCheckerApi
   include Rails.application.routes.url_helpers

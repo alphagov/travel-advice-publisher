@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe Country do
   describe "Country.all" do
     it "should return a list of Countries" do

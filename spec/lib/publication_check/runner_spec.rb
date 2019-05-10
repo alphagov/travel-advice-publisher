@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 module PublicationCheck
   describe Runner do
     let(:request_one) { double(register_check_attempt!: nil) }

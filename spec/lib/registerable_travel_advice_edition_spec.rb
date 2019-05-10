@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe RegisterableTravelAdviceEdition do
   describe "state" do
     before :each do

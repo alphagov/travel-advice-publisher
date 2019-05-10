@@ -1,6 +1,3 @@
-require 'spec_helper'
-require "sidekiq/testing"
-
 describe Admin::EditionsController do
   include GdsApi::TestHelpers::PublishingApiV2
   render_views

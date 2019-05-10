@@ -18,3 +18,9 @@ RSpec.configuration.before :each, type: :feature do
 end
 
 RSpec.configuration.include GdsApiHelpers, type: :rake_task
+
+require "gds_api/asset_manager"
+require "gds_api/exceptions"
+require "gds_api/test_helpers/email_alert_api"
+require "gds_api/test_helpers/link_checker_api"
+require "gds_api/test_helpers/publishing_api_v2"

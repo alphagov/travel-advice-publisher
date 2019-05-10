@@ -1,7 +1,3 @@
-require 'spec_helper'
-require "gds_api/asset_manager"
-require "gds_api/exceptions"
-
 describe TravelAdviceEdition do
   describe('fields') do
     it "has correct fields" do

@@ -1,7 +1,3 @@
-#encoding: utf-8
-
-require 'spec_helper'
-
 feature "Country version index" do
   before do
     login_as_stub_user

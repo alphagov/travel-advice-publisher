@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe LinkCheckReportUpdater do
   let(:link_check_report) do
     FactoryBot.create(:travel_advice_edition_with_pending_link_checks,

@@ -1,8 +1,3 @@
-require "spec_helper"
-require "gds_api/test_helpers/email_alert_api"
-require "gds_api/test_helpers/publishing_api_v2"
-require "sidekiq/testing"
-
 RSpec.describe PublishingApiWorker, :perform do
   include GdsApi::TestHelpers::EmailAlertApi
   include GdsApi::TestHelpers::PublishingApiV2

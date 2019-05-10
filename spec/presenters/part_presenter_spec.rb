@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe PartPresenter do
   let(:edition) { FactoryBot.build(:travel_advice_edition) }
   let(:parts) { edition.parts }

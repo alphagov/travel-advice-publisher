@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe EditionPresenter do
   let(:user) { FactoryBot.create(:user) }
 

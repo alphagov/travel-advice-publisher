@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe LinkCheckReport, type: :model do
   context "validations" do
     let(:attributes) do

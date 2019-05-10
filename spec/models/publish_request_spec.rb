@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 describe PublishRequest do
   describe "#check_count" do
     let(:publish_request) { PublishRequest.new }

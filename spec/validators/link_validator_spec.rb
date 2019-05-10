@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe LinkValidator do
   class LinkValidatorDummy
     include Mongoid::Document

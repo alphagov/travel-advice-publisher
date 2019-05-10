@@ -1,6 +1,3 @@
-require "spec_helper"
-require "sidekiq/testing"
-
 RSpec.describe PublishingApiNotifier do
   include GdsApiHelpers
 

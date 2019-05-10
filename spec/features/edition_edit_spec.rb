@@ -1,8 +1,3 @@
-# encoding: UTF-8
-
-require 'spec_helper'
-require 'govuk_sidekiq/testing'
-
 feature "Edit Edition page", js: true do
   before do
     login_as_stub_user

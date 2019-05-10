@@ -1,4 +1,3 @@
-require "spec_helper"
 require "rake"
 
 describe "Email alert rake tasks", type: :rake_task do

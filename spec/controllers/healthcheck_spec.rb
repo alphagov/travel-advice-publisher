@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe HealthcheckController, type: :controller do
   include Rails.application.routes.url_helpers
 

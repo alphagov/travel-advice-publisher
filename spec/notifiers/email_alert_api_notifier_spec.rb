@@ -1,6 +1,3 @@
-require "spec_helper"
-require "gds_api/test_helpers/email_alert_api"
-
 RSpec.describe EmailAlertApiNotifier do
   include GdsApiHelpers
   include GdsApi::TestHelpers::EmailAlertApi

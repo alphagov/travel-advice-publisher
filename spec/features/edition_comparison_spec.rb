@@ -1,7 +1,3 @@
-# encoding: UTF-8
-
-require 'spec_helper'
-
 feature "Comparing two editions", js: true do
   before :each do
     login_as stub_user
