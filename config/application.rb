@@ -13,7 +13,6 @@ require "sprockets/railtie"
 Bundler.require(*Rails.groups)
 
 module TravelAdvicePublisher
-  mattr_accessor :publishing_api_v2
   mattr_accessor :email_alert_api
 
   # Maslow need ID for Travel Advice Publisher
