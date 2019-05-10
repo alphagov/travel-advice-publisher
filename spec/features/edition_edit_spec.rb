@@ -9,6 +9,9 @@ feature "Edit Edition page", js: true do
     Sidekiq::Testing.fake!
   end
 
+  let(:asset_manager) { double }
+  before { allow(GdsApi).to receive(:asset_manager).and_return(asset_manager) }
+
   def assert_details_contains(content_id, key, expected_value)
     assert_publishing_api_put_content(content_id, ->(response) {
       payload = JSON.parse(response.body)
@@ -536,10 +539,10 @@ feature "Edit Edition page", js: true do
       "content_type" => "image/jpeg",
     }
 
-    expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_one)
+    expect(asset_manager).to receive(:create_asset).and_return(asset_one)
 
-    allow(TravelAdvicePublisher.asset_api).to receive(:asset).with("an_image_id").and_return(asset_one)
-    allow(TravelAdvicePublisher.asset_api).to receive(:asset).with("another_image_id").and_return(asset_two)
+    allow(asset_manager).to receive(:asset).with("an_image_id").and_return(asset_one)
+    allow(asset_manager).to receive(:asset).with("another_image_id").and_return(asset_two)
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -569,7 +572,7 @@ feature "Edit Edition page", js: true do
       "content_type" => "image/jpeg")
 
     # replace image
-    expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_two)
+    expect(asset_manager).to receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new map image", file_two.path)
 
@@ -618,10 +621,10 @@ feature "Edit Edition page", js: true do
       "content_type" => "application/pdf",
     }
 
-    expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_one)
+    expect(asset_manager).to receive(:create_asset).and_return(asset_one)
 
-    allow(TravelAdvicePublisher.asset_api).to receive(:asset).with("a_document_id").and_return(asset_one)
-    allow(TravelAdvicePublisher.asset_api).to receive(:asset).with("another_document_id").and_return(asset_two)
+    allow(asset_manager).to receive(:asset).with("a_document_id").and_return(asset_one)
+    allow(asset_manager).to receive(:asset).with("another_document_id").and_return(asset_two)
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -651,7 +654,7 @@ feature "Edit Edition page", js: true do
       "content_type" => "application/pdf")
 
     # replace document
-    expect(TravelAdvicePublisher.asset_api).to receive(:create_asset).and_return(asset_two)
+    expect(asset_manager).to receive(:create_asset).and_return(asset_two)
 
     attach_file("Upload a new PDF", file_two.path)
 
