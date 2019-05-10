@@ -1,7 +1,7 @@
 describe RegisterableTravelAdviceEdition do
   describe "state" do
     before :each do
-      @edition = FactoryBot.build(:travel_advice_edition)
+      @edition = build(:travel_advice_edition)
     end
 
     it "should be 'live' for a published edition" do
@@ -22,7 +22,7 @@ describe RegisterableTravelAdviceEdition do
 
   describe "simple fields" do
     before :each do
-      @edition = FactoryBot.build(:travel_advice_edition)
+      @edition = build(:travel_advice_edition)
       @registerable = RegisterableTravelAdviceEdition.new(@edition)
     end
 
@@ -66,7 +66,7 @@ describe RegisterableTravelAdviceEdition do
 
   describe "content_id" do
     before :each do
-      @edition = FactoryBot.build(:travel_advice_edition)
+      @edition = build(:travel_advice_edition)
       @registerable = RegisterableTravelAdviceEdition.new(@edition)
     end
 

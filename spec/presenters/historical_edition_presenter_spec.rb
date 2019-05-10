@@ -9,7 +9,7 @@ describe HistoricalEditionPresenter do
   }
 
   let(:edition) {
-    FactoryBot.build(
+    build(
       :travel_advice_edition,
       country_slug: 'aruba',
       title: "Aruba travel advice",

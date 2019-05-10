@@ -2,9 +2,7 @@ describe HealthcheckController, type: :controller do
   include Rails.application.routes.url_helpers
 
   describe "#recently_published_editions" do
-    let(:travel_advice_edition) do
-      FactoryBot.create(:travel_advice_edition, published_at: 2.hours.ago)
-    end
+    let(:travel_advice_edition) { create(:travel_advice_edition, published_at: 2.hours.ago) }
 
     before do
       controller.stub(:editions_published_between_2_days_and_1_hour_ago) do

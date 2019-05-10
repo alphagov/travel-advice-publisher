@@ -2,7 +2,7 @@ RSpec.describe EmailAlertPresenter do
   include GdsApiHelpers
 
   let(:edition) do
-    FactoryBot.create(
+    create(
       :published_travel_advice_edition,
       country_slug: "algeria",
       title: "Algeria travel advice",

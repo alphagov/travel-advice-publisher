@@ -1,8 +1,8 @@
 describe EditionPresenter do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   let(:edition) {
-    edition = FactoryBot.build(
+    edition = build(
       :travel_advice_edition,
       country_slug: "aruba",
       title: "Aruba travel advice",
@@ -36,7 +36,7 @@ describe EditionPresenter do
   }
 
   let(:previous) {
-    previous = FactoryBot.create(
+    previous = create(
       :travel_advice_edition,
       country_slug: "aruba",
       change_description: "Stuff previously changed"

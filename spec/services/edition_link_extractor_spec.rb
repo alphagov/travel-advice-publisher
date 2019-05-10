@@ -1,9 +1,9 @@
 RSpec.describe EditionLinkExtractor do
   context ".call" do
-    let(:edition_with_no_links) { FactoryBot.create(:travel_advice_edition) }
-    let(:edition_with_links_in_govspeak_fields) { FactoryBot.create(:travel_advice_edition, summary: "This is a [link](https://www.example.com)") }
-    let(:edition_with_links_in_parts) { FactoryBot.create(:travel_advice_edition_with_parts) }
-    let(:edition_with_absolute_paths_in_govspeak_fields) { FactoryBot.create(:travel_advice_edition, summary: "This is a [link](https://www.example.com). This is an absolute [path](/id-for-driving-licence)") }
+    let(:edition_with_no_links) { create(:travel_advice_edition) }
+    let(:edition_with_links_in_govspeak_fields) { create(:travel_advice_edition, summary: "This is a [link](https://www.example.com)") }
+    let(:edition_with_links_in_parts) { create(:travel_advice_edition_with_parts) }
+    let(:edition_with_absolute_paths_in_govspeak_fields) { create(:travel_advice_edition, summary: "This is a [link](https://www.example.com). This is an absolute [path](/id-for-driving-licence)") }
 
     it "should not error when edition has no links" do
       result = call_edition_link_extractor(edition_with_no_links)

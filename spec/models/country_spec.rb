@@ -30,17 +30,17 @@ describe Country do
     end
 
     it "should return all TravelAdviceEditions with the matching country_slug" do
-      e1 = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug)
-      _e2 = FactoryBot.create(:archived_travel_advice_edition, country_slug: "wibble")
-      e3 = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug)
+      e1 = create(:archived_travel_advice_edition, country_slug: @country.slug)
+      _e2 = create(:archived_travel_advice_edition, country_slug: "wibble")
+      e3 = create(:archived_travel_advice_edition, country_slug: @country.slug)
 
       expect(@country.editions.to_a).to match_array([e1, e3])
     end
 
     it "should order them by descending version_number" do
-      e1 = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
-      e3 = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 3)
-      e2 = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 2)
+      e1 = create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
+      e3 = create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 3)
+      e2 = create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 2)
 
       expect(@country.editions.to_a).to eq([e3, e2, e1])
     end
@@ -50,9 +50,9 @@ describe Country do
     before do
       @country = Country.all.first
 
-      @archived = FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
-      @published = FactoryBot.create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 2)
-      @draft = FactoryBot.create(:draft_travel_advice_edition, country_slug: @country.slug, version_number: 3)
+      @archived = create(:archived_travel_advice_edition, country_slug: @country.slug, version_number: 1)
+      @published = create(:published_travel_advice_edition, country_slug: @country.slug, version_number: 2)
+      @draft = create(:draft_travel_advice_edition, country_slug: @country.slug, version_number: 3)
     end
 
     it "should return the last published edition for the country" do
@@ -81,19 +81,19 @@ describe Country do
     end
 
     it "should match published editions correctly" do
-      FactoryBot.create(:published_travel_advice_edition, country_slug: @country.slug)
+      create(:published_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(true)
       expect(@country.has_draft_edition?).to eq(false)
     end
 
     it "should match draft editions correctly" do
-      FactoryBot.create(:draft_travel_advice_edition, country_slug: @country.slug)
+      create(:draft_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(false)
       expect(@country.has_draft_edition?).to eq(true)
     end
 
     it "should be false with editions in other states" do
-      FactoryBot.create(:archived_travel_advice_edition, country_slug: @country.slug)
+      create(:archived_travel_advice_edition, country_slug: @country.slug)
       expect(@country.has_published_edition?).to eq(false)
       expect(@country.has_draft_edition?).to eq(false)
     end
@@ -105,9 +105,9 @@ describe Country do
     end
 
     it "should build a clone of the latest edition if present" do
-      ed1 = FactoryBot.build(:travel_advice_edition)
-      ed2 = FactoryBot.build(:travel_advice_edition)
-      ed3 = FactoryBot.build(:travel_advice_edition)
+      ed1 = build(:travel_advice_edition)
+      ed2 = build(:travel_advice_edition)
+      ed3 = build(:travel_advice_edition)
       allow(@country).to receive(:editions).and_return([ed3, ed2, ed1])
       expect(ed3).to receive(:build_clone).and_return(:a_new_edition)
 
@@ -124,7 +124,7 @@ describe Country do
 
   describe "build_new_edition_as" do
     before :each do
-      @user = FactoryBot.create(:user)
+      @user = create(:user)
       @country = Country.find_by_slug('aruba')
     end
 
@@ -138,9 +138,10 @@ describe Country do
 
     describe "providing an optional edition parameter" do
       before :each do
-        @edition = FactoryBot.create(:archived_travel_advice_edition,
-          country_slug: @country.slug, title: "A test title",
-          overview: "Meh")
+        @edition = create(
+          :archived_travel_advice_edition, country_slug: @country.slug,
+          title: "A test title", overview: "Meh"
+        )
       end
 
       it "should build a clone of the provided edition" do

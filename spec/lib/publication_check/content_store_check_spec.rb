@@ -1,12 +1,9 @@
 module PublicationCheck
   describe ContentStoreCheck do
-    let(:edition) {
-      FactoryBot.create(
-        :published_travel_advice_edition,
-        country_slug: "andorra",
-        version_number: 2
-      )
-    }
+    let(:edition) do
+      create(:published_travel_advice_edition, country_slug: "andorra", version_number: 2)
+    end
+
     let(:publish_request) {
       PublishRequest.new(
         request_id: "25107-1461581820.634-185.22.224.96-13641",

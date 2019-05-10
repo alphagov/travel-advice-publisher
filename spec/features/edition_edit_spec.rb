@@ -57,7 +57,7 @@ feature "Edit Edition page", js: true do
     end
 
     scenario "create an edition from an archived edition" do
-      @edition = FactoryBot.create(:archived_travel_advice_edition, country_slug: "albania", title: "An archived title")
+      @edition = create(:archived_travel_advice_edition, country_slug: "albania", title: "An archived title")
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -75,7 +75,7 @@ feature "Edit Edition page", js: true do
     end
 
     scenario "create an edition from a published edition" do
-      @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
+      @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
       @edition.actions.build(request_type: Action::NEW_VERSION)
       @edition.actions.build(request_type: Action::PUBLISH, requester: User.first, comment: "Made some changes...")
       @edition.save(validate: false)
@@ -106,8 +106,8 @@ feature "Edit Edition page", js: true do
     end
 
     scenario "should not allow creation of drafts if draft already exists" do
-      @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
-      @draft = FactoryBot.create(:travel_advice_edition, country_slug: 'albania', state: "draft")
+      @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
+      @draft = create(:travel_advice_edition, country_slug: 'albania', state: "draft")
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -117,7 +117,7 @@ feature "Edit Edition page", js: true do
     end
 
     scenario "preventing double submits by using the Rails 'disable_with' feature" do
-      @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
+      @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -127,7 +127,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "inspecting the edit form, and adding content" do
-    @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:draft_travel_advice_edition, country_slug: 'albania')
     visit "/admin/editions/#{@edition._id}/edit"
 
     within('h1') { expect(page).to have_content "Editing Albania Version 1" }
@@ -218,7 +218,7 @@ feature "Edit Edition page", js: true do
 
   scenario "Updating the reviewed at date for a published edition" do
     travel_to(Time.current) do
-      @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:published_travel_advice_edition, country_slug: 'albania')
       visit "/admin/editions/#{@edition._id}/edit"
       click_on "Update review date"
       @edition.reload
@@ -231,8 +231,8 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Seeing the minor update toggle on the edit form for non-first versions" do
-    FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
-    @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: 'albania', minor_update: true)
+    create(:published_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:draft_travel_advice_edition, country_slug: 'albania', minor_update: true)
     visit "/admin/editions/#{@edition._id}/edit"
 
     within('h1') { expect(page).to have_content "Editing Albania Version 2" }
@@ -255,7 +255,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "slug for expect(parts).to be automatically generated" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
 
     click_on 'Add new part'
@@ -268,7 +268,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "removing a part from an edition" do
-    @edition = FactoryBot.build(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = build(:travel_advice_edition, country_slug: 'albania', state: 'draft')
     @edition.parts.build(title: 'Part One', body: 'Body text', slug: 'part-one')
     @edition.parts.build(title: 'Part Two', body: 'Body text', slug: 'part-two')
     @edition.save!
@@ -314,7 +314,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "adding an invalid part" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
     visit "/admin/editions/#{@edition._id}/edit"
 
     click_on "Add new part"
@@ -329,7 +329,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "updating the parts sort order" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
 
     @edition.parts << Part.new(title: "Wallace", slug: "wallace", order: 1)
     @edition.parts << Part.new(title: "Gromit", slug: "gromit", order: 2)
@@ -359,8 +359,8 @@ feature "Edit Edition page", js: true do
     allow(GdsApi::GovukHeaders).to receive(:headers)
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
 
-    @old_edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
-    @edition = FactoryBot.create(
+    @old_edition = create(:published_travel_advice_edition, country_slug: 'albania')
+    @edition = create(
       :draft_travel_advice_edition,
       country_slug: 'albania',
       title: 'Albania travel advice',
@@ -402,16 +402,16 @@ feature "Edit Edition page", js: true do
 
   scenario "save and publish a minor update to an edition" do
     travel_to(3.days.ago) do
-      @old_edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania',
-                                        summary: "## The summaryy",
-                                        change_description: "Some things changed", minor_update: false)
+      @old_edition = create(:published_travel_advice_edition, country_slug: 'albania',
+                            summary: "## The summaryy", change_description: "Some things changed",
+                            minor_update: false)
     end
     travel_to(2.days.ago) do
       @old_edition.reviewed_at = Time.zone.now.utc
       @old_edition.save!
       @old_edition.reload
     end
-    @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:draft_travel_advice_edition, country_slug: 'albania')
 
     travel_to(Time.current) do
       visit "/admin/editions/#{@edition.to_param}/edit"
@@ -440,8 +440,8 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "attempting to edit a published edition" do
-    @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
-    @draft = FactoryBot.create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:published_travel_advice_edition, country_slug: 'albania')
+    @draft = create(:draft_travel_advice_edition, country_slug: 'albania')
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -454,14 +454,14 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "preview an edition" do
-    @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:published_travel_advice_edition, country_slug: 'albania')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     expect(page).to have_selector("a[href^='http://www.dev.gov.uk/foreign-travel-advice/albania?cache=']", text: "View on site")
   end
 
   scenario "create a note" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     within(:css, ".tabbable .nav") do
@@ -478,7 +478,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Set the alert status for an edition" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
@@ -519,7 +519,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "managing images for an edition" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
 
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "image.jpg"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "image_two.jpg"))
@@ -599,7 +599,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "managing documents for an edition" do
-    @edition = FactoryBot.create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
 
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "document.pdf"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "document_two.pdf"))
@@ -682,20 +682,20 @@ feature "Edit Edition page", js: true do
 
   context "workflow 'Save & Publish' button" do
     scenario "does not appear for archived editions" do
-      @edition = FactoryBot.create(:archived_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:archived_travel_advice_edition, country_slug: 'albania')
       visit "/admin/editions/#{@edition.to_param}/edit"
       expect(page).not_to have_button("Save & Publish")
     end
 
     scenario "does not appear for published editions" do
-      @edition = FactoryBot.create(:published_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:published_travel_advice_edition, country_slug: 'albania')
       visit "/admin/editions/#{@edition.to_param}/edit"
       expect(page).not_to have_button("Save & Publish")
     end
   end
 
   scenario "disallowing hover text on links in govspeak fields" do
-    @edition = FactoryBot.create(:draft_travel_advice_edition, country_slug: "albania")
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     fill_in "Summary", with: "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
