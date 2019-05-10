@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.3)
     actioncable (5.2.3)
       actionpack (= 5.2.3)
       nio4r (~> 2.0)
@@ -44,6 +45,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    afm (0.2.2)
     arel (9.0.0)
     ast (2.4.0)
     autoprefixer-rails (9.5.1.1)
@@ -167,6 +169,7 @@ GEM
       selenium-webdriver
       webdrivers
     hashdiff (0.3.9)
+    hashery (2.1.2)
     hashie (3.6.0)
     htmlentities (4.3.4)
     http-cookie (1.0.3)
@@ -254,6 +257,12 @@ GEM
     parallel (1.17.0)
     parser (2.6.3.0)
       ast (~> 2.4.0)
+    pdf-reader (2.2.0)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     phantomjs (2.1.1.0)
     plek (2.1.1)
     power_assert (1.1.4)
@@ -351,6 +360,7 @@ GEM
     rubocop-rspec (1.32.0)
       rubocop (>= 0.60.0)
     ruby-progressbar (1.10.0)
+    ruby-rc4 (0.1.5)
     rubyzip (1.2.2)
     safe_yaml (1.0.5)
     sanitize (5.0.0)
@@ -424,6 +434,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.9)
     timecop (0.9.1)
+    ttfunk (1.5.1)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.20)
@@ -478,6 +489,7 @@ DEPENDENCIES
   mongo (~> 2.4.3)
   mongoid (~> 6.2)
   mongoid_rails_migrations
+  pdf-reader (~> 2.2)
   plek (~> 2.1)
   pry-byebug
   pry-rails
