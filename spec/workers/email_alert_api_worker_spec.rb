@@ -22,7 +22,7 @@ RSpec.describe EmailAlertApiWorker, :perform do
     end
 
     it "does not send an alert" do
-      expect(TravelAdvicePublisher.email_alert_api).not_to receive(:send_alert)
+      expect(GdsApi.email_alert_api).not_to receive(:send_alert)
       described_class.new.perform(payload)
     end
   end
