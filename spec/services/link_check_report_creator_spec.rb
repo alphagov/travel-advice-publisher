@@ -1,9 +1,6 @@
-require "spec_helper"
-
 RSpec.describe LinkCheckReportCreator do
   let(:travel_advice_edition) do
-    FactoryBot.create(:travel_advice_edition,
-                       summary: "[link](http://www.example.com)[link_two](http://www.gov.com)")
+    create(:travel_advice_edition, summary: "[link](http://www.example.com)[link_two](http://www.gov.com)")
   end
 
   let(:completed_at) { Time.now }
@@ -37,14 +34,16 @@ RSpec.describe LinkCheckReportCreator do
   end
 
   let(:link_check_report) do
-    FactoryBot.create(:travel_advice_edition_with_pending_link_checks,
-                       batch_id: 1,
-                       link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
+    create(:travel_advice_edition_with_pending_link_checks,
+           batch_id: 1, link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
   end
 
+  let(:link_checker_api) { double }
+
   before do
-    allow(TravelAdvicePublisher.link_checker_api).to receive(:create_batch).and_return(link_checker_api_response)
+    allow(link_checker_api).to receive(:create_batch).and_return(link_checker_api_response)
     allow(LinkCheckReport).to receive(:new).and_return(link_check_report)
+    allow(GdsApi).to receive(:link_checker_api).and_return(link_checker_api)
   end
 
   subject do
@@ -52,11 +51,10 @@ RSpec.describe LinkCheckReportCreator do
   end
 
   it 'should call the link checker api with a callback url and secret token' do
-    expect(TravelAdvicePublisher.link_checker_api).to receive(:create_batch)
+    expect(link_checker_api).to receive(:create_batch)
 
     subject.call
   end
-
 
   context "when the link checker api is called" do
     it "sets link check api attributes on report" do

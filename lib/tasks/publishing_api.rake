@@ -1,6 +1,6 @@
 namespace :publishing_api do
   def api_v2
-    TravelAdvicePublisher.publishing_api_v2
+    GdsApi.publishing_api_v2
   end
 
   desc "send index content-item to publishing-api"

@@ -215,7 +215,7 @@ private
 
       define_method(field) do
         unless self.send("#{field}_id").blank?
-          @attachments[field] ||= TravelAdvicePublisher.asset_api.asset(self.send("#{field}_id"))
+          @attachments[field] ||= GdsApi.asset_manager.asset(self.send("#{field}_id"))
         end
       end
 
@@ -234,7 +234,7 @@ private
 
       define_method("upload_#{field}") do
         begin
-          response = TravelAdvicePublisher.asset_api.create_asset(file: instance_variable_get("@#{field}_file"))
+          response = GdsApi.asset_manager.create_asset(file: instance_variable_get("@#{field}_file"))
           self.send("#{field}_id=", response["id"].match(/\/([^\/]+)\z/) { |m| m[1] })
         rescue GdsApi::BaseError
           errors.add("#{field}_id".to_sym, "could not be uploaded")
