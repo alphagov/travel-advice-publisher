@@ -15,6 +15,9 @@ gem 'formtastic-bootstrap', '~> 3.1'
 gem 'uglifier', '~> 4.1'
 gem 'sass-rails', '~> 5.0'
 
+gem "mini_magick", "~> 4.9"
+gem "pdf-reader", "~> 2.2"
+
 gem 'plek', '~> 2.1'
 gem 'gds-api-adapters', '~> 59.2'
 gem 'gds-sso', '~> 14.0'

@@ -228,6 +228,8 @@ private
         instance_variable_get("@#{field}_has_changed")
       end
 
+      attr_reader :"#{field}_file"
+
       define_method("remove_#{field}=") do |value|
         self.send("#{field}_id=", nil) unless value.blank?
       end
@@ -247,4 +249,7 @@ private
   private_class_method :attaches
 
   attaches :image, :document
+
+  validates :image_file, image: true
+  validates :document_file, pdf: true
 end

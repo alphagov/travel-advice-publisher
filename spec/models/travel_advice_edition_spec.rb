@@ -199,6 +199,22 @@ describe TravelAdviceEdition do
         expect(ta).to be_valid
       end
     end
+
+    context "with an invalid image" do
+      before { ta.image = file_fixture("example.html").open }
+
+      it "should be invalid" do
+        expect(ta).not_to be_valid
+      end
+    end
+
+    context "with an invalid document" do
+      before { ta.document = file_fixture("example.html").open }
+
+      it "should be invalid" do
+        expect(ta).not_to be_valid
+      end
+    end
   end
 
   it "has a published scope" do
