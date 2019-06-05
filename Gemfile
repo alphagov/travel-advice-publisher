@@ -21,7 +21,7 @@ gem "pdf-reader", "~> 2.2"
 gem 'plek', '~> 2.1'
 gem 'gds-api-adapters', '~> 59.2'
 gem 'gds-sso', '~> 14.0'
-gem 'govspeak', '~> 6.0'
+gem 'govspeak', '~> 6.2'
 gem 'govuk_admin_template', '~> 6.7'
 gem 'govuk_app_config', '~> 1.16'
 gem 'govuk_publishing_components', '~> 16.19.0'
