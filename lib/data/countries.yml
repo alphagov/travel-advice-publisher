@@ -135,10 +135,6 @@
   slug: burkina-faso
   content_id: 9ac225d7-ea48-401b-b255-7f281d2c4168
   email_signup_content_id: 4c7c89ff-23b5-41ba-a104-6e2b629ba4d1
-- name: Burma
-  slug: burma
-  content_id: ed343e59-83ca-496b-84b1-8f85c71a747d
-  email_signup_content_id: 38913925-e2e8-473a-a9ff-012f3eb6f2bf
 - name: Burundi
   slug: burundi
   content_id: d13008f0-a794-47e2-a9fe-773ffe6bc0b5
@@ -563,6 +559,10 @@
   slug: mozambique
   content_id: eb77a950-bd40-4a8d-8f3b-1f92d126930d
   email_signup_content_id: 753ce9ff-afda-452e-bc9c-0f17d00d162a
+- name: Myanmar
+  slug: myanmar
+  content_id: ed343e59-83ca-496b-84b1-8f85c71a747d
+  email_signup_content_id: 38913925-e2e8-473a-a9ff-012f3eb6f2bf
 - name: Namibia
   slug: namibia
   content_id: 5a2d153e-efc6-4dbc-b3ac-d81e51e4f1f7
