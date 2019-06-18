@@ -262,7 +262,7 @@ GEM
       ruby-rc4
       ttfunk
     phantomjs (2.1.1.0)
-    plek (2.1.1)
+    plek (3.0.0)
     power_assert (1.1.4)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -494,7 +494,7 @@ DEPENDENCIES
   mongoid (~> 6.2)
   mongoid_rails_migrations
   pdf-reader (~> 2.2)
-  plek (~> 2.1)
+  plek (~> 3.0)
   pry-byebug
   pry-rails
   rails (= 5.2.3)
