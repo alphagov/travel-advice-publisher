@@ -18,7 +18,7 @@ gem 'sass-rails', '~> 5.0'
 gem "mini_magick", "~> 4.9"
 gem "pdf-reader", "~> 2.2"
 
-gem 'plek', '~> 2.1'
+gem 'plek', '~> 3.0'
 gem 'gds-api-adapters', '~> 59.5'
 gem 'gds-sso', '~> 14.0'
 gem 'govspeak', '~> 6.2'
