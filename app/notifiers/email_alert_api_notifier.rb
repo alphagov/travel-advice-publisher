@@ -6,7 +6,7 @@ module EmailAlertApiNotifier
       return unless send_alert?(edition)
 
       payload = EmailAlertPresenter.present(edition)
-      GdsApi.email_alert_api.send_alert(payload)
+      GdsApi.email_alert_api.create_content_change(payload)
     end
 
   private
