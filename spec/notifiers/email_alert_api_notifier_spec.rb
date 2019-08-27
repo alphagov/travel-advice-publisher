@@ -16,7 +16,7 @@ RSpec.describe EmailAlertApiNotifier do
 
   it "sends a request to the email alert api" do
     subject.send_alert(edition)
-    assert_email_alert_sent("subject" => "Albania travel advice")
+    assert_email_alert_api_content_change_created("subject" => "Albania travel advice")
   end
 
   context "when the edition is a draft" do

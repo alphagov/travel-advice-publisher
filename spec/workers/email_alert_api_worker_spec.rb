@@ -12,7 +12,7 @@ RSpec.describe EmailAlertApiWorker, :perform do
 
   it "sends an alert to the email-alert-api" do
     described_class.new.perform(payload)
-    assert_email_alert_sent(payload)
+    assert_email_alert_api_content_change_created(payload)
   end
 
   context "when send_email_alerts is disabled" do
@@ -22,7 +22,7 @@ RSpec.describe EmailAlertApiWorker, :perform do
     end
 
     it "does not send an alert" do
-      expect(GdsApi.email_alert_api).not_to receive(:send_alert)
+      expect(GdsApi.email_alert_api).not_to receive(:create_content_change)
       described_class.new.perform(payload)
     end
   end
