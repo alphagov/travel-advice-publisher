@@ -30,7 +30,7 @@ gem 'slimmer', '~> 13.1'
 
 group :development, :test do
   gem 'govuk-lint', '~> 3.11'
-  gem 'jasmine', '~> 3.4'
+  gem 'jasmine', '~> 3.5'
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.8'
