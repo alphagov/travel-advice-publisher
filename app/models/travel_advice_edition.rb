@@ -178,7 +178,7 @@ private
   end
 
   def anything_other_than_state_changed?(*additional_allowed_fields)
-    self.changed? && ((changes.keys - ["state"] - additional_allowed_fields) != [] || self.parts.any?(&:changed?))
+    self.changed? && ((changes.keys - %w[state] - additional_allowed_fields) != [] || self.parts.any?(&:changed?))
   end
 
   def alert_status_contains_valid_values

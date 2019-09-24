@@ -134,7 +134,7 @@ describe EditionPresenter do
               ],
             },
           ],
-          "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
+          "alert_status" => %w[avoid_all_but_essential_travel_to_parts],
           "max_cache_time" => 10,
         },
       )

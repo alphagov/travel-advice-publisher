@@ -48,7 +48,7 @@ feature "Country version index" do
     expect(e4.overview).to eq("Search description about Aruba")
     expect(e4.alert_status).to eq([TravelAdviceEdition::ALERT_STATUSES.first])
     expect(e4.parts.map(&:title)).to eq(["Part One", "Part Two"])
-    expect(e4.parts.map(&:slug)).to eq(["part-one", "part-2"])
+    expect(e4.parts.map(&:slug)).to eq(%w[part-one part-2])
     expect(e4.parts.map(&:body)).to eq(["Some text", "Some more text"])
 
     i_should_be_on "/admin/editions/#{e4.id}/edit"

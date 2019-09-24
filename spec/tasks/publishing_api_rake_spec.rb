@@ -35,8 +35,8 @@ describe "publishing_api rake tasks", type: :rake_task do
         request_json_includes(
           links:
             {
-              parent: ["b9849cd6-61a7-42dc-8124-362d2c7d48b0"],
-              primary_publishing_organisation: ["9adfc4ed-9f6c-4976-a6d8-18d34356367c"],
+              parent: %w[b9849cd6-61a7-42dc-8124-362d2c7d48b0],
+              primary_publishing_organisation: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
             },
         ),
       )
