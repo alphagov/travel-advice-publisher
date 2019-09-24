@@ -195,6 +195,7 @@ private
 
   def extract_part_errors
     return if errors.delete(:parts).blank?
+
     part_errors = parts.map do |part|
       "#{part.order}: #{part.errors.full_messages.to_sentence}" if part.errors.present?
     end
