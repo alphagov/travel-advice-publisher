@@ -21,7 +21,7 @@ private
 
   CACHE_EXPIRES_IN = 10.seconds
 
-  def raise_helpful_error(e, jobs, endpoint, content_id, payload)
+  def raise_helpful_error(error, jobs, endpoint, content_id, payload)
     message = "\n\n=== Job details ==="
     jobs.each { |j| message += "\n#{j.inspect}" }
 
@@ -29,6 +29,6 @@ private
     message += "\n#{endpoint}, #{content_id}"
     message += "\n#{payload}"
 
-    raise WorkerError.new(self, e, message)
+    raise WorkerError.new(self, error, message)
   end
 end
