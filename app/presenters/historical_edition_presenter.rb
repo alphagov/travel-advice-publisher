@@ -2,14 +2,14 @@ class HistoricalEditionPresenter
   extend Forwardable
 
   def_delegators :edition,
-     :alert_status,
-     :change_description,
-     :overview,
-     :title,
-     :document,
-     :image,
-     :reviewed_at,
-     :updated_at
+                 :alert_status,
+                 :change_description,
+                 :overview,
+                 :title,
+                 :document,
+                 :image,
+                 :reviewed_at,
+                 :updated_at
 
   attr_accessor :edition, :country
   Part = Struct.new(:slug, :title, :body)
