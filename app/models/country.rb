@@ -41,7 +41,7 @@ class Country
   end
 
   def self.all
-    @countries ||= data.map { |d| Country.new(d) }
+    @all ||= data.map { |d| Country.new(d) }
   end
 
   def self.find_by_slug(slug)
@@ -62,6 +62,6 @@ class Country
   end
 
   def self.clear_memoized_countries
-    @countries = nil
+    @all = nil
   end
 end
