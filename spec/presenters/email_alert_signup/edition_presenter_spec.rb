@@ -54,7 +54,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
             title: "Aruba Travel Advice",
             link: "/foreign-travel-advice/aruba",
           },
-        ]
+        ],
       })
   end
 end

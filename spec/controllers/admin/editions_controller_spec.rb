@@ -124,13 +124,13 @@ describe Admin::EditionsController do
                 title: "Part One",
                 body: "Body text",
                 slug: "part-one",
-                order: "1"
+                order: "1",
               },
               "1" => {
                 title: "Part Two",
                 body: "Body text",
                 slug: "part-two",
-                order: "2"
+                order: "2",
               },
             },
           },
@@ -145,7 +145,7 @@ describe Admin::EditionsController do
           commit: "Save",
           id: @edition._id,
           edition: {
-            alert_status: ["", nil, "   ", "one", "two", "three"]
+            alert_status: ["", nil, "   ", "one", "two", "three"],
           },
         }
 
@@ -158,8 +158,8 @@ describe Admin::EditionsController do
           commit: "Add Note",
           edition: {
             note: {
-              comment: "Test note"
-            }
+              comment: "Test note",
+            },
           },
         }
 
@@ -180,16 +180,16 @@ describe Admin::EditionsController do
                 title: "Part One",
                 body: "Body text",
                 slug: "part-one",
-                order: "1"
+                order: "1",
               },
               "1" => {
                 title: "Part Two",
                 body: "Body text",
                 slug: "part-two",
-                order: "2"
-              }
-            }
-          }
+                order: "2",
+              },
+            },
+          },
         }
 
         expect(response).to be_success

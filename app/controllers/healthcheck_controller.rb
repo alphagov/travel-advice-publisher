@@ -11,7 +11,7 @@ class HealthcheckController < ApplicationController
     editions = editions_published_between_2_days_and_1_hour_ago.each.map do |edition|
       {
         title: edition.title,
-        published_at: edition.published_at
+        published_at: edition.published_at,
       }
     end
 

@@ -164,7 +164,7 @@ module Formtastic #:nodoc:
             local_assignments = {
               index_variable_name => index += 1,
               local_assign_name.to_sym => element,
-              :f => f
+              :f => f,
             }.merge(opts[:locals])
             template.render({ partial: partial.to_s, locals: local_assignments }.merge(opts[:render]))
           end

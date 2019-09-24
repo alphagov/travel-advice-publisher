@@ -10,7 +10,7 @@ RSpec.describe LinkCheckReportUpdater do
     {
       status: "complete",
       completed_at: completed_at,
-      links: links_payload
+      links: links_payload,
     }.with_indifferent_access
   end
 
@@ -20,13 +20,13 @@ RSpec.describe LinkCheckReportUpdater do
       status: "ok",
       checked: completed_at.try(:iso8601),
       problem_summary: nil,
-      suggested_fix: nil
+      suggested_fix: nil,
     }, {
       uri: "http://www.gov.com",
       status: "broken",
       checked: completed_at.try(:iso8601),
       problem_summary: "Page Not Found",
-      suggested_fix: "Contact site administrator"
+      suggested_fix: "Contact site administrator",
     }]
   end
 

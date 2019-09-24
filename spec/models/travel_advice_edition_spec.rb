@@ -540,7 +540,7 @@ describe TravelAdviceEdition do
       ed = create(:travel_advice_edition, state: "draft", image_id: "an_image_id")
 
       asset = {
-        "file_url" => "/path/to/image"
+        "file_url" => "/path/to/image",
       }
       allow_any_instance_of(GdsApi::AssetManager).to receive(:asset).with("an_image_id").and_return(asset)
 
@@ -552,7 +552,7 @@ describe TravelAdviceEdition do
 
       asset = {
         "something" => "one",
-        "something_else" => "two"
+        "something_else" => "two",
       }
       expect_any_instance_of(GdsApi::AssetManager).to receive(:asset).once.with("an_image_id").and_return(asset)
 

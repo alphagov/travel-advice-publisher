@@ -39,7 +39,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
             title: "Foreign travel advice",
             link: "/foreign-travel-advice",
           },
-        ]
+        ],
       })
   end
 end

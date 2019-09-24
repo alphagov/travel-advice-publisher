@@ -55,8 +55,8 @@ namespace :publishing_api do
             "e4d06cb9-9e2e-4e82-b802-0aad013ae16c",
             "95f9c380-30bc-44c7-86b4-e9c9ef0fc272",
             "82248bb1-c4d6-41e0-9494-d98123475626"
-          ]
-        }
+          ],
+        },
       }
 
       api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)

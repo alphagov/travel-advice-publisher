@@ -18,7 +18,7 @@ RSpec.describe LinkCheckReportCreator do
           warnings: ["example check warnings"],
           errors: ["example check errors"],
           problem_summary: "example problem",
-          suggested_fix: "example fix"
+          suggested_fix: "example fix",
         },
         {
           uri: "http://www.gov.com",
@@ -27,9 +27,9 @@ RSpec.describe LinkCheckReportCreator do
           warnings: [],
           errors: [],
           problem_summary: "",
-          suggested_fix: ""
+          suggested_fix: "",
         }
-      ]
+      ],
     }
   end
 
