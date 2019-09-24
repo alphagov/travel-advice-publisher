@@ -22,11 +22,11 @@ private
 
   def editions_published_between_2_days_and_1_hour_ago
     TravelAdviceEdition.published.where(
-      :published_at.gte => 2.days.ago
+      :published_at.gte => 2.days.ago,
     ).where(
-      :published_at.lte => 1.hour.ago
+      :published_at.lte => 1.hour.ago,
     ).order_by(
-      published_at: :desc
+      published_at: :desc,
     )
   end
 end

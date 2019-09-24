@@ -26,7 +26,7 @@ RSpec.describe LinkCheckerApiController, type: :controller do
       id: link_check_report_batch_id,
       links: [
         { uri: "https://www.gov.uk", status: "ok" },
-      ]
+      ],
     )
   end
 

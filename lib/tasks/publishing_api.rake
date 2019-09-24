@@ -25,7 +25,7 @@ namespace :publishing_api do
         path: "/foreign-travel-advice/#{args[:country_slug]}",
         type: "prefix",
         destination: alternative_path,
-      ]
+      ],
     )
   end
 

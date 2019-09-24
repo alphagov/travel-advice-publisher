@@ -478,7 +478,7 @@ describe TravelAdviceEdition do
         links: [{ uri: "http://www.example.com", status: "error" }],
         batch_id: 1,
         status: "broken",
-        completed_at: Time.parse("2017-12-01")
+        completed_at: Time.parse("2017-12-01"),
       )
       expect(edition.link_check_reports.size).to eq(1)
     end

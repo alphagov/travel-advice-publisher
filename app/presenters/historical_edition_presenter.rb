@@ -24,7 +24,7 @@ class HistoricalEditionPresenter
       Part.new(
         part.slug,
         part.title,
-        Govspeak::Document.new(part.body).to_html
+        Govspeak::Document.new(part.body).to_html,
       )
     end
   end

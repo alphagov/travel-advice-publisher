@@ -37,8 +37,8 @@ describe "publishing_api rake tasks", type: :rake_task do
             {
               parent: ["b9849cd6-61a7-42dc-8124-362d2c7d48b0"],
               primary_publishing_organisation: ["9adfc4ed-9f6c-4976-a6d8-18d34356367c"],
-            }
-        )
+            },
+        ),
       )
     end
   end
@@ -123,7 +123,7 @@ describe "publishing_api rake tasks", type: :rake_task do
         .not_to have_been_made
 
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
-                                                                                  "base_path" => "/foreign-travel-advice/algeria"
+                                                                                  "base_path" => "/foreign-travel-advice/algeria",
       ))
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", "update_type" => "republish")

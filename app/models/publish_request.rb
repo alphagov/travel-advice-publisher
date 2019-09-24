@@ -30,7 +30,7 @@ class PublishRequest
             _id: "$latestId"
           }
         }
-      ]
+      ],
     ).map { |result| result["_id"] }
     where(:_id.in => ids)
       .where(checks_complete: false)

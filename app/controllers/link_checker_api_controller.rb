@@ -10,7 +10,7 @@ class LinkCheckerApiController < ApplicationController
     if link_check_report
       LinkCheckReportUpdater.new(
         report: link_check_report,
-        payload: params
+        payload: params,
       ).call
     end
 

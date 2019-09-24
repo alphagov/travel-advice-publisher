@@ -21,7 +21,7 @@ describe "Email alert rake tasks", type: :rake_task do
       assert_email_alert_api_content_change_created(
         "links" => {
           "countries" => [Country.find_by_slug(country_slug).content_id]
-        }
+        },
       )
     end
   end

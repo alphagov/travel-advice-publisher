@@ -62,8 +62,8 @@ RSpec.describe LinkCheckReportCreator do
         hash_including(
           batch_id: 1,
           completed_at: nil,
-          status: "in_progress"
-        )
+          status: "in_progress",
+        ),
       )
       subject.call
     end
@@ -87,7 +87,7 @@ RSpec.describe LinkCheckReportCreator do
            check_warnings: [],
            check_errors: [],
            problem_summary: "",
-           suggested_fix: "" }]
+           suggested_fix: "" }],
       )
       subject.call
     end
@@ -106,9 +106,9 @@ RSpec.describe LinkCheckReportCreator do
       expect(LinkCheckReport).to receive(:new).with(
         hash_including(
           links: array_including(
-            hash_including(check_errors: [])
-          )
-        )
+            hash_including(check_errors: []),
+          ),
+        ),
       )
       subject.call
     end
@@ -120,9 +120,9 @@ RSpec.describe LinkCheckReportCreator do
       expect(LinkCheckReport).to receive(:new).with(
         hash_including(
           links: array_including(
-            hash_including(check_warnings: [])
-          )
-        )
+            hash_including(check_warnings: []),
+          ),
+        ),
       )
       subject.call
     end

@@ -39,7 +39,7 @@ describe EditionPresenter do
     previous = create(
       :travel_advice_edition,
       country_slug: "aruba",
-      change_description: "Stuff previously changed"
+      change_description: "Stuff previously changed",
     )
 
     previous.parts.create(

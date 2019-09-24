@@ -371,7 +371,7 @@ feature "Edit Edition page", js: true do
       change_description: "Stuff changed",
       minor_update: false,
       overview: "The overview",
-      summary: "## Summary"
+      summary: "## Summary",
     )
 
     now = Time.now.utc
@@ -497,7 +497,7 @@ feature "Edit Edition page", js: true do
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
       "alert_status",
-      %w(avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts)
+      %w(avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts),
     )
 
     expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
