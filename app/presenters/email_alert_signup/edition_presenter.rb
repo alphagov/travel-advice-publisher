@@ -74,7 +74,7 @@ module EmailAlertSignup
         {
           title: edition.title,
           link: edition_base_path,
-        }
+        },
       ]
     end
 

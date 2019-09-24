@@ -63,7 +63,7 @@ module EmailAlertSignup
         {
           title: "Foreign travel advice",
           link: index_base_path,
-        }
+        },
       ]
     end
   end

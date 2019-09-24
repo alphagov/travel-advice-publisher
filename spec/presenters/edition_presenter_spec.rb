@@ -132,7 +132,7 @@ describe EditionPresenter do
               "body" => [
                 { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
               ],
-            }
+            },
           ],
           "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
           "max_cache_time" => 10,

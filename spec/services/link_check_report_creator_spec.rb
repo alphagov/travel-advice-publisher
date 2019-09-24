@@ -28,7 +28,7 @@ RSpec.describe LinkCheckReportCreator do
           errors: [],
           problem_summary: "",
           suggested_fix: "",
-        }
+        },
       ],
     }
   end

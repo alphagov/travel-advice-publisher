@@ -310,7 +310,7 @@ feature "Edit Edition page", js: true do
         "body" => [
           { "content_type" => "text/govspeak", "content" => "Body text" },
         ],
-      }
+      },
     ])
 
     expect(page).to have_no_content("Part Two")

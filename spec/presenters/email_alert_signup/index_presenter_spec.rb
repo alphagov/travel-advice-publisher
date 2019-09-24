@@ -26,7 +26,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
         {
           path: "/foreign-travel-advice/email-signup",
           type: "exact",
-        }
+        },
       ],
       details: {
         summary: "You'll get an email each time a country is updated.",

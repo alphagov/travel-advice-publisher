@@ -17,7 +17,7 @@ describe HealthcheckController, type: :controller do
           {
             title: travel_advice_edition.title,
             published_at: travel_advice_edition.published_at,
-          }
+          },
         ],
       }.to_json
       # We compare the JSON-encoded responses here since JSON-encoding the expected

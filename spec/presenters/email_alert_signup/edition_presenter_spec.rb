@@ -38,7 +38,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
         {
           path: "/foreign-travel-advice/aruba/email-signup",
           type: "exact",
-        }
+        },
       ],
       details: {
         summary: "You'll get an email each time Aruba Travel Advice is updated.",

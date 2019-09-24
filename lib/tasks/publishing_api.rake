@@ -54,7 +54,7 @@ namespace :publishing_api do
           ordered_related_items: [
             "e4d06cb9-9e2e-4e82-b802-0aad013ae16c",
             "95f9c380-30bc-44c7-86b4-e9c9ef0fc272",
-            "82248bb1-c4d6-41e0-9494-d98123475626"
+            "82248bb1-c4d6-41e0-9494-d98123475626",
           ],
         },
       }
@@ -88,7 +88,7 @@ namespace :publishing_api do
   desc "republish email signup content items for the index and all countries"
   task republish_email_signups: [
     "republish_email_signups:index",
-    "republish_email_signups:editions"
+    "republish_email_signups:editions",
   ]
 
   namespace :republish_email_signups do

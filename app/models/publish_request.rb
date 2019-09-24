@@ -29,7 +29,7 @@ class PublishRequest
           "$group" => {
             _id: "$latestId",
           },
-        }
+        },
       ],
     ).map { |result| result["_id"] }
     where(:_id.in => ids)
