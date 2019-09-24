@@ -46,5 +46,5 @@ group :test do
   gem "simplecov"
   gem "test-unit"
   gem "timecop"
-  gem "webmock", "~> 3.7", :require => false
+  gem "webmock", "~> 3.7", require: false
 end
