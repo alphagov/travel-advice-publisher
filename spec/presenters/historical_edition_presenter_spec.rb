@@ -11,7 +11,7 @@ describe HistoricalEditionPresenter do
   let(:edition) {
     build(
       :travel_advice_edition,
-      country_slug: 'aruba',
+      country_slug: "aruba",
       title: "Aruba travel advice",
       overview: "Something something",
       published_at: 5.minutes.ago,

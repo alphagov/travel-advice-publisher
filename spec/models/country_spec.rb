@@ -10,7 +10,7 @@ describe Country do
 
   describe "Country.find_by_slug" do
     it "returns a Country given a valid slug" do
-      country = Country.find_by_slug('argentina')
+      country = Country.find_by_slug("argentina")
 
       expect(country).to be_a Country
       expect(country.slug).to eq("argentina")
@@ -18,7 +18,7 @@ describe Country do
     end
 
     it "returns nil given an invalid slug" do
-      country = Country.find_by_slug('oceania')
+      country = Country.find_by_slug("oceania")
 
       expect(country).to be_nil
     end
@@ -72,7 +72,7 @@ describe Country do
 
   describe "has_{state}_edition?" do
     before :each do
-      @country = Country.find_by_slug('aruba')
+      @country = Country.find_by_slug("aruba")
     end
 
     it "should be false with no editions" do
@@ -101,7 +101,7 @@ describe Country do
 
   describe "build_new_edition" do
     before :each do
-      @country = Country.find_by_slug('aruba')
+      @country = Country.find_by_slug("aruba")
     end
 
     it "should build a clone of the latest edition if present" do
@@ -117,7 +117,7 @@ describe Country do
     it "should build a new edition if there are no existing editions" do
       ed = @country.build_new_edition
       expect(ed).to be_new_record
-      expect(ed.country_slug).to eq('aruba')
+      expect(ed.country_slug).to eq("aruba")
       expect(ed.title).to eq("Aruba travel advice")
     end
   end
@@ -125,7 +125,7 @@ describe Country do
   describe "build_new_edition_as" do
     before :each do
       @user = create(:user)
-      @country = Country.find_by_slug('aruba')
+      @country = Country.find_by_slug("aruba")
     end
 
     it "should build out a new edition with a create action" do

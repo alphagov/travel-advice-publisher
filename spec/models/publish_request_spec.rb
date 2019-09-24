@@ -193,7 +193,7 @@ describe PublishRequest do
         PublishRequest.create(
           checks_complete: false,
           created_at: 10.minutes.ago,
-          country_slug: 'denmark'
+          country_slug: "denmark"
         )
       }
 
@@ -201,7 +201,7 @@ describe PublishRequest do
         PublishRequest.create(
           checks_complete: false,
           created_at: 6.minutes.ago,
-          country_slug: 'denmark'
+          country_slug: "denmark"
         )
       }
 

@@ -23,7 +23,7 @@ namespace :publishing_api do
       type: "redirect",
       redirects: [
         path: "/foreign-travel-advice/#{args[:country_slug]}",
-        type: 'prefix',
+        type: "prefix",
         destination: alternative_path,
       ]
     )
@@ -69,7 +69,7 @@ namespace :publishing_api do
     puts
   end
 
-  desc 'republish a published edition to publishing-api for a country'
+  desc "republish a published edition to publishing-api for a country"
   task :republish_edition, [:country_slug] => :environment do |_task, args|
     begin
       edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])

@@ -5,18 +5,18 @@ describe RegisterableTravelAdviceEdition do
     end
 
     it "should be 'live' for a published edition" do
-      @edition.state = 'published'
-      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('live')
+      @edition.state = "published"
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq("live")
     end
 
     it "should be 'archived' for an archived edition" do
-      @edition.state = 'archived'
-      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('archived')
+      @edition.state = "archived"
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq("archived")
     end
 
     it "should be 'draft' for a draft edition" do
-      @edition.state = 'draft'
-      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq('draft')
+      @edition.state = "draft"
+      expect(RegisterableTravelAdviceEdition.new(@edition).state).to eq("draft")
     end
   end
 
@@ -27,8 +27,8 @@ describe RegisterableTravelAdviceEdition do
     end
 
     it "should return the edition's overview for description" do
-      @edition.overview = 'fooey gooey kablooie'
-      expect(@registerable.description).to eq('fooey gooey kablooie')
+      @edition.overview = "fooey gooey kablooie"
+      expect(@registerable.description).to eq("fooey gooey kablooie")
     end
 
     it "should return the edition's country_slug with travel_advice prepended" do
@@ -71,12 +71,12 @@ describe RegisterableTravelAdviceEdition do
     end
 
     it "should return the content_id of the corresponding country" do
-      @edition.country_slug = 'albania'
-      expect(@registerable.content_id).to eq('2a3938e1-d588-45fc-8c8f-0f51814d5409') # From countries.yml fixture
+      @edition.country_slug = "albania"
+      expect(@registerable.content_id).to eq("2a3938e1-d588-45fc-8c8f-0f51814d5409") # From countries.yml fixture
     end
 
     it "should return nil if there is no corresponding country" do
-      @edition.country_slug = 'non-existent'
+      @edition.country_slug = "non-existent"
       expect(@registerable.content_id).to be_nil
     end
   end

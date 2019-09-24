@@ -33,11 +33,11 @@ class Country
   end
 
   def has_published_edition?
-    editions.with_state('published').any?
+    editions.with_state("published").any?
   end
 
   def has_draft_edition?
-    editions.with_state('draft').any?
+    editions.with_state("draft").any?
   end
 
   def self.all

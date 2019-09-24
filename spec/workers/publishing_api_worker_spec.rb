@@ -39,14 +39,14 @@ RSpec.describe PublishingApiWorker, :perform do
 
       job = EmailAlertApiWorker.jobs.first
       expect(job).to be_present
-      expect(job['args'].first).to eq(payload)
+      expect(job["args"].first).to eq(payload)
     end
 
-    it 'delays the execution of EmailAlertApiWorker' do
+    it "delays the execution of EmailAlertApiWorker" do
       travel_to(Time.current) do
         described_class.new.perform([task])
         job = EmailAlertApiWorker.jobs.first
-        job_starts_at  = Time.at(job['at'])
+        job_starts_at  = Time.at(job["at"])
         expected_delay = 10.seconds.from_now
 
         expect(job_starts_at).to eq(expected_delay)

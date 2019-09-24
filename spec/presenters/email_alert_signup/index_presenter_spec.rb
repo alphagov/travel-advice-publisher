@@ -6,7 +6,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
   subject(:presenter) { described_class.new }
 
   it "validates against the email alert signup schema" do
-    expect(presenter.content_payload.as_json).to be_valid_against_schema('email_alert_signup')
+    expect(presenter.content_payload.as_json).to be_valid_against_schema("email_alert_signup")
   end
 
   it "presents the email signup content item for the edition" do

@@ -23,14 +23,14 @@ FactoryBot.define do
   factory :published_travel_advice_edition, parent: :travel_advice_edition do
     after :create do |tae|
       tae.published_at ||= Time.zone.now.utc
-      tae.state = 'published'
+      tae.state = "published"
       tae.save!
     end
   end
 
   factory :archived_travel_advice_edition, parent: :travel_advice_edition do
     after :create do |tae|
-      tae.state = 'archived'
+      tae.state = "archived"
       tae.save!
     end
   end

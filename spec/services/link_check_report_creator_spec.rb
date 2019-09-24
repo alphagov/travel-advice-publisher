@@ -35,7 +35,7 @@ RSpec.describe LinkCheckReportCreator do
 
   let(:link_check_report) do
     create(:travel_advice_edition_with_pending_link_checks,
-           batch_id: 1, link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
+           batch_id: 1, link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
   end
 
   let(:link_checker_api) { double }
@@ -50,7 +50,7 @@ RSpec.describe LinkCheckReportCreator do
     described_class.new(travel_advice_edition_id: travel_advice_edition.id)
   end
 
-  it 'should call the link checker api with a callback url and secret token' do
+  it "should call the link checker api with a callback url and secret token" do
     expect(link_checker_api).to receive(:create_batch)
 
     subject.call

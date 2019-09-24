@@ -110,7 +110,7 @@ feature "Edit Edition page", js: true do
 
     scenario "should not allow creation of drafts if draft already exists" do
       @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
-      @draft = create(:travel_advice_edition, country_slug: 'albania', state: "draft")
+      @draft = create(:travel_advice_edition, country_slug: "albania", state: "draft")
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -130,12 +130,12 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "inspecting the edit form, and adding content" do
-    @edition = create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition._id}/edit"
 
-    within('h1') { expect(page).to have_content "Editing Albania Version 1" }
+    within("h1") { expect(page).to have_content "Editing Albania Version 1" }
 
-    within '#edit' do
+    within "#edit" do
       within_section "the fieldset labelled Type of update" do
         # The first version can't be a minor update...
         expect(page).not_to have_field("Minor update")
@@ -159,38 +159,38 @@ feature "Edit Edition page", js: true do
 
       within_section "the fieldset labelled Parts (govspeak available)" do
         # Should to be no parts by default
-        expect(page).not_to have_selector('#parts .part')
+        expect(page).not_to have_selector("#parts .part")
 
         expect(page).to have_button "Add new part"
       end
     end
 
-    fill_in 'Search title', with: 'Travel advice for Albania'
-    fill_in 'Search description', with: "Read this if you're planning on visiting Albania"
+    fill_in "Search title", with: "Travel advice for Albania"
+    fill_in "Search description", with: "Read this if you're planning on visiting Albania"
 
-    fill_in 'Change description', with: "Made changes to all the stuff"
+    fill_in "Change description", with: "Made changes to all the stuff"
 
-    fill_in 'Summary', with: "Summary of the situation in Albania"
+    fill_in "Summary", with: "Summary of the situation in Albania"
 
-    fill_in 'Synonyms', with: "Foo,Bar"
+    fill_in "Synonyms", with: "Foo,Bar"
 
-    click_on 'Add new part'
-    within :css, '#parts div.part:first-of-type' do
-      fill_in 'Title', with: 'Part One'
-      fill_in 'Body',  with: 'Body text'
-      fill_in 'Slug',  with: 'part-one'
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-one"
     end
 
-    click_on 'Add new part'
-    within :css, '#parts div.part:nth-of-type(2)' do
-      fill_in 'Title', with: 'Part Two'
-      fill_in 'Body',  with: 'Body text'
-      fill_in 'Slug',  with: 'part-two'
+    click_on "Add new part"
+    within :css, "#parts div.part:nth-of-type(2)" do
+      fill_in "Title", with: "Part Two"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-two"
     end
 
     click_navbar_button "Save"
 
-    expect(all(:css, '#parts > div.part').length).to eq(2)
+    expect(all(:css, "#parts > div.part").length).to eq(2)
 
     expect(current_path).to eq("/admin/editions/#{@edition._id}/edit")
 
@@ -203,14 +203,14 @@ feature "Edit Edition page", js: true do
 
     expect(@edition.parts.size).to eq(2)
     one = @edition.parts.first
-    expect(one.title).to eq('Part One')
-    expect(one.slug).to eq('part-one')
-    expect(one.body).to eq('Body text')
+    expect(one.title).to eq("Part One")
+    expect(one.slug).to eq("part-one")
+    expect(one.body).to eq("Body text")
     expect(one.order).to eq(1)
     two = @edition.parts.last
-    expect(two.title).to eq('Part Two')
-    expect(two.slug).to eq('part-two')
-    expect(two.body).to eq('Body text')
+    expect(two.title).to eq("Part Two")
+    expect(two.slug).to eq("part-two")
+    expect(two.body).to eq("Body text")
     expect(two.order).to eq(2)
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
@@ -221,7 +221,7 @@ feature "Edit Edition page", js: true do
 
   scenario "Updating the reviewed at date for a published edition" do
     travel_to(Time.current) do
-      @edition = create(:published_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:published_travel_advice_edition, country_slug: "albania")
       visit "/admin/editions/#{@edition._id}/edit"
       click_on "Update review date"
       @edition.reload
@@ -234,13 +234,13 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Seeing the minor update toggle on the edit form for non-first versions" do
-    create(:published_travel_advice_edition, country_slug: 'albania')
-    @edition = create(:draft_travel_advice_edition, country_slug: 'albania', minor_update: true)
+    create(:published_travel_advice_edition, country_slug: "albania")
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania", minor_update: true)
     visit "/admin/editions/#{@edition._id}/edit"
 
-    within('h1') { expect(page).to have_content "Editing Albania Version 2" }
+    within("h1") { expect(page).to have_content "Editing Albania Version 2" }
 
-    within '#edit' do
+    within "#edit" do
       within_section "the fieldset labelled Type of update" do
         expect(page).to have_checked_field("Minor update")
 
@@ -258,36 +258,36 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "slug for expect(parts).to be automatically generated" do
-    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
     visit "/admin/editions/#{@edition._id}/edit"
 
-    click_on 'Add new part'
-    within :css, '#parts div.part:first-of-type' do
-      fill_in 'Title', with: 'Part One'
-      fill_in 'Body',  with: 'Body text'
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
 
-      expect(find(:css, ".slug").value).to eq('part-one')
+      expect(find(:css, ".slug").value).to eq("part-one")
     end
   end
 
   scenario "removing a part from an edition" do
-    @edition = build(:travel_advice_edition, country_slug: 'albania', state: 'draft')
-    @edition.parts.build(title: 'Part One', body: 'Body text', slug: 'part-one')
-    @edition.parts.build(title: 'Part Two', body: 'Body text', slug: 'part-two')
+    @edition = build(:travel_advice_edition, country_slug: "albania", state: "draft")
+    @edition.parts.build(title: "Part One", body: "Body text", slug: "part-one")
+    @edition.parts.build(title: "Part Two", body: "Body text", slug: "part-two")
     @edition.save!
 
     @edition.parts.build
     @edition.parts.first.update_attributes(
-      title: 'Part One',
-      slug: 'part-one',
-      body: 'Body text',
+      title: "Part One",
+      slug: "part-one",
+      body: "Body text",
     )
 
     @edition.parts.build
     @edition.parts.second.update_attributes(
-      title: 'Part Two',
-      slug: 'part-two',
-      body: 'Body text',
+      title: "Part Two",
+      slug: "part-two",
+      body: "Body text",
     )
 
     visit "/admin/editions/#{@edition._id}/edit"
@@ -317,13 +317,13 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "adding an invalid part" do
-    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
     visit "/admin/editions/#{@edition._id}/edit"
 
     click_on "Add new part"
-    within :css, '#parts div.part:first-of-type' do
-      fill_in 'Body',  with: 'Body text'
-      fill_in 'Slug',  with: 'part-one'
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-one"
     end
 
     click_navbar_button "Save"
@@ -332,7 +332,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "updating the parts sort order" do
-    @edition = create(:travel_advice_edition, country_slug: 'albania', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
 
     @edition.parts << Part.new(title: "Wallace", slug: "wallace", order: 1)
     @edition.parts << Part.new(title: "Gromit", slug: "gromit", order: 2)
@@ -343,9 +343,9 @@ feature "Edit Edition page", js: true do
 
     # Capybara nth-of-type tests need an element in their selector
     # https://github.com/jnicklas/capybara/issues/1109
-    expect(page).to have_selector("#parts div.part:nth-of-type(1) .panel-title a", text: 'Wallace')
-    expect(page).to have_selector("#parts div.part:nth-of-type(2) .panel-title a", text: 'Gromit')
-    expect(page).to have_selector("#parts div.part:nth-of-type(3) .panel-title a", text: 'Cheese')
+    expect(page).to have_selector("#parts div.part:nth-of-type(1) .panel-title a", text: "Wallace")
+    expect(page).to have_selector("#parts div.part:nth-of-type(2) .panel-title a", text: "Gromit")
+    expect(page).to have_selector("#parts div.part:nth-of-type(3) .panel-title a", text: "Cheese")
 
     reorder_parts(0, 2)
     reorder_parts(1, 0)
@@ -362,11 +362,11 @@ feature "Edit Edition page", js: true do
     allow(GdsApi::GovukHeaders).to receive(:headers)
       .and_return(govuk_request_id: "25108-1461151489.528-10.3.3.1-1066")
 
-    @old_edition = create(:published_travel_advice_edition, country_slug: 'albania')
+    @old_edition = create(:published_travel_advice_edition, country_slug: "albania")
     @edition = create(
       :draft_travel_advice_edition,
-      country_slug: 'albania',
-      title: 'Albania travel advice',
+      country_slug: "albania",
+      title: "Albania travel advice",
       alert_status: TravelAdviceEdition::ALERT_STATUSES[1..0],
       change_description: "Stuff changed",
       minor_update: false,
@@ -405,7 +405,7 @@ feature "Edit Edition page", js: true do
 
   scenario "save and publish a minor update to an edition" do
     travel_to(3.days.ago) do
-      @old_edition = create(:published_travel_advice_edition, country_slug: 'albania',
+      @old_edition = create(:published_travel_advice_edition, country_slug: "albania",
                             summary: "## The summaryy", change_description: "Some things changed",
                             minor_update: false)
     end
@@ -414,7 +414,7 @@ feature "Edit Edition page", js: true do
       @old_edition.save!
       @old_edition.reload
     end
-    @edition = create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania")
 
     travel_to(Time.current) do
       visit "/admin/editions/#{@edition.to_param}/edit"
@@ -443,8 +443,8 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "attempting to edit a published edition" do
-    @edition = create(:published_travel_advice_edition, country_slug: 'albania')
-    @draft = create(:draft_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:published_travel_advice_edition, country_slug: "albania")
+    @draft = create(:draft_travel_advice_edition, country_slug: "albania")
 
     visit "/admin/editions/#{@edition.to_param}/edit"
 
@@ -457,14 +457,14 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "preview an edition" do
-    @edition = create(:published_travel_advice_edition, country_slug: 'albania')
+    @edition = create(:published_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     expect(page).to have_selector("a[href^='http://www.dev.gov.uk/foreign-travel-advice/albania?cache=']", text: "View on site")
   end
 
   scenario "create a note" do
-    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     within(:css, ".tabbable .nav") do
@@ -481,7 +481,7 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Set the alert status for an edition" do
-    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
@@ -522,20 +522,20 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "managing images for an edition" do
-    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
 
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "image.jpg"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "image_two.jpg"))
 
     asset_one = {
-      "id" => 'http://asset-manager.dev.gov.uk/assets/an_image_id',
-      "file_url" => 'http://path/to/image_one.jpg',
+      "id" => "http://asset-manager.dev.gov.uk/assets/an_image_id",
+      "file_url" => "http://path/to/image_one.jpg",
       "content_type" => "image/jpeg",
     }
 
     asset_two = {
-      "id" => 'http://asset-manager.dev.gov.uk/assets/another_image_id',
-      "file_url" => 'http://path/to/image_two.jpg',
+      "id" => "http://asset-manager.dev.gov.uk/assets/another_image_id",
+      "file_url" => "http://path/to/image_two.jpg",
       "content_type" => "image/jpeg",
     }
 
@@ -602,22 +602,22 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "managing documents for an edition" do
-    @edition = create(:travel_advice_edition, country_slug: 'australia', state: 'draft')
+    @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
 
     file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "document.pdf"))
     file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "document_two.pdf"))
 
     asset_one = {
-      "id" => 'http://asset-manager.dev.gov.uk/assets/a_document_id',
+      "id" => "http://asset-manager.dev.gov.uk/assets/a_document_id",
       "name" => "document_one.pdf",
-      "file_url" => 'http://path/to/document_one.pdf',
+      "file_url" => "http://path/to/document_one.pdf",
       "content_type" => "application/pdf",
     }
 
     asset_two = {
-      "id" => 'http://asset-manager.dev.gov.uk/assets/another_document_id',
+      "id" => "http://asset-manager.dev.gov.uk/assets/another_document_id",
       "name" => "document_two.pdf",
-      "file_url" => 'http://path/to/document_two.pdf',
+      "file_url" => "http://path/to/document_two.pdf",
       "content_type" => "application/pdf",
     }
 
@@ -685,13 +685,13 @@ feature "Edit Edition page", js: true do
 
   context "workflow 'Save & Publish' button" do
     scenario "does not appear for archived editions" do
-      @edition = create(:archived_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:archived_travel_advice_edition, country_slug: "albania")
       visit "/admin/editions/#{@edition.to_param}/edit"
       expect(page).not_to have_button("Save & Publish")
     end
 
     scenario "does not appear for published editions" do
-      @edition = create(:published_travel_advice_edition, country_slug: 'albania')
+      @edition = create(:published_travel_advice_edition, country_slug: "albania")
       visit "/admin/editions/#{@edition.to_param}/edit"
       expect(page).not_to have_button("Save & Publish")
     end
