@@ -244,7 +244,7 @@ private
         end
       end
 
-      private "upload_#{field}".to_sym
+      private "upload_#{field}".to_sym # rubocop:disable Style/AccessModifierDeclarations
     end
   end
   private_class_method :attaches
