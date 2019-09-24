@@ -1,7 +1,7 @@
 class PublishingApiWorker
   include Sidekiq::Worker
 
-  def perform(jobs, params = {})
+  def perform(jobs, _params = {})
     jobs.each do |endpoint, content_id, payload|
       payload = payload.symbolize_keys if payload.is_a?(Hash)
 
