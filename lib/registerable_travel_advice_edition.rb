@@ -9,9 +9,9 @@ class RegisterableTravelAdviceEdition
 
   def state
     case @edition.state
-    when 'published' then 'live'
-    when 'archived' then 'archived'
-    else 'draft'
+    when "published" then "live"
+    when "archived" then "archived"
+    else "draft"
     end
   end
 

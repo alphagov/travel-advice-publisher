@@ -13,7 +13,7 @@ describe LinkCheckReportsController, type: :controller do
         uris: ["http://www.example.com", "http://www.gov.uk"],
         id: 5,
         webhook_uri: link_checker_api_callback_url(host: Plek.find("travel-advice-publisher")),
-        webhook_secret_token: Rails.application.secrets.link_checker_api_secret_token
+        webhook_secret_token: Rails.application.secrets.link_checker_api_secret_token,
       )
     end
 

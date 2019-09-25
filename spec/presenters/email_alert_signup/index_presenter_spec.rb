@@ -6,7 +6,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
   subject(:presenter) { described_class.new }
 
   it "validates against the email alert signup schema" do
-    expect(presenter.content_payload.as_json).to be_valid_against_schema('email_alert_signup')
+    expect(presenter.content_payload.as_json).to be_valid_against_schema("email_alert_signup")
   end
 
   it "presents the email signup content item for the edition" do
@@ -26,7 +26,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
         {
           path: "/foreign-travel-advice/email-signup",
           type: "exact",
-        }
+        },
       ],
       details: {
         summary: "You'll get an email each time a country is updated.",
@@ -39,7 +39,7 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
             title: "Foreign travel advice",
             link: "/foreign-travel-advice",
           },
-        ]
+        ],
       })
   end
 end

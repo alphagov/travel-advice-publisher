@@ -1,5 +1,5 @@
 RSpec.describe LinksPresenter do
-  let(:edition) { build(:travel_advice_edition, country_slug: 'aruba') }
+  let(:edition) { build(:travel_advice_edition, country_slug: "aruba") }
 
   subject { described_class.new(edition) }
 
@@ -14,9 +14,9 @@ RSpec.describe LinksPresenter do
 
     it "returns travel advice links data" do
       expect(presented_data).to eq(links: {
-        parent: ["08d48cdd-6b50-43ff-a53b-beab47f4aab0"],
-        meets_user_needs: ["5118d7b4-215d-45e6-bd20-15d7bc21314f"],
-        primary_publishing_organisation: ["9adfc4ed-9f6c-4976-a6d8-18d34356367c"],
+        parent: %w[08d48cdd-6b50-43ff-a53b-beab47f4aab0],
+        meets_user_needs: %w[5118d7b4-215d-45e6-bd20-15d7bc21314f],
+        primary_publishing_organisation: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
       })
     end
   end

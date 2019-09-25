@@ -8,7 +8,7 @@ RSpec.describe LinkCheckerApiController, type: :controller do
   def set_headers
     headers = {
       "Content-Type": "application/json",
-      "X-LinkCheckerApi-Signature": generate_signature(post_body.to_json, Rails.application.secrets.link_checker_api_secret_token)
+      "X-LinkCheckerApi-Signature": generate_signature(post_body.to_json, Rails.application.secrets.link_checker_api_secret_token),
     }
 
     request.headers.merge! headers
@@ -18,19 +18,19 @@ RSpec.describe LinkCheckerApiController, type: :controller do
   let!(:link_check_report) do
     create(:travel_advice_edition_with_pending_link_checks,
            batch_id: 5,
-           link_uris: ['http://www.example.com', 'http://www.gov.com']).link_check_reports.first
+           link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
   end
 
   let(:post_body) do
     link_checker_api_batch_report_hash(
       id: link_check_report_batch_id,
       links: [
-        { uri: 'https://www.gov.uk', status: "ok" },
-      ]
+        { uri: "https://www.gov.uk", status: "ok" },
+      ],
     )
   end
 
-  context 'when the report exists' do
+  context "when the report exists" do
     subject do
       post :callback, params: post_body
       link_check_report.reload
@@ -43,14 +43,14 @@ RSpec.describe LinkCheckerApiController, type: :controller do
     it "POST :update updates LinkCheckReport" do
       set_headers
 
-      expect { subject }.to change { link_check_report.status }.to('completed')
+      expect { subject }.to change { link_check_report.status }.to("completed")
     end
   end
 
-  context 'when the report does not exist' do
+  context "when the report does not exist" do
     let(:link_check_report_batch_id) { 1 }
 
-    it 'should not throw an error' do
+    it "should not throw an error" do
       set_headers
       post :callback, params: post_body
 

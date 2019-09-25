@@ -2,14 +2,14 @@ class HistoricalEditionPresenter
   extend Forwardable
 
   def_delegators :edition,
-     :alert_status,
-     :change_description,
-     :overview,
-     :title,
-     :document,
-     :image,
-     :reviewed_at,
-     :updated_at
+                 :alert_status,
+                 :change_description,
+                 :overview,
+                 :title,
+                 :document,
+                 :image,
+                 :reviewed_at,
+                 :updated_at
 
   attr_accessor :edition, :country
   Part = Struct.new(:slug, :title, :body)
@@ -24,7 +24,7 @@ class HistoricalEditionPresenter
       Part.new(
         part.slug,
         part.title,
-        Govspeak::Document.new(part.body).to_html
+        Govspeak::Document.new(part.body).to_html,
       )
     end
   end
@@ -41,7 +41,7 @@ class HistoricalEditionPresenter
   # has a latest update label, so we can strip this out.
   # Avoids: "Latest update: Latest update - …"
   def latest_update
-    change_description.sub(/^Latest update:?\s-?\s?/i, '').tap do |latest|
+    change_description.sub(/^Latest update:?\s-?\s?/i, "").tap do |latest|
       latest[0] = latest[0].capitalize
     end
   end

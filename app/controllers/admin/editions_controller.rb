@@ -82,7 +82,7 @@ private
       :remove_document,
       :remove_image,
       alert_status: [],
-      parts_attributes: %i[title body slug order id _destroy]
+      parts_attributes: %i[title body slug order id _destroy],
     )
   end
 
@@ -119,7 +119,7 @@ private
       PublishRequest.create(
         request_id: govuk_request_id,
         edition_id: @edition.id,
-        country_slug: @edition.country_slug
+        country_slug: @edition.country_slug,
       )
 
       redirect_to admin_country_path(@edition.country_slug), alert: "#{@edition.title} published."

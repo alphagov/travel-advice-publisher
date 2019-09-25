@@ -5,7 +5,7 @@ module Formtastic #:nodoc:
     end
 
     def extract_option_or_class_name(hash, option, object)
-      (hash.delete(option) || object.class.name.split('::').last.underscore)
+      (hash.delete(option) || object.class.name.split("::").last.underscore)
     end
 
     #  Dynamically add and remove nested forms for a has_many relation.
@@ -66,8 +66,8 @@ module Formtastic #:nodoc:
       partial = opts.delete(:partial) || associated_name
 
       form = render_associated_form(object, partial: partial, associated_name: associated_name, locals: opts[:locals])
-      form.gsub!(/attributes_(\d+)/, 'attributes_{{index}}')
-      form.gsub!(/\[(\d+)\]/, '[{{index}}]')
+      form.gsub!(/attributes_(\d+)/, "attributes_{{index}}")
+      form.gsub!(/\[(\d+)\]/, "[{{index}}]")
 
       "<script id='tmpl-#{association}' type='text/x-jquery-tmpl'>#{form}</script>".html_safe
     end
@@ -155,7 +155,7 @@ module Formtastic #:nodoc:
         name = extract_option_or_class_name(opts, :name, associated.first)
         partial = opts[:partial] || name
         associated_name = opts[:associated_name] || opts[:partial]
-        local_assign_name = partial.split('/').last.split('.').first
+        local_assign_name = partial.split("/").last.split(".").first
 
         index = -1
         index_variable_name = "#{associated_name}_counter".to_sym
@@ -164,7 +164,7 @@ module Formtastic #:nodoc:
             local_assignments = {
               index_variable_name => index += 1,
               local_assign_name.to_sym => element,
-              :f => f
+              :f => f,
             }.merge(opts[:locals])
             template.render({ partial: partial.to_s, locals: local_assignments }.merge(opts[:render]))
           end

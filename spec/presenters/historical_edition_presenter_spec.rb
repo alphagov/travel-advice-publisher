@@ -4,20 +4,20 @@ describe HistoricalEditionPresenter do
       "name" => "Aruba",
       "slug" => "aruba",
       "content_id" => SecureRandom.uuid,
-      "email_signup_content_id" => SecureRandom.uuid
+      "email_signup_content_id" => SecureRandom.uuid,
     )
   }
 
   let(:edition) {
     build(
       :travel_advice_edition,
-      country_slug: 'aruba',
+      country_slug: "aruba",
       title: "Aruba travel advice",
       overview: "Something something",
       published_at: 5.minutes.ago,
       summary: "### Summary",
       alert_status: [TravelAdviceEdition::ALERT_STATUSES.first],
-      change_description: "Latest update: added latest events"
+      change_description: "Latest update: added latest events",
     ).tap do |e|
       e.parts.build(
         slug: "terrorism",

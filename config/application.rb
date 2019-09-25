@@ -1,4 +1,4 @@
-require_relative 'boot'
+require_relative "boot"
 
 # Pick the frameworks you want:
 # require "active_record/railtie"
@@ -14,7 +14,7 @@ Bundler.require(*Rails.groups)
 
 module TravelAdvicePublisher
   # Maslow need ID for Travel Advice Publisher
-  NEED_CONTENT_ID = '5118d7b4-215d-45e6-bd20-15d7bc21314f'.freeze
+  NEED_CONTENT_ID = "5118d7b4-215d-45e6-bd20-15d7bc21314f".freeze
 
   INDEX_CONTENT_ID = "08d48cdd-6b50-43ff-a53b-beab47f4aab0".freeze
   # The parent page is /browse/abroad/travel-abroad

@@ -39,7 +39,7 @@ describe EditionPresenter do
     previous = create(
       :travel_advice_edition,
       country_slug: "aruba",
-      change_description: "Stuff previously changed"
+      change_description: "Stuff previously changed",
     )
 
     previous.parts.create(
@@ -81,7 +81,7 @@ describe EditionPresenter do
 
     it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice")
-      expect(presented_data).to be_valid_against_schema('travel_advice')
+      expect(presented_data).to be_valid_against_schema("travel_advice")
     end
 
     it "returns a travel_advice item" do
@@ -132,9 +132,9 @@ describe EditionPresenter do
               "body" => [
                 { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
               ],
-            }
+            },
           ],
-          "alert_status" => ["avoid_all_but_essential_travel_to_parts"],
+          "alert_status" => %w[avoid_all_but_essential_travel_to_parts],
           "max_cache_time" => 10,
         },
       )
@@ -168,12 +168,12 @@ describe EditionPresenter do
       subject { described_class.new(edition, republish: true) }
 
       it "sets the update_type to 'republish'" do
-        expect(presented_data['update_type']).to eq('republish')
+        expect(presented_data["update_type"]).to eq("republish")
       end
 
       it "sets the update_type to 'republish' for a minor update" do
         edition.minor_update = true
-        expect(presented_data['update_type']).to eq('republish')
+        expect(presented_data["update_type"]).to eq("republish")
       end
     end
   end

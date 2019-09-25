@@ -8,7 +8,7 @@ describe Admin::EditionsController do
 
   describe "POST to create" do
     before do
-      @country = Country.find_by_slug('aruba')
+      @country = Country.find_by_slug("aruba")
       @user = stub_user
       login_as @user
     end
@@ -38,18 +38,18 @@ describe Admin::EditionsController do
       end
 
       it "should set a flash error" do
-        post :create, params: { country_id: 'aruba' }
+        post :create, params: { country_id: "aruba" }
         expect(flash[:alert]).to eq("Failed to create new edition")
       end
 
       it "should redirect back to the country edition list" do
-        post :create, params: { country_id: 'aruba' }
-        expect(response).to redirect_to(admin_country_path('aruba'))
+        post :create, params: { country_id: "aruba" }
+        expect(response).to redirect_to(admin_country_path("aruba"))
       end
     end
 
     it "should 404 for a non-existent country" do
-      post :create, params: { country_id: 'wibble' }
+      post :create, params: { country_id: "wibble" }
       expect(response).to be_missing
     end
 
@@ -74,14 +74,14 @@ describe Admin::EditionsController do
 
     describe "GET to destroy" do
       it "should delete the latest draft edition" do
-        edition = create(:draft_travel_advice_edition, country_slug: 'aruba')
+        edition = create(:draft_travel_advice_edition, country_slug: "aruba")
         allow_any_instance_of(TravelAdviceEdition).to receive(:destroy).and_return(true)
         get :destroy, params: { id: edition.id }
-        expect(response).to redirect_to(admin_country_path('aruba') + "?alert=Edition+deleted");
+        expect(response).to redirect_to(admin_country_path("aruba") + "?alert=Edition+deleted");
       end
 
       it "wont let a published edition be deleted" do
-        edition = create(:published_travel_advice_edition, country_slug: 'aruba')
+        edition = create(:published_travel_advice_edition, country_slug: "aruba")
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
@@ -89,7 +89,7 @@ describe Admin::EditionsController do
       end
 
       it "wont let an archived edition be deleted" do
-        edition = create(:archived_travel_advice_edition, country_slug: 'aruba')
+        edition = create(:archived_travel_advice_edition, country_slug: "aruba")
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
@@ -100,8 +100,8 @@ describe Admin::EditionsController do
   describe "edit, update" do
     before do
       login_as_stub_user
-      @edition = create(:travel_advice_edition, country_slug: 'aruba')
-      @country = Country.find_by_slug('aruba')
+      @edition = create(:travel_advice_edition, country_slug: "aruba")
+      @country = Country.find_by_slug("aruba")
     end
 
     describe "GET to edit" do
@@ -124,13 +124,13 @@ describe Admin::EditionsController do
                 title: "Part One",
                 body: "Body text",
                 slug: "part-one",
-                order: "1"
+                order: "1",
               },
               "1" => {
                 title: "Part Two",
                 body: "Body text",
                 slug: "part-two",
-                order: "2"
+                order: "2",
               },
             },
           },
@@ -145,7 +145,7 @@ describe Admin::EditionsController do
           commit: "Save",
           id: @edition._id,
           edition: {
-            alert_status: ["", nil, "   ", "one", "two", "three"]
+            alert_status: ["", nil, "   ", "one", "two", "three"],
           },
         }
 
@@ -158,8 +158,8 @@ describe Admin::EditionsController do
           commit: "Add Note",
           edition: {
             note: {
-              comment: "Test note"
-            }
+              comment: "Test note",
+            },
           },
         }
 
@@ -180,16 +180,16 @@ describe Admin::EditionsController do
                 title: "Part One",
                 body: "Body text",
                 slug: "part-one",
-                order: "1"
+                order: "1",
               },
               "1" => {
                 title: "Part Two",
                 body: "Body text",
                 slug: "part-two",
-                order: "2"
-              }
-            }
-          }
+                order: "2",
+              },
+            },
+          },
         }
 
         expect(response).to be_success
@@ -199,7 +199,7 @@ describe Admin::EditionsController do
   end
 
   describe "workflow" do
-    let(:draft) { create(:draft_travel_advice_edition, country_slug: 'aruba') }
+    let(:draft) { create(:draft_travel_advice_edition, country_slug: "aruba") }
     before do
       login_as_stub_user
     end
@@ -223,7 +223,7 @@ describe Admin::EditionsController do
       end
 
       it "creates a PublishRequest for that edition" do
-        request_id = '123456'
+        request_id = "123456"
         allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: request_id)
         post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
         publish_request = PublishRequest.last
@@ -238,10 +238,10 @@ describe Admin::EditionsController do
           post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 
           expect(PublishingApiWorker.jobs.size).to eq(1)
-          actions = PublishingApiWorker.jobs[0]['args'][0]
+          actions = PublishingApiWorker.jobs[0]["args"][0]
           expect(actions.count).to eq(6)
           signup_email = actions.detect do |_, _, details|
-            details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
+            details["base_path"] == "/foreign-travel-advice/aruba/email-signup"
           end
           expect(signup_email).not_to be_nil
         end
@@ -249,7 +249,7 @@ describe Admin::EditionsController do
 
       context "when previous edition exist for the country" do
         before do
-          create(:published_travel_advice_edition, country_slug: 'aruba')
+          create(:published_travel_advice_edition, country_slug: "aruba")
           draft.update_attributes(version_number: 2)
         end
 
@@ -259,10 +259,10 @@ describe Admin::EditionsController do
           post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 
           expect(PublishingApiWorker.jobs.size).to eq(1)
-          actions = PublishingApiWorker.jobs[0]['args'][0]
+          actions = PublishingApiWorker.jobs[0]["args"][0]
           expect(actions.count).to eq(4)
           signup_email = actions.detect do |_, _, details|
-            details['base_path'] == "/foreign-travel-advice/aruba/email-signup"
+            details["base_path"] == "/foreign-travel-advice/aruba/email-signup"
           end
           expect(signup_email).to be_nil
         end
@@ -273,8 +273,8 @@ describe Admin::EditionsController do
   describe "historical_edition" do
     before do
       login_as_stub_user
-      @edition = create(:travel_advice_edition, country_slug: 'aruba')
-      @country = Country.find_by_slug('aruba')
+      @edition = create(:travel_advice_edition, country_slug: "aruba")
+      @country = Country.find_by_slug("aruba")
     end
 
     it "shows a print preview for that edition" do

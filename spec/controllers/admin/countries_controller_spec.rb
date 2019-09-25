@@ -7,8 +7,8 @@ describe Admin::CountriesController do
     it "populates an array of countries" do
       get :index
 
-      expect(assigns(:countries).map(&:slug)).to include('afghanistan', 'albania', 'algeria')
-      expect(assigns(:countries).map(&:name)).to include('Afghanistan', 'Albania', 'Algeria')
+      expect(assigns(:countries).map(&:slug)).to include("afghanistan", "albania", "algeria")
+      expect(assigns(:countries).map(&:name)).to include("Afghanistan", "Albania", "Algeria")
     end
 
     it "renders the index view" do
@@ -23,8 +23,8 @@ describe Admin::CountriesController do
       it "assigns the request country" do
         get :show, params: { id: "australia" }
 
-        expect(assigns(:country).name).to eq('Australia')
-        expect(assigns(:country).slug).to eq('australia')
+        expect(assigns(:country).name).to eq("Australia")
+        expect(assigns(:country).slug).to eq("australia")
       end
 
       it "renders the show view" do

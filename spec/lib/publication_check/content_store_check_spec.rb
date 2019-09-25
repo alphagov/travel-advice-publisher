@@ -7,7 +7,7 @@ module PublicationCheck
     let(:publish_request) {
       PublishRequest.new(
         request_id: "25107-1461581820.634-185.22.224.96-13641",
-        edition_id: edition.id
+        edition_id: edition.id,
       )
     }
     let(:content_store_check) { ContentStoreCheck.new }

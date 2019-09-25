@@ -1,4 +1,4 @@
-require 'gds_api/test_helpers/email_alert_api'
+require "gds_api/test_helpers/email_alert_api"
 
 RSpec.configure do |config|
   config.include GdsApi::TestHelpers::EmailAlertApi, type: :feature

@@ -1,5 +1,5 @@
 describe TravelAdviceEdition do
-  describe('fields') do
+  describe("fields") do
     it "has correct fields" do
       ed = TravelAdviceEdition.new
       ed.title = "Travel advice for Aruba"
@@ -448,9 +448,9 @@ describe TravelAdviceEdition do
   context "parts" do
     it "should merge part validation errors with parent document's errors" do
       edition = create(:travel_advice_edition)
-      edition.parts.build(_id: '54c10d4d759b743528000010', order: '1', title: "", slug: "overview")
-      edition.parts.build(_id: '54c10d4d759b743528000011', order: '2', title: "Prepare for your appointment", slug: "")
-      edition.parts.build(_id: '54c10d4d759b743528000012', order: '3', title: "Valid", slug: "valid")
+      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview")
+      edition.parts.build(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: "")
+      edition.parts.build(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid")
 
       expect(edition).not_to be_valid
 
@@ -459,9 +459,9 @@ describe TravelAdviceEdition do
 
     it "#whole_body returns ordered parts" do
       edition = create(:travel_advice_edition)
-      edition.parts.build(_id: '54c10d4d759b743528000010', order: '1', title: "Part 1", slug: "part_1")
-      edition.parts.build(_id: '54c10d4d759b743528000011', order: '3', title: "Part 3", slug: "part_3")
-      edition.parts.build(_id: '54c10d4d759b743528000012', order: '2', title: "Part 2", slug: "part_2")
+      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "Part 1", slug: "part_1")
+      edition.parts.build(_id: "54c10d4d759b743528000011", order: "3", title: "Part 3", slug: "part_3")
+      edition.parts.build(_id: "54c10d4d759b743528000012", order: "2", title: "Part 2", slug: "part_2")
       expect(edition.whole_body).to eq("# Part 1\n\n\n\n# Part 2\n\n\n\n# Part 3\n\n")
     end
   end
@@ -478,7 +478,7 @@ describe TravelAdviceEdition do
         links: [{ uri: "http://www.example.com", status: "error" }],
         batch_id: 1,
         status: "broken",
-        completed_at: Time.parse("2017-12-01")
+        completed_at: Time.parse("2017-12-01"),
       )
       expect(edition.link_check_reports.size).to eq(1)
     end
@@ -486,7 +486,7 @@ describe TravelAdviceEdition do
 
   describe "CSV Synonyms" do
     before do
-      @edition = Country.find_by_slug('aruba').build_new_edition
+      @edition = Country.find_by_slug("aruba").build_new_edition
     end
 
     describe "reading user input for synonyms" do
@@ -525,7 +525,7 @@ describe TravelAdviceEdition do
     describe "writing synonyms out to frontend" do
       it "should parse array out into string for view" do
         @edition.synonyms = %w{foo bar}
-        expect(@edition.csv_synonyms).to eq 'foo,bar'
+        expect(@edition.csv_synonyms).to eq "foo,bar"
       end
 
       it "should deal with commas in the synonyms" do
@@ -537,10 +537,10 @@ describe TravelAdviceEdition do
 
   describe "attached fields" do
     it "retrieves the asset from the api" do
-      ed = create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+      ed = create(:travel_advice_edition, state: "draft", image_id: "an_image_id")
 
       asset = {
-        "file_url" => "/path/to/image"
+        "file_url" => "/path/to/image",
       }
       allow_any_instance_of(GdsApi::AssetManager).to receive(:asset).with("an_image_id").and_return(asset)
 
@@ -548,11 +548,11 @@ describe TravelAdviceEdition do
     end
 
     it "caches the asset from the api" do
-      ed = create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+      ed = create(:travel_advice_edition, state: "draft", image_id: "an_image_id")
 
       asset = {
         "something" => "one",
-        "something_else" => "two"
+        "something_else" => "two",
       }
       expect_any_instance_of(GdsApi::AssetManager).to receive(:asset).once.with("an_image_id").and_return(asset)
 
@@ -562,14 +562,14 @@ describe TravelAdviceEdition do
 
     it "assigns a file and detects it has changed" do
       file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
-      ed = create(:travel_advice_edition, state: 'draft')
+      ed = create(:travel_advice_edition, state: "draft")
 
       ed.image = file
       expect(ed.image_has_changed?).to be true
     end
 
     it "does not upload an asset if it has not changed" do
-      ed = create(:travel_advice_edition, state: 'draft')
+      ed = create(:travel_advice_edition, state: "draft")
       expect_any_instance_of(TravelAdviceEdition).not_to receive(:upload_image)
 
       ed.save!
@@ -577,10 +577,10 @@ describe TravelAdviceEdition do
 
     describe "saving an edition" do
       before do
-        @ed = create(:travel_advice_edition, state: 'draft')
+        @ed = create(:travel_advice_edition, state: "draft")
         @file = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
 
-        @asset = { "id" => 'http://asset-manager.dev.gov.uk/assets/an_image_id' }
+        @asset = { "id" => "http://asset-manager.dev.gov.uk/assets/an_image_id" }
       end
 
       it "uploads the asset" do
@@ -626,7 +626,7 @@ describe TravelAdviceEdition do
 
     describe "removing an asset" do
       it "removes an asset when remove_* set to true" do
-        ed = create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+        ed = create(:travel_advice_edition, state: "draft", image_id: "an_image_id")
         ed.remove_image = true
         ed.save!
 
@@ -634,7 +634,7 @@ describe TravelAdviceEdition do
       end
 
       it "doesn't remove an asset when remove_* set to false or empty" do
-        ed = create(:travel_advice_edition, state: 'draft', image_id: "an_image_id")
+        ed = create(:travel_advice_edition, state: "draft", image_id: "an_image_id")
         ed.remove_image = false
         ed.remove_image = ""
         ed.remove_image = nil

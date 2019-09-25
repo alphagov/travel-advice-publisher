@@ -2,7 +2,7 @@ class ImageValidator < ActiveModel::EachValidator
   MIME_TYPES = {
     "image/jpeg" => /(\.jpeg|\.jpg)$/,
     "image/gif"  => /\.gif$/,
-    "image/png"  => /\.png$/
+    "image/png"  => /\.png$/,
   }.freeze
 
   def validate_each(record, attribute, value)

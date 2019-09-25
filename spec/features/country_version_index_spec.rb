@@ -4,7 +4,7 @@ feature "Country version index" do
   end
 
   specify "viewing a country with no editions, and creating a draft" do
-    country = Country.find_by_slug('angola')
+    country = Country.find_by_slug("angola")
 
     visit "/admin/countries/angola"
 
@@ -14,14 +14,14 @@ feature "Country version index" do
 
     expect(country.editions.count).to eq(1)
     ed = country.editions.first
-    expect(ed.state).to eq('draft')
+    expect(ed.state).to eq("draft")
     expect(ed.version_number).to eq(1)
 
     i_should_be_on "/admin/editions/#{ed.id}/edit"
   end
 
   specify "viewing a country with published editions and creating a draft" do
-    country = Country.find_by_slug('aruba')
+    country = Country.find_by_slug("aruba")
     e1 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
     e2 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
     e3 = build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
@@ -31,24 +31,24 @@ feature "Country version index" do
     e3.parts.build(title: "Part One", slug: "part-one", body: "Some text")
     e3.parts.build(title: "Part Two", slug: "part-2", body: "Some more text")
     e3.save!
-    e3.state = 'published'
+    e3.state = "published"
     e3.save!
 
     visit "/admin/countries/aruba"
 
-    expect(page.all('table tr td:first-child').map(&:text)).to eq(["Version 3", "Version 2", "Version 1"])
+    expect(page.all("table tr td:first-child").map(&:text)).to eq(["Version 3", "Version 2", "Version 1"])
 
     click_on "Create new edition"
 
     expect(country.editions.count).to eq(4)
-    e4 = country.editions.with_state('draft').first
+    e4 = country.editions.with_state("draft").first
     expect(e4.version_number).to eq(4)
     expect(e4.title).to eq("Aruba extra special travel advice")
     expect(e4.summary).to eq("## This is the summary")
     expect(e4.overview).to eq("Search description about Aruba")
     expect(e4.alert_status).to eq([TravelAdviceEdition::ALERT_STATUSES.first])
     expect(e4.parts.map(&:title)).to eq(["Part One", "Part Two"])
-    expect(e4.parts.map(&:slug)).to eq(["part-one", "part-2"])
+    expect(e4.parts.map(&:slug)).to eq(%w[part-one part-2])
     expect(e4.parts.map(&:body)).to eq(["Some text", "Some more text"])
 
     i_should_be_on "/admin/editions/#{e4.id}/edit"
@@ -57,7 +57,7 @@ feature "Country version index" do
 
     expect(page).to have_content("Aruba")
 
-    rows = page.all('table tr').map { |r| r.all('th, td').map(&:text).map(&:strip) }
+    rows = page.all("table tr").map { |r| r.all("th, td").map(&:text).map(&:strip) }
     expect(rows).to eq([
       ["Version", "State", "Updated", "Reviewed", ""],
       ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit — preview"],

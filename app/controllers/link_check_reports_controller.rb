@@ -3,7 +3,7 @@ class LinkCheckReportsController < ApplicationController
 
   def create
     service = LinkCheckReportCreator.new(
-      travel_advice_edition_id: @edition.id
+      travel_advice_edition_id: @edition.id,
     )
 
     @report = service.call

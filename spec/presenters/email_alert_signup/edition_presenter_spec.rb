@@ -16,7 +16,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
 
   it "validates against the email alert signup schema" do
     presenter = described_class.new(edition)
-    expect(presenter.content_payload.as_json).to be_valid_against_schema('email_alert_signup')
+    expect(presenter.content_payload.as_json).to be_valid_against_schema("email_alert_signup")
   end
 
   it "presents the email signup content item for the edition" do
@@ -38,7 +38,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
         {
           path: "/foreign-travel-advice/aruba/email-signup",
           type: "exact",
-        }
+        },
       ],
       details: {
         summary: "You'll get an email each time Aruba Travel Advice is updated.",
@@ -54,7 +54,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
             title: "Aruba Travel Advice",
             link: "/foreign-travel-advice/aruba",
           },
-        ]
+        ],
       })
   end
 end

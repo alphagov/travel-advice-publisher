@@ -33,15 +33,15 @@ class Country
   end
 
   def has_published_edition?
-    editions.with_state('published').any?
+    editions.with_state("published").any?
   end
 
   def has_draft_edition?
-    editions.with_state('draft').any?
+    editions.with_state("draft").any?
   end
 
   def self.all
-    @countries ||= data.map { |d| Country.new(d) }
+    @all ||= data.map { |d| Country.new(d) }
   end
 
   def self.find_by_slug(slug)
@@ -62,6 +62,6 @@ class Country
   end
 
   def self.clear_memoized_countries
-    @countries = nil
+    @all = nil
   end
 end

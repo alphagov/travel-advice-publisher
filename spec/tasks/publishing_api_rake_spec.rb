@@ -1,4 +1,4 @@
-require 'rake'
+require "rake"
 
 describe "publishing_api rake tasks", type: :rake_task do
   include GdsApi::TestHelpers::PublishingApiV2
@@ -11,7 +11,7 @@ describe "publishing_api rake tasks", type: :rake_task do
   end
 
   describe "publish" do
-    let(:task) { Rake::Task['publishing_api:publish'] }
+    let(:task) { Rake::Task["publishing_api:publish"] }
 
     it "sends the index item to publishing_api" do
       task.invoke
@@ -35,37 +35,37 @@ describe "publishing_api rake tasks", type: :rake_task do
         request_json_includes(
           links:
             {
-              parent: ["b9849cd6-61a7-42dc-8124-362d2c7d48b0"],
-              primary_publishing_organisation: ["9adfc4ed-9f6c-4976-a6d8-18d34356367c"],
-            }
-        )
+              parent: %w[b9849cd6-61a7-42dc-8124-362d2c7d48b0],
+              primary_publishing_organisation: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
+            },
+        ),
       )
     end
   end
 
-  describe 'republish_edition' do
-    let(:country) { Country.find_by_slug('aruba') }
-    let(:task) { Rake::Task['publishing_api:republish_edition'] }
+  describe "republish_edition" do
+    let(:country) { Country.find_by_slug("aruba") }
+    let(:task) { Rake::Task["publishing_api:republish_edition"] }
 
     it "sends the published edition to the publishing_api with update_type of 'republish'" do
-      edition = create(:published_travel_advice_edition, country_slug: 'aruba')
+      edition = create(:published_travel_advice_edition, country_slug: "aruba")
 
       task.invoke(country.slug)
 
       expected_request_attributes = {
-        base_path: '/foreign-travel-advice/aruba',
+        base_path: "/foreign-travel-advice/aruba",
         title: edition.title,
-        document_type: 'travel_advice',
-        schema_name: 'travel_advice',
-        update_type: 'republish',
+        document_type: "travel_advice",
+        schema_name: "travel_advice",
+        update_type: "republish",
         public_updated_at: edition.published_at.iso8601,
       }
 
       assert_publishing_api_put_content(country.content_id, request_json_includes(expected_request_attributes))
-      assert_publishing_api_publish(country.content_id, update_type: 'republish')
+      assert_publishing_api_publish(country.content_id, update_type: "republish")
     end
 
-    it 'ignore draft items' do
+    it "ignore draft items" do
       create(:draft_travel_advice_edition, country_slug: country.slug)
 
       task.invoke(country.slug)
@@ -79,11 +79,11 @@ describe "publishing_api rake tasks", type: :rake_task do
   end
 
   describe "republish_editions" do
-    let(:task) { Rake::Task['publishing_api:republish_editions'] }
+    let(:task) { Rake::Task["publishing_api:republish_editions"] }
 
     it "sends all published editions to the publishing_api with update_type of 'republish'" do
-      aruba = create(:published_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      algeria = create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      aruba = create(:published_travel_advice_edition, country_slug: "aruba", published_at: 10.minutes.ago)
+      algeria = create(:published_travel_advice_edition, country_slug: "algeria", published_at: 5.minutes.ago)
 
       task.invoke
 
@@ -111,8 +111,8 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it "ignores draft items" do
-      create(:draft_travel_advice_edition, country_slug: 'aruba', published_at: 10.minutes.ago)
-      create(:published_travel_advice_edition, country_slug: 'algeria', published_at: 5.minutes.ago)
+      create(:draft_travel_advice_edition, country_slug: "aruba", published_at: 10.minutes.ago)
+      create(:published_travel_advice_edition, country_slug: "algeria", published_at: 5.minutes.ago)
 
       task.invoke
 
@@ -123,7 +123,7 @@ describe "publishing_api rake tasks", type: :rake_task do
         .not_to have_been_made
 
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
-                                                                                  "base_path" => "/foreign-travel-advice/algeria"
+                                                                                  "base_path" => "/foreign-travel-advice/algeria",
       ))
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", "update_type" => "republish")

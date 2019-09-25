@@ -20,7 +20,7 @@ describe IndexPresenter do
 
     it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice_index")
-      expect(presented_data).to be_valid_against_schema('travel_advice_index')
+      expect(presented_data).to be_valid_against_schema("travel_advice_index")
     end
 
     it "returns a presented index item" do

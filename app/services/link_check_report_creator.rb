@@ -19,7 +19,7 @@ class LinkCheckReportCreator
       batch_id: link_report.fetch(:id),
       completed_at: link_report.fetch(:completed_at),
       status: link_report.fetch(:status),
-      links: link_report.fetch(:links).map { |link| map_link_attrs(link) }
+      links: link_report.fetch(:links).map { |link| map_link_attrs(link) },
     )
 
     report.save!
@@ -41,7 +41,7 @@ private
     GdsApi.link_checker_api.create_batch(
       uris,
       webhook_uri: callback,
-      webhook_secret_token: Rails.application.secrets.link_checker_api_secret_token
+      webhook_secret_token: Rails.application.secrets.link_checker_api_secret_token,
     )
   end
 
@@ -57,7 +57,7 @@ private
       check_warnings: link.fetch(:warnings, []),
       check_errors: link.fetch(:errors, []),
       problem_summary: link.fetch(:problem_summary),
-      suggested_fix: link.fetch(:suggested_fix)
+      suggested_fix: link.fetch(:suggested_fix),
     }
   end
 end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require 'formtastic_extensions'
+require "formtastic_extensions"
 
 # --------------------------------------------------------------------------------------------------
 # Please note: If you're subclassing Formtastic::SemanticFormBuilder in a Rails 3 project,

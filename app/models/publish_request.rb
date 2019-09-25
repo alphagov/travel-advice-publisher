@@ -22,15 +22,15 @@ class PublishRequest
         {
           "$group" => {
             _id: "$country_slug",
-            latestId: { "$last" => "$_id" }
-          }
+            latestId: { "$last" => "$_id" },
+          },
         },
         {
           "$group" => {
-            _id: "$latestId"
-          }
-        }
-      ]
+            _id: "$latestId",
+          },
+        },
+      ],
     ).map { |result| result["_id"] }
     where(:_id.in => ids)
       .where(checks_complete: false)

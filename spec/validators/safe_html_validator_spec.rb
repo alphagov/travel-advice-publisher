@@ -8,13 +8,13 @@ describe SafeHtml do
 
     validates_with SafeHtml
 
-    embeds_one :dummy_embedded_single, class_name: 'DummyEmbeddedSingle'
+    embeds_one :dummy_embedded_single, class_name: "DummyEmbeddedSingle"
   end
 
   class DummyEmbeddedSingle
     include Mongoid::Document
 
-    embedded_in :dummy, class_name: 'Dummy'
+    embedded_in :dummy, class_name: "Dummy"
 
     field :i_am_govspeak, type: String
 

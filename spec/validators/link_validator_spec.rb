@@ -57,7 +57,7 @@ describe LinkValidator do
   end
 
   context "smart quotes as normal quotes" do
-    let(:body) { 'abc [foobar](http://foobar.com “hover”)' }
+    let(:body) { "abc [foobar](http://foobar.com “hover”)" }
     include_examples "is invalid"
   end
 
@@ -87,7 +87,7 @@ describe LinkValidator do
   end
 
   context "already published document having link validation errors" do
-    let(:body) { 'abc [link1](foobar.com), ghi [link2](bazquux.com)' }
+    let(:body) { "abc [link1](foobar.com), ghi [link2](bazquux.com)" }
 
     it "should be validated when any attribute of the document changes" do
       doc.save(validate: false)
