@@ -13,7 +13,7 @@ gem "formtastic", "~> 3.1"
 gem "formtastic-bootstrap", "~> 3.1"
 
 gem "sass-rails", "~> 5.0"
-gem "uglifier", "~> 4.1"
+gem "uglifier", "~> 4.2"
 
 gem "mini_magick", "~> 4.9"
 gem "pdf-reader", "~> 2.2"
