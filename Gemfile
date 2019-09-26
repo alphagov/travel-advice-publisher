@@ -12,7 +12,7 @@ gem "diffy", "~> 3.3"
 gem "formtastic", "~> 3.1"
 gem "formtastic-bootstrap", "~> 3.1"
 
-gem "sass-rails", "~> 5.0"
+gem "sass-rails", "~> 6.0"
 gem "uglifier", "~> 4.2"
 
 gem "mini_magick", "~> 4.9"
