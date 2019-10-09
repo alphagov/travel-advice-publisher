@@ -33,7 +33,7 @@ group :development, :test do
   gem "jasmine", "~> 3.5"
   gem "pry-byebug"
   gem "pry-rails"
-  gem "rspec-rails", "~> 3.8"
+  gem "rspec-rails", "~> 3.9"
 end
 
 group :test do
