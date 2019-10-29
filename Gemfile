@@ -26,7 +26,7 @@ gem "govuk_app_config", "~> 2.0"
 gem "govuk_publishing_components", "~> 21.6.1"
 gem "govuk_sidekiq", "~> 3.0"
 gem "plek", "~> 3.0"
-gem "slimmer", "~> 13.1"
+gem "slimmer", "~> 13.2"
 
 group :development, :test do
   gem "govuk-lint", "~> 4.0"
