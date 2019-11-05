@@ -33,7 +33,6 @@ class User
     name || email || ""
   end
 
-  # rubocop:disable Style/FormatStringToken
   def gravatar_url(opts = {})
     opts.symbolize_keys!
     "%s.gravatar.com/avatar/%s%s" % [
@@ -42,5 +41,4 @@ class User
       opts[:s] ? "?s=#{CGI.escape(opts[:s])}" : "",
     ]
   end
-  # rubocop:enable Style/FormatStringToken
 end
