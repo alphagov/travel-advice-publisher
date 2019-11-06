@@ -19,7 +19,7 @@ gem "mini_magick", "~> 4.9"
 gem "pdf-reader", "~> 2.2"
 
 gem "gds-api-adapters", "~> 60.1"
-gem "gds-sso", "~> 14.1"
+gem "gds-sso", "~> 14.2"
 gem "govspeak", "~> 6.5"
 gem "govuk_admin_template", "~> 6.7"
 gem "govuk_app_config", "~> 2.0"
