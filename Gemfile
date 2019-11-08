@@ -16,7 +16,7 @@ gem "sass-rails", "~> 5.0"
 gem "uglifier", "~> 4.2"
 
 gem "mini_magick", "~> 4.9"
-gem "pdf-reader", "~> 2.2"
+gem "pdf-reader", "~> 2.3"
 
 gem "gds-api-adapters", "~> 61.0"
 gem "gds-sso", "~> 14.2"
