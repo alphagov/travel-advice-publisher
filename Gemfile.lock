@@ -127,11 +127,6 @@ GEM
       sanitize (~> 5)
     govuk-content-schema-test-helpers (1.6.1)
       json-schema (~> 2.8.0)
-    govuk-lint (4.3.0)
-      rubocop (~> 0.76)
-      rubocop-rails (~> 2)
-      rubocop-rspec (~> 1.28)
-      scss_lint
     govuk_admin_template (6.7.0)
       bootstrap-sass (= 3.4.1)
       jquery-rails (~> 4.3.1)
@@ -354,6 +349,10 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
+    rubocop-govuk (1.0.0)
+      rubocop (~> 0.76)
+      rubocop-rails (~> 2)
+      rubocop-rspec (~> 1.28)
     rubocop-rails (2.3.2)
       rack (>= 1.1)
       rubocop (>= 0.72.0)
@@ -388,6 +387,8 @@ GEM
       tilt
     scss_lint (0.59.0)
       sass (~> 3.5, >= 3.5.5)
+    scss_lint-govuk (0.2.0)
+      scss_lint
     selenium-webdriver (3.142.6)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -482,7 +483,6 @@ DEPENDENCIES
   gds-sso (~> 14.2)
   govspeak (~> 6.5)
   govuk-content-schema-test-helpers (~> 1.6)
-  govuk-lint (~> 4.3)
   govuk_admin_template (~> 6.7)
   govuk_app_config (~> 2.0)
   govuk_publishing_components (~> 21.10.0)
@@ -500,7 +500,9 @@ DEPENDENCIES
   rails (= 5.2.3)
   rails-controller-testing
   rspec-rails (~> 3.9)
+  rubocop-govuk (~> 1.0)
   sass-rails (~> 5.0)
+  scss_lint-govuk (~> 0.2)
   simplecov
   slimmer (~> 13.2)
   state_machines (~> 0.4)
