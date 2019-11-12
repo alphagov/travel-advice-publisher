@@ -29,7 +29,7 @@ gem "plek", "~> 3.0"
 gem "slimmer", "~> 13.2"
 
 group :development, :test do
-  gem "govuk-lint", "~> 4.2"
+  gem "govuk-lint", "~> 4.3"
   gem "jasmine", "~> 3.5"
   gem "pry-byebug"
   gem "pry-rails"
