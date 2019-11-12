@@ -29,7 +29,6 @@ gem "plek", "~> 3.0"
 gem "slimmer", "~> 13.2"
 
 group :development, :test do
-  gem "govuk-lint", "~> 4.3"
   gem "jasmine", "~> 3.5"
   gem "pry-byebug"
   gem "pry-rails"
@@ -43,6 +42,8 @@ group :test do
   gem "govuk-content-schema-test-helpers", "~> 1.6"
   gem "govuk_test"
   gem "rails-controller-testing"
+  gem "rubocop-govuk", "~> 1.0"
+  gem "scss_lint-govuk", "~> 0.2"
   gem "simplecov"
   gem "test-unit"
   gem "timecop"
