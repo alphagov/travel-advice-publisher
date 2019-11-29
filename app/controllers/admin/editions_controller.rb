@@ -103,7 +103,7 @@ private
   end
 
   def save_and_publish
-    if @edition.update_attributes(permitted_edition_attributes) && @edition.publish_as(current_user)
+    if @edition.update(permitted_edition_attributes) && @edition.publish_as(current_user)
       notifier.put_content(@edition)
       notifier.patch_links(@edition)
       notifier.email_signup(@edition) if @edition.previous_version.nil?
@@ -130,7 +130,7 @@ private
   end
 
   def save
-    if @edition.update_attributes(permitted_edition_attributes)
+    if @edition.update(permitted_edition_attributes)
       notifier.put_content(@edition)
       notifier.enqueue
 

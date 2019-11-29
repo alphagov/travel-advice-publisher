@@ -1,3 +1,18 @@
 inherit_gem:
   rubocop-govuk:
     - "config/default.yml"
+    - "config/rails.yml"
+
+# Mongoid doesn't support some of the methods that Rubocop prefers
+Rails/FindBy:
+  Enabled: false
+
+Rails/FindEach:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_slug
+
+Rails/OutputSafety:
+  Enabled: false

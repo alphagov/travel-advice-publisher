@@ -3,7 +3,7 @@ RSpec.describe LinkCheckReportCreator do
     create(:travel_advice_edition, summary: "[link](http://www.example.com)[link_two](http://www.gov.com)")
   end
 
-  let(:completed_at) { Time.now }
+  let(:completed_at) { Time.zone.now }
 
   let(:link_checker_api_response) do
     {

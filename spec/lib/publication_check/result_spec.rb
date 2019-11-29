@@ -27,7 +27,7 @@ module PublicationCheck
             country_slug: "scotland",
             succeeded: false,
             checks_complete: false,
-            checks_attempted: [Time.now],
+            checks_attempted: [Time.zone.now],
             frontend_updated: nil,
           )
           result = Result.new
@@ -37,7 +37,7 @@ module PublicationCheck
       end
 
       context "for a complete successful check" do
-        let(:updated_time) { Time.now }
+        let(:updated_time) { Time.zone.now }
         it "returns 'SUCCESS: <id> <country_slug> checked. checks_count: <n>, frontend_updated: <date>" do
           expected = "SUCCESS: 1234 scotland checked. check_count: 1, frontend_updated: #{updated_time.strftime('%FT%T%:z')}"
           request = PublishRequest.new(
@@ -45,7 +45,7 @@ module PublicationCheck
             country_slug: "scotland",
             succeeded: true,
             checks_complete: true,
-            checks_attempted: [Time.now],
+            checks_attempted: [Time.zone.now],
             frontend_updated: updated_time,
           )
           result = Result.new
@@ -62,7 +62,7 @@ module PublicationCheck
             country_slug: "scotland",
             succeeded: false,
             checks_complete: true,
-            checks_attempted: [Time.now],
+            checks_attempted: [Time.zone.now],
             frontend_updated: nil,
           )
           result = Result.new

@@ -85,7 +85,7 @@ FactoryBot.define do
   factory :link_check_report do
     batch_id { 1 }
     status { "in_progress" }
-    completed_at { Time.now }
+    completed_at { Time.zone.now }
     links { [build(:link)] }
 
     trait :completed do

@@ -13,7 +13,7 @@ RSpec.describe EmailAlertPresenter do
   let(:email_alert) { described_class.present(edition) }
 
   around do |example|
-    travel_to(Time.local(2016, 1, 1, 1, 1, 1)) { example.run }
+    travel_to(Time.zone.local(2016, 1, 1, 1, 1, 1)) { example.run }
   end
 
   it "includes the necessary fields" do

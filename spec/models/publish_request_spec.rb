@@ -2,7 +2,7 @@ describe PublishRequest do
   describe "#check_count" do
     let(:publish_request) { PublishRequest.new }
     it "returns the length of checks_attempted" do
-      publish_request.checks_attempted << Time.now
+      publish_request.checks_attempted << Time.zone.now
       expect(publish_request.check_count).to eq(1)
     end
   end
@@ -13,7 +13,7 @@ describe PublishRequest do
 
     it "adds a new timestamp to checks_attempted" do
       publish_request.register_check_attempt!
-      expect(publish_request.checks_attempted.first).to eq(Time.now)
+      expect(publish_request.checks_attempted.first).to eq(Time.zone.now)
     end
 
     context "incremented check_count == MAX_RETRIES (3)" do
@@ -162,7 +162,7 @@ describe PublishRequest do
   describe "mark_frontend_updated" do
     let(:publish_request) { PublishRequest.new }
     around do |example|
-      travel_to(Time.new(2015, 4, 10, 5, 0, 0)) { example.run }
+      travel_to(Time.zone.local(2015, 4, 10, 5, 0, 0)) { example.run }
     end
 
     it "sets frontend_updated to DateTime.now" do

@@ -38,10 +38,10 @@ private
   end
 
   def public_updated_at(edition)
-    (edition.published_at || Time.now).in_time_zone
+    (edition.published_at || Time.zone.now).in_time_zone
   end
 
   def updated_at(edition)
-    (edition.updated_at || Time.now).in_time_zone
+    (edition.updated_at || Time.zone.now).in_time_zone
   end
 end

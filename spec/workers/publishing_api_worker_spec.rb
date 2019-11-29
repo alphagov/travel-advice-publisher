@@ -46,7 +46,7 @@ RSpec.describe PublishingApiWorker, :perform do
       travel_to(Time.current) do
         described_class.new.perform([task])
         job = EmailAlertApiWorker.jobs.first
-        job_starts_at = Time.at(job["at"])
+        job_starts_at = Time.zone.at(job["at"])
         expected_delay = 10.seconds.from_now
 
         expect(job_starts_at).to eq(expected_delay)

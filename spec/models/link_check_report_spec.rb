@@ -5,7 +5,7 @@ describe LinkCheckReport, type: :model do
         links: [{ uri: "http://www.example.com", status: "error" }],
         batch_id: 1,
         status: "broken",
-        completed_at: Time.parse("2017-12-01"),
+        completed_at: Time.zone.parse("2017-12-01"),
       }
     end
 
@@ -25,7 +25,7 @@ describe LinkCheckReport, type: :model do
           links: [],
           batch_id: 1,
           status: "broken",
-          completed_at: Time.parse("2017-12-01"),
+          completed_at: Time.zone.parse("2017-12-01"),
         }
 
       link_check_report = LinkCheckReport.new(attributes)
