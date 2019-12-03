@@ -42,7 +42,7 @@ group :test do
   gem "govuk-content-schema-test-helpers", "~> 1.6"
   gem "govuk_test"
   gem "rails-controller-testing"
-  gem "rubocop-govuk", "~> 1.0"
+  gem "rubocop-govuk", "~> 2.0"
   gem "scss_lint-govuk", "~> 0.2"
   gem "simplecov"
   gem "test-unit"
