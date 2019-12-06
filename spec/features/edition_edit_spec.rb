@@ -277,14 +277,14 @@ feature "Edit Edition page", js: true do
     @edition.save!
 
     @edition.parts.build
-    @edition.parts.first.update_attributes(
+    @edition.parts.first.update(
       title: "Part One",
       slug: "part-one",
       body: "Body text",
     )
 
     @edition.parts.build
-    @edition.parts.second.update_attributes(
+    @edition.parts.second.update(
       title: "Part Two",
       slug: "part-two",
       body: "Body text",
@@ -524,8 +524,8 @@ feature "Edit Edition page", js: true do
   scenario "managing images for an edition" do
     @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
 
-    file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "image.jpg"))
-    file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "image_two.jpg"))
+    file_one = File.open(Rails.root.join("spec/fixtures/uploads/image.jpg"))
+    file_two = File.open(Rails.root.join("spec/fixtures/uploads/image_two.jpg"))
 
     asset_one = {
       "id" => "http://asset-manager.dev.gov.uk/assets/an_image_id",
@@ -604,8 +604,8 @@ feature "Edit Edition page", js: true do
   scenario "managing documents for an edition" do
     @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
 
-    file_one = File.open(Rails.root.join("spec", "fixtures", "uploads", "document.pdf"))
-    file_two = File.open(Rails.root.join("spec", "fixtures", "uploads", "document_two.pdf"))
+    file_one = File.open(Rails.root.join("spec/fixtures/uploads/document.pdf"))
+    file_two = File.open(Rails.root.join("spec/fixtures/uploads/document_two.pdf"))
 
     asset_one = {
       "id" => "http://asset-manager.dev.gov.uk/assets/a_document_id",

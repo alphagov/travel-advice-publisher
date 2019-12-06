@@ -215,7 +215,7 @@ private
       self.field "#{field}_id".to_sym, type: String
 
       define_method(field) do
-        unless self.send("#{field}_id").blank?
+        if self.send("#{field}_id").present?
           @attachments[field] ||= GdsApi.asset_manager.asset(self.send("#{field}_id"))
         end
       end
@@ -232,7 +232,7 @@ private
       attr_reader :"#{field}_file"
 
       define_method("remove_#{field}=") do |value|
-        self.send("#{field}_id=", nil) unless value.blank?
+        self.send("#{field}_id=", nil) if value.present?
       end
 
       define_method("upload_#{field}") do

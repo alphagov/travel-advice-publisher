@@ -362,7 +362,7 @@ describe TravelAdviceEdition do
       @published.reviewed_at = 2.days.ago
       @published.save!
       @published.reload
-      travel_to(1.days.ago) do
+      travel_to(1.day.ago) do
         @ed = create(:travel_advice_edition, country_slug: "aruba")
       end
     end
@@ -478,7 +478,7 @@ describe TravelAdviceEdition do
         links: [{ uri: "http://www.example.com", status: "error" }],
         batch_id: 1,
         status: "broken",
-        completed_at: Time.parse("2017-12-01"),
+        completed_at: Time.zone.parse("2017-12-01"),
       )
       expect(edition.link_check_reports.size).to eq(1)
     end

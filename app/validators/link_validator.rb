@@ -7,7 +7,7 @@ class LinkValidator < ActiveModel::Validator
       next if govspeak_field_value.blank?
 
       messages = errors(govspeak_field_value)
-      record.errors[govspeak_field_name] << messages unless messages.blank?
+      record.errors[govspeak_field_name] << messages if messages.present?
     end
   end
 
@@ -24,7 +24,7 @@ class LinkValidator < ActiveModel::Validator
     errors = Set.new
 
     string.gsub(/(“|”)+/, '"').scan(link_regex) do |match|
-      errors << "Internal links must start with a forward slash eg [link text](/link-destination). External links must start with http://, https://, or mailto: eg [external link text](https://www.google.co.uk)." if match[0] !~ %r{^(?:https?://|mailto:|/)}
+      errors << "Internal links must start with a forward slash eg [link text](/link-destination). External links must start with http://, https://, or mailto: eg [external link text](https://www.google.co.uk)." if !%r{^(?:https?://|mailto:|/)}.match?(match[0])
       errors << %q-Don't include hover text in links. Delete the text in quotation marks eg "This appears when you hover over the link."- if match[1]
       errors << 'Delete {:rel="external"} in links.' if match[2]
     end

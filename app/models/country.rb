@@ -53,7 +53,7 @@ class Country
   end
 
   def self.data_path
-    @data_path ||= Rails.root.join("lib", "data", "countries.yml")
+    @data_path ||= Rails.root.join("lib/data/countries.yml")
   end
 
   def self.data_path=(path)

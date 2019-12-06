@@ -4,7 +4,7 @@ RSpec.describe LinkCheckReportUpdater do
            batch_id: 1, link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
   end
 
-  let(:completed_at) { Time.now }
+  let(:completed_at) { Time.zone.now }
 
   let(:payload) do
     {

@@ -38,7 +38,7 @@ class PublishRequest
   end
 
   def register_check_attempt!
-    self.checks_attempted << Time.now
+    self.checks_attempted << Time.zone.now
     self.checks_complete = check_count >= MAX_RETRIES
     if frontend_updated.present?
       self.succeeded = true
