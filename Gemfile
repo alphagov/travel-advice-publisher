@@ -18,7 +18,7 @@ gem "uglifier", "~> 4.2"
 gem "mini_magick", "~> 4.9"
 gem "pdf-reader", "~> 2.4"
 
-gem "gds-api-adapters", "~> 61.1"
+gem "gds-api-adapters", "~> 62.0"
 gem "gds-sso", "~> 14.2"
 gem "govspeak", "~> 6.5"
 gem "govuk_admin_template", "~> 6.7"
