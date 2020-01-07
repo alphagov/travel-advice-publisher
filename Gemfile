@@ -15,7 +15,7 @@ gem "formtastic-bootstrap", "~> 3.1"
 gem "sass-rails", "~> 5.0"
 gem "uglifier", "~> 4.2"
 
-gem "mini_magick", "~> 4.9"
+gem "mini_magick", "~> 4.10"
 gem "pdf-reader", "~> 2.4"
 
 gem "gds-api-adapters", "~> 63.2"
