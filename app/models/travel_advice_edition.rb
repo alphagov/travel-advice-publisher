@@ -207,7 +207,7 @@ private
   end
 
   def self.attaches(*fields)
-    fields.map(&:to_s).each do |field| # rubocop:disable Style/BlockLength
+    fields.map(&:to_s).each do |field| # rubocop:disable Metrics/BlockLength
       after_initialize do
         instance_variable_set("@#{field}_has_changed", false)
       end
