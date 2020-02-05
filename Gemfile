@@ -37,7 +37,7 @@ end
 
 group :test do
   gem "ci_reporter_rspec"
-  gem "database_cleaner", "~> 1.7"
+  gem "database_cleaner", "~> 1.8"
   gem "factory_bot_rails", "~> 5.1"
   gem "govuk-content-schema-test-helpers", "~> 1.6"
   gem "govuk_test"
