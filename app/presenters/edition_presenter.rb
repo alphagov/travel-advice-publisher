@@ -133,10 +133,22 @@ private
   end
 
   def image
-    @image ||= AssetPresenter.present(edition.image)
+    @image ||= if edition.image
+                 {
+                   "url" => edition.image["file_url"],
+                   "content_type" => edition.image["content_type"],
+                 }
+               end
   end
 
   def document
-    @document ||= AssetPresenter.present(edition.document)
+    @document ||= if edition.document
+                    {
+                      "attachment_type" => "file",
+                      "id" => SecureRandom.uuid,
+                      "url" => edition.document["file_url"],
+                      "content_type" => edition.document["content_type"],
+                    }
+                  end
   end
 end
