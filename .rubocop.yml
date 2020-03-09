@@ -3,6 +3,10 @@ inherit_gem:
     - "config/default.yml"
     - "config/rails.yml"
 
+inherit_mode:
+  merge:
+    - Exclude
+
 # Mongoid doesn't support some of the methods that Rubocop prefers
 Rails/FindBy:
   Enabled: false
