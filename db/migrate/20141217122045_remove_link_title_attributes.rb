@@ -6,10 +6,10 @@ class RemoveLinkTitleAttributes < Mongoid::Migration
                   (\s+"[^"]+")?    # and optional space followed by title text in quotes
                 \)                # literal close paren
                 (\{:rel=["']external["']\})?  # optional :rel=external in literal curly brackets.
-              }x
+              }x.freeze
 
   def self.up
-    TravelAdviceEdition.where(:state.in => ["draft","published"]).order([:country_slug, :asc]).each do |edition|
+    TravelAdviceEdition.where(:state.in => %w[draft published]).order(%i[country_slug asc]).each do |edition|
       @messages = []
       edition.summary = sanitise_links(edition.summary)
       edition.parts.each_with_index do |part, index|
@@ -17,26 +17,25 @@ class RemoveLinkTitleAttributes < Mongoid::Migration
       end
       if @messages.any?
         puts edition.country_slug
-        if edition.valid? or (!has_error?(:summary, edition) and !has_error?(:parts, edition))
+        if edition.valid? || (!has_error?(:summary, edition) && !has_error?(:parts, edition))
           edition.save!(validate: false)
-          puts "Saved. Updated links: #{@messages.join(",")}"
+          puts "Saved. Updated links: #{@messages.join(',')}"
         else
           puts "Failed to validate and save Edition."
-          puts "Summary #{edition.errors[:summary].join(", ")}" if has_error?(:summary, edition)
-          puts "Parts #{edition.errors[:parts].join(", ")}" if has_error?(:parts, edition)
+          puts "Summary #{edition.errors[:summary].join(', ')}" if has_error?(:summary, edition)
+          puts "Parts #{edition.errors[:parts].join(', ')}" if has_error?(:parts, edition)
         end
         puts "---------------------------------------------------------------"
       end
     end
   end
 
-  def self.down
-  end
+  def self.down; end
 
-  private
+private
 
   def self.has_error?(key, edition)
-    edition.errors.has_key?(key) and edition.errors[key].flatten.compact.any?
+    edition.errors.has_key?(key) && edition.errors[key].flatten.compact.any?
   end
 
   def self.sanitise_links(str)
@@ -48,7 +47,7 @@ class RemoveLinkTitleAttributes < Mongoid::Migration
 
       prepend_scheme = link_url =~ /\Awww/
 
-      if link_title or link_rel or prepend_scheme
+      if link_title || link_rel || prepend_scheme
         link_url = "http://#{link_url}" if prepend_scheme
         @messages << "#{link_text_md}(#{link_url})"
         "#{link_text_md}(#{link_url})"

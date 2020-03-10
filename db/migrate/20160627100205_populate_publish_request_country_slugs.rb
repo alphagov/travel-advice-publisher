@@ -3,10 +3,9 @@ class PopulatePublishRequestCountrySlugs < Mongoid::Migration
     publish_requests = PublishRequest.all
     publish_requests.each do |publish_request|
       edition = TravelAdviceEdition.find(publish_request.edition_id)
-      publish_request.update_attributes!(country_slug: edition.country_slug)
+      publish_request.update!(country_slug: edition.country_slug)
     end
   end
 
-  def self.down
-  end
+  def self.down; end
 end
