@@ -32,7 +32,7 @@ describe IndexPresenter do
           "document_type" => "travel_advice_index",
           "schema_name" => "travel_advice_index",
           "title" => "Foreign travel advice",
-          "description" => "Latest travel advice by country including safety and security, entry requirements, travel warnings and health",
+          "description" => "Get advice about travelling abroad, including the latest information on coronavirus, safety and security, entry requirements and travel warnings.",
           "locale" => "en",
           "publishing_app" => "travel-advice-publisher",
           "rendering_app" => "frontend",
