@@ -7,6 +7,11 @@ inherit_mode:
   merge:
     - Exclude
 
+AllCops:
+  Exclude:
+    - db/migrate/201*.rb
+
+
 # Mongoid doesn't support some of the methods that Rubocop prefers
 Rails/FindBy:
   Enabled: false
