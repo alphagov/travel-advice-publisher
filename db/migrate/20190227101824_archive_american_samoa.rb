@@ -5,6 +5,5 @@ class ArchiveAmericanSamoa < Mongoid::Migration
       .update_all(state: "archived")
   end
 
-  def self.down
-  end
+  def self.down; end
 end

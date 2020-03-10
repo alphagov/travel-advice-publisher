@@ -1,13 +1,13 @@
 # Add your own tasks in files placed in lib/tasks ending in .rake,
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
-require File.expand_path("../config/application", __FILE__)
+require File.expand_path("config/application", __dir__)
 
 Rails.application.load_tasks
 
 unless Rails.env.production?
   require "rubocop/rake_task"
-  require 'scss_lint/rake_task'
+  require "scss_lint/rake_task"
 
   RuboCop::RakeTask.new(:rubocop) do |t|
     t.patterns = %w(app config lib spec)
@@ -18,5 +18,5 @@ unless Rails.env.production?
   end
 
   task default: [:spec, "jasmine:ci", :rubocop, :scss_lint]
-  task lint: [:rubocop, :scss_lint]
+  task lint: %i[rubocop scss_lint]
 end
