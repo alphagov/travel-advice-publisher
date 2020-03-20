@@ -10,7 +10,7 @@
   <h1>Editing <%= @country.name %> <small>Version <%= @edition.version_number %></small></h1>
 </div>
 
-<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition do |f| %>
+<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition, class: "js-edition-form" do |f| %>
   <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
@@ -20,22 +20,7 @@
     <div class="tab-content add-bottom-margin">
       <div class="tab-pane active row" id="edit">
         <div class="col-md-8">
-          <%= f.inputs :name => "Type of update" do %>
-            <% unless @edition.version_number == 1 %>
-              <h5>Minor update</h5>
-              <p>Tick the box if the only change you're making is minor (eg fixing a typo or a small change to wording).</p>
-              <%= f.input :minor_update, :as => :boolean, :input_html => { :disabled => ! @edition.draft? } %>
-            <% end %>
-
-            <div id="major_update_input">
-              <h5>Major update</h5>
-              <% unless @edition.version_number == 1 %>
-                <p>If the change is major, leave a description below. An email will be sent to subscribers with your description of the change.</p>
-              <% end %>
-              <%= f.input :change_description, :as => :text, :label => "Change description (plain text)", :required => true, :input_html => {
-                :class => "input-md-8", :rows => 4, :disabled => ! @edition.draft? } %>
-            </div>
-          <% end %>
+          <%= render "change_notes", f: f %>
 
           <%= f.inputs :name => "Metadata" do %>
             <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "input-md-8" } %>

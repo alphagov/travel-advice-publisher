@@ -143,6 +143,10 @@ class TravelAdviceEdition
     link_check_reports.last
   end
 
+  def update?
+    version_number > 1
+  end
+
 private
 
   def state_for_slug_unique

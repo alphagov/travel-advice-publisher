@@ -659,4 +659,18 @@ describe TravelAdviceEdition do
       expect(edition.latest_link_check_report).to eq(latest_report)
     end
   end
+
+  describe "a first edition" do
+    it "is not an update" do
+      ta = build(:travel_advice_edition, version_number: 1)
+      expect(ta).not_to be_update
+    end
+  end
+
+  describe "subsequent edition" do
+    it "is an update" do
+      ta2 = build(:travel_advice_edition, version_number: 2)
+      expect(ta2).to be_update
+    end
+  end
 end

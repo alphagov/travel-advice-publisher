@@ -71,10 +71,7 @@ $(function() {
     $("#clone-edition").submit();
   });
 
-  $("#edition_minor_update").change(function() {
-    TravelAdviceUtils.setChangeDescriptionVisibility($(this));
-  });
-  TravelAdviceUtils.setChangeDescriptionVisibility($("#edition_minor_update"));
+  adminEditionsForm.showChangeNotesIfMajorChange();
 
   $(".js-add-related-item").on("click", function () {
     var relatedItems = $(".js-related-items"),
