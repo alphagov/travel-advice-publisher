@@ -8,7 +8,7 @@ class HealthcheckController < ApplicationController
   # that all published editions have been sent to publishing-api and triggered
   # an email alert.
   def recently_published_editions
-    editions = editions_published_between_2_days_and_90_minutes_ago.each.map do |edition|
+    editions = editions_published_between_2_days_and_150_minutes_ago.each.map do |edition|
       {
         title: edition.title,
         published_at: edition.published_at,
@@ -20,11 +20,11 @@ class HealthcheckController < ApplicationController
 
 private
 
-  def editions_published_between_2_days_and_90_minutes_ago
+  def editions_published_between_2_days_and_150_minutes_ago
     TravelAdviceEdition.published.where(
       :published_at.gte => 2.days.ago,
     ).where(
-      :published_at.lte => 90.minutes.ago,
+      :published_at.lte => 150.minutes.ago,
     ).order_by(
       published_at: :desc,
     )
