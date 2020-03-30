@@ -136,10 +136,10 @@ feature "Edit Edition page", js: true do
     within("h1") { expect(page).to have_content "Editing Albania Version 1" }
 
     within "#edit" do
-      within_section "the fieldset labelled Type of update" do
+      within_section "the fieldset labelled What sort of change are you making?" do
         # The first version can't be a minor update...
-        expect(page).not_to have_field("Minor update")
-        expect(page).to have_field("Change description (plain text)")
+        expect(page).not_to have_field("A typo, style change or similar (no update is sent to email subscribers)")
+        expect(page).to have_field("Public change note")
       end
 
       within_section "the fieldset labelled Metadata" do
@@ -168,7 +168,7 @@ feature "Edit Edition page", js: true do
     fill_in "Search title", with: "Travel advice for Albania"
     fill_in "Search description", with: "Read this if you're planning on visiting Albania"
 
-    fill_in "Change description", with: "Made changes to all the stuff"
+    fill_in "Public change note", with: "Made changes to all the stuff"
 
     fill_in "Summary", with: "Summary of the situation in Albania"
 
@@ -241,13 +241,14 @@ feature "Edit Edition page", js: true do
     within("h1") { expect(page).to have_content "Editing Albania Version 2" }
 
     within "#edit" do
-      within_section "the fieldset labelled Type of update" do
-        expect(page).to have_checked_field("Minor update")
+      within_section "the fieldset labelled What sort of change are you making?" do
+        expect(page).to have_checked_field("A typo, style change or similar (no update is sent to email subscribers)")
 
-        expect(page.find_field("Change description", visible: false)).not_to be_visible
+        choose("A typo, style change or similar (no update is sent to email subscribers)")
+        expect(page.find_field("Public change note", visible: false)).not_to be_visible
 
-        uncheck "Minor update"
-        expect(page.find_field("Change description")).to be_visible
+        choose("A significant change, for example a new travel restriction (sends an email to all subscribers and adds a change note to the summary page)")
+        expect(page.find_field("Public change note")).to be_visible
       end
     end
 
@@ -420,7 +421,7 @@ feature "Edit Edition page", js: true do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
       fill_in "Summary", with: "## The summary"
-      check "Minor update"
+      choose "A typo, style change or similar (no update is sent to email subscribers)"
 
       click_on "Save & Publish"
     end

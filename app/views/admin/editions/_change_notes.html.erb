@@ -1,0 +1,32 @@
+<fieldset class="js-change-notes">
+  <%= f.inputs :name => "What sort of change are you making?" do %>
+    <% if @edition.update? %>
+      <div class="radio">
+        <%= label_tag do %>
+          <%= f.radio_button(:minor_update, true, class: "js-edition-update-minor") %>
+          <strong>A typo, style change or similar</strong> (no update is sent to email subscribers)
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="radio">
+      <%= label_tag do %>
+        <%= f.radio_button(:minor_update, false, class: "js-edition-update-major") %>
+        <strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)
+      <% end %>
+    </div>
+
+    <div class="form-group js-change-notes-section">
+      <%= f.label :change_description, "Public change note" %>
+      <%= f.text_area(:change_description,
+                      rows: 4,
+                      placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"',
+                      label_text: "Public change note",
+                      required: true,
+                      class: "form-control",
+                      disabled: ! @edition.draft?) %>
+    </div>
+
+    <p>Read the <a href="https://www.gov.uk/guidance/content-design/writing-for-gov-uk#change-notes" target="_blank">guidance about change notes</a> (opens in a new tab).</p>
+  <% end %>
+</fieldset>
