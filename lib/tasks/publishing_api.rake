@@ -1,15 +1,11 @@
 namespace :publishing_api do
-  def api_v2
-    GdsApi.publishing_api_v2
-  end
-
   desc "send index content-item to publishing-api"
   task publish: :environment do
     presenter = IndexPresenter.new
 
-    api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-    api_v2.patch_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
-    api_v2.publish(presenter.content_id)
+    GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+    GdsApi.publishing_api.patch_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
+    GdsApi.publishing_api.publish(presenter.content_id)
   end
 
   desc "unpublish a published edition and email signup content item for a country and redirect"
@@ -17,8 +13,8 @@ namespace :publishing_api do
     country = Country.find_by_slug(args[:country_slug])
     alternative_path = "/foreign-travel-advice/#{args[:new_country_slug]}"
 
-    api_v2.unpublish(country.email_signup_content_id, type: "redirect", alternative_path: "#{alternative_path}/email-signup")
-    api_v2.unpublish(
+    GdsApi.publishing_api.unpublish(country.email_signup_content_id, type: "redirect", alternative_path: "#{alternative_path}/email-signup")
+    GdsApi.publishing_api.unpublish(
       country.content_id,
       type: "redirect",
       redirects: [
@@ -35,9 +31,9 @@ namespace :publishing_api do
       presenter = EditionPresenter.new(edition, republish: true)
       links_presenter = LinksPresenter.new(edition)
 
-      api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      api_v2.patch_links(links_presenter.content_id, links_presenter.present)
-      api_v2.publish(presenter.content_id, presenter.update_type)
+      GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
+      GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
 
       print "."
     end
@@ -59,9 +55,9 @@ namespace :publishing_api do
         },
       }
 
-      api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      api_v2.patch_links(presenter.content_id, links)
-      api_v2.publish(presenter.content_id, "minor")
+      GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      GdsApi.publishing_api.patch_links(presenter.content_id, links)
+      GdsApi.publishing_api.publish(presenter.content_id, "minor")
 
       print "."
     end
@@ -76,9 +72,9 @@ namespace :publishing_api do
       presenter       = EditionPresenter.new(edition, republish: true)
       links_presenter = LinksPresenter.new(edition)
 
-      api_v2.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      api_v2.patch_links(links_presenter.content_id, links_presenter.present)
-      api_v2.publish(presenter.content_id, presenter.update_type)
+      GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+      GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
+      GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
       puts "SUCCEED: The country #{args[:country_slug]} has been republished"
     rescue Mongoid::Errors::DocumentNotFound
       puts "ERROR: No published country found for #{args[:country_slug]}"
@@ -96,8 +92,8 @@ namespace :publishing_api do
     task index: :environment do
       presenter = EmailAlertSignup::IndexPresenter.new
 
-      api_v2.put_content(presenter.content_id, presenter.content_payload)
-      api_v2.publish(presenter.content_id, presenter.update_type)
+      GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
+      GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
     end
 
     desc "republish email signup content item for all countries"
@@ -105,8 +101,8 @@ namespace :publishing_api do
       TravelAdviceEdition.published.each do |edition|
         presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
-        api_v2.put_content(presenter.content_id, presenter.content_payload)
-        api_v2.publish(presenter.content_id, presenter.update_type)
+        GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
+        GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
 
         print "."
       end
@@ -120,8 +116,8 @@ namespace :publishing_api do
         edition = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
         presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
-        api_v2.put_content(presenter.content_id, presenter.content_payload)
-        api_v2.publish(presenter.content_id, presenter.update_type)
+        GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
+        GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
         puts "SUCCEED: The country #{args[:country_slug]} has been republished"
       rescue Mongoid::Errors::DocumentNotFound
         puts "ERROR: No published country found for '#{args[:country_slug]}'"
