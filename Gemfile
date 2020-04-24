@@ -2,8 +2,8 @@ source "https://rubygems.org"
 
 gem "rails", "5.2.4.2"
 
-gem "mongo", "~> 2.4.3"
-gem "mongoid", "~> 6.2"
+gem "mongo", "~> 2.5.0"
+gem "mongoid", "~> 6.3.0"
 gem "mongoid_rails_migrations"
 gem "state_machines", "~> 0.4"
 gem "state_machines-mongoid", "~> 0.2"
