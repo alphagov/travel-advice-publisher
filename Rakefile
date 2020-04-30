@@ -10,7 +10,7 @@ unless Rails.env.production?
   require "scss_lint/rake_task"
 
   RuboCop::RakeTask.new(:rubocop) do |t|
-    t.patterns = %w(app config lib spec)
+    t.patterns = %w[app config lib spec]
   end
 
   SCSSLint::RakeTask.new do |t|

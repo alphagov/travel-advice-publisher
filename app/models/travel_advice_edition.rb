@@ -28,16 +28,16 @@ class TravelAdviceEdition
   index({ country_slug: 1, version_number: -1 }, unique: true)
 
   GOVSPEAK_FIELDS = [:summary].freeze
-  ALERT_STATUSES = %w(
+  ALERT_STATUSES = %w[
     avoid_all_but_essential_travel_to_parts
     avoid_all_but_essential_travel_to_whole_country
     avoid_all_travel_to_parts
     avoid_all_travel_to_whole_country
-  ).freeze
+  ].freeze
 
   before_validation :populate_version_number, on: :create
 
-  validates_presence_of :country_slug, :title
+  validates :country_slug, :title, presence: true
   validate :state_for_slug_unique
   validates :version_number, presence: true, uniqueness: { scope: :country_slug }
   validate :alert_status_contains_valid_values
@@ -47,7 +47,7 @@ class TravelAdviceEdition
 
   embeds_many :parts
   accepts_nested_attributes_for :parts, allow_destroy: true,
-    reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
+                                        reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
 
   scope :published, lambda { where(state: "published") }
 
@@ -78,7 +78,7 @@ class TravelAdviceEdition
 
     state :published do
       validate :cannot_edit_published
-      validates_presence_of :change_description, unless: :minor_update, message: "can't be blank on publish"
+      validates :change_description, presence: { unless: :minor_update, message: "can't be blank on publish" }
     end
     state :archived do
       validate :cannot_edit_archived
@@ -88,14 +88,14 @@ class TravelAdviceEdition
   def build_clone(target_class = nil)
     new_edition = self.class.new
     self.class.fields_to_clone.each do |attr|
-      new_edition[attr] = self.read_attribute(attr)
+      new_edition[attr] = self[attr]
     end
-    new_edition.parts = self.parts.map(&:dup)
+    new_edition.parts = parts.map(&:dup)
 
     # If the new edition is of the same type or another type that has parts,
     # copy over the parts from this edition
     if target_class.nil? || target_class.include?(Parted)
-      new_edition.parts = self.parts.map(&:dup)
+      new_edition.parts = parts.map(&:dup)
     end
 
     new_edition
@@ -106,18 +106,18 @@ class TravelAdviceEdition
   end
 
   def publish_as(user)
-    comment = self.minor_update ? "Minor update" : Govspeak::Document.new(self.change_description).to_text
+    comment = minor_update ? "Minor update" : Govspeak::Document.new(change_description).to_text
     build_action_as(user, Action::PUBLISH, comment) && publish
   end
 
   def previous_version
-    self.class.where(country_slug: self.country_slug, :version_number.lt => self.version_number).order_by(version_number: :desc).first
+    self.class.where(country_slug: country_slug, :version_number.lt => version_number).order_by(version_number: :desc).first
   end
 
   after_validation :extract_part_errors
 
   def csv_synonyms
-    CSV.generate_line(self.synonyms).chomp
+    CSV.generate_line(synonyms).chomp
   end
 
   def csv_synonyms=(value)
@@ -136,7 +136,7 @@ class TravelAdviceEdition
   end
 
   def whole_body
-    self.parts.in_order.map { |i| %(\# #{i.title}\n\n#{i.body}) }.join("\n\n")
+    parts.in_order.map { |i| %(\# #{i.title}\n\n#{i.body}) }.join("\n\n")
   end
 
   def latest_link_check_report
@@ -150,7 +150,7 @@ class TravelAdviceEdition
 private
 
   def state_for_slug_unique
-    if %w(published draft).include?(self.state) &&
+    if %w[published draft].include?(state) &&
         self.class.where(:_id.ne => id,
                          country_slug: country_slug,
                          state: state).any?
@@ -159,8 +159,8 @@ private
   end
 
   def populate_version_number
-    if self.version_number.nil? && ! self.country_slug.nil? && ! self.country_slug.empty?
-      latest_edition = self.class.where(country_slug: self.country_slug).order_by(version_number: :desc).first
+    if version_number.nil? && !country_slug.nil? && !country_slug.empty?
+      latest_edition = self.class.where(country_slug: country_slug).order_by(version_number: :desc).first
       self.version_number = if latest_edition
                               latest_edition.version_number + 1
                             else
@@ -170,7 +170,7 @@ private
   end
 
   def cannot_edit_published
-    if anything_other_than_state_changed?("reviewed_at") && self.state_was != "draft"
+    if anything_other_than_state_changed?("reviewed_at") && state_was != "draft"
       errors.add(:state, "must be draft to modify")
     end
   end
@@ -182,17 +182,17 @@ private
   end
 
   def anything_other_than_state_changed?(*additional_allowed_fields)
-    self.changed? && ((changes.keys - %w[state] - additional_allowed_fields) != [] || self.parts.any?(&:changed?))
+    changed? && ((changes.keys - %w[state] - additional_allowed_fields) != [] || parts.any?(&:changed?))
   end
 
   def alert_status_contains_valid_values
-    self.alert_status.each do |status|
+    alert_status.each do |status|
       errors.add(:alert_status, "is not in the list") unless ALERT_STATUSES.include?(status)
     end
   end
 
   def first_version_cant_be_minor_update
-    if self.minor_update && self.version_number == 1
+    if minor_update && version_number == 1
       errors.add(:minor_update, "can't be set for first version")
     end
   end
@@ -219,8 +219,8 @@ private
       self.field "#{field}_id".to_sym, type: String
 
       define_method(field) do
-        if self.send("#{field}_id").present?
-          @attachments[field] ||= GdsApi.asset_manager.asset(self.send("#{field}_id"))
+        if send("#{field}_id").present?
+          @attachments[field] ||= GdsApi.asset_manager.asset(send("#{field}_id"))
         end
       end
 
@@ -236,16 +236,14 @@ private
       attr_reader :"#{field}_file"
 
       define_method("remove_#{field}=") do |value|
-        self.send("#{field}_id=", nil) if value.present?
+        send("#{field}_id=", nil) if value.present?
       end
 
       define_method("upload_#{field}") do
-        begin
-          response = GdsApi.asset_manager.create_asset(file: instance_variable_get("@#{field}_file"))
-          self.send("#{field}_id=", response["id"].match(/\/([^\/]+)\z/) { |m| m[1] })
-        rescue GdsApi::BaseError
-          errors.add("#{field}_id".to_sym, "could not be uploaded")
-        end
+        response = GdsApi.asset_manager.create_asset(file: instance_variable_get("@#{field}_file"))
+        send("#{field}_id=", response["id"].match(/\/([^\/]+)\z/) { |m| m[1] })
+      rescue GdsApi::BaseError
+        errors.add("#{field}_id".to_sym, "could not be uploaded")
       end
 
       private "upload_#{field}".to_sym # rubocop:disable Style/AccessModifierDeclarations

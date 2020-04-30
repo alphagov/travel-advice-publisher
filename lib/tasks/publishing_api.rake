@@ -9,7 +9,7 @@ namespace :publishing_api do
   end
 
   desc "unpublish a published edition and email signup content item for a country and redirect"
-  task :unpublish_published_edition_and_email_signup_content_item, %i(country_slug new_country_slug) => :environment do |_task, args|
+  task :unpublish_published_edition_and_email_signup_content_item, %i[country_slug new_country_slug] => :environment do |_task, args|
     country = Country.find_by_slug(args[:country_slug])
     alternative_path = "/foreign-travel-advice/#{args[:new_country_slug]}"
 
@@ -67,18 +67,16 @@ namespace :publishing_api do
 
   desc "republish a published edition to publishing-api for a country"
   task :republish_edition, [:country_slug] => :environment do |_task, args|
-    begin
-      edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
-      presenter       = EditionPresenter.new(edition, republish: true)
-      links_presenter = LinksPresenter.new(edition)
+    edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
+    presenter       = EditionPresenter.new(edition, republish: true)
+    links_presenter = LinksPresenter.new(edition)
 
-      GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
-      GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
-      GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
-      puts "SUCCEED: The country #{args[:country_slug]} has been republished"
-    rescue Mongoid::Errors::DocumentNotFound
-      puts "ERROR: No published country found for #{args[:country_slug]}"
-    end
+    GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
+    GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
+    GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
+    puts "SUCCEED: The country #{args[:country_slug]} has been republished"
+  rescue Mongoid::Errors::DocumentNotFound
+    puts "ERROR: No published country found for #{args[:country_slug]}"
   end
 
   desc "republish email signup content items for the index and all countries"
@@ -112,16 +110,14 @@ namespace :publishing_api do
 
     desc "republish email signup content item for a country"
     task :country_edition, [:country_slug] => :environment do |_task, args|
-      begin
-        edition = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
-        presenter = EmailAlertSignup::EditionPresenter.new(edition)
+      edition = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
+      presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
-        GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
-        GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
-        puts "SUCCEED: The country #{args[:country_slug]} has been republished"
-      rescue Mongoid::Errors::DocumentNotFound
-        puts "ERROR: No published country found for '#{args[:country_slug]}'"
-      end
+      GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
+      GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
+      puts "SUCCEED: The country #{args[:country_slug]} has been republished"
+    rescue Mongoid::Errors::DocumentNotFound
+      puts "ERROR: No published country found for '#{args[:country_slug]}'"
     end
   end
 end

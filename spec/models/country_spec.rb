@@ -140,7 +140,7 @@ describe Country do
       before :each do
         @edition = create(
           :archived_travel_advice_edition, country_slug: @country.slug,
-          title: "A test title", overview: "Meh"
+                                           title: "A test title", overview: "Meh"
         )
       end
 

@@ -13,9 +13,9 @@ class PublishRequest
   MAX_RETRIES = 3
 
   def self.awaiting_check
-    #returns the most recent per country_slug
-    #with checks_complete == false
-    #and created_at more than 5 minutes ago
+    # returns the most recent per country_slug
+    # with checks_complete == false
+    # and created_at more than 5 minutes ago
     ids = collection.aggregate(
       [
         { "$sort" => { country_slug: 1, created_at: 1 } },
@@ -38,7 +38,7 @@ class PublishRequest
   end
 
   def register_check_attempt!
-    self.checks_attempted << Time.zone.now
+    checks_attempted << Time.zone.now
     self.checks_complete = check_count >= MAX_RETRIES
     if frontend_updated.present?
       self.succeeded = true

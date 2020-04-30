@@ -25,7 +25,7 @@ class PublishingApiNotifier
   def publish(edition, update_type: nil)
     presenter = EditionPresenter.new(edition)
 
-    update_type = update_type || presenter.update_type
+    update_type ||= presenter.update_type
     tasks << [:publish, presenter.content_id, update_type]
   end
 

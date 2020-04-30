@@ -1,7 +1,7 @@
 module GdsApiHelpers
   def stub_shared_templates
-    WebMock.stub_request(:get, %r{\A#{Plek.current.find('static')}/templates}).
-      to_return(status: 200, body: "{}")
+    WebMock.stub_request(:get, %r{\A#{Plek.current.find('static')}/templates})
+      .to_return(status: 200, body: "{}")
   end
 end
 
