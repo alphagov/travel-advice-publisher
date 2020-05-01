@@ -25,22 +25,22 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
     expect(presenter.content_id).to eq(email_signup_content_id)
 
     expect(presenter.content_payload).to eq(base_path: "/foreign-travel-advice/aruba/email-signup",
-      title: "Aruba Travel Advice",
-      description: "Aruba Travel Advice Email Alert Signup",
-      document_type: "email_alert_signup",
-      schema_name: "email_alert_signup",
-      locale: "en",
-      publishing_app: "travel-advice-publisher",
-      rendering_app: "email-alert-frontend",
-      public_updated_at: Time.zone.now.iso8601,
-      update_type: "republish",
-      routes: [
+                                            title: "Aruba Travel Advice",
+                                            description: "Aruba Travel Advice Email Alert Signup",
+                                            document_type: "email_alert_signup",
+                                            schema_name: "email_alert_signup",
+                                            locale: "en",
+                                            publishing_app: "travel-advice-publisher",
+                                            rendering_app: "email-alert-frontend",
+                                            public_updated_at: Time.zone.now.iso8601,
+                                            update_type: "republish",
+                                            routes: [
         {
           path: "/foreign-travel-advice/aruba/email-signup",
           type: "exact",
         },
       ],
-      details: {
+                                            details: {
         summary: "You'll get an email each time Aruba Travel Advice is updated.",
         govdelivery_title: "Aruba Travel Advice",
         subscriber_list: {

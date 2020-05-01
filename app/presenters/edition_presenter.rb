@@ -5,9 +5,7 @@ class EditionPresenter
   end
   attr_reader :edition
 
-  def content_id
-    country.content_id
-  end
+  delegate :content_id, to: :country
 
   def update_type
     if @republish

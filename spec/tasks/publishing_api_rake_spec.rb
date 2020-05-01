@@ -22,7 +22,7 @@ describe "publishing_api rake tasks", type: :rake_task do
                                                                                    document_type: "travel_advice_index",
                                                                                    schema_name: "travel_advice_index",
                                                                                    update_type: "minor",
-      ))
+                                                                                 ))
 
       assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID)
     end
@@ -94,7 +94,7 @@ describe "publishing_api rake tasks", type: :rake_task do
                                                                                   schema_name: "travel_advice",
                                                                                   update_type: "republish",
                                                                                   public_updated_at: aruba.published_at.iso8601,
-      ))
+                                                                                ))
 
       assert_publishing_api_publish("56bae85b-a57c-4ca2-9dbd-68361a086bb3", update_type: "republish")
 
@@ -105,7 +105,7 @@ describe "publishing_api rake tasks", type: :rake_task do
                                                                                   schema_name: "travel_advice",
                                                                                   update_type: "republish",
                                                                                   public_updated_at: algeria.published_at.iso8601,
-      ))
+                                                                                ))
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", update_type: "republish")
     end
@@ -124,7 +124,7 @@ describe "publishing_api rake tasks", type: :rake_task do
 
       assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
                                                                                   "base_path" => "/foreign-travel-advice/algeria",
-      ))
+                                                                                ))
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", "update_type" => "republish")
     end

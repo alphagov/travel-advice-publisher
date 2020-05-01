@@ -26,9 +26,7 @@ class EmailAlertPresenter
     }
   end
 
-  def content_id
-    country.content_id
-  end
+  delegate :content_id, to: :country
 
 private
 

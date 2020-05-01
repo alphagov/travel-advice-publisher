@@ -74,7 +74,7 @@ feature "Edit Edition page", js: true do
       assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
                                                                                   title: "An archived title",
                                                                                   base_path: "/foreign-travel-advice/albania",
-      ))
+                                                                                ))
     end
 
     scenario "create an edition from a published edition" do
@@ -199,7 +199,7 @@ feature "Edit Edition page", js: true do
     expect(@edition.overview).to eq("Read this if you're planning on visiting Albania")
     expect(@edition.summary).to eq("Summary of the situation in Albania")
     expect(@edition.change_description).to eq("Made changes to all the stuff")
-    expect(@edition.synonyms).to eq(%w{Foo Bar})
+    expect(@edition.synonyms).to eq(%w[Foo Bar])
 
     expect(@edition.parts.size).to eq(2)
     one = @edition.parts.first
@@ -216,7 +216,7 @@ feature "Edit Edition page", js: true do
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
                                                                                 title: "Travel advice for Albania",
                                                                                 base_path: "/foreign-travel-advice/albania",
-    ))
+                                                                              ))
   end
 
   scenario "Updating the reviewed at date for a published edition" do
@@ -293,10 +293,10 @@ feature "Edit Edition page", js: true do
 
     visit "/admin/editions/#{@edition._id}/edit"
 
-    remove_part_button = "$('.remove-associated').last()";
+    remove_part_button = "$('.remove-associated').last()"
     page.execute_script("#{remove_part_button}.click()")
 
-    input_value = page.evaluate_script("#{remove_part_button}.prev(':input').val()");
+    input_value = page.evaluate_script("#{remove_part_button}.prev(':input').val()")
     expect(input_value).to eq("1")
 
     click_navbar_button "Save"
@@ -407,8 +407,8 @@ feature "Edit Edition page", js: true do
   scenario "save and publish a minor update to an edition" do
     travel_to(3.days.ago) do
       @old_edition = create(:published_travel_advice_edition, country_slug: "albania",
-                            summary: "## The summaryy", change_description: "Some things changed",
-                            minor_update: false)
+                                                              summary: "## The summaryy", change_description: "Some things changed",
+                                                              minor_update: false)
     end
     travel_to(2.days.ago) do
       @old_edition.reviewed_at = Time.zone.now.utc
@@ -438,7 +438,7 @@ feature "Edit Edition page", js: true do
 
     assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
                                                                                 base_path: "/foreign-travel-advice/albania",
-    ))
+                                                                              ))
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
   end
@@ -498,7 +498,7 @@ feature "Edit Edition page", js: true do
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
       "alert_status",
-      %w(avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts),
+      %w[avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts],
     )
 
     expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
@@ -557,7 +557,7 @@ feature "Edit Edition page", js: true do
     end
 
     assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
-      "content_type" => "image/jpeg")
+                                                                             "content_type" => "image/jpeg")
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
@@ -570,7 +570,7 @@ feature "Edit Edition page", js: true do
     end
 
     assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
-      "content_type" => "image/jpeg")
+                                                                             "content_type" => "image/jpeg")
 
     # replace image
     expect(asset_manager).to receive(:create_asset).and_return(asset_two)
@@ -587,7 +587,7 @@ feature "Edit Edition page", js: true do
     end
 
     assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_two.jpg",
-      "content_type" => "image/jpeg")
+                                                                             "content_type" => "image/jpeg")
 
     # remove image
     check "Remove image?"
@@ -718,6 +718,6 @@ feature "Edit Edition page", js: true do
     fill_in "Summary", with: "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
     click_navbar_button "Save"
 
-    expect(page).to have_content(%q<Don't include hover text in links. Delete the text in quotation marks eg "This appears when you hover over the link.">)
+    expect(page).to have_content(%q(Don't include hover text in links. Delete the text in quotation marks eg "This appears when you hover over the link."))
   end
 end

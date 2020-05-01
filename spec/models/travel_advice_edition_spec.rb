@@ -5,7 +5,7 @@ describe TravelAdviceEdition do
       ed.title = "Travel advice for Aruba"
       ed.overview = "This gives travel advice for Aruba"
       ed.country_slug = "aruba"
-      ed.alert_status = %w(avoid_all_but_essential_travel_to_parts avoid_all_travel_to_parts)
+      ed.alert_status = %w[avoid_all_but_essential_travel_to_parts avoid_all_travel_to_parts]
       ed.summary = "This is the summary of stuff going on in Aruba"
       ed.version_number = 4
       ed.image_id = "id_from_the_asset_manager_for_an_image"
@@ -13,7 +13,7 @@ describe TravelAdviceEdition do
       ed.published_at = Time.zone.parse("2013-02-21T14:56:22Z")
       ed.minor_update = true
       ed.change_description = "Some things"
-      ed.synonyms = %w(Foo Bar)
+      ed.synonyms = %w[Foo Bar]
       ed.parts.build(title: "Part One", slug: "one")
       ed.save!
 
@@ -21,14 +21,14 @@ describe TravelAdviceEdition do
       expect(ed.title).to eq("Travel advice for Aruba")
       expect(ed.overview).to eq("This gives travel advice for Aruba")
       expect(ed.country_slug).to eq("aruba")
-      expect(ed.alert_status).to eq(%w(avoid_all_but_essential_travel_to_parts avoid_all_travel_to_parts))
+      expect(ed.alert_status).to eq(%w[avoid_all_but_essential_travel_to_parts avoid_all_travel_to_parts])
       expect(ed.summary).to eq("This is the summary of stuff going on in Aruba")
       expect(ed.version_number).to eq(4)
       expect(ed.image_id).to eq("id_from_the_asset_manager_for_an_image")
       expect(ed.document_id).to eq("id_from_the_asset_manager_for_a_document")
       expect(ed.published_at).to eq(Time.zone.parse("2013-02-21T14:56:22Z"))
       expect(ed.minor_update).to be true
-      expect(ed.synonyms).to eq(%w(Foo Bar))
+      expect(ed.synonyms).to eq(%w[Foo Bar])
       expect(ed.change_description).to eq("Some things")
       expect(ed.parts.first.title).to eq("Part One")
     end
@@ -119,7 +119,7 @@ describe TravelAdviceEdition do
 
     context "on alert status" do
       it "not permit invalid values in the array" do
-        ta.alert_status = %w(avoid_all_but_essential_travel_to_parts something_else blah)
+        ta.alert_status = %w[avoid_all_but_essential_travel_to_parts something_else blah]
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:alert_status]).to include("is not in the list")
       end
@@ -268,11 +268,11 @@ describe TravelAdviceEdition do
     let(:ed) do
       create(
         :travel_advice_edition, title: "Aruba",
-        overview: "Aruba is not near Wales", country_slug: "aruba",
-        summary: "## The summary",
-        alert_status: %w(avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts),
-        image_id: "id_from_the_asset_manager_for_an_image",
-        document_id: "id_from_the_asset_manager_for_a_document"
+                                overview: "Aruba is not near Wales", country_slug: "aruba",
+                                summary: "## The summary",
+                                alert_status: %w[avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts],
+                                image_id: "id_from_the_asset_manager_for_an_image",
+                                document_id: "id_from_the_asset_manager_for_a_document"
       )
     end
 
@@ -298,7 +298,7 @@ describe TravelAdviceEdition do
 
     it "copies the edition's parts" do
       new_ed = ed.build_clone
-      expect(new_ed.parts.map(&:title)).to eq(%w(Fooey Gooey))
+      expect(new_ed.parts.map(&:title)).to eq(%w[Fooey Gooey])
     end
   end
 
@@ -492,7 +492,7 @@ describe TravelAdviceEdition do
     describe "reading user input for synonyms" do
       it "should parse string input into an array for saving from view" do
         @edition.csv_synonyms = "bar,baz,boo"
-        expect(@edition.synonyms).to eq(%w{bar baz boo})
+        expect(@edition.synonyms).to eq(%w[bar baz boo])
       end
 
       it "can deal with quoted input when parsing input" do
@@ -518,13 +518,13 @@ describe TravelAdviceEdition do
 
       it "strips leading and trailing whitespace" do
         @edition.csv_synonyms = "       foo    ,   bar    "
-        expect(@edition.synonyms).to eq %w(foo bar)
+        expect(@edition.synonyms).to eq %w[foo bar]
       end
     end
 
     describe "writing synonyms out to frontend" do
       it "should parse array out into string for view" do
-        @edition.synonyms = %w{foo bar}
+        @edition.synonyms = %w[foo bar]
         expect(@edition.csv_synonyms).to eq "foo,bar"
       end
 
@@ -584,16 +584,16 @@ describe TravelAdviceEdition do
       end
 
       it "uploads the asset" do
-        allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset).
-          with(file: @file).and_return(@asset)
+        allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
+          .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
       end
 
       it "assigns the asset id to the attachment id attribute" do
-        allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset).
-          with(file: @file).and_return(@asset)
+        allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
+          .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
