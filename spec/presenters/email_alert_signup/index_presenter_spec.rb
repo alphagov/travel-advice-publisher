@@ -23,23 +23,23 @@ RSpec.describe EmailAlertSignup::IndexPresenter do
                                             public_updated_at: Time.zone.now.iso8601,
                                             update_type: "republish",
                                             routes: [
-        {
-          path: "/foreign-travel-advice/email-signup",
-          type: "exact",
-        },
-      ],
+                                              {
+                                                path: "/foreign-travel-advice/email-signup",
+                                                type: "exact",
+                                              },
+                                            ],
                                             details: {
-        summary: "You'll get an email each time a country is updated.",
-        govdelivery_title: "Foreign travel advice",
-        subscriber_list: {
-          document_type: "travel_advice",
-        },
-        breadcrumbs: [
-          {
-            title: "Foreign travel advice",
-            link: "/foreign-travel-advice",
-          },
-        ],
-      })
+                                              summary: "You'll get an email each time a country is updated.",
+                                              govdelivery_title: "Foreign travel advice",
+                                              subscriber_list: {
+                                                document_type: "travel_advice",
+                                              },
+                                              breadcrumbs: [
+                                                {
+                                                  title: "Foreign travel advice",
+                                                  link: "/foreign-travel-advice",
+                                                },
+                                              ],
+                                            })
   end
 end

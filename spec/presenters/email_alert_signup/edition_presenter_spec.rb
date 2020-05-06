@@ -35,26 +35,26 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
                                             public_updated_at: Time.zone.now.iso8601,
                                             update_type: "republish",
                                             routes: [
-        {
-          path: "/foreign-travel-advice/aruba/email-signup",
-          type: "exact",
-        },
-      ],
+                                              {
+                                                path: "/foreign-travel-advice/aruba/email-signup",
+                                                type: "exact",
+                                              },
+                                            ],
                                             details: {
-        summary: "You'll get an email each time Aruba Travel Advice is updated.",
-        govdelivery_title: "Aruba Travel Advice",
-        subscriber_list: {
-          document_type: "travel_advice",
-          links: {
-            countries: [edition_content_id],
-          },
-        },
-        breadcrumbs: [
-          {
-            title: "Aruba Travel Advice",
-            link: "/foreign-travel-advice/aruba",
-          },
-        ],
-      })
+                                              summary: "You'll get an email each time Aruba Travel Advice is updated.",
+                                              govdelivery_title: "Aruba Travel Advice",
+                                              subscriber_list: {
+                                                document_type: "travel_advice",
+                                                links: {
+                                                  countries: [edition_content_id],
+                                                },
+                                              },
+                                              breadcrumbs: [
+                                                {
+                                                  title: "Aruba Travel Advice",
+                                                  link: "/foreign-travel-advice/aruba",
+                                                },
+                                              ],
+                                            })
   end
 end

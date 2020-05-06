@@ -22,11 +22,11 @@ describe LinkCheckReport, type: :model do
 
     it "should be invalid without links" do
       attributes = {
-          links: [],
-          batch_id: 1,
-          status: "broken",
-          completed_at: Time.zone.parse("2017-12-01"),
-        }
+        links: [],
+        batch_id: 1,
+        status: "broken",
+        completed_at: Time.zone.parse("2017-12-01"),
+      }
 
       link_check_report = LinkCheckReport.new(attributes)
       expect(link_check_report).not_to be_valid
