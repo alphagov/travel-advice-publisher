@@ -1,7 +1,7 @@
 describe EditionPresenter do
   let(:user) { create(:user) }
 
-  let(:edition) {
+  let(:edition) do
     edition = build(
       :travel_advice_edition,
       country_slug: "aruba",
@@ -33,9 +33,9 @@ describe EditionPresenter do
     )
 
     edition
-  }
+  end
 
-  let(:previous) {
+  let(:previous) do
     previous = create(
       :travel_advice_edition,
       country_slug: "aruba",
@@ -50,7 +50,7 @@ describe EditionPresenter do
     )
 
     previous
-  }
+  end
 
   before do
     allow(GdsApi::GovukHeaders).to receive(:headers)

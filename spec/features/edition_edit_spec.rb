@@ -13,7 +13,7 @@ feature "Edit Edition page", js: true do
   before { allow(GdsApi).to receive(:asset_manager).and_return(asset_manager) }
 
   def assert_details_contains(content_id, key, expected_value)
-    assert_publishing_api_put_content(content_id, ->(response) {
+    assert_publishing_api_put_content(content_id, lambda { |response|
       payload = JSON.parse(response.body)
       details = payload.fetch("details")
       actual_value = details.fetch(key)
@@ -23,7 +23,7 @@ feature "Edit Edition page", js: true do
   end
 
   def assert_details_does_not_contain(content_id, key)
-    assert_publishing_api_put_content(content_id, ->(response) {
+    assert_publishing_api_put_content(content_id, lambda { |response|
       payload = JSON.parse(response.body)
       details = payload.fetch("details")
 

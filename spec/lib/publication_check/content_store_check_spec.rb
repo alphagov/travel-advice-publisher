@@ -4,20 +4,20 @@ module PublicationCheck
       create(:published_travel_advice_edition, country_slug: "andorra", version_number: 2)
     end
 
-    let(:publish_request) {
+    let(:publish_request) do
       PublishRequest.new(
         request_id: "25107-1461581820.634-185.22.224.96-13641",
         edition_id: edition.id,
       )
-    }
+    end
     let(:content_store_check) { ContentStoreCheck.new }
-    let(:content_store_url) {
+    let(:content_store_url) do
       "http://www.dev.gov.uk/api/content/foreign-travel-advice/#{edition.country_slug}"
-    }
-    let(:response_publishing_request_id) {
+    end
+    let(:response_publishing_request_id) do
       "25107-1461581820.634-185.22.224.96-13641"
-    }
-    let(:response_body) {
+    end
+    let(:response_body) do
       <<-JSON
         {
           "base_path": "test/base/path",
@@ -26,7 +26,7 @@ module PublicationCheck
           "publishing_request_id": "#{response_publishing_request_id}"
         }
       JSON
-    }
+    end
 
     before do
       ENV["AUTH_USERNAME"] = "dave"
@@ -49,9 +49,9 @@ module PublicationCheck
     end
 
     context "a response containing a different request id" do
-      let(:response_publishing_request_id) {
+      let(:response_publishing_request_id) do
         "25107-1461581820.634-185.22.224.96-1234"
-      }
+      end
 
       it "returns false" do
         expect(content_store_check.run(publish_request))
@@ -65,7 +65,7 @@ module PublicationCheck
     end
 
     context "the response contains no request_id" do
-      let(:response_body) {
+      let(:response_body) do
         <<-JSON
           {
             "base_path": "test/base/path",
@@ -73,7 +73,7 @@ module PublicationCheck
             "details": {}
           }
         JSON
-      }
+      end
 
       it "returns false" do
         expect(content_store_check.run(publish_request))

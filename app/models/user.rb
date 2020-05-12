@@ -23,7 +23,7 @@ class User
   index({ uid: 1 }, unique: true)
   index disabled: 1
 
-  scope :alphabetized, lambda { order_by(name: :asc) }
+  scope :alphabetized, -> { order_by(name: :asc) }
   scope :enabled, lambda {
     any_of({ :disabled.exists => false },
            { :disabled.in => [false, nil] })
@@ -35,10 +35,6 @@ class User
 
   def gravatar_url(opts = {})
     opts.symbolize_keys!
-    "%s.gravatar.com/avatar/%s%s" % [
-      opts[:ssl] ? "https://secure" : "http://www",
-      Digest::MD5.hexdigest(email.downcase),
-      opts[:s] ? "?s=#{CGI.escape(opts[:s])}" : "",
-    ]
+    format("%s.gravatar.com/avatar/%s%s", opts[:ssl] ? "https://secure" : "http://www", Digest::MD5.hexdigest(email.downcase), opts[:s] ? "?s=#{CGI.escape(opts[:s])}" : "")
   end
 end

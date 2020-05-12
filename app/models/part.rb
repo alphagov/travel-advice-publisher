@@ -5,13 +5,13 @@ class Part
 
   embedded_in :travel_advice_edition
 
-  scope :in_order, lambda { order_by(order: :asc) }
+  scope :in_order, -> { order_by(order: :asc) }
 
   field :order,      type: Integer
   field :title,      type: String
   field :body,       type: String
   field :slug,       type: String
-  field :created_at, type: DateTime, default: lambda { Time.zone.now }
+  field :created_at, type: DateTime, default: -> { Time.zone.now }
 
   GOVSPEAK_FIELDS = [:body].freeze
 

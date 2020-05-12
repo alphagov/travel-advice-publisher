@@ -18,11 +18,11 @@ describe PublishRequest do
 
     context "incremented check_count == MAX_RETRIES (3)" do
       context "no successful checks" do
-        let(:publish_request) {
+        let(:publish_request) do
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
           )
-        }
+        end
 
         before do
           publish_request.register_check_attempt!
@@ -42,12 +42,12 @@ describe PublishRequest do
       end
 
       context "one check passed one not" do
-        let(:publish_request) {
+        let(:publish_request) do
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
             frontend_updated: nil,
           )
-        }
+        end
 
         before do
           publish_request.register_check_attempt!
@@ -67,12 +67,12 @@ describe PublishRequest do
       end
 
       context "all checks passed" do
-        let(:publish_request) {
+        let(:publish_request) do
           PublishRequest.new(
             checks_attempted: [10.minutes.ago, 5.minutes.ago],
             frontend_updated: 5.minutes.ago,
           )
-        }
+        end
 
         before do
           publish_request.register_check_attempt!
@@ -95,12 +95,12 @@ describe PublishRequest do
 
   context "check_count < MAX_RETRIES" do
     context "all checks passed" do
-      let(:publish_request) {
+      let(:publish_request) do
         PublishRequest.new(
           checks_attempted: [],
           frontend_updated: 1.minute.ago,
         )
-      }
+      end
 
       before do
         publish_request.register_check_attempt!
@@ -120,12 +120,12 @@ describe PublishRequest do
     end
 
     context "all checks not passed" do
-      let(:publish_request) {
+      let(:publish_request) do
         PublishRequest.new(
           checks_attempted: [],
           frontend_updated: nil,
         )
-      }
+      end
 
       before do
         publish_request.register_check_attempt!
@@ -145,12 +145,12 @@ describe PublishRequest do
     end
 
     context "check_count > MAX_RETRIES" do
-      let(:publish_request) {
+      let(:publish_request) do
         PublishRequest.new(
           checks_attempted: (1..5).map { |i| i.minutes.ago },
           frontend_updated: nil,
         )
-      }
+      end
 
       it "sets checks_complete? to true" do
         publish_request.register_check_attempt!
@@ -189,21 +189,21 @@ describe PublishRequest do
     end
 
     context "where there are two incomplete PublishRequests for the country_slug" do
-      let!(:publish_request_one) {
+      let!(:publish_request_one) do
         PublishRequest.create(
           checks_complete: false,
           created_at: 10.minutes.ago,
           country_slug: "denmark",
         )
-      }
+      end
 
-      let!(:publish_request_two) {
+      let!(:publish_request_two) do
         PublishRequest.create(
           checks_complete: false,
           created_at: 6.minutes.ago,
           country_slug: "denmark",
         )
-      }
+      end
 
       it "only returns the most recent one" do
         results = PublishRequest.awaiting_check
