@@ -49,7 +49,7 @@ class TravelAdviceEdition
   accepts_nested_attributes_for :parts, allow_destroy: true,
                                         reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
 
-  scope :published, lambda { where(state: "published") }
+  scope :published, -> { where(state: "published") }
 
   class << self; attr_accessor :fields_to_clone end
   @fields_to_clone = %i[title country_slug overview alert_status summary image_id document_id synonyms]
@@ -211,7 +211,7 @@ private
   end
 
   def self.attaches(*fields)
-    fields.map(&:to_s).each do |field| # rubocop:disable Metrics/BlockLength
+    fields.map(&:to_s).each do |field|
       after_initialize do
         instance_variable_set("@#{field}_has_changed", false)
       end

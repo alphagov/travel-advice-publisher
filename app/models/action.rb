@@ -27,7 +27,7 @@ class Action
   field :request_details,    type: Hash, default: {}
   field :email_addresses,    type: String
   field :customised_message, type: String
-  field :created_at,         type: DateTime, default: lambda { Time.zone.now }
+  field :created_at,         type: DateTime, default: -> { Time.zone.now }
 
   def status_action?
     STATUS_ACTIONS.include?(request_type)

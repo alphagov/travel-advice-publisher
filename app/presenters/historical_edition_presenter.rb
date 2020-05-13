@@ -39,7 +39,7 @@ class HistoricalEditionPresenter
   # This led to users appending (in a variety of formats)
   # "Latest update:" to the start of the change description. The frontend now
   # has a latest update label, so we can strip this out.
-  # Avoids: "Latest update: Latest update - …"
+  # Avoids: "Latest update: Latest update - ..."
   def latest_update
     change_description.sub(/^Latest update:?\s-?\s?/i, "").tap do |latest|
       latest[0] = latest[0].capitalize

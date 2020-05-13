@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_authenticated_user_header
 
-  def error_404; error 404; end
+  def error_404
+    error 404
+  end
 
 private
 

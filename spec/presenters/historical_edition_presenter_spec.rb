@@ -1,14 +1,14 @@
 describe HistoricalEditionPresenter do
-  let(:country) {
+  let(:country) do
     Country.new(
       "name" => "Aruba",
       "slug" => "aruba",
       "content_id" => SecureRandom.uuid,
       "email_signup_content_id" => SecureRandom.uuid,
     )
-  }
+  end
 
-  let(:edition) {
+  let(:edition) do
     build(
       :travel_advice_edition,
       country_slug: "aruba",
@@ -33,7 +33,7 @@ describe HistoricalEditionPresenter do
         order: 1,
       )
     end
-  }
+  end
 
   subject { described_class.new(edition, country) }
 
