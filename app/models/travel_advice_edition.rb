@@ -46,8 +46,9 @@ class TravelAdviceEdition
   validates_with LinkValidator
 
   embeds_many :parts
-  accepts_nested_attributes_for :parts, allow_destroy: true,
-                                        reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
+  accepts_nested_attributes_for :parts,
+                                allow_destroy: true,
+                                reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
 
   scope :published, -> { where(state: "published") }
 
@@ -129,7 +130,7 @@ class TravelAdviceEdition
   end
 
   def order_parts
-    ordered_parts = parts.sort_by { |p| p.order || 99999 }
+    ordered_parts = parts.sort_by { |p| p.order || 99_999 }
     ordered_parts.each_with_index do |obj, i|
       obj.order = i + 1
     end
@@ -151,9 +152,11 @@ private
 
   def state_for_slug_unique
     if %w[published draft].include?(state) &&
-        self.class.where(:_id.ne => id,
-                         country_slug: country_slug,
-                         state: state).any?
+        self.class.where(
+          :_id.ne => id,
+          country_slug: country_slug,
+          state: state,
+        ).any?
       errors.add(:state, :taken)
     end
   end

@@ -1,9 +1,12 @@
 feature "Comparing two editions", js: true do
   before :each do
     login_as stub_user
-    @edition1 = create(:published_travel_advice_edition,
-                       country_slug: "aruba", summary: "Advice summray",
-                       version_number: 1)
+    @edition1 = create(
+      :published_travel_advice_edition,
+      country_slug: "aruba",
+      summary: "Advice summray",
+      version_number: 1,
+    )
     @edition2 = @edition1.build_clone
     @edition2.summary = "Advice summary"
     @edition2.change_description = "Corrected typo in the summary"

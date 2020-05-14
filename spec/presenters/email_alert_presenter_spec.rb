@@ -18,9 +18,20 @@ RSpec.describe EmailAlertPresenter do
 
   it "includes the necessary fields" do
     expect(email_alert.compact.keys).to match_array(%w[
-      title description change_note subject tags links document_type
-      email_document_supertype government_document_supertype content_id
-      public_updated_at publishing_app base_path priority
+      title
+      description
+      change_note
+      subject
+      tags
+      links
+      document_type
+      email_document_supertype
+      government_document_supertype
+      content_id
+      public_updated_at
+      publishing_app
+      base_path
+      priority
     ])
   end
 

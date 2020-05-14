@@ -13,23 +13,29 @@ feature "Edit Edition page", js: true do
   before { allow(GdsApi).to receive(:asset_manager).and_return(asset_manager) }
 
   def assert_details_contains(content_id, key, expected_value)
-    assert_publishing_api_put_content(content_id, lambda { |response|
-      payload = JSON.parse(response.body)
-      details = payload.fetch("details")
-      actual_value = details.fetch(key)
+    assert_publishing_api_put_content(
+      content_id,
+      lambda { |response|
+        payload = JSON.parse(response.body)
+        details = payload.fetch("details")
+        actual_value = details.fetch(key)
 
-      expect(actual_value).to eq(expected_value)
-    })
+        expect(actual_value).to eq(expected_value)
+      },
+    )
   end
 
   def assert_details_does_not_contain(content_id, key)
-    assert_publishing_api_put_content(content_id, lambda { |response|
-      payload = JSON.parse(response.body)
-      details = payload.fetch("details")
+    assert_publishing_api_put_content(
+      content_id,
+      lambda { |response|
+        payload = JSON.parse(response.body)
+        details = payload.fetch("details")
 
-      expect(details.keys).not_to include(key)
-      true
-    })
+        expect(details.keys).not_to include(key)
+        true
+      },
+    )
   end
 
   def reorder_parts(index, new_index)
@@ -71,10 +77,13 @@ feature "Edit Edition page", js: true do
       expect(page).to have_field("Search title", with: @edition.title)
       expect(current_path).not_to eq("/admin/editions/#{@edition._id}/edit")
 
-      assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-                                                                                  title: "An archived title",
-                                                                                  base_path: "/foreign-travel-advice/albania",
-                                                                                ))
+      assert_publishing_api_put_content(
+        "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+        request_json_includes(
+          title: "An archived title",
+          base_path: "/foreign-travel-advice/albania",
+        ),
+      )
     end
 
     scenario "create an edition from a published edition" do
@@ -213,10 +222,13 @@ feature "Edit Edition page", js: true do
     expect(two.body).to eq("Body text")
     expect(two.order).to eq(2)
 
-    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-                                                                                title: "Travel advice for Albania",
-                                                                                base_path: "/foreign-travel-advice/albania",
-                                                                              ))
+    assert_publishing_api_put_content(
+      "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+      request_json_includes(
+        title: "Travel advice for Albania",
+        base_path: "/foreign-travel-advice/albania",
+      ),
+    )
   end
 
   scenario "Updating the reviewed at date for a published edition" do
@@ -304,15 +316,19 @@ feature "Edit Edition page", js: true do
 
     expect(current_path).to eq("/admin/editions/#{@edition._id}/edit")
 
-    assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "parts", [
-      {
-        "slug" => "part-one",
-        "title" => "Part One",
-        "body" => [
-          { "content_type" => "text/govspeak", "content" => "Body text" },
-        ],
-      },
-    ])
+    assert_details_contains(
+      "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+      "parts",
+      [
+        {
+          "slug" => "part-one",
+          "title" => "Part One",
+          "body" => [
+            { "content_type" => "text/govspeak", "content" => "Body text" },
+          ],
+        },
+      ],
+    )
 
     expect(page).to have_no_content("Part Two")
   end
@@ -406,9 +422,13 @@ feature "Edit Edition page", js: true do
 
   scenario "save and publish a minor update to an edition" do
     travel_to(3.days.ago) do
-      @old_edition = create(:published_travel_advice_edition, country_slug: "albania",
-                                                              summary: "## The summaryy", change_description: "Some things changed",
-                                                              minor_update: false)
+      @old_edition = create(
+        :published_travel_advice_edition,
+        country_slug: "albania",
+        summary: "## The summaryy",
+        change_description: "Some things changed",
+        minor_update: false,
+      )
     end
     travel_to(2.days.ago) do
       @old_edition.reviewed_at = Time.zone.now.utc
@@ -436,9 +456,12 @@ feature "Edit Edition page", js: true do
     expect(action.request_type).to eq Action::PUBLISH
     expect(action.comment).to eq "Minor update"
 
-    assert_publishing_api_put_content("2a3938e1-d588-45fc-8c8f-0f51814d5409", request_json_includes(
-                                                                                base_path: "/foreign-travel-advice/albania",
-                                                                              ))
+    assert_publishing_api_put_content(
+      "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+      request_json_includes(
+        base_path: "/foreign-travel-advice/albania",
+      ),
+    )
 
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
   end
@@ -556,8 +579,12 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_one.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
-                                                                             "content_type" => "image/jpeg")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "image",
+      "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg",
+    )
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
@@ -569,8 +596,12 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_one.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_one.jpg",
-                                                                             "content_type" => "image/jpeg")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "image",
+      "url" => "http://path/to/image_one.jpg",
+      "content_type" => "image/jpeg",
+    )
 
     # replace image
     expect(asset_manager).to receive(:create_asset).and_return(asset_two)
@@ -586,8 +617,12 @@ feature "Edit Edition page", js: true do
       expect(page).to have_selector("img[src$='image_two.jpg']")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "image", "url" => "http://path/to/image_two.jpg",
-                                                                             "content_type" => "image/jpeg")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "image",
+      "url" => "http://path/to/image_two.jpg",
+      "content_type" => "image/jpeg",
+    )
 
     # remove image
     check "Remove image?"
@@ -640,11 +675,14 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document",
-                            "attachment_type" => "file",
-                            "id" => "some-uuid",
-                            "url" => "http://path/to/document_one.pdf",
-                            "content_type" => "application/pdf")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "document",
+      "attachment_type" => "file",
+      "id" => "some-uuid",
+      "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf",
+    )
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
@@ -658,11 +696,14 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document",
-                            "attachment_type" => "file",
-                            "id" => "some-uuid",
-                            "url" => "http://path/to/document_one.pdf",
-                            "content_type" => "application/pdf")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "document",
+      "attachment_type" => "file",
+      "id" => "some-uuid",
+      "url" => "http://path/to/document_one.pdf",
+      "content_type" => "application/pdf",
+    )
 
     # replace document
     expect(asset_manager).to receive(:create_asset).and_return(asset_two)
@@ -678,11 +719,14 @@ feature "Edit Edition page", js: true do
       expect(page).to have_link("Download document_two.pdf", href: "http://path/to/document_two.pdf")
     end
 
-    assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "document",
-                            "attachment_type" => "file",
-                            "id" => "some-uuid",
-                            "url" => "http://path/to/document_two.pdf",
-                            "content_type" => "application/pdf")
+    assert_details_contains(
+      "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
+      "document",
+      "attachment_type" => "file",
+      "id" => "some-uuid",
+      "url" => "http://path/to/document_two.pdf",
+      "content_type" => "application/pdf",
+    )
 
     # remove document
     check "Remove PDF?"

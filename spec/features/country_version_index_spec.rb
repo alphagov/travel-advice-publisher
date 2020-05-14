@@ -24,10 +24,15 @@ feature "Country version index" do
     country = Country.find_by_slug("aruba")
     e1 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 1)
     e2 = create(:archived_travel_advice_edition, country_slug: "aruba", version_number: 2)
-    e3 = build(:travel_advice_edition, country_slug: "aruba", version_number: 3,
-                                       title: "Aruba extra special travel advice", summary: "## This is the summary",
-                                       overview: "Search description about Aruba",
-                                       alert_status: [TravelAdviceEdition::ALERT_STATUSES.first])
+    e3 = build(
+      :travel_advice_edition,
+      country_slug: "aruba",
+      version_number: 3,
+      title: "Aruba extra special travel advice",
+      summary: "## This is the summary",
+      overview: "Search description about Aruba",
+      alert_status: [TravelAdviceEdition::ALERT_STATUSES.first],
+    )
     e3.parts.build(title: "Part One", slug: "part-one", body: "Some text")
     e3.parts.build(title: "Part Two", slug: "part-2", body: "Some more text")
     e3.save!

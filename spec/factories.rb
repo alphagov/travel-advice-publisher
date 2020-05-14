@@ -74,11 +74,16 @@ FactoryBot.define do
     summary { "This is [link](https://www.gov.uk) text." }
 
     after :create do |getp|
-      getp.parts.build(title: "Some Part Title!",
-                       body: "This is some **version** text.", slug: "part-one")
-      getp.parts.build(title: "Another Part Title",
-                       body: "This is [link](http://www.example.com) text.",
-                       slug: "part-two")
+      getp.parts.build(
+        title: "Some Part Title!",
+        body: "This is some **version** text.",
+        slug: "part-one",
+      )
+      getp.parts.build(
+        title: "Another Part Title",
+        body: "This is [link](http://www.example.com) text.",
+        slug: "part-two",
+      )
     end
   end
 

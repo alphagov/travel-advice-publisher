@@ -1,7 +1,10 @@
 RSpec.describe LinkCheckReportUpdater do
   let(:link_check_report) do
-    create(:travel_advice_edition_with_pending_link_checks,
-           batch_id: 1, link_uris: ["http://www.example.com", "http://www.gov.com"]).link_check_reports.first
+    create(
+      :travel_advice_edition_with_pending_link_checks,
+      batch_id: 1,
+      link_uris: ["http://www.example.com", "http://www.gov.com"],
+    ).link_check_reports.first
   end
 
   let(:completed_at) { Time.zone.now }
@@ -21,13 +24,14 @@ RSpec.describe LinkCheckReportUpdater do
       checked: completed_at.try(:iso8601),
       problem_summary: nil,
       suggested_fix: nil,
-    }, {
-      uri: "http://www.gov.com",
-      status: "broken",
-      checked: completed_at.try(:iso8601),
-      problem_summary: "Page Not Found",
-      suggested_fix: "Contact site administrator",
-    }]
+    },
+     {
+       uri: "http://www.gov.com",
+       status: "broken",
+       checked: completed_at.try(:iso8601),
+       problem_summary: "Page Not Found",
+       suggested_fix: "Contact site administrator",
+     }]
   end
 
   subject do
