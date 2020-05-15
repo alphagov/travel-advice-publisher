@@ -267,12 +267,14 @@ describe TravelAdviceEdition do
   context "building a new version" do
     let(:ed) do
       create(
-        :travel_advice_edition, title: "Aruba",
-                                overview: "Aruba is not near Wales", country_slug: "aruba",
-                                summary: "## The summary",
-                                alert_status: %w[avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts],
-                                image_id: "id_from_the_asset_manager_for_an_image",
-                                document_id: "id_from_the_asset_manager_for_a_document"
+        :travel_advice_edition,
+        title: "Aruba",
+        overview: "Aruba is not near Wales",
+        country_slug: "aruba",
+        summary: "## The summary",
+        alert_status: %w[avoid_all_but_essential_travel_to_whole_country avoid_all_travel_to_parts],
+        image_id: "id_from_the_asset_manager_for_an_image",
+        document_id: "id_from_the_asset_manager_for_a_document",
       )
     end
 

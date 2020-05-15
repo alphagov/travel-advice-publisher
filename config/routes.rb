@@ -20,9 +20,10 @@ Rails.application.routes.draw do
 
   mount GovukAdminTemplate::Engine, at: "/style-guide"
 
-  get "/healthcheck", to: GovukHealthcheck.rack_response(
-    GovukHealthcheck::SidekiqRedis,
-  )
+  get "/healthcheck",
+      to: GovukHealthcheck.rack_response(
+        GovukHealthcheck::SidekiqRedis,
+      )
 
   get "/healthcheck/recently-published-editions" => "healthcheck#recently_published_editions"
 end

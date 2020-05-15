@@ -16,13 +16,16 @@ describe "publishing_api rake tasks", type: :rake_task do
     it "sends the index item to publishing_api" do
       task.invoke
 
-      assert_publishing_api_put_content(TravelAdvicePublisher::INDEX_CONTENT_ID, request_json_includes(
-                                                                                   base_path: "/foreign-travel-advice",
-                                                                                   title: "Foreign travel advice",
-                                                                                   document_type: "travel_advice_index",
-                                                                                   schema_name: "travel_advice_index",
-                                                                                   update_type: "minor",
-                                                                                 ))
+      assert_publishing_api_put_content(
+        TravelAdvicePublisher::INDEX_CONTENT_ID,
+        request_json_includes(
+          base_path: "/foreign-travel-advice",
+          title: "Foreign travel advice",
+          document_type: "travel_advice_index",
+          schema_name: "travel_advice_index",
+          update_type: "minor",
+        ),
+      )
 
       assert_publishing_api_publish(TravelAdvicePublisher::INDEX_CONTENT_ID)
     end
@@ -87,25 +90,31 @@ describe "publishing_api rake tasks", type: :rake_task do
 
       task.invoke
 
-      assert_publishing_api_put_content("56bae85b-a57c-4ca2-9dbd-68361a086bb3", request_json_includes(
-                                                                                  base_path: "/foreign-travel-advice/aruba",
-                                                                                  title: aruba.title,
-                                                                                  document_type: "travel_advice",
-                                                                                  schema_name: "travel_advice",
-                                                                                  update_type: "republish",
-                                                                                  public_updated_at: aruba.published_at.iso8601,
-                                                                                ))
+      assert_publishing_api_put_content(
+        "56bae85b-a57c-4ca2-9dbd-68361a086bb3",
+        request_json_includes(
+          base_path: "/foreign-travel-advice/aruba",
+          title: aruba.title,
+          document_type: "travel_advice",
+          schema_name: "travel_advice",
+          update_type: "republish",
+          public_updated_at: aruba.published_at.iso8601,
+        ),
+      )
 
       assert_publishing_api_publish("56bae85b-a57c-4ca2-9dbd-68361a086bb3", update_type: "republish")
 
-      assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
-                                                                                  base_path: "/foreign-travel-advice/algeria",
-                                                                                  title: algeria.title,
-                                                                                  document_type: "travel_advice",
-                                                                                  schema_name: "travel_advice",
-                                                                                  update_type: "republish",
-                                                                                  public_updated_at: algeria.published_at.iso8601,
-                                                                                ))
+      assert_publishing_api_put_content(
+        "b5c8e64b-3461-4447-9144-1588e4a84fe6",
+        request_json_includes(
+          base_path: "/foreign-travel-advice/algeria",
+          title: algeria.title,
+          document_type: "travel_advice",
+          schema_name: "travel_advice",
+          update_type: "republish",
+          public_updated_at: algeria.published_at.iso8601,
+        ),
+      )
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", update_type: "republish")
     end
@@ -122,9 +131,12 @@ describe "publishing_api rake tasks", type: :rake_task do
       expect(a_request(:post, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3/publish"))
         .not_to have_been_made
 
-      assert_publishing_api_put_content("b5c8e64b-3461-4447-9144-1588e4a84fe6", request_json_includes(
-                                                                                  "base_path" => "/foreign-travel-advice/algeria",
-                                                                                ))
+      assert_publishing_api_put_content(
+        "b5c8e64b-3461-4447-9144-1588e4a84fe6",
+        request_json_includes(
+          "base_path" => "/foreign-travel-advice/algeria",
+        ),
+      )
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", "update_type" => "republish")
     end

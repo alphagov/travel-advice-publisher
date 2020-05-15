@@ -139,8 +139,10 @@ describe Country do
     describe "providing an optional edition parameter" do
       before :each do
         @edition = create(
-          :archived_travel_advice_edition, country_slug: @country.slug,
-                                           title: "A test title", overview: "Meh"
+          :archived_travel_advice_edition,
+          country_slug: @country.slug,
+          title: "A test title",
+          overview: "Meh",
         )
       end
 
