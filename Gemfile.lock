@@ -203,7 +203,7 @@ GEM
     method_source (1.0.0)
     mime-types (3.3.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2020.0425)
+    mime-types-data (3.2020.0512)
     mimemagic (0.3.4)
     mini_magick (4.10.1)
     mini_mime (1.0.2)
@@ -415,7 +415,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
     simplecov-html (0.12.1)
-    slimmer (13.3.0)
+    slimmer (14.0.0)
       activesupport
       json
       nokogiri (~> 1.7)
@@ -509,7 +509,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   scss_lint-govuk (~> 0.2)
   simplecov
-  slimmer (~> 13.3)
+  slimmer (~> 14.0)
   state_machines (~> 0.4)
   state_machines-mongoid (~> 0.2)
   test-unit
