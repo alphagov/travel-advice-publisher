@@ -116,7 +116,7 @@ RSpec.describe PublishingApiNotifier do
 
     context "for a minor update" do
       it "doesn't enqueue anything" do
-        edition.update_attribute(:minor_update, true)
+        edition.update(minor_update: true)
 
         subject.send_alert(edition)
         subject.enqueue
