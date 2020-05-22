@@ -19,7 +19,7 @@ module ApplicationHelper
   end
 
   def timestamp(time)
-    %(<time datetime="#{time.strftime('%Y-%m-%dT%H:%M:%SZ')}">#{time.strftime('%d/%m/%Y %H:%M %Z')}</time>).html_safe
+    %(<time datetime="#{time.strftime('%Y-%m-%dT%H:%M:%SZ')}">#{time.strftime('%d/%m/%Y %H:%M %Z')}</time>).html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def alert_statuses_with_labels(keys)
@@ -28,6 +28,6 @@ module ApplicationHelper
   end
 
   def diff_html(version1, version2)
-    Diffy::Diff.new(version1, version2, allow_empty_diff: false).to_s(:html).html_safe
+    Diffy::Diff.new(version1, version2, allow_empty_diff: false).to_s(:html).html_safe # rubocop:disable Rails/OutputSafety
   end
 end
