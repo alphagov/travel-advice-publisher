@@ -26,7 +26,7 @@ gem "govuk_app_config", "~> 2.2"
 gem "govuk_publishing_components", "~> 21.49.0"
 gem "govuk_sidekiq", "~> 3.0"
 gem "plek", "~> 3.0"
-gem "slimmer", "~> 14.0"
+gem "slimmer", "~> 15.0"
 
 group :development, :test do
   gem "jasmine", "~> 3.5"
