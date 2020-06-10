@@ -56,7 +56,7 @@ module Formtastic #:nodoc:
       options = args.extract_options!
       css_selector = options.delete(:selector) || ".#{@object.class.name.split('::').last.underscore}"
       link = '<a href="#" class="btn btn-danger pull-right remove-associated" data-selector="' + css_selector + '">Remove part</a>'
-      output = hidden_field(:_destroy) + link.html_safe # rubocop:disable Rails/OutputSafety
+      output = hidden_field(:_destroy) + link.html_safe
       output
     end
 
@@ -69,7 +69,7 @@ module Formtastic #:nodoc:
       form.gsub!(/attributes_(\d+)/, "attributes_{{index}}")
       form.gsub!(/\[(\d+)\]/, "[{{index}}]")
 
-      "<script id='tmpl-#{association}' type='text/x-jquery-tmpl'>#{form}</script>".html_safe # rubocop:disable Rails/OutputSafety
+      "<script id='tmpl-#{association}' type='text/x-jquery-tmpl'>#{form}</script>".html_safe
     end
 
     # Render associated form
