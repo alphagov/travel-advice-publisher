@@ -168,10 +168,17 @@ describe TravelAdviceEdition do
         expect(ta.errors.messages[:update_type]).to include("can't be minor for first version")
       end
 
-      it "allow other versions to be minor updates" do
+      it "allow subsequent versions to be minor updates" do
         create(:published_travel_advice_edition, country_slug: ta.country_slug)
         ta.update_type = "minor"
         expect(ta).to be_valid
+      end
+
+      it "requires a major/minor change flag" do
+        ta = create(:travel_advice_edition, state: "draft", update_type: nil)
+        ta.state = "published"
+        expect(ta).not_to be_valid
+        expect(ta.errors.messages[:update_type]).to include("can't be blank on publish")
       end
     end
 
@@ -230,6 +237,10 @@ describe TravelAdviceEdition do
       expect(TravelAdviceEdition.new).to be_draft
     end
 
+    it "is neither a minor or major update" do
+      expect(TravelAdviceEdition.new.update_type).to be_nil
+    end
+
     context "populating version_number" do
       it "sets version_number to 1 if there are no existing versions for the country" do
         ed = TravelAdviceEdition.new(country_slug: "foo")
@@ -259,7 +270,7 @@ describe TravelAdviceEdition do
       end
     end
 
-    it "is not minor_update" do
+    it "is not a minor update" do
       expect(TravelAdviceEdition.new.update_type).to_not eql("minor")
     end
   end

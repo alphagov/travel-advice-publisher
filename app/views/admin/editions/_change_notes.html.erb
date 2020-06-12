@@ -1,22 +1,16 @@
 <fieldset class="js-change-notes">
   <%= f.inputs :name => "What sort of change are you making?" do %>
-    <% if @edition.update? %>
-      <div class="radio">
-        <%= label_tag do %>
-          <%= f.radio_button(:update_type, "minor", checked: @edition.is_minor_update?, class: "js-edition-update-minor") %>
-          <strong>A typo, style change or similar</strong> (no update is sent to email subscribers)
-        <% end %>
-      </div>
-    <% end %>
-
     <div class="radio">
-      <%= label_tag do %>
-        <%= f.radio_button(:update_type, "major", checked: !@edition.is_minor_update?, class: "js-edition-update-major") %>
-        <strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)
-      <% end %>
+      <%= f.input :update_type,
+        as: :radio,
+        collection: [
+          ["A typo, style change or similar (no update is sent to email subscribers)", "minor", { class: "js-edition-update-minor" }],
+          ["A significant change, for example a new travel restriction (sends an email to all subscribers and adds a change note to the summary page)", "major", { class: "js-edition-update-major" }],
+        ]
+      %>
     </div>
 
-    <div class="form-group js-change-notes-section">
+    <div class="form-group js-change-notes-section js-hidden">
       <%= f.input :change_description,
         label: "Public change note",
         as: :text,
