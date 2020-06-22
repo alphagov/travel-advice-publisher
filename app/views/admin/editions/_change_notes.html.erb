@@ -17,16 +17,16 @@
     </div>
 
     <div class="form-group js-change-notes-section">
-      <%= f.label :change_description, "Public change note" %>
-      <%= f.text_area(:change_description,
+      <%= f.input :change_description,
+        label: "Public change note",
+        as: :text,
+        input_html: { class: "form-control",
                       rows: 4,
-                      placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"',
-                      label_text: "Public change note",
+                      disabled: ! @edition.draft?,
                       required: true,
-                      class: "form-control",
-                      disabled: ! @edition.draft?) %>
-    </div>
+                      placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"' } %>
 
-    <p>Read the <a href="https://www.gov.uk/guidance/content-design/writing-for-gov-uk#change-notes" target="_blank">guidance about change notes</a> (opens in a new tab).</p>
+      <p>Read the <a href="https://www.gov.uk/guidance/content-design/writing-for-gov-uk#change-notes" target="_blank">guidance about change notes</a> (opens in a new tab).</p>
+    </div>
   <% end %>
 </fieldset>
