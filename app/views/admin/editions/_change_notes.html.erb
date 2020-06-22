@@ -3,7 +3,7 @@
     <% if @edition.update? %>
       <div class="radio">
         <%= label_tag do %>
-          <%= f.radio_button(:minor_update, true, class: "js-edition-update-minor") %>
+          <%= f.radio_button(:update_type, "minor", checked: @edition.is_minor_update?, class: "js-edition-update-minor") %>
           <strong>A typo, style change or similar</strong> (no update is sent to email subscribers)
         <% end %>
       </div>
@@ -11,7 +11,7 @@
 
     <div class="radio">
       <%= label_tag do %>
-        <%= f.radio_button(:minor_update, false, class: "js-edition-update-major") %>
+        <%= f.radio_button(:update_type, "major", checked: !@edition.is_minor_update?, class: "js-edition-update-major") %>
         <strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)
       <% end %>
     </div>

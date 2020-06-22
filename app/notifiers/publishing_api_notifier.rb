@@ -59,7 +59,7 @@ private
   end
 
   def send_alert?(edition)
-    edition.state == "published" && !edition.minor_update
+    edition.state == "published" && !edition.is_minor_update?
   end
 
   def validate_tasks_order

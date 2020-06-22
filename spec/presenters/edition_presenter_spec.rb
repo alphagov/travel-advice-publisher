@@ -150,7 +150,7 @@ describe EditionPresenter do
 
     context "when it is a minor update" do
       it "sets update_type to minor for a minor update" do
-        edition.minor_update = true
+        edition.update_type = "minor"
         expect(presented_data["update_type"]).to eq("minor")
       end
     end
@@ -172,7 +172,7 @@ describe EditionPresenter do
       end
 
       it "sets the update_type to 'republish' for a minor update" do
-        edition.minor_update = true
+        edition.update_type = "minor"
         expect(presented_data["update_type"]).to eq("republish")
       end
     end

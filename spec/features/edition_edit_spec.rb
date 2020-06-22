@@ -247,7 +247,7 @@ feature "Edit Edition page", js: true do
 
   scenario "Seeing the minor update toggle on the edit form for non-first versions" do
     create(:published_travel_advice_edition, country_slug: "albania")
-    @edition = create(:draft_travel_advice_edition, country_slug: "albania", minor_update: true)
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania", update_type: "minor")
     visit "/admin/editions/#{@edition._id}/edit"
 
     within("h1") { expect(page).to have_content "Editing Albania Version 2" }
@@ -267,7 +267,7 @@ feature "Edit Edition page", js: true do
     click_navbar_button "Save"
 
     @edition.reload
-    expect(@edition.minor_update).to eq(false)
+    expect(@edition.update_type).to eq("major")
   end
 
   scenario "slug for expect(parts).to be automatically generated" do
@@ -386,7 +386,7 @@ feature "Edit Edition page", js: true do
       title: "Albania travel advice",
       alert_status: TravelAdviceEdition::ALERT_STATUSES[1..0],
       change_description: "Stuff changed",
-      minor_update: false,
+      update_type: "major",
       overview: "The overview",
       summary: "## Summary",
     )
@@ -427,7 +427,7 @@ feature "Edit Edition page", js: true do
         country_slug: "albania",
         summary: "## The summaryy",
         change_description: "Some things changed",
-        minor_update: false,
+        update_type: "major",
       )
     end
     travel_to(2.days.ago) do

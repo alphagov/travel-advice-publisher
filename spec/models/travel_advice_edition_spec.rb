@@ -11,7 +11,7 @@ describe TravelAdviceEdition do
       ed.image_id = "id_from_the_asset_manager_for_an_image"
       ed.document_id = "id_from_the_asset_manager_for_a_document"
       ed.published_at = Time.zone.parse("2013-02-21T14:56:22Z")
-      ed.minor_update = true
+      ed.update_type = "minor"
       ed.change_description = "Some things"
       ed.synonyms = %w[Foo Bar]
       ed.parts.build(title: "Part One", slug: "one")
@@ -27,7 +27,7 @@ describe TravelAdviceEdition do
       expect(ed.image_id).to eq("id_from_the_asset_manager_for_an_image")
       expect(ed.document_id).to eq("id_from_the_asset_manager_for_a_document")
       expect(ed.published_at).to eq(Time.zone.parse("2013-02-21T14:56:22Z"))
-      expect(ed.minor_update).to be true
+      expect(ed.update_type).to eql("minor")
       expect(ed.synonyms).to eq(%w[Foo Bar])
       expect(ed.change_description).to eq("Some things")
       expect(ed.parts.first.title).to eq("Part One")
@@ -163,14 +163,14 @@ describe TravelAdviceEdition do
 
     context "on minor update" do
       it "does not allow first version to be minor update" do
-        ta.minor_update = true
+        ta.update_type = "minor"
         expect(ta).not_to be_valid
-        expect(ta.errors.messages[:minor_update]).to include("can't be set for first version")
+        expect(ta.errors.messages[:update_type]).to include("can't be minor for first version")
       end
 
       it "allow other versions to be minor updates" do
         create(:published_travel_advice_edition, country_slug: ta.country_slug)
-        ta.minor_update = true
+        ta.update_type = "minor"
         expect(ta).to be_valid
       end
     end
@@ -189,7 +189,7 @@ describe TravelAdviceEdition do
         ta.version_number = 2
         ta.save!
         ta.change_description = ""
-        ta.minor_update = true
+        ta.update_type = "minor"
         ta.state = "published"
         expect(ta).to be_valid
       end
@@ -260,7 +260,7 @@ describe TravelAdviceEdition do
     end
 
     it "is not minor_update" do
-      expect(TravelAdviceEdition.new.minor_update).to be false
+      expect(TravelAdviceEdition.new.update_type).to_not eql("minor")
     end
   end
 
@@ -345,14 +345,14 @@ describe TravelAdviceEdition do
       end
 
       it "sets the published_at to the previous version's published_at for a minor update" do
-        ed.minor_update = true
+        ed.update_type = "minor"
         ed.publish!
         expect(ed.published_at).to eq(published.published_at)
       end
     end
 
     it "sets the change_description to the previous version's change_description for a minor update" do
-      ed.minor_update = true
+      ed.update_type = "minor"
       ed.publish!
       expect(ed.change_description).to eq(published.change_description)
     end
@@ -376,7 +376,7 @@ describe TravelAdviceEdition do
     end
 
     it "is set to the previous version's reviewed_at when a minor update is published" do
-      @ed.minor_update = true
+      @ed.update_type = "minor"
       @ed.publish!
       expect(@ed.reviewed_at).to eq(@published.reviewed_at)
     end
@@ -390,7 +390,7 @@ describe TravelAdviceEdition do
     end
 
     it "is able to update reviewed_at on a published edition" do
-      @ed.minor_update = true
+      @ed.update_type = "minor"
       @ed.publish!
       travel_to(1.day.from_now) do
         new_time = Time.zone.now
@@ -436,7 +436,7 @@ describe TravelAdviceEdition do
       end
 
       it "adds a 'publish' action with 'Minor update' as comment on publish of a minor_update" do
-        edition.minor_update = true
+        edition.update_type = "minor"
         edition.publish_as(user)
         edition.reload
         expect(edition.actions.size).to eq(1)

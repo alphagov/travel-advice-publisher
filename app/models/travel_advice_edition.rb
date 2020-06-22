@@ -17,6 +17,7 @@ class TravelAdviceEdition
   field :summary,              type: String,    default: ""
   field :change_description,   type: String
   field :minor_update,         type: Boolean,   default: false
+  field :update_type,          type: String,    default: "major"
   field :synonyms,             type: Array,     default: []
   # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
   field :published_at,         type: Time
@@ -57,7 +58,7 @@ class TravelAdviceEdition
 
   state_machine initial: :draft do
     before_transition draft: :published do |edition, _|
-      if edition.minor_update
+      if edition.is_minor_update?
         previous = edition.previous_version
         edition.published_at = previous.published_at
         edition.reviewed_at = previous.reviewed_at
@@ -79,11 +80,15 @@ class TravelAdviceEdition
 
     state :published do
       validate :cannot_edit_published
-      validates :change_description, presence: { unless: :minor_update, message: "can't be blank on publish" }
+      validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
     end
     state :archived do
       validate :cannot_edit_archived
     end
+  end
+
+  def is_minor_update?
+    update_type == "minor" || minor_update
   end
 
   def build_clone(target_class = nil)
@@ -107,7 +112,7 @@ class TravelAdviceEdition
   end
 
   def publish_as(user)
-    comment = minor_update ? "Minor update" : Govspeak::Document.new(change_description).to_text
+    comment = is_minor_update? ? "Minor update" : Govspeak::Document.new(change_description).to_text
     build_action_as(user, Action::PUBLISH, comment) && publish
   end
 
@@ -195,8 +200,8 @@ private
   end
 
   def first_version_cant_be_minor_update
-    if minor_update && version_number == 1
-      errors.add(:minor_update, "can't be set for first version")
+    if is_minor_update? && version_number == 1
+      errors.add(:update_type, "can't be minor for first version")
     end
   end
 

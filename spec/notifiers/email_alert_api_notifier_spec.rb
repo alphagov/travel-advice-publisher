@@ -29,7 +29,7 @@ RSpec.describe EmailAlertApiNotifier do
 
   context "when the update_type is minor" do
     before do
-      edition.minor_update = true
+      edition.update_type = "minor"
       edition.save!(validate: false)
     end
 
