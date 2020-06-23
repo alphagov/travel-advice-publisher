@@ -16,7 +16,7 @@ class TravelAdviceEdition
   field :alert_status,         type: Array,     default: []
   field :summary,              type: String,    default: ""
   field :change_description,   type: String
-  field :minor_update,         type: Boolean,   default: false
+  field :minor_update,         type: Boolean
   field :update_type,          type: String,    default: "major"
   field :synonyms,             type: Array,     default: []
   # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
