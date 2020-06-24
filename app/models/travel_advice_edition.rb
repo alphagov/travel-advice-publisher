@@ -178,13 +178,13 @@ private
   end
 
   def cannot_edit_published
-    if anything_other_than_state_changed?("reviewed_at", "update_type") && state_was != "draft"
+    if anything_other_than_state_changed?("reviewed_at") && state_was != "draft"
       errors.add(:state, "must be draft to modify")
     end
   end
 
   def cannot_edit_archived
-    if anything_other_than_state_changed?("update_type")
+    if anything_other_than_state_changed?
       errors.add(:state, "must be draft to modify")
     end
   end
