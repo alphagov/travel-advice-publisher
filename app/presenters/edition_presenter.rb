@@ -10,7 +10,7 @@ class EditionPresenter
   def update_type
     if @republish
       "republish"
-    elsif edition.minor_update
+    elsif edition.is_minor_update?
       "minor"
     else
       "major"

@@ -71,6 +71,7 @@ private
   def permitted_edition_attributes
     params.fetch(:edition, {}).permit(
       :minor_update,
+      :update_type,
       :change_description,
       :title,
       :overview,
