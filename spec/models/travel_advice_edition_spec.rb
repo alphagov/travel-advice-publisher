@@ -201,7 +201,7 @@ describe TravelAdviceEdition do
         expect(ta).to be_valid
       end
 
-      it "s not required when just saving a draft" do
+      it "is not required when just saving a draft" do
         ta.change_description = ""
         expect(ta).to be_valid
       end
@@ -235,10 +235,6 @@ describe TravelAdviceEdition do
   context "fields on a new edition" do
     it "is in draft state" do
       expect(TravelAdviceEdition.new).to be_draft
-    end
-
-    it "is neither a minor or major update" do
-      expect(TravelAdviceEdition.new.update_type).to be_nil
     end
 
     context "populating version_number" do
@@ -673,17 +669,29 @@ describe TravelAdviceEdition do
     end
   end
 
-  describe "a first edition" do
-    it "is not an update" do
-      ta = build(:travel_advice_edition, version_number: 1)
-      expect(ta).not_to be_update
-    end
-  end
+  describe "the version of an edition" do
+    describe "the first version" do
+      it "is a major update" do
+        ta = TravelAdviceEdition.new(version_number: 1)
+        expect(ta.update_type).to eql("major")
+      end
 
-  describe "subsequent edition" do
-    it "is an update" do
-      ta2 = build(:travel_advice_edition, version_number: 2)
-      expect(ta2).to be_update
+      it "#first_version? is true" do
+        ta = TravelAdviceEdition.new(version_number: 1)
+        expect(ta).to be_first_version
+      end
+    end
+
+    describe "a subsequent version" do
+      it "#first_version? is false for subsequent versions" do
+        ta = TravelAdviceEdition.new(version_number: 2)
+        expect(ta).not_to be_first_version
+      end
+
+      it "is neither a minor or major update" do
+        ta = TravelAdviceEdition.new(version_number: 2)
+        expect(ta.update_type).to be_nil
+      end
     end
   end
 end
