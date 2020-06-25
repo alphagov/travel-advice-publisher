@@ -25,7 +25,7 @@ gem "govuk_admin_template", "~> 6.7"
 gem "govuk_app_config", "~> 2.2"
 gem "govuk_publishing_components", "~> 21.56.2"
 gem "govuk_sidekiq", "~> 3.0"
-gem "plek", "~> 3.0"
+gem "plek", "~> 4.0"
 gem "slimmer", "~> 15.0"
 
 group :development, :test do
