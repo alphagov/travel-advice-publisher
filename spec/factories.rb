@@ -14,6 +14,7 @@ FactoryBot.define do
     sequence(:title) { |n| "Test Country #{n}" }
     sequence(:summary) { |n| "Travel advice about Test Country #{n}" }
     change_description { "Stuff changed" }
+    update_type { "major" }
   end
 
   # These factories only work when used with FactoryBot.create

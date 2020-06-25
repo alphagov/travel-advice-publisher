@@ -17,10 +17,9 @@ class TravelAdviceEdition
   field :summary,              type: String,    default: ""
   field :change_description,   type: String
   field :minor_update,         type: Boolean
-  field :update_type,          type: String,    default: "major"
+  field :update_type,          type: String,    default: -> { "major" if first_version? }
   field :synonyms,             type: Array,     default: []
-  # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
-  field :published_at,         type: Time
+  field :published_at,         type: Time # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
   field :reviewed_at,          type: Time
 
   embeds_many :actions
@@ -81,6 +80,7 @@ class TravelAdviceEdition
     state :published do
       validate :cannot_edit_published
       validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
+      validates :update_type, presence: { message: "can't be blank on publish" }
     end
     state :archived do
       validate :cannot_edit_archived
@@ -88,7 +88,7 @@ class TravelAdviceEdition
   end
 
   def is_minor_update?
-    update_type == "minor" || minor_update
+    update_type == "minor"
   end
 
   def build_clone(target_class = nil)
@@ -149,8 +149,8 @@ class TravelAdviceEdition
     link_check_reports.last
   end
 
-  def update?
-    version_number > 1
+  def first_version?
+    version_number == 1
   end
 
 private
@@ -200,7 +200,7 @@ private
   end
 
   def first_version_cant_be_minor_update
-    if is_minor_update? && version_number == 1
+    if is_minor_update? && first_version?
       errors.add(:update_type, "can't be minor for first version")
     end
   end

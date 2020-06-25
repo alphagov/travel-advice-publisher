@@ -1,28 +1,42 @@
 <fieldset class="js-change-notes">
   <%= f.inputs :name => "What sort of change are you making?" do %>
-    <% if @edition.update? %>
+    <% if !@edition.first_version? %>
       <div class="radio">
-        <%= label_tag do %>
-          <%= f.radio_button(:update_type, "minor", checked: @edition.is_minor_update?, class: "js-edition-update-minor") %>
-          <strong>A typo, style change or similar</strong> (no update is sent to email subscribers)
-        <% end %>
+        <%= f.input :update_type,
+          label: false,
+          as: :radio,
+          collection: [
+            [
+              "<strong>A typo, style change or similar</strong> (no update is sent to email subscribers)".html_safe,
+              "minor",
+              { class: "js-edition-update-minor", disabled: !@edition.draft? }
+            ]
+          ]
+        %>
       </div>
     <% end %>
 
     <div class="radio">
-      <%= label_tag do %>
-        <%= f.radio_button(:update_type, "major", checked: !@edition.is_minor_update?, class: "js-edition-update-major") %>
-        <strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)
-      <% end %>
+      <%= f.input :update_type,
+        label: false,
+        as: :radio,
+        collection: [
+          [
+            "<strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)".html_safe,
+            "major",
+            { class: "js-edition-update-major", disabled: !@edition.draft? }
+          ]
+        ]
+      %>
     </div>
 
-    <div class="form-group js-change-notes-section">
+    <div class="form-group js-change-notes-section js-hidden">
       <%= f.input :change_description,
         label: "Public change note",
         as: :text,
         input_html: { class: "form-control",
                       rows: 4,
-                      disabled: ! @edition.draft?,
+                      disabled: !@edition.draft?,
                       required: true,
                       placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"' } %>
 
