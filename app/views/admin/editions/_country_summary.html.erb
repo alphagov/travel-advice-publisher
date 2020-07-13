@@ -31,4 +31,6 @@
   </div>
 <% end %>
 
-<%= render 'govuk_publishing_components/components/govspeak', content: presenter.summary %>
+<%= render 'govuk_publishing_components/components/govspeak' do %>
+  <%= presenter.summary %>
+<% end %>
