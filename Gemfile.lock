@@ -470,43 +470,43 @@ PLATFORMS
 
 DEPENDENCIES
   ci_reporter_rspec
-  database_cleaner (~> 1.8)
-  diffy (~> 3.3)
-  factory_bot_rails (~> 6.1)
-  formtastic (~> 3.1)
-  formtastic-bootstrap (~> 3.1)
-  gds-api-adapters (~> 67.0)
-  gds-sso (~> 15.0)
-  govspeak (~> 6.5)
-  govuk-content-schema-test-helpers (~> 1.6)
-  govuk_admin_template (~> 6.7)
-  govuk_app_config (~> 2.2)
-  govuk_publishing_components (~> 21.59.0)
-  govuk_sidekiq (~> 3.0)
+  database_cleaner
+  diffy
+  factory_bot_rails
+  formtastic
+  formtastic-bootstrap
+  gds-api-adapters
+  gds-sso
+  govspeak
+  govuk-content-schema-test-helpers
+  govuk_admin_template
+  govuk_app_config
+  govuk_publishing_components
+  govuk_sidekiq
   govuk_test
-  jasmine (~> 3.5)
-  mini_magick (~> 4.10)
-  mongo (~> 2.12.2)
-  mongoid (~> 6.3.0)
+  jasmine
+  mini_magick
+  mongo
+  mongoid
   mongoid_rails_migrations
-  pdf-reader (~> 2.4)
-  plek (~> 4.0)
+  pdf-reader
+  plek
   pry-byebug
   pry-rails
-  rails (= 5.2.4.3)
+  rails (~> 5.2.4, >= 5.2.4.3)
   rails-controller-testing
-  rspec-rails (~> 4.0)
-  rubocop-govuk (~> 3.16)
-  sass-rails (~> 5.0)
-  scss_lint-govuk (~> 0.2)
+  rspec-rails
+  rubocop-govuk
+  sass-rails
+  scss_lint-govuk
   simplecov
-  slimmer (~> 15.0)
-  state_machines (~> 0.4)
-  state_machines-mongoid (~> 0.2)
+  slimmer
+  state_machines
+  state_machines-mongoid
   test-unit
   timecop
-  uglifier (~> 4.2)
-  webmock (~> 3.8)
+  uglifier
+  webmock
 
 BUNDLED WITH
    1.17.3
