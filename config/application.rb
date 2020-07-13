@@ -23,9 +23,6 @@ module TravelAdvicePublisher
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
-    # Custom directories with classes and modules you want to be autoloadable.
-    config.eager_load_paths += %W[#{config.root}/lib]
-
     config.slimmer.use_cache = true
   end
 end
