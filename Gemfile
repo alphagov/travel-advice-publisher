@@ -28,6 +28,10 @@ gem "govuk_sidekiq"
 gem "plek"
 gem "slimmer"
 
+group :development do
+  gem "listen"
+end
+
 group :development, :test do
   gem "jasmine"
   gem "jasmine_selenium_runner", require: false

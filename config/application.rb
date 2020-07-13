@@ -1,8 +1,12 @@
 require_relative "boot"
 
+require "rails"
+
 # Pick the frameworks you want:
+require "active_model/railtie"
 require "action_controller/railtie"
 require "action_mailer/railtie"
+require "action_view/railtie"
 require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
@@ -11,9 +15,14 @@ Bundler.require(*Rails.groups)
 
 module TravelAdvicePublisher
   class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 5.2
+
     # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration should go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
+
     # Custom directories with classes and modules you want to be autoloadable.
     config.eager_load_paths += %W[#{config.root}/lib]
 
