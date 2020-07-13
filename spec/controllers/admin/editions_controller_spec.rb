@@ -50,7 +50,7 @@ describe Admin::EditionsController do
 
     it "should 404 for a non-existent country" do
       post :create, params: { country_id: "wibble" }
-      expect(response).to be_missing
+      expect(response).to be_not_found
     end
 
     context "cloning an existing edition" do
@@ -107,7 +107,7 @@ describe Admin::EditionsController do
     describe "GET to edit" do
       it "should assign an edition and country" do
         get :edit, params: { id: @edition._id }
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(assigns(:edition)).to eq(@edition)
         expect(assigns(:country)).to eq(@country)
       end
@@ -196,7 +196,7 @@ describe Admin::EditionsController do
               },
             }
 
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(flash[:alert]).to eq("We had some problems saving: State must be draft to modify.")
       end
     end
@@ -283,7 +283,7 @@ describe Admin::EditionsController do
 
     it "shows a print preview for that edition" do
       get :historical_edition, params: { edition_id: @edition._id }
-      expect(response).to be_success
+      expect(response).to be_successful
       expect(assigns(:presenter).edition).to eq(@edition)
       expect(assigns(:presenter).country).to eq(@country)
     end
