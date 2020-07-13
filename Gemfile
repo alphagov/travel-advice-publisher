@@ -30,6 +30,7 @@ gem "slimmer"
 
 group :development, :test do
   gem "jasmine"
+  gem "jasmine_selenium_runner", require: false
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails"
@@ -47,5 +48,6 @@ group :test do
   gem "simplecov"
   gem "test-unit"
   gem "timecop"
+  gem "webdrivers"
   gem "webmock", require: false
 end
