@@ -20,8 +20,6 @@ module TravelAdvicePublisher
     # Custom directories with classes and modules you want to be autoloadable.
     config.eager_load_paths += %W[#{config.root}/lib]
 
-    config.action_view.form_with_generates_remote_forms = false
-
     config.slimmer.use_cache = true
   end
 end
