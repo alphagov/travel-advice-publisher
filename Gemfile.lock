@@ -519,7 +519,7 @@ DEPENDENCIES
   plek
   pry-byebug
   pry-rails
-  rails (~> 6.0.3, >= 6.0.3.2)
+  rails (= 6.0.3.2)
   rails-controller-testing
   rspec-rails
   rubocop-govuk
