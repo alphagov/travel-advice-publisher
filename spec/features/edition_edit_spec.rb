@@ -90,7 +90,7 @@ feature "Edit Edition page", js: true do
       @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
       @edition.actions.build(request_type: Action::NEW_VERSION)
       @edition.actions.build(request_type: Action::PUBLISH, requester: User.first, comment: "Made some changes...")
-      @edition.save(validate: false)
+      @edition.save!(validate: false)
 
       visit "/admin/editions/#{@edition._id}/edit"
 
@@ -232,12 +232,12 @@ feature "Edit Edition page", js: true do
   end
 
   scenario "Updating the reviewed at date for a published edition" do
-    travel_to(Time.current) do
+    travel_to(Time.zone.now) do
       @edition = create(:published_travel_advice_edition, country_slug: "albania")
       visit "/admin/editions/#{@edition._id}/edit"
       click_on "Update review date"
       @edition.reload
-      expect(@edition.reviewed_at.to_i).to eq(Time.now.to_i)
+      expect(@edition.reviewed_at.to_i).to eq(Time.zone.now.to_i)
 
       expect(page).to have_content "Updated review date"
       assert_details_contains("2a3938e1-d588-45fc-8c8f-0f51814d5409", "reviewed_at", Time.zone.now.iso8601)
@@ -290,14 +290,14 @@ feature "Edit Edition page", js: true do
     @edition.save!
 
     @edition.parts.build
-    @edition.parts.first.update(
+    @edition.parts.first.update!(
       title: "Part One",
       slug: "part-one",
       body: "Body text",
     )
 
     @edition.parts.build
-    @edition.parts.second.update(
+    @edition.parts.second.update!(
       title: "Part Two",
       slug: "part-two",
       body: "Body text",
@@ -391,7 +391,7 @@ feature "Edit Edition page", js: true do
       summary: "## Summary",
     )
 
-    now = Time.now.utc
+    now = Time.zone.now.utc
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     click_on "Add new part"
@@ -437,7 +437,7 @@ feature "Edit Edition page", js: true do
     end
     @edition = create(:draft_travel_advice_edition, country_slug: "albania")
 
-    travel_to(Time.current) do
+    travel_to(Time.zone.now) do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
       fill_in "Summary", with: "## The summary"

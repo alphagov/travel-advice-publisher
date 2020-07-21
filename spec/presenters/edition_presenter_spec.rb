@@ -42,7 +42,7 @@ describe EditionPresenter do
       change_description: "Stuff previously changed",
     )
 
-    previous.parts.create(
+    previous.parts.create!(
       slug: "money",
       title: "Money",
       body: "Use a piggy bank ...",
@@ -76,7 +76,7 @@ describe EditionPresenter do
     let(:presented_data) { subject.render_for_publishing_api }
 
     around do |example|
-      travel_to(Time.current) { example.run }
+      travel_to(Time.zone.now) { example.run }
     end
 
     it "is valid against the content schemas" do

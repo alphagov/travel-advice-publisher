@@ -1,6 +1,6 @@
 RSpec.describe EmailAlertSignup::IndexPresenter do
   around do |example|
-    travel_to(Time.current) { example.run }
+    travel_to(Time.zone.now) { example.run }
   end
 
   subject(:presenter) { described_class.new }

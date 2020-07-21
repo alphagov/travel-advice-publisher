@@ -9,7 +9,7 @@ describe PublishRequest do
 
   describe "#register_check_attempt!" do
     let(:publish_request) { PublishRequest.new }
-    around { |example| travel_to(Time.current) { example.run } }
+    around { |example| travel_to(Time.zone.now) { example.run } }
 
     it "adds a new timestamp to checks_attempted" do
       publish_request.register_check_attempt!
@@ -167,13 +167,13 @@ describe PublishRequest do
 
     it "sets frontend_updated to DateTime.now" do
       publish_request.mark_frontend_updated
-      expect(publish_request.frontend_updated).to eq(Time.now.utc)
+      expect(publish_request.frontend_updated).to eq(Time.zone.now.utc)
     end
   end
 
   describe "awaiting_check scope" do
     it "returns checks_complete? == false older then 5 minutes" do
-      publish_request = PublishRequest.create(
+      publish_request = PublishRequest.create!(
         checks_complete: false,
         created_at: 6.minutes.ago,
       )
@@ -181,7 +181,7 @@ describe PublishRequest do
     end
 
     it "doesn't return checks_complete? == false newer than 5 minutes" do
-      PublishRequest.create(
+      PublishRequest.create!(
         checks_complete: false,
         created_at: 4.minutes.ago,
       )

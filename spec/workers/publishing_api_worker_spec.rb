@@ -43,7 +43,7 @@ RSpec.describe PublishingApiWorker, :perform do
     end
 
     it "delays the execution of EmailAlertApiWorker" do
-      travel_to(Time.current) do
+      travel_to(Time.zone.now) do
         described_class.new.perform([task])
         job = EmailAlertApiWorker.jobs.first
         job_starts_at = Time.zone.at(job["at"])

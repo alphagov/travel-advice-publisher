@@ -141,7 +141,7 @@ describe TravelAdviceEdition do
 
     context "on version_number" do
       it "requires a version_number" do
-        ta.save
+        ta.save!
         ta.version_number = ""
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:version_number]).to include("can't be blank")
@@ -662,8 +662,8 @@ describe TravelAdviceEdition do
 
     it "should return the last report created" do
       edition = create(:published_travel_advice_edition)
-      edition.link_check_reports.create(FactoryBot.attributes_for(:link_check_report))
-      latest_report = edition.link_check_reports.create(FactoryBot.attributes_for(:link_check_report, batch_id: 2))
+      edition.link_check_reports.create!(FactoryBot.attributes_for(:link_check_report))
+      latest_report = edition.link_check_reports.create!(FactoryBot.attributes_for(:link_check_report, batch_id: 2))
 
       expect(edition.latest_link_check_report).to eq(latest_report)
     end
