@@ -9,7 +9,7 @@ class PublishingApiWorker
         if endpoint == "send_alert"
           EmailAlertApiWorker.perform_in(CACHE_EXPIRES_IN, payload)
         else
-          GdsApi.publishing_api_v2.public_send(endpoint, content_id, payload)
+          GdsApi.publishing_api.public_send(endpoint, content_id, payload)
         end
       rescue StandardError => e
         raise_helpful_error(e, jobs, endpoint, content_id, payload)

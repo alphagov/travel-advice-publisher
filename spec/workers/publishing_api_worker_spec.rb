@@ -1,9 +1,9 @@
 RSpec.describe PublishingApiWorker, :perform do
   include GdsApi::TestHelpers::EmailAlertApi
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
 
   let(:publishing_api) do
-    GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT
+    GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT
   end
 
   let(:email_alert_api) do
