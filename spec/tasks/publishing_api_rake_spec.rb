@@ -1,7 +1,7 @@
 require "rake"
 
 describe "publishing_api rake tasks", type: :rake_task do
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
 
   before do
     Rake.application = nil # Reset any previously loaded tasks
@@ -73,10 +73,10 @@ describe "publishing_api rake tasks", type: :rake_task do
 
       task.invoke(country.slug)
 
-      expect(a_request(:put, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}"))
+      expect(a_request(:put, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}"))
         .not_to have_been_made
 
-      expect(a_request(:post, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}/publish"))
+      expect(a_request(:post, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}/publish"))
         .not_to have_been_made
     end
   end
@@ -125,10 +125,10 @@ describe "publishing_api rake tasks", type: :rake_task do
 
       task.invoke
 
-      expect(a_request(:put, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3"))
+      expect(a_request(:put, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3"))
         .not_to have_been_made
 
-      expect(a_request(:post, GdsApi::TestHelpers::PublishingApiV2::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3/publish"))
+      expect(a_request(:post, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3/publish"))
         .not_to have_been_made
 
       assert_publishing_api_put_content(

@@ -1,5 +1,5 @@
 RSpec.describe "Request tracing", type: :request do
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
   include GdsApi::TestHelpers::EmailAlertApi
   include AuthenticationFeatureHelpers
 
