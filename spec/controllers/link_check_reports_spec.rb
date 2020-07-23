@@ -9,7 +9,7 @@ describe LinkCheckReportsController, type: :controller do
 
     before do
       login_as_stub_user
-      @stubbed_api_request = link_checker_api_create_batch(
+      @stubbed_api_request = stub_link_checker_api_create_batch(
         uris: ["http://www.example.com", "http://www.gov.uk"],
         id: 5,
         webhook_uri: link_checker_api_callback_url(host: Plek.find("travel-advice-publisher")),
