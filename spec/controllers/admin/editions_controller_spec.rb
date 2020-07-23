@@ -1,5 +1,5 @@
 describe Admin::EditionsController do
-  include GdsApi::TestHelpers::PublishingApiV2
+  include GdsApi::TestHelpers::PublishingApi
   render_views
 
   before do
