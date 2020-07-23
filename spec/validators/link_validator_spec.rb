@@ -90,7 +90,7 @@ describe LinkValidator do
     let(:body) { "abc [link1](foobar.com), ghi [link2](bazquux.com)" }
 
     it "should be validated when any attribute of the document changes" do
-      doc.save(validate: false)
+      doc.save!(validate: false)
 
       doc.assignee = "4fdef0000000000000000001"
       expect(doc).to be_invalid

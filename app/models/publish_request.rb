@@ -48,7 +48,7 @@ class PublishRequest
   end
 
   def mark_frontend_updated
-    self.frontend_updated = Time.now.utc
+    self.frontend_updated = Time.zone.now.utc
   end
 
   def check_count

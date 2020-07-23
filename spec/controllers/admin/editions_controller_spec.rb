@@ -254,7 +254,7 @@ describe Admin::EditionsController do
       context "when previous edition exist for the country" do
         before do
           create(:published_travel_advice_edition, country_slug: "aruba")
-          draft.update(version_number: 2)
+          draft.update!(version_number: 2)
         end
 
         it "doesn't create a PublishRequest for the email signup page" do

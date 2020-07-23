@@ -48,7 +48,7 @@ class Admin::EditionsController < ApplicationController
     when "Update review date"
       update_review_date
     when "Save"
-      save
+      save_draft
     when "Save & Publish"
       save_and_publish
     when "Add Note"
@@ -117,7 +117,7 @@ private
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      PublishRequest.create(
+      PublishRequest.create!(
         request_id: govuk_request_id,
         edition_id: @edition.id,
         country_slug: @edition.country_slug,
@@ -130,7 +130,7 @@ private
     end
   end
 
-  def save
+  def save_draft
     if @edition.update(permitted_edition_attributes)
       notifier.put_content(@edition)
       notifier.enqueue
@@ -164,7 +164,7 @@ private
 
   def add_note
     @edition.build_action_as(current_user, Action::NOTE, params[:edition][:note][:comment])
-    save
+    save_draft
   end
 
   def notifier
