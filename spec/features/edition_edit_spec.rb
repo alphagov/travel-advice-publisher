@@ -20,7 +20,7 @@ feature "Edit Edition page", js: true do
         details = payload.fetch("details")
         actual_value = details.fetch(key)
 
-        expect(actual_value).to eq(expected_value)
+        expect(actual_value).to match(expected_value)
       },
     )
   end
@@ -667,8 +667,6 @@ feature "Edit Edition page", js: true do
     expect(page).to have_field("Upload a new PDF", type: "file")
     attach_file("Upload a new PDF", file_one.path)
 
-    allow(SecureRandom).to receive(:uuid).and_return("some-uuid")
-
     click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
@@ -678,16 +676,15 @@ feature "Edit Edition page", js: true do
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
       "document",
-      "attachment_type" => "file",
-      "id" => "some-uuid",
-      "url" => "http://path/to/document_one.pdf",
-      "content_type" => "application/pdf",
+      hash_including(
+        "attachment_type" => "file",
+        "url" => "http://path/to/document_one.pdf",
+        "content_type" => "application/pdf",
+      ),
     )
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
-
-    allow(SecureRandom).to receive(:uuid).and_return("some-uuid")
 
     # ensure document is not removed on save
     click_navbar_button "Save"
@@ -699,10 +696,11 @@ feature "Edit Edition page", js: true do
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
       "document",
-      "attachment_type" => "file",
-      "id" => "some-uuid",
-      "url" => "http://path/to/document_one.pdf",
-      "content_type" => "application/pdf",
+      hash_including(
+        "attachment_type" => "file",
+        "url" => "http://path/to/document_one.pdf",
+        "content_type" => "application/pdf",
+      ),
     )
 
     # replace document
@@ -722,10 +720,11 @@ feature "Edit Edition page", js: true do
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
       "document",
-      "attachment_type" => "file",
-      "id" => "some-uuid",
-      "url" => "http://path/to/document_two.pdf",
-      "content_type" => "application/pdf",
+      hash_including(
+        "attachment_type" => "file",
+        "url" => "http://path/to/document_two.pdf",
+        "content_type" => "application/pdf",
+      ),
     )
 
     # remove document
