@@ -43,9 +43,6 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
-  # We should always send email alerts in test
-  config.send_email_alerts = true
-
   config.after_initialize do
     Timecop.freeze(2011, 11, 11, 11, 11, 11)
   end
