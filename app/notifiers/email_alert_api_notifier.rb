@@ -12,9 +12,7 @@ module EmailAlertApiNotifier
   private
 
     def send_alert?(edition)
-      Rails.application.config.send_email_alerts &&
-        edition.state == "published" &&
-        !edition.is_minor_update?
+      edition.state == "published" && !edition.is_minor_update?
     end
   end
 end

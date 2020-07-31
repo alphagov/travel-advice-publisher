@@ -15,18 +15,6 @@ RSpec.describe EmailAlertApiWorker, :perform do
     assert_email_alert_api_content_change_created(payload)
   end
 
-  context "when send_email_alerts is disabled" do
-    before do
-      expect(Rails.application.config).to receive(:send_email_alerts)
-        .and_return(false)
-    end
-
-    it "does not send an alert" do
-      expect(GdsApi.email_alert_api).not_to receive(:create_content_change)
-      described_class.new.perform(payload)
-    end
-  end
-
   context "when a request to the email-alert-api times out" do
     before do
       stub_any_email_alert_api_call.to_timeout
