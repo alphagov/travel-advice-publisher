@@ -4,7 +4,6 @@ gem "rails", "6.0.3.2"
 
 gem "mongo"
 gem "mongoid"
-gem "mongoid_rails_migrations"
 gem "state_machines"
 gem "state_machines-mongoid"
 
