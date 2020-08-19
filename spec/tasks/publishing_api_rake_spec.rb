@@ -39,8 +39,8 @@ describe "publishing_api rake tasks", type: :rake_task do
           links:
             {
               parent: %w[b9849cd6-61a7-42dc-8124-362d2c7d48b0],
-              primary_publishing_organisation: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
-              organisations: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
+              primary_publishing_organisation: %w[f9fcf3fe-2751-4dca-97ca-becaeceb4b26],
+              organisations: %w[f9fcf3fe-2751-4dca-97ca-becaeceb4b26],
             },
         ),
       )
