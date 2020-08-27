@@ -17,6 +17,7 @@ RSpec.describe LinksPresenter do
         parent: %w[08d48cdd-6b50-43ff-a53b-beab47f4aab0],
         meets_user_needs: %w[5118d7b4-215d-45e6-bd20-15d7bc21314f],
         primary_publishing_organisation: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
+        organisations: %w[9adfc4ed-9f6c-4976-a6d8-18d34356367c],
       })
     end
   end
