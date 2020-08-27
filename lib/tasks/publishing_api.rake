@@ -8,6 +8,14 @@ namespace :publishing_api do
     GdsApi.publishing_api.publish(presenter.content_id)
   end
 
+  desc "send index content-item to publishing-api"
+  task patch_index_links: :environment do
+    GdsApi.publishing_api.patch_links(
+      TravelAdvicePublisher::INDEX_CONTENT_ID,
+      IndexLinksPresenter.present,
+    )
+  end
+
   desc "unpublish a published edition and email signup content item for a country and redirect"
   task :unpublish_published_edition_and_email_signup_content_item, %i[country_slug new_country_slug] => :environment do |_task, args|
     country = Country.find_by_slug(args[:country_slug])
@@ -34,6 +42,19 @@ namespace :publishing_api do
       GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
       GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
       GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
+
+      print "."
+    end
+
+    puts
+  end
+
+  desc "Send patch links requests to the Publishing API for all editions"
+  task repatch_links: :environment do
+    TravelAdviceEdition.each do |edition|
+      links_presenter = LinksPresenter.new(edition)
+
+      GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
 
       print "."
     end
