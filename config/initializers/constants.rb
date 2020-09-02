@@ -9,5 +9,5 @@ module TravelAdvicePublisher
 
   COUNTRY_FORMAT = "travel_advice".freeze
   INDEX_FORMAT = "travel_advice_index".freeze
-  PRIMARY_ORG_CONTENT_ID = "9adfc4ed-9f6c-4976-a6d8-18d34356367c".freeze
+  PRIMARY_ORG_CONTENT_ID = "f9fcf3fe-2751-4dca-97ca-becaeceb4b26".freeze
 end
