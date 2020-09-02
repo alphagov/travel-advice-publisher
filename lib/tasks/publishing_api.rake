@@ -51,7 +51,7 @@ namespace :publishing_api do
 
   desc "Send patch links requests to the Publishing API for all editions"
   task repatch_links: :environment do
-    TravelAdviceEdition.each do |edition|
+    TravelAdviceEdition.published.each do |edition|
       links_presenter = LinksPresenter.new(edition)
 
       GdsApi.publishing_api.patch_links(links_presenter.content_id, links_presenter.present)
