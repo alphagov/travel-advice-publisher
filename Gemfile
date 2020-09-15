@@ -8,8 +8,6 @@ gem "state_machines"
 gem "state_machines-mongoid"
 
 gem "diffy"
-gem "formtastic"
-gem "formtastic-bootstrap"
 
 gem "sass-rails"
 gem "uglifier"

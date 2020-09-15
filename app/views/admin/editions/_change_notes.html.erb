@@ -1,46 +1,44 @@
 <fieldset class="js-change-notes">
-  <%= f.inputs :name => "What sort of change are you making?" do %>
+  <fieldset class="inputs">
+    <legend><span>What sort of change are you making?</span></legend>
+
     <% if !@edition.first_version? %>
       <div class="radio">
-        <%= f.input :update_type,
-          label: false,
-          as: :radio,
-          collection: [
-            [
-              "<strong>A typo, style change or similar</strong> (no update is sent to email subscribers)".html_safe,
-              "minor",
-              { class: "js-edition-update-minor", disabled: !@edition.draft? }
-            ]
-          ]
-        %>
+        <div class="form-group radio_buttons input" id="edition_update_type_input">
+          <span class="form-wrapper">
+            <div class="radio">
+              <%= f.label :update_type, :minor, class: "choice", for: "edition_update_type_minor" do %>
+                <%= f.radio_button :update_type, :minor, class: "js-edition-update-minor", disabled: !@edition.draft?  %>
+                <strong>A typo, style change or similar</strong> (no update is sent to email subscribers)
+              <% end %>
+            </div>
+          </span>
+        </div>
       </div>
     <% end %>
 
     <div class="radio">
-      <%= f.input :update_type,
-        label: false,
-        as: :radio,
-        collection: [
-          [
-            "<strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)".html_safe,
-            "major",
-            { class: "js-edition-update-major", disabled: !@edition.draft? }
-          ]
-        ]
-      %>
+      <div class="form-group radio_buttons input" id="edition_update_type_input">
+        <span class="form-wrapper">
+          <div class="radio">
+            <%= f.label :update_type, :major, class: "choice", for: "edition_update_type_major" do %>
+              <%= f.radio_button :update_type, :major, class: "js-edition-update-major", disabled: !@edition.draft?  %>
+              <strong>A significant change, for example a new travel restriction</strong> (sends an email to all subscribers and adds a change note to the summary page)
+            <% end %>
+          </div>
+        </span>
+      </div>
     </div>
 
     <div class="form-group js-change-notes-section js-hidden">
-      <%= f.input :change_description,
-        label: "Public change note",
-        as: :text,
-        input_html: { class: "form-control",
-                      rows: 4,
-                      disabled: !@edition.draft?,
-                      required: true,
-                      placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"' } %>
+      <span class="form-label">
+        <%= f.label :change_description, "Public change note", class: "control-label" %>
+      </span>
+      <span class="form-wrapper">
+        <%= f.text_area :change_description, placeholder: 'For example: "Addition of information and advice about planned protests on 5 January (Summary page)" or "Updated information on passport validity requirements (Entry Requirements page)"', disabled: !@edition.draft?, class: "form-control", rows: 4 %>
+      </span>
 
       <p>Read the <a href="https://www.gov.uk/guidance/content-design/writing-for-gov-uk#change-notes" target="_blank">guidance about change notes</a> (opens in a new tab).</p>
     </div>
-  <% end %>
+  </fieldset>
 </fieldset>

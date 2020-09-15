@@ -351,9 +351,9 @@ feature "Edit Edition page", js: true do
   scenario "updating the parts sort order" do
     @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
 
-    @edition.parts << Part.new(title: "Wallace", slug: "wallace", order: 1)
-    @edition.parts << Part.new(title: "Gromit", slug: "gromit", order: 2)
-    @edition.parts << Part.new(title: "Cheese", slug: "cheese", order: 3)
+    @edition.parts << Part.new(title: "Wallace", body: "some text", slug: "wallace", order: 1)
+    @edition.parts << Part.new(title: "Gromit", body: "some text", slug: "gromit", order: 2)
+    @edition.parts << Part.new(title: "Cheese", body: "some text", slug: "cheese", order: 3)
     @edition.save!
 
     visit "/admin/editions/#{@edition._id}/edit"
@@ -761,6 +761,6 @@ feature "Edit Edition page", js: true do
     fill_in "Summary", with: "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
     click_navbar_button "Save"
 
-    expect(page).to have_content(%q(Don't include hover text in links. Delete the text in quotation marks eg "This appears when you hover over the link."))
+    expect(page).to have_content("Don't include hover text in links. Delete the text in quotation marks eg \\\"This appears when you hover over the link.")
   end
 end
