@@ -32,8 +32,9 @@ group :development do
 end
 
 group :development, :test do
+  gem "govuk_test"
   gem "jasmine"
-  gem "jasmine_selenium_runner", require: false
+  gem "jasmine_selenium_runner"
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails"
@@ -44,7 +45,6 @@ group :test do
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "govuk-content-schema-test-helpers"
-  gem "govuk_test"
   gem "rails-controller-testing"
   gem "rubocop-govuk"
   gem "scss_lint-govuk"
