@@ -21,4 +21,3 @@
   <h2><%= part.title.present? ? part.title : 'Untitled part' %></h2>
   <%= diff_html(@comparison.parts[index].try(:body), part.body) %>
 <% end %>
-

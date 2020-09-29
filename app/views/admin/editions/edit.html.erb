@@ -10,7 +10,7 @@
   <h1>Editing <%= @country.name %> <small>Version <%= @edition.version_number %></small></h1>
 </div>
 
-<%= semantic_form_for @edition, :url => admin_edition_path(@edition), :as => :edition, class: "js-edition-form" do |f| %>
+<%= form_for @edition, url: admin_edition_path(@edition), as: :edition, class: "js-edition-form" do |f| %>
   <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>
@@ -22,16 +22,60 @@
         <div class="col-md-8">
           <%= render "change_notes", f: f %>
 
-          <%= f.inputs :name => "Metadata" do %>
-            <%= f.input :title, :label => "Search title (plain text)", :required => true, :input_html => { :disabled => ! @edition.draft?, :class => "input-md-8" } %>
-          <%= f.input :overview, :label => "Search description (plain text)",
-            :as => :text, :input_html => { :class => "input-md-8", :rows => 4, :disabled => ! @edition.draft? } %>
+          <fieldset class="inputs">
+            <legend><span>Metadata</span></legend>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :title, class: "control-label" do %>
+                  Search title (plain text)<abbr title="required">*</abbr>
+                <% end %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.text_field :title, disabled: !@edition.draft?, required: true, aria: { required: true }, class: "input-md-8 form-control" %>
+              </span>
+            </div>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :overview, "Search description (plain text)" %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.text_area :overview, disabled: !@edition.draft?, class: "input-md-8 form-control", rows: 4 %>
+              </span>
+            </div>
 
-            <%= f.input :csv_synonyms, :hint => "Enter synonyms for this country, comma separated.", :label => "Country Synonyms", :required => false, :input_html => { :class => "input-md-8", :disabled => ! @edition.draft? } %>
-          <% end %>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :csv_synonyms, "Country Synonyms" %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.text_field :csv_synonyms, required: false, disabled: !@edition.draft?, class: "input-md-8 form-control" %>
+              </span>
 
-          <%= f.inputs :name => "Summary content" do %>
-            <%= f.input :alert_status, :as => :check_boxes, :collection => alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES) %>
+              <p class="help-block">
+                Enter synonyms for this country, comma separated.
+              </p>
+            </div>
+
+          </fieldset>
+
+          <fieldset class="inputs">
+            <legend><span>Summary content</span></legend>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :alert_status %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.collection_check_boxes :alert_status, alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES), :last, :last do |builder| %>
+                  <div class="checkbox">
+                    <%= builder.label(class: "custom-control-label") do %>
+                      <%= builder.check_box(class: "custom-control-input") %>
+                      <%= builder.object.first %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </span>
+            </div>
+
             <label>Map Image</label>
             <% if @edition.image %>
               <div class="well uploaded-image">
@@ -42,8 +86,15 @@
 
               <p><strong>Replace map image</strong></p>
             <% end %>
-            <%= f.input :image, :as => :file, :label => "Upload a new map image" %>
 
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :image, "Upload a new map image" %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.file_field :image, type: "file" %>
+              </span>
+            </div>
 
             <label>PDF Document</label>
             <% if @edition.document %>
@@ -58,14 +109,30 @@
               <p><strong>Replace PDF</strong></p>
             <% end %>
 
-            <%= f.input :document, :as => :file, :label => "Upload a new PDF" %>
-            <%= f.input :summary, :label => "Summary (govspeak available)", :as => :text, :input_html => { :class => "input-md-8", :disabled => ! @edition.draft? } %>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :document, "Upload a new PDF" %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.file_field :document, type: "file" %>
+              </span>
+            </div>
 
-          <% end %>
+            <div class="form-group">
+              <span class="form-label">
+                <%= f.label :summary, "Summary (govspeak available)" %>
+              </span>
+              <span class="form-wrapper">
+                <%= f.text_area :summary, disabled: !@edition.draft?, class: "input-md-8 form-control", rows: 20 %>
+              </span>
+            </div>
+          </fieldset>
 
-          <%= f.inputs :name => "Parts (govspeak available)" do %>
+          <fieldset>
+            <legend><span>Parts (govspeak available)</span></legend>
+
             <section class="panel-group" id="parts" data-module="sortable-parts">
-              <%= f.semantic_fields_for :parts, f.object.parts.in_order do |part| %>
+              <%= f.fields_for :parts, f.object.parts.in_order do |part| %>
                 <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
               <% end %>
             </section>
@@ -74,9 +141,8 @@
               <button class="btn btn-success add-associated" data-target="parts" data-tmpl_id="tmpl-parts">Add new part</button>
             <% end %>
 
-            <%= f.add_associated_jquery_template :parts, :partial => '/admin/editions/part',
-                :locals => {:editable => @edition.draft?} %>
-          <% end %>
+            <%= render :partial => '/admin/editions/jquery_template', locals: { editable: @edition.draft? } %>
+          </fieldset>
         </div>
 
         <div class="col-md-4 link-check-report">
@@ -95,8 +161,18 @@
       <div class="tab-pane row add-top-margin" id="history">
         <div class="col-md-6">
           <%= f.fields_for :note do |h| %>
-            <%= h.input :comment, :label => "Note", :as => :text, :input_html => { :class=> 'input-md-6', :rows => 6 } %>
-            <%= h.action :submit, :label => "Add Note", :button_html => { :class => "add-top-margin btn btn-success" } %>
+            <div class="form-group">
+              <span class="form-label">
+                <%= h.label :comment, class: "control-label" do %>
+                  Note<abbr title="required">*</abbr>
+                <% end %>
+              </span>
+              <span class="form-wrapper">
+                <%= h.text_area :comment, class: "input-md-6 form-control", rows: 6 %>
+              </span>
+            </div>
+
+            <%= h.submit "Add Note", class: "add-top-margin btn btn-success" %>
           <% end %>
         </div>
 
