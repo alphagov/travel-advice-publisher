@@ -15,6 +15,7 @@ RSpec.describe "/healthcheck", type: :request do
 
     expect(data.fetch(:checks)).to include(
       redis_connectivity: { status: "ok" },
+      database_connectivity: { status: "ok" },
     )
   end
 end
