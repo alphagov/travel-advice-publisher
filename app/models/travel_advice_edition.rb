@@ -254,7 +254,7 @@ private
         errors.add("#{field}_id".to_sym, "could not be uploaded")
       end
 
-      private "upload_#{field}".to_sym # rubocop:disable Style/AccessModifierDeclarations
+      private "upload_#{field}".to_sym
     end
   end
   private_class_method :attaches
