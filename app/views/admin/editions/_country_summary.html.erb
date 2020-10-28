@@ -32,5 +32,5 @@
 <% end %>
 
 <%= render 'govuk_publishing_components/components/govspeak' do %>
-  <%= presenter.summary %>
+  <%= sanitize(presenter.summary) %>
 <% end %>
