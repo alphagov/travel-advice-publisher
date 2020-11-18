@@ -111,8 +111,8 @@
   slug: brazil
   content_id: eaec959e-d3e2-4e69-9caa-a5fbf117c790
   email_signup_content_id: 13a9d11b-098b-417d-af76-05b9246b5b31
-- name: British Antarctic Territory
-  slug: british-antarctic-territory
+- name: Antarctica/British Antarctic Territory
+  slug: antarctica-british-antarctic-territory
   content_id: 7a2554bd-9dc5-4a2e-953c-263c65ced66b
   email_signup_content_id: ae345eb9-a881-4165-ae21-75759f27086e
 - name: British Indian Ocean Territory
