@@ -16,3 +16,6 @@
 
 /coverage
 /spec/reports
+
+/node_modules
+/yarn-error.log
