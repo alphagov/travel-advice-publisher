@@ -2,26 +2,26 @@
 //= require jquery.mustache
 //= require_tree .
 
-var formtastic_ids = {}
+var formtasticIds = {}
 
 $(function () {
   $('.add-associated').click(function () {
-    elem = $(this)
-    var target_id = elem.data('target')
-    var target = $('#' + target_id)
+    var elem = $(this)
+    var targetId = elem.data('target')
+    var target = $('#' + targetId)
 
-    var template_id = elem.data('tmpl_id')
-    template_contents = $('#' + template_id).html()
+    var templateId = elem.data('tmpl_id')
+    var templateContents = $('#' + templateId).html()
 
-    if (typeof (formtastic_ids[template_id]) === 'undefined') {
-      var current_id = target.find('.part').length - 1
-      formtastic_ids[template_id] = current_id
+    if (typeof (formtasticIds[templateId]) === 'undefined') {
+      var currentId = target.find('.part').length - 1
+      formtasticIds[templateId] = currentId
     }
 
-    formtastic_ids[template_id]++
+    formtasticIds[templateId]++
 
-    var html = $.mustache(template_contents, {
-      index: formtastic_ids[template_id]
+    var html = $.mustache(templateContents, {
+      index: formtasticIds[templateId]
     })
 
     target.append(html)
@@ -30,8 +30,8 @@ $(function () {
   })
 
   $('body').on('click', '.remove-associated', function () {
-    var css_selector = $(this).data('selector')
-    $(this).parents(css_selector).hide()
+    var cssSelector = $(this).data('selector')
+    $(this).parents(cssSelector).hide()
     $(this).prev(':input').val('1')
     $('body').trigger('associated-removed')
     return false
@@ -46,9 +46,9 @@ $(function () {
       var value = elem.val()
 
       // Set slug on change.
-      var slug_field = elem.closest('.part').find('.slug')
-      if (slug_field.text() === '') {
-        slug_field.val(TravelAdviceUtils.convertToSlug(value))
+      var slugField = elem.closest('.part').find('.slug')
+      if (slugField.text() === '') {
+        slugField.val(TravelAdviceUtils.convertToSlug(value))
       }
 
       // Set header on change.
@@ -57,20 +57,20 @@ $(function () {
     })
 
   $('.add-associated').bind('associated-added', function () {
-    var active_index = $('#parts div.part').length
-    var new_part = $('#parts .part:last-child')
-    new_part.find('.accordion-body').attr('id', 'new-part-' + active_index).collapse('show')
-    new_part.find('a.accordion-toggle').attr('href', '#new-part-' + active_index)
+    var activeIndex = $('#parts div.part').length
+    var newPart = $('#parts .part:last-child')
+    newPart.find('.accordion-body').attr('id', 'new-part-' + activeIndex).collapse('show')
+    newPart.find('a.accordion-toggle').attr('href', '#new-part-' + activeIndex)
 
-    new_part.find('input.order').val(active_index)
-    new_part.find('.title').focus()
+    newPart.find('input.order').val(activeIndex)
+    newPart.find('.title').focus()
   })
 
   $('body').on('click', '#new-from-existing-edition', function () {
     $('#clone-edition').submit()
   })
 
-  adminEditionsForm.showChangeNotesIfMajorChange()
+  AdminEditionsForm.showChangeNotesIfMajorChange()
 
   $('.js-add-related-item').on('click', function () {
     var relatedItems = $('.js-related-items')

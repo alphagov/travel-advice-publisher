@@ -5,11 +5,11 @@ describe('A sortable parts module', function () {
     module
 
   beforeEach(function () {
-    element = $('<div>\
-      <div class="part">1. <input class="order" value="10" /><div class="js-sort-handle"></div></div>\
-      <div class="part">2. <input class="order" value="x" /><div class="js-sort-handle"></div></div>\
-      <div class="part">3. <input class="order" /><div class="js-sort-handle"></div></div>\
-    </div>')
+    element = $('<div>' +
+      '<div class="part">1. <input class="order" value="10" /><div class="js-sort-handle"></div></div>' +
+      '<div class="part">2. <input class="order" value="x" /><div class="js-sort-handle"></div></div>' +
+      '<div class="part">3. <input class="order" /><div class="js-sort-handle"></div></div>' +
+    '</div>')
     $('body').append(element)
     module = new GOVUKAdmin.Modules.SortableParts()
     spyOn(element, 'sortable')

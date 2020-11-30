@@ -8,7 +8,7 @@
 
       // jQuery UI sortable options
       // http://api.jqueryui.com/sortable/
-      var sortable_opts = {
+      var sortableOpts = {
         axis: 'y',
         handle: sortHandleSelector,
         stop: function (event, ui) {
@@ -17,7 +17,7 @@
         }
       }
 
-      element.sortable(sortable_opts)
+      element.sortable(sortableOpts)
       element.find(sortHandleSelector).css({ cursor: 'move' })
 
       function updateInputOrder () {

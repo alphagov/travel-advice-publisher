@@ -14,7 +14,12 @@
       "browser": true,
       "jquery": true,
       "jasmine": true
-    }
+    },
+    "globals": [
+      "AdminEditionsForm",
+      "GOVUKAdmin",
+      "TravelAdviceUtils"
+    ]
   },
   "eslintConfig": {
     "rules": {
