@@ -5,12 +5,5 @@ require File.expand_path("config/application", __dir__)
 
 Rails.application.load_tasks
 
-unless Rails.env.production?
-  require "rubocop/rake_task"
-
-  RuboCop::RakeTask.new(:rubocop) do |t|
-    t.patterns = %w[app config lib spec]
-  end
-
-  task default: [:spec, "jasmine:ci", :rubocop]
-end
+Rake::Task[:default].clear if Rake::Task.task_defined?(:default)
+task default: %i[lint spec jasmine:ci]
