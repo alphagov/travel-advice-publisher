@@ -9,7 +9,7 @@ gem "state_machines-mongoid"
 
 gem "diffy"
 
-gem "sass-rails"
+gem "sassc-rails"
 gem "uglifier"
 
 gem "mini_magick"
