@@ -1,4 +1,4 @@
-$medium-dark-grey: #555;
+$medium-dark-grey: #555555;
 
 // Increase padding on footer to account for fixed navbar
 .page-footer {
@@ -6,13 +6,13 @@ $medium-dark-grey: #555;
 }
 
 // Override the font-size for main textareas
-.formtastic textarea.form-control {
+.formtastic textarea.form-control { // stylelint-disable-line selector-no-qualifying-type
   font-size: 17px;
   line-height: 26px;
   color: $medium-dark-grey;
 }
 
-fieldset.inputs {
+fieldset.inputs { // stylelint-disable-line selector-no-qualifying-type
   @include add-top-margin;
 }
 
