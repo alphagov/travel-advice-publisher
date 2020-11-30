@@ -2,19 +2,7 @@ source "https://rubygems.org"
 
 gem "rails", "6.0.3.4"
 
-gem "mongo"
-gem "mongoid"
-gem "state_machines"
-gem "state_machines-mongoid"
-
 gem "diffy"
-
-gem "sassc-rails"
-gem "uglifier"
-
-gem "mini_magick"
-gem "pdf-reader"
-
 gem "gds-api-adapters"
 gem "gds-sso"
 gem "govspeak"
@@ -22,8 +10,16 @@ gem "govuk_admin_template"
 gem "govuk_app_config"
 gem "govuk_publishing_components"
 gem "govuk_sidekiq"
+gem "mini_magick"
+gem "mongo"
+gem "mongoid"
+gem "pdf-reader"
 gem "plek"
+gem "sassc-rails"
 gem "slimmer"
+gem "state_machines"
+gem "state_machines-mongoid"
+gem "uglifier"
 
 group :development do
   gem "listen"
