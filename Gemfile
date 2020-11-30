@@ -41,7 +41,6 @@ group :test do
   gem "govuk-content-schema-test-helpers"
   gem "rails-controller-testing"
   gem "rubocop-govuk"
-  gem "scss_lint-govuk"
   gem "simplecov"
   gem "test-unit"
   gem "timecop"

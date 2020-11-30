@@ -6,7 +6,6 @@ $medium-dark-grey: #555;
 }
 
 // Override the font-size for main textareas
-// scss-lint:disable QualifyingElement
 .formtastic textarea.form-control {
   font-size: 17px;
   line-height: 26px;
@@ -16,7 +15,6 @@ $medium-dark-grey: #555;
 fieldset.inputs {
   @include add-top-margin;
 }
-// scss-lint:enable QualifyingElement
 
 .govspeak-help {
   height: 200px;
