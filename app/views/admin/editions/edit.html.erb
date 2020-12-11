@@ -10,7 +10,7 @@
   <h1>Editing <%= @country.name %> <small>Version <%= @edition.version_number %></small></h1>
 </div>
 
-<%= form_for @edition, url: admin_edition_path(@edition), as: :edition, class: "js-edition-form" do |f| %>
+<%= form_for @edition, url: admin_edition_path(@edition), as: :edition, html: { class: "js-edition-form" } do |f| %>
   <div class="tabbable">
     <ul class="nav nav-tabs">
       <li class="active"><a href="#edit" data-toggle="tab">Edit</a></li>

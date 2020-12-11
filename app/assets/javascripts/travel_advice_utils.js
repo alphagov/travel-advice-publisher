@@ -1,5 +1,5 @@
-var TravelAdviceUtils = {
-  convertToSlug: function(title) {
-    return title.toLowerCase().replace(/[^\w ]+/g,'').replace(/ +/g,'-');
-  },
+window.TravelAdviceUtils = {
+  convertToSlug: function (title) {
+    return title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
+  }
 }

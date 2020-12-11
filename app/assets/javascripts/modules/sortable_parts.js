@@ -1,35 +1,34 @@
-(function(Modules) {
-  "use strict";
+(function (Modules) {
+  'use strict'
 
-  Modules.SortableParts = function() {
-    var that = this;
-    that.start = function(element) {
-
-      var sortHandleSelector = ".js-sort-handle";
+  Modules.SortableParts = function () {
+    var that = this
+    that.start = function (element) {
+      var sortHandleSelector = '.js-sort-handle'
 
       // jQuery UI sortable options
       // http://api.jqueryui.com/sortable/
-      var sortable_opts = {
-        axis: "y",
+      var sortableOpts = {
+        axis: 'y',
         handle: sortHandleSelector,
-        stop: function(event, ui) {
-          updateInputOrder();
-          highlightMovedPart(ui.item);
+        stop: function (event, ui) {
+          updateInputOrder()
+          highlightMovedPart(ui.item)
         }
-      };
+      }
 
-      element.sortable(sortable_opts);
-      element.find(sortHandleSelector).css({cursor: 'move'});
+      element.sortable(sortableOpts)
+      element.find(sortHandleSelector).css({ cursor: 'move' })
 
-      function updateInputOrder() {
+      function updateInputOrder () {
         element.find('.part').each(function (i, part) {
-          $(part).find('input.order').val(i + 1);
-        });
+          $(part).find('input.order').val(i + 1)
+        })
       }
 
-      function highlightMovedPart(part) {
-        part.find(sortHandleSelector).addClass("yellow-fade");
+      function highlightMovedPart (part) {
+        part.find(sortHandleSelector).addClass('yellow-fade')
       }
-    };
-  };
-})(window.GOVUKAdmin.Modules);
+    }
+  }
+})(window.GOVUKAdmin.Modules)
