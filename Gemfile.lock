@@ -156,7 +156,7 @@ GEM
       rails (>= 5.0.0.1)
       rouge
       sprockets (< 4)
-    govuk_sidekiq (4.0.0)
+    govuk_sidekiq (5.0.0)
       gds-api-adapters (>= 19.1.0)
       govuk_app_config (>= 1.1)
       redis-namespace (~> 1.6)
@@ -379,7 +379,7 @@ GEM
       rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
     ruby-rc4 (0.1.5)
-    ruby2_keywords (0.0.2)
+    ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
     safe_yaml (1.0.5)
     sanitize (5.2.3)
