@@ -26,5 +26,11 @@ Rails.application.routes.draw do
         GovukHealthcheck::Mongoid,
       )
 
+  get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
+  get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
+    GovukHealthcheck::SidekiqRedis,
+    GovukHealthcheck::Mongoid,
+  )
+
   get "/healthcheck/recently-published-editions" => "healthcheck#recently_published_editions"
 end
