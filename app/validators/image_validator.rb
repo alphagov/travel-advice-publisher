@@ -14,9 +14,9 @@ class ImageValidator < ActiveModel::EachValidator
     if valid_extension.nil?
       record.errors[attribute] << "is not an allowed image format"
     elsif !value.path.downcase.match?(valid_extension)
-      record.errors[attribute] << "is of type '#{image.mime_type}', but has the extension '#{File.extname(value.path)}'"
+      record.errors.add(attribute, message: "is of type '#{image.mime_type}', but has the extension '#{File.extname(value.path)}'")
     end
   rescue MiniMagick::Error, MiniMagick::Invalid
-    record.errors[attribute] << "is not an image"
+    record.errors.add(attribute, message: "is not an image")
   end
 end
