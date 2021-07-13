@@ -77,7 +77,7 @@ describe Admin::EditionsController do
         edition = create(:draft_travel_advice_edition, country_slug: "aruba")
         allow_any_instance_of(TravelAdviceEdition).to receive(:destroy).and_return(true)
         get :destroy, params: { id: edition.id }
-        expect(response).to redirect_to(admin_country_path("aruba") + "?alert=Edition+deleted")
+        expect(response).to redirect_to("#{admin_country_path('aruba')}?alert=Edition+deleted")
       end
 
       it "wont let a published edition be deleted" do
@@ -85,7 +85,7 @@ describe Admin::EditionsController do
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
-        expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition")
+        expect(response).to redirect_to("#{edit_admin_edition_path(edition)}?alert=Can%27t+delete+a+published+or+archived+edition")
       end
 
       it "wont let an archived edition be deleted" do
@@ -93,7 +93,7 @@ describe Admin::EditionsController do
         expect_any_instance_of(TravelAdviceEdition).not_to receive(:destroy)
 
         get :destroy, params: { id: edition.id }
-        expect(response).to redirect_to(edit_admin_edition_path(edition) + "?alert=Can%27t+delete+a+published+or+archived+edition")
+        expect(response).to redirect_to("#{edit_admin_edition_path(edition)}?alert=Can%27t+delete+a+published+or+archived+edition")
       end
     end
   end

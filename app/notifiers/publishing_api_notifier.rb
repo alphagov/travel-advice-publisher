@@ -71,7 +71,7 @@ private
       raise EnqueueError, message
     end
 
-    if send_alert_count == 1 && endpoints[-2..-1] != %i[publish send_alert]
+    if send_alert_count == 1 && endpoints[-2..] != %i[publish send_alert]
       message = "send_alert must be last and immediately follow a publish"
       raise EnqueueError, message
     end

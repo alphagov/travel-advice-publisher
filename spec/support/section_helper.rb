@@ -8,10 +8,8 @@ module SectionHelper
     end
   end
 
-  def within_section(section_name)
-    within(*selector_of_section(section_name)) do
-      yield
-    end
+  def within_section(section_name, &block)
+    within(*selector_of_section(section_name), &block)
   end
 end
 
