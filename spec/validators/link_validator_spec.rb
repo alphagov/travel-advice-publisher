@@ -1,17 +1,20 @@
 describe LinkValidator do
-  class LinkValidatorDummy
-    include Mongoid::Document
+  before do
+    link_validator_dummy_class = Class.new do
+      include Mongoid::Document
 
-    field "body", type: String
-    field "assignee", type: String
-    GOVSPEAK_FIELDS = [:body].freeze
+      field "body", type: String
+      field "assignee", type: String
 
-    validates_with LinkValidator
+      validates_with LinkValidator
+    end
+
+    stub_const("LinkValidatorDummy", link_validator_dummy_class)
+    stub_const("LinkValidatorDummy::GOVSPEAK_FIELDS", %i[body])
   end
 
   let(:body) { nil }
   subject(:doc) { LinkValidatorDummy.new(body: body) }
-  before { doc.save }
 
   shared_examples "is valid" do
     it "should be valid" do
@@ -72,6 +75,7 @@ describe LinkValidator do
     include_examples "is invalid"
 
     it "should have 3 errors" do
+      doc.validate
       expect(doc.errors[:body].first.length).to eq(3)
     end
   end
@@ -82,19 +86,7 @@ describe LinkValidator do
     include_examples "is invalid"
 
     it "should have 1 error" do
-      expect(doc.errors[:body].first.length).to eq(1)
-    end
-  end
-
-  context "already published document having link validation errors" do
-    let(:body) { "abc [link1](foobar.com), ghi [link2](bazquux.com)" }
-
-    it "should be validated when any attribute of the document changes" do
-      doc.save!(validate: false)
-
-      doc.assignee = "4fdef0000000000000000001"
-      expect(doc).to be_invalid
-
+      doc.validate
       expect(doc.errors[:body].first.length).to eq(1)
     end
   end

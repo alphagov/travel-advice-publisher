@@ -1,26 +1,22 @@
 describe SafeHtml do
-  class Dummy
-    include Mongoid::Document
+  before do
+    stub_const("Dummy", Class.new do
+      include Mongoid::Document
 
-    field :i_am_govspeak, type: String
+      field :i_am_govspeak, type: String
+      validates_with SafeHtml
+      embeds_one :dummy_embedded_single, class_name: "DummyEmbeddedSingle"
+    end)
+    stub_const("Dummy::GOVSPEAK_FIELDS", %i[i_am_govspeak])
 
-    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
+    stub_const("DummyEmbeddedSingle", Class.new do
+      include Mongoid::Document
 
-    validates_with SafeHtml
-
-    embeds_one :dummy_embedded_single, class_name: "DummyEmbeddedSingle"
-  end
-
-  class DummyEmbeddedSingle
-    include Mongoid::Document
-
-    embedded_in :dummy, class_name: "Dummy"
-
-    field :i_am_govspeak, type: String
-
-    GOVSPEAK_FIELDS = [:i_am_govspeak].freeze
-
-    validates_with SafeHtml
+      field :i_am_govspeak, type: String
+      validates_with SafeHtml
+      embedded_in :dummy, class_name: "Dummy"
+    end)
+    stub_const("DummyEmbeddedSingle::GOVSPEAK_FIELDS", %i[i_am_govspeak])
   end
 
   shared_examples "is valid" do
