@@ -1,10 +1,14 @@
 RSpec.describe PdfValidator do
-  class DocumentWithPdf
-    include Mongoid::Document
+  before do
+    document_with_pdf_class = Class.new do
+      include Mongoid::Document
 
-    field "pdf", type: File
+      field "pdf", type: File
 
-    validates :pdf, pdf: true
+      validates :pdf, pdf: true
+    end
+
+    stub_const("DocumentWithPdf", document_with_pdf_class)
   end
 
   let(:pdf) { nil }

@@ -1,14 +1,18 @@
 RSpec.describe ImageValidator do
-  class DocumentWithImage
-    include Mongoid::Document
+  before do
+    document_class = Class.new do
+      include Mongoid::Document
 
-    field "image", type: File
+      field "image", type: File
 
-    validates :image, image: true
+      validates :image, image: true
+    end
+
+    stub_const("Document", document_class)
   end
 
   let(:image) { nil }
-  let(:document) { DocumentWithImage.new(image: image) }
+  let(:document) { Document.new(image: image) }
 
   shared_examples "is valid" do
     it "should be valid" do

@@ -12,6 +12,7 @@ class HistoricalEditionPresenter
                  :updated_at
 
   attr_accessor :edition, :country
+
   Part = Struct.new(:slug, :title, :body)
 
   def initialize(edition, country)
