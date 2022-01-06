@@ -144,7 +144,7 @@ GEM
       warden-oauth2 (~> 0.0.1)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    govspeak (6.7.7)
+    govspeak (6.7.8)
       actionview (>= 5.0, < 7)
       addressable (>= 2.3.8, < 3)
       govuk_publishing_components (>= 23)
@@ -466,7 +466,7 @@ GEM
     statsd-ruby (1.5.0)
     test-unit (3.3.6)
       power_assert
-    thor (1.1.0)
+    thor (1.2.1)
     tilt (2.0.10)
     timecop (0.9.1)
     ttfunk (1.6.2.1)
@@ -498,7 +498,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.1)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby
