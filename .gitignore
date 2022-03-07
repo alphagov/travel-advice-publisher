@@ -10,6 +10,12 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 
+# Ignore JavaScript dependencies
+/node_modules
+
+# Ignore compiled assets
+/public/assets
+
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
@@ -17,5 +23,4 @@
 /coverage
 /spec/reports
 
-/node_modules
 /yarn-error.log

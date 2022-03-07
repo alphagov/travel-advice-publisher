@@ -27,8 +27,6 @@ end
 
 group :development, :test do
   gem "govuk_test"
-  gem "jasmine"
-  gem "jasmine_selenium_runner"
   gem "pry-byebug"
   gem "pry-rails"
   gem "rspec-rails"
