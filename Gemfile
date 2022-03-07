@@ -44,6 +44,5 @@ group :test do
   gem "simplecov"
   gem "test-unit"
   gem "timecop"
-  gem "webdrivers"
   gem "webmock", require: false
 end
