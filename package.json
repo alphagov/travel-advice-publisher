@@ -4,6 +4,9 @@
   "private": true,
   "author": "Government Digital Service",
   "license": "MIT",
+  "dependencies": {
+    "jquery": "1.12.4"
+  },
   "scripts": {
     "lint": "yarn run lint:js && yarn run lint:scss",
     "lint:js": "standardx 'app/assets/javascripts/**/*.js' 'spec/javascripts/**/*.js'",

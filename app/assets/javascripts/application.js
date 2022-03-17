@@ -1,3 +1,4 @@
+//= require jquery/dist/jquery
 //= require jquery-ui.custom.min
 //= require jquery.mustache
 //= require_tree .
