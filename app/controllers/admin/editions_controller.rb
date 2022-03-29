@@ -1,5 +1,6 @@
 class Admin::EditionsController < ApplicationController
   include Slimmer::Headers
+  layout "legacy"
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]

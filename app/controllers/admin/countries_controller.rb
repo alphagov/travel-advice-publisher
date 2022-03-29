@@ -1,4 +1,5 @@
 class Admin::CountriesController < ApplicationController
+  layout "legacy"
   before_action :skip_slimmer
   before_action :load_country, only: [:show]
 

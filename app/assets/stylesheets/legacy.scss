@@ -1,0 +1,13 @@
+//= require_self
+
+@import "govuk_admin_template";
+@import "scaffold";
+@import "sortable_accordion";
+@import "diff";
+@import "broken_links_report";
+
+.js-hidden {
+  .js & {
+    display: none;
+  }
+}

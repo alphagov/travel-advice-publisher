@@ -2,10 +2,10 @@
   "srcDir": "public/assets",
   "srcFiles": [
     "govuk-admin-template-*.js",
-    "application-*.js"
+    "legacy-*.js"
   ],
   "cssFiles": [
-    "application-*.css"
+    "legacy-*.css"
   ],
   "specDir": "spec/javascripts",
   "specFiles": [
