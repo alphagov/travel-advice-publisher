@@ -1,6 +1,8 @@
 //= require jquery-ui.custom.min
 //= require jquery.mustache
-//= require_tree .
+//= require ./admin/editions/form.js
+//= require ./modules/sortable_parts.js
+//= require ./travel_advice_utils.js
 
 var formtasticIds = {}
 
