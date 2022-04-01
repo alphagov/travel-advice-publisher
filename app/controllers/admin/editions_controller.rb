@@ -1,6 +1,6 @@
 class Admin::EditionsController < ApplicationController
   include Slimmer::Headers
-  layout "legacy"
+  layout :get_layout
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
@@ -29,7 +29,9 @@ class Admin::EditionsController < ApplicationController
     @comparison = @country.editions.find(params[:compare_id])
   end
 
-  def edit; end
+  def edit
+    render_edit_layout
+  end
 
   def destroy
     country_slug = @edition.country_slug
@@ -127,7 +129,7 @@ private
       redirect_to admin_country_path(@edition.country_slug), alert: "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
-      render "/admin/editions/edit"
+      render_edit_layout
     end
   end
 
@@ -146,7 +148,7 @@ private
       redirect_to edit_admin_edition_path(@edition), alert: "#{@edition.title} updated."
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
-      render "/admin/editions/edit"
+      render_edit_layout
     end
   end
 
@@ -174,5 +176,21 @@ private
 
   def govuk_request_id
     @govuk_request_id ||= GdsApi::GovukHeaders.headers[:govuk_request_id]
+  end
+
+  def get_layout
+    if preview_design_system_user?
+      "design_system"
+    else
+      "legacy"
+    end
+  end
+
+  def render_edit_layout
+    if get_layout == "legacy"
+      render "edit_legacy"
+    else
+      render "edit"
+    end
   end
 end
