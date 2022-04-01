@@ -1,6 +1,6 @@
 module ApplicationHelper
   def edition_edit_link(edition)
-    link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition))
+    link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition), class: "govuk-link")
   end
 
   def preview_edition_link(edition, short, options = {})

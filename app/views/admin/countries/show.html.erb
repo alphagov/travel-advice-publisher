@@ -1,40 +1,46 @@
-<ul class="breadcrumb">
-  <li>
-    <%= link_to "All countries", admin_countries_path %>
-  </li>
-  <li class="active"><%= @country.name %></li>
-</ul>
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+      }
 
-<h1 class="page-title">
-  <%= @country.name %>
-</h1>
-
-
-<% unless @country.has_draft_edition? %>
-  <%= button_to "Create new edition",
-    admin_country_editions_path(@country.slug),
-    :class => "btn btn-success" %>
+    ]
+  } %>
 <% end %>
 
-<table class="table table-bordered table-striped add-top-margin">
-  <thead>
-    <tr class="table-header">
-      <th>Version</th>
-      <th>State</th>
-      <th>Updated</th>
-      <th>Reviewed</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
+<%= content_for :title, @country.name %>
+
+<% unless @country.has_draft_edition? %>
+  <form action="<%= admin_country_editions_path(@country.slug) %>" method="post">
+    <%= render "govuk_publishing_components/components/button", {
+    text: "Create new edition",
+  } %>
+  </form>
+<% end %>
+
+<%= GovukPublishingComponents::AppHelpers::TableHelper.helper(self) do |table| %>
+  <%= table.head do %>
+    <%= table.header "Version" %>
+    <%= table.header "State" %>
+    <%= table.header "Updated" %>
+    <%= table.header "Reviewed" %>
+    <%= table.header "" %>
+  <% end %>
+
+  <%= table.body do %>
     <% @country.editions.each do |edition| %>
-      <tr>
-        <td>Version <%= edition.version_number %></td>
-        <td><%= edition.state %></td>
-        <td><%= timestamp(edition.updated_at) %></td>
-        <td><%= edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" %></td>
-        <td><%= edition_edit_link(edition) %> — <%= preview_edition_link(edition, true, :target => "blank") %></td>
-      </tr>
+      <%= table.row do %>
+        <%= table.cell "Version #{edition.version_number}" %>
+        <%= table.cell edition.state %>
+        <%= table.cell timestamp(edition.updated_at) %>
+        <%= table.cell edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" %>
+        <%= table.cell edition_edit_link(edition) + " — " + preview_edition_link(edition, true, target: "blank", class: "govuk-link") %>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
+  <% end %>
+<% end %>
