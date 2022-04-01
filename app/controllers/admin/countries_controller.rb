@@ -1,5 +1,5 @@
 class Admin::CountriesController < ApplicationController
-  layout "legacy"
+  layout :get_layout
   before_action :skip_slimmer
   before_action :load_country, only: [:show]
 
@@ -10,6 +10,14 @@ class Admin::CountriesController < ApplicationController
   def show; end
 
 private
+
+  def get_layout
+    if action_name == "show"
+      "design_system"
+    else
+      "legacy"
+    end
+  end
 
   def load_country
     @country = Country.find_by_slug(params[:id]) || error_404
