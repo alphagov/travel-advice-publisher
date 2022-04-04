@@ -1,0 +1,40 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+      },
+    ]
+  } %>
+<% end %>
+
+<%= content_for :title, "Editing #{@country.name}"%>
+<%= content_for :context, "Version #{@edition.version_number}" %>
+
+<%= form_for @edition, url: admin_edition_path(@edition), as: :edition, html: { multipart: true } do |f| %>
+  <div class="govuk-tabs" data-module="govuk-tabs">
+    <ul class="govuk-tabs__list">
+      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+        <a class="govuk-tabs__tab" href="#edit">Edit</a>
+      </li>
+
+      <li class="govuk-tabs__list-item">
+        <a class="govuk-tabs__tab" href="#history">History & notes</a>
+      </li>
+    </ul>
+
+    <div class="govuk-tabs__panel" id="edit">
+    </div>
+
+    <div class="govuk-tabs__panel" id="history">
+    </div>
+  </div>
+<% end %>
