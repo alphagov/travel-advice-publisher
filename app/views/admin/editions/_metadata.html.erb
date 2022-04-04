@@ -1,0 +1,38 @@
+<%= render "govuk_publishing_components/components/fieldset", {
+  legend_text: "Metadata",
+  heading_size: "m",
+} do %>
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Search title",
+      bold: true, #TODO: add validations/error messages
+    },
+    name: "edition[title]",
+    id: "edition_title",
+    hint: "Enter plain text.",
+    value: @edition.title,
+  } %>
+
+  <%= render "govuk_publishing_components/components/textarea", {
+    label: {
+      text: "Search description (optional) ",
+      bold: true,
+    },
+    name: "edition[overview]",
+    id: "edition_overview",
+    hint: "Enter plain text.",
+    rows: 4,
+    value: @edition.overview,
+  } %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Country Synonyms (optional)",
+      bold: true,
+    },
+    name: "edition[csv_synonyms]",
+    id: "edition_csv_synonyms",
+    hint: "Enter synonyms for this country, comma separated.",
+    value: @edition.csv_synonyms,
+  } %>
+<% end %>
