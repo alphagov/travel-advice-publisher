@@ -133,7 +133,7 @@
 
             <section class="panel-group" id="parts" data-module="sortable-parts">
               <%= f.fields_for :parts, f.object.parts.in_order do |part| %>
-                <%= render :partial => '/admin/editions/part', :locals => {:f => part, :editable => @edition.draft?} %>
+                <%= render :partial => '/admin/editions/part_legacy', :locals => {:f => part, :editable => @edition.draft?} %>
               <% end %>
             </section>
 
