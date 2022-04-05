@@ -14,7 +14,26 @@ describe Admin::CountriesController do
     it "renders the index view" do
       get :index
 
-      expect(response).to render_template :index
+      expect(response).to render_template :index_legacy
+    end
+
+    context "with Preview Design System permission" do
+      it "populates an array of countries" do
+        user = create(:user, preview_design_system: true)
+        login_as(user)
+        get :index
+
+        expect(assigns(:countries).map(&:slug)).to include("afghanistan", "albania", "algeria")
+        expect(assigns(:countries).map(&:name)).to include("Afghanistan", "Albania", "Algeria")
+      end
+
+      it "renders the index view" do
+        user = create(:user, preview_design_system: true)
+        login_as(user)
+        get :index
+
+        expect(response).to render_template :index
+      end
     end
   end
 
