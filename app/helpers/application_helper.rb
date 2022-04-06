@@ -1,6 +1,6 @@
 module ApplicationHelper
   def edition_edit_link(edition)
-    link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition))
+    link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition), class: "govuk-link")
   end
 
   def preview_edition_link(edition, short, options = {})
@@ -15,7 +15,7 @@ module ApplicationHelper
       url = admin_edition_historical_edition_path(edition)
     end
     name = name.downcase.split(" ").first if short
-    link_to(name, url, options.merge(target: "blank"))
+    link_to(name, url, options.merge(target: "blank", class: "govuk-link"))
   end
 
   def timestamp(time)

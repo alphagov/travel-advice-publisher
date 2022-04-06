@@ -8,7 +8,9 @@ class Admin::CountriesController < ApplicationController
     render "admin/countries/index_legacy" if is_legacy_layout?
   end
 
-  def show; end
+  def show
+    render "admin/countries/show_legacy" if is_legacy_layout?
+  end
 
 private
 
@@ -17,7 +19,7 @@ private
   end
 
   def get_layout
-    return "legacy" if is_legacy_layout? || %(show).include?(action_name)
+    return "legacy" if is_legacy_layout?
 
     "design_system"
   end

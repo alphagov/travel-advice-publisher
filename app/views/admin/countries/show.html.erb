@@ -1,40 +1,53 @@
-<ul class="breadcrumb">
-  <li>
-    <%= link_to "All countries", admin_countries_path %>
-  </li>
-  <li class="active"><%= @country.name %></li>
-</ul>
-
-<h1 class="page-title">
-  <%= @country.name %>
-</h1>
-
-
-<% unless @country.has_draft_edition? %>
-  <%= button_to "Create new edition",
-    admin_country_editions_path(@country.slug),
-    :class => "btn btn-success" %>
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        :title => "All countries",
+        :url => admin_countries_path
+      },
+      {
+        :title => @country.name,
+      },
+    ]
+  } %>
 <% end %>
 
-<table class="table table-bordered table-striped add-top-margin">
-  <thead>
-    <tr class="table-header">
-      <th>Version</th>
-      <th>State</th>
-      <th>Updated</th>
-      <th>Reviewed</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @country.editions.each do |edition| %>
-      <tr>
-        <td>Version <%= edition.version_number %></td>
-        <td><%= edition.state %></td>
-        <td><%= timestamp(edition.updated_at) %></td>
-        <td><%= edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" %></td>
-        <td><%= edition_edit_link(edition) %> — <%= preview_edition_link(edition, true, :target => "blank") %></td>
-      </tr>
+<% content_for :title, @country.name %>
+
+<% content_for :title_side do %>
+  <% unless @country.has_draft_edition? %>
+    <form action="<%= admin_country_editions_path(@country.slug) %>" method="POST">
+      <%= render("govuk_publishing_components/components/button", {
+        text: "Create new edition",
+        margin_bottom: true
+      }) %>
+    </form>
+  <% end %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <% if @country.editions.any? %>
+      <%= render "govuk_publishing_components/components/table", {
+        head: [
+          { text: "Version" },
+          { text: "Status" },
+          { text: "Updated" },
+          { text: "Reviewed" },
+          { text: "Action" },
+        ],
+        rows: @country.editions.map do |edition|
+          [
+            { text: "Version #{edition.version_number}" },
+            { text: edition.state },
+            { text: timestamp(edition.updated_at) },
+            { text: edition.reviewed_at ? timestamp(edition.reviewed_at) : "N/A" },
+            { text: edition_edit_link(edition) + " - " + preview_edition_link(edition, true, :target => "blank") },
+          ]
+        end
+      } %>
+    <% else %>
+      <p class="govuk-body">No editions exist for this country</p>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
