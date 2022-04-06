@@ -1,0 +1,122 @@
+<h3 class="govuk-heading-m govuk-!-margin-top-3">Govspeak help</h3>
+
+<div class="app-c-markdown-guidance">
+  <p>For full examples see <%= link_to "the Govspeak Wiki", "https://sites.google.com/a/digital.cabinet-office.gov.uk/wiki/projects-and-processes/processes/editorial/govspeak", target:"_blank", rel: "external", class: "govuk-link" %></p>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Headers",
+    margin_bottom: 0
+  } do %>
+    <p class="govuk-hint">Note that the page already has a top heading from the article name.</p>
+    <p>Add each definition in its own paragraph at the end of the body copy.</p>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    ## Top level sub-heading
+    ### Second level sub-heading
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Text Styles",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    <p>**This text will be bold**</p>
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Acronyms",
+    margin_bottom: 0
+  } do %>
+    <p>Definitions for acronyms that will appear if the user hovers the mouse over it.</p>
+    <p>Add each definition in its own paragraph at the end of the body copy.</p>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    *[TLA]:Three-letter acronym
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Bulleted List",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    * item 1
+    * item 2
+    * item 3
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Numbered List",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    1. item 1
+    2. item 2
+    3. item 3
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "List of steps",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    s1. item 1
+    s2. item 2
+    s3. item 3
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Tables",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    Fruit | Colour
+    -|-
+    apple | green
+    banana | yellow
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Internal links",
+    margin_bottom: 0
+  } do %>
+    <p class="govuk-hint">Use when linking to <code>http://www.gov.uk/</code>.</p>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    [Income tax rates](/income-tax-rates "Find out more about income tax rates")
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "External links",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    [link text](http://www.example.com "Title text goes here"){:rel="external"}
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Download link style",
+    margin_bottom: 0
+  } do %>
+    <pre class="app-c-markdown-guidance__code-snippet">
+    $D[link text](http://example.com)$D
+    </pre>
+  <% end %>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Info boxes",
+    margin_bottom: 0
+  } do %>
+    <p class="govuk-hint">These can contain other Govspeak items.</p>
+    <pre class="app-c-markdown-guidance__code-snippet">
+      ^Info box^
+      %Warning or alert box%
+      @Highlighted information box@
+    </pre>
+  <% end %>
+</div>
