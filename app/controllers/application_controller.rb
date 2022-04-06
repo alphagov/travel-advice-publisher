@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
 
 private
 
+  helper_method :preview_design_system_user?
+
+  def preview_design_system_user?
+    current_user.has_permission? "Preview Design System"
+  end
+
   def error(status_code)
     render status: status_code, plain: "#{status_code} error"
   end
