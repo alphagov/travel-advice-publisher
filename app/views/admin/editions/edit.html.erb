@@ -33,10 +33,29 @@
     </ul>
 
     <div class="govuk-tabs__panel" id="edit">
-      <%= render "change_notes" %>
-      <%= render "metadata" %>
-      <%= render "summary_content" %>
-      <%= render "parts" %>
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+          <%= render "change_notes" %>
+          <%= render "metadata" %>
+          <%= render "summary_content" %>
+          <%= render "parts" %>
+        </div>
+        <div class="govuk-grid-column-one-third">
+          <div class="app-side-wrapper">
+            <div class="app-side">
+              <div class="app-side__actions">
+                <%= render "admin/link_check_reports/link_check_report", edition: @edition, report: @edition.latest_link_check_report %>
+              </div>
+            </div>
+            <div class="app-side">
+              <div class="app-side__actions">
+                <%= render "govspeak_guidance_design_system" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="govuk-tabs__panel" id="history">

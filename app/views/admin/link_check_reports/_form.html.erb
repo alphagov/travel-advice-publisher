@@ -1,1 +1,6 @@
-<%= link_to button_text, link_check_reports_path(edition_id: edition.id), method: :post, remote: :true, class: "btn btn-default add-top-margin remove-bottom-margin" %>
+<form action="<%= link_check_reports_path(edition_id: edition.id) %>" method="post" ata-remote="true" rel="nofollow">
+    <%= render "govuk_publishing_components/components/button", {
+    text: button_text,
+    secondary: true,
+  } %>
+</form>
