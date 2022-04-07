@@ -1,4 +1,3 @@
-
 <% content_for :breadcrumbs do %>
   <%= render "govuk_publishing_components/components/breadcrumbs", {
     breadcrumbs: [
@@ -56,26 +55,50 @@
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="govuk-tabs__panel" id="history">
       <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-half">
-          <%= form_for @edition, url: admin_edition_path(@edition) do |f| %>
-            <%= render "govuk_publishing_components/components/textarea", {
-              label: {
-                text: "Note",
-                bold: true,
-              },
-              name: "edition[note][comment]",
-              id: "edition_note_comment",
-              rows: 6,
-            } %>
-
+        <div class="govuk-grid-column-one-third govuk-!-margin-bottom-0">
+          <div class="govuk-button-group">
             <%= render "govuk_publishing_components/components/button", {
-              text: "Add note"
+              text: "Save",
+              value: "Save",
+              name: "commit",
             } %>
-          <% end %>
+            <%= form_with url: admin_edition_path(@edition), method: :delete do |f| %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Delete",
+                destructive: true,
+              } %>
+            <% end %>
+            <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-button govuk-button--secondary" %>
+          </div>
+        </div>
+
+        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-0">
+          <div class="govuk-button-group">
+            <%= preview_edition_link(@edition, false, class: "govuk-button govuk-button--secondary") %>
+            <% if @edition.published? %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Update review date",
+                value: "Update review date",
+                name: "commit"
+              } %>
+            <% end %>
+            <% if @edition.draft? %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Save & Publish",
+                value: "Save & Publish",
+                name: "commit",
+                destructive: true,
+              } %>
+            <% elsif !@country.has_draft_edition? %>
+              <%= form_with url: admin_country_editions_path(@country.slug), method: :post, html: { class: "govuk-!-margin-top-0" } do |f| %>
+                <%= render "govuk_publishing_components/components/button", {
+                  text: "Create new edition"
+                } %>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     <% end %>
@@ -110,4 +133,4 @@
       </div>
     </div>
   </div>
-<% end %>
+</div>
