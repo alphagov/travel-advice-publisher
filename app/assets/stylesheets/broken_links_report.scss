@@ -43,4 +43,8 @@
   details[open] > .display-issue-details:before {
     content: "\25BC";
   }
+
+  .issues-link-design-system {
+    word-wrap: break-word;
+  }  /* TODO: clean this file up once we're only using the design system */
 }
