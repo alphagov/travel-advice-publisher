@@ -164,11 +164,11 @@ feature "Edit Edition page" do
         expect(page).to have_field("Summary")
       end
 
-      within_section "the fieldset labelled Parts (govspeak available)" do
+      within "#parts" do
         # Should to be no parts by default
-        expect(page).not_to have_selector("#parts .part")
+        expect(page).to have_content("This edition has no parts.")
 
-        expect(page).to have_button "Add new part"
+        expect(page).to have_link "Add part"
       end
     end
 
