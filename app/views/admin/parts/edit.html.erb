@@ -24,6 +24,19 @@
 
 <%= render 'shared/error_summary', object: @part %>
 
-<%= form_for @part, url: admin_country_edition_part_path(@edition.country_slug, @edition, @part), method: :patch do |f| %>
-  <%= render 'form_fields' %>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @part, url: admin_country_edition_part_path(@edition.country_slug, @edition, @part), method: :patch do |f| %>
+        <%= render 'form_fields' %>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="app-side-wrapper">
+      <div class="app-side">
+        <div class="app-side__actions">
+          <%= render "shared/govspeak_guidance_design_system" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
