@@ -10,7 +10,6 @@ feature "Adding a part" do
       )
     end
 
-  context "Draft edition" do
     scenario "Adding a part" do
       visit edit_admin_edition_path(@edition)
       click_on "Add part"
@@ -50,6 +49,50 @@ feature "Adding a part" do
 
       expect(page).to have_link("Enter a valid slug", href: "#part_slug")
       expect(all(".govuk-form-group")[2]).to have_content "Enter a valid slug"
+    end
+  end
+
+  context "Published edition" do
+    before do
+      login_as_stub_user_with_design_system_permission
+      @edition = create(
+        :published_travel_advice_edition,
+        country_slug: "aruba",
+        summary: "Advice summary",
+        version_number: 1,
+      )
+    end
+
+    scenario "User tries to add a part" do
+      visit edit_admin_edition_path(@edition)
+      expect(page).not_to have_content "Add part"
+
+      visit new_admin_country_edition_part_path(@edition.country_slug, @edition)
+
+      expect(page).to have_current_path(edit_admin_edition_path(@edition))
+      expect(page).to have_content "You cannot add a part to a published edition"
+    end
+  end
+
+  context "Archived edition" do
+    before do
+      login_as_stub_user_with_design_system_permission
+      @edition = create(
+        :archived_travel_advice_edition,
+        country_slug: "aruba",
+        summary: "Advice summary",
+        version_number: 1,
+      )
+    end
+
+    scenario "User tries to add a part" do
+      visit edit_admin_edition_path(@edition)
+      expect(page).not_to have_content "Add part"
+
+      visit new_admin_country_edition_part_path(@edition.country_slug, @edition)
+
+      expect(page).to have_current_path(edit_admin_edition_path(@edition))
+      expect(page).to have_content "You cannot add a part to an archived edition"
     end
   end
 end
