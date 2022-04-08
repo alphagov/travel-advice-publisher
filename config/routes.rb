@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   namespace :admin do
     resources :countries, only: %i[index show] do
-      resources :editions, only: [:create]
+      resources :editions, only: [:create] do
+        resources :parts, only: %i[new create]
+      end
     end
 
     resources :editions, only: %i[edit update destroy] do
