@@ -14,9 +14,11 @@
     } %>
   <% end %>
 
-  <%= render "govuk_publishing_components/components/button", {
-    text: "Add new part",
-    secondary: true,
-    href: new_admin_country_edition_part_path(@country.slug, @edition)
-} %>
+  <% if @edition.draft? %>
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Add new part",
+      secondary: true,
+      href: new_admin_country_edition_part_path(@country.slug, @edition)
+    } %>
+  <% end %>
 </div>
