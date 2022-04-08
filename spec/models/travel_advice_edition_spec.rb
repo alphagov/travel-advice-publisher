@@ -14,7 +14,7 @@ describe TravelAdviceEdition do
       ed.update_type = "minor"
       ed.change_description = "Some things"
       ed.synonyms = %w[Foo Bar]
-      ed.parts.build(title: "Part One", slug: "one")
+      ed.parts.build(title: "Part One", slug: "one", body: "Body one")
       ed.save!
 
       ed = TravelAdviceEdition.first
@@ -457,13 +457,13 @@ describe TravelAdviceEdition do
   context "parts" do
     it "should merge part validation errors with parent document's errors" do
       edition = create(:travel_advice_edition)
-      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview")
-      edition.parts.build(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: "")
-      edition.parts.build(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid")
+      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview", body: "Body")
+      edition.parts.build(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: "", body: "Body")
+      edition.parts.build(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid", body: "")
 
       expect(edition).not_to be_valid
 
-      expect(edition.errors[:part]).to eq(["1: Title can't be blank and 2: Slug can't be blank and Slug is invalid"])
+      expect(edition.errors[:part]).to eq(["1: Title Enter a title, 2: Slug Enter a slug, and 3: Body Enter a body"])
     end
 
     it "#whole_body returns ordered parts" do
