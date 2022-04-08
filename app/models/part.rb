@@ -15,10 +15,11 @@ class Part
 
   GOVSPEAK_FIELDS = [:body].freeze
 
-  validates :title, presence: true
-  validates :slug, presence: true
+  validates :title, presence: { message: "Enter a title" }
+  validates :body, presence: { message: "Enter a body" }
+  validates :slug, presence: { message: "Enter a slug" }
   validates :slug, exclusion: { in: %w[video], message: "Can not be video" }
-  validates :slug, format: { with: /\A[a-z0-9\-]+\Z/i }
+  validates :slug, format: { with: /\A[a-z0-9\-]+\Z/i, message: "Enter a valid slug" }, if: -> { slug.present? }
   validates_with SafeHtml
   validates_with LinkValidator
 end
