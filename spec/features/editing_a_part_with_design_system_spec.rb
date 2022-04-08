@@ -26,7 +26,7 @@ feature "Editing a part" do
       expect(find("#part_slug").value).to eq @part.slug
     end
 
-    scenario "Parts can be modified from the edit page" do
+    scenario "Parts are prefilled when you visit the edit page" do
       visit edit_admin_edition_path(@edition)
       click_on "Change #{@part.title}"
       fill_in "Title", with: "New title"
