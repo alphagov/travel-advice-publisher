@@ -30,6 +30,7 @@
     },
     name: "part[title]",
     id: "title",
+    error_items: errors_for(@part, :title)
   } %>
 
   <%= render "govuk_publishing_components/components/textarea", {
@@ -40,6 +41,7 @@
     name: "part[body]",
     id: "body",
     rows: 15,
+    error_items: errors_for(@part, :body)
   } %>
 
   <%= render "govuk_publishing_components/components/input", {
@@ -49,7 +51,8 @@
     },
     name: "part[slug]",
     id: "slug",
-    hint: 'For example "title-of-part" (no spaces, apostrophes, etc).'
+    hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
+    error_items: errors_for(@part, :slug)
   } %>
 
   <%= render "govuk_publishing_components/components/button", {
