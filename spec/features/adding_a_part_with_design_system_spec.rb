@@ -31,9 +31,9 @@ feature "Adding a part" do
       click_on "Add part"
       click_on "Save"
 
-      expect(page).to have_link("Enter a title", href: "#title")
-      expect(page).to have_link("Enter a body", href: "#body")
-      expect(page).to have_link("Enter a slug", href: "#slug")
+      expect(page).to have_link("Enter a title", href: "#part_title")
+      expect(page).to have_link("Enter a body", href: "#part_body")
+      expect(page).to have_link("Enter a slug", href: "#part_slug")
       expect(page).not_to have_link("Enter a valid slug", href: "#slug")
       expect(all(".govuk-form-group")[0]).to have_content "Enter a title"
       expect(all(".govuk-form-group")[1]).to have_content "Enter a body"
@@ -48,7 +48,7 @@ feature "Adding a part" do
       fill_in "Slug", with: "THIS_IS_INVALID"
       click_on "Save"
 
-      expect(page).to have_link("Enter a valid slug", href: "#slug")
+      expect(page).to have_link("Enter a valid slug", href: "#part_slug")
       expect(all(".govuk-form-group")[2]).to have_content "Enter a valid slug"
     end
   end

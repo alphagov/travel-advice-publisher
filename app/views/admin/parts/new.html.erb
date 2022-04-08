@@ -22,6 +22,8 @@
 
 <%= content_for :title, 'New part' %>
 
+<%= render 'shared/error_summary', object: @part %>
+
 <%= form_for @part, url: admin_country_edition_parts_path(@edition.country_slug, @edition), method: :post do |f| %>
   <%= render "govuk_publishing_components/components/input", {
     label: {
@@ -29,7 +31,7 @@
       bold: true,
     },
     name: "part[title]",
-    id: "title",
+    id: "part_title",
     error_items: errors_for(@part, :title)
   } %>
 
@@ -39,7 +41,7 @@
       bold: true,
     },
     name: "part[body]",
-    id: "body",
+    id: "part_body",
     rows: 15,
     error_items: errors_for(@part, :body)
   } %>
@@ -50,7 +52,7 @@
       bold: true,
     },
     name: "part[slug]",
-    id: "slug",
+    id: "part_slug",
     hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
     error_items: errors_for(@part, :slug)
   } %>
