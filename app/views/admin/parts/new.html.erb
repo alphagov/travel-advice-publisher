@@ -1,0 +1,58 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+        url: edit_admin_edition_path(@edition),
+      },
+      {
+        title: "New part",
+      },
+    ]
+  } %>
+<% end %>
+
+<%= content_for :title, 'New part' %>
+
+<%= form_for @part, url: admin_country_edition_parts_path(@edition.country_slug, @edition), method: :post do |f| %>
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Title",
+      bold: true,
+    },
+    name: "part[title]",
+    id: "title",
+  } %>
+
+  <%= render "govuk_publishing_components/components/textarea", {
+    label: {
+      text: "Body",
+      bold: true,
+    },
+    name: "part[body]",
+    id: "body",
+    rows: 15,
+  } %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Slug",
+      bold: true,
+    },
+    name: "part[slug]",
+    id: "slug",
+    hint: 'For example "title-of-part" (no spaces, apostrophes, etc).'
+  } %>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: "Save",
+  } %>
+<% end %>
