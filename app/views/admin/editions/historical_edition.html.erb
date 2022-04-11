@@ -3,7 +3,7 @@
 </header>
 
 <div class="content-block" id="summary">
-  <%= render partial: "country_summary", locals: {presenter: @presenter}, formats: ["html"] %>
+  <%= render partial: "country_summary", locals: {presenter: @presenter}, formats: :html %>
 </div>
 <% @presenter.parts.each do |part| %>
   <article class="content-block" id="<%= part.slug %>">
