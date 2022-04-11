@@ -23,8 +23,10 @@
       <h4 class="govuk-heading-s govuk-!-margin-bottom-3">Current map image</h4>
       <div class="well uploaded-image">
         <%= render "govuk_publishing_components/components/image_card", {
+          href: @edition.image["file_url"],
           image_src: @edition.image["file_url"],
           image_alt: "Map of #{@country.name}",
+          heading_text: "Map of #{@country.name}",
           name: "edition[image]",
           id: "edition_image",
         } %>
