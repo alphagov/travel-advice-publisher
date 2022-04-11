@@ -72,22 +72,41 @@ class Admin::EditionsController < ApplicationController
 private
 
   def permitted_edition_attributes
-    params.fetch(:edition, {}).permit(
-      :minor_update,
-      :update_type,
-      :change_description,
-      :title,
-      :overview,
-      :csv_synonyms,
-      :summary,
-      :note,
-      :image,
-      :document,
-      :remove_document,
-      :remove_image,
-      alert_status: [],
-      parts_attributes: %i[title body slug order id _destroy],
-    )
+    if preview_design_system_user?
+      params.fetch(:edition, {}).permit(
+        :update_type,
+        :change_description,
+        :title,
+        :overview,
+        :csv_synonyms,
+        :summary,
+        :note,
+        :image,
+        :document,
+        :remove_document,
+        :remove_image,
+      ).merge(
+        minor_update: params.dig("edition", "update_type") == "minor" ? true : nil,
+        alert_status: params.dig("edition", "alert_status") || [],
+      )
+    else
+      params.fetch(:edition, {}).permit(
+        :minor_update,
+        :update_type,
+        :change_description,
+        :title,
+        :overview,
+        :csv_synonyms,
+        :summary,
+        :note,
+        :image,
+        :document,
+        :remove_document,
+        :remove_image,
+        alert_status: [],
+        parts_attributes: %i[title body slug order id _destroy],
+      )
+    end
   end
 
   def load_country_and_edition
