@@ -16,6 +16,10 @@ FactoryBot.define do
         ].compact
       end
     end
+
+    trait :with_design_system_permission do
+      permissions { ["signin", "Preview Design System"] }
+    end
   end
 
   factory :travel_advice_edition do
