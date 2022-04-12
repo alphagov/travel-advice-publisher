@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     resources :editions, only: %i[edit update destroy] do
       get "diff/:compare_id", action: :diff, as: :diff, on: :member
       get "historical_edition"
+      get "manage_part_ordering", on: :member
+      patch "update_part_ordering", on: :member
     end
 
     root to: "countries#index"
