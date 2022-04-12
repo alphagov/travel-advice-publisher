@@ -1,0 +1,47 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+        url: edit_admin_edition_path(@edition),
+      },
+      {
+        title: "Reorder parts",
+      },
+    ]
+  } %>
+<% end %>
+
+
+<% content_for :title, "Reorder parts" %>
+
+<%= render 'shared/error_summary', object: @edition %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @edition, url: update_part_ordering_admin_edition_path, method: :patch do |f| %>
+      <div class="govuk-!-margin-bottom-6">
+        <%= render "govuk_publishing_components/components/reorderable_list", {
+          items: @edition.parts.in_order.map do |part|
+            {
+              id: part.id,
+              title: part.title,
+            }
+          end
+        } %>
+
+        <%= render "govuk_publishing_components/components/button", {
+          text: "Save",
+        } %>
+      </div>
+    <% end %>
+  </div>
+</div>
