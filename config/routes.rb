@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :countries, only: %i[index show] do
       resources :editions, only: [:create] do
-        resources :parts, only: %i[new create edit update]
+        resources :parts, only: %i[new create edit update show] do
+          get "review", on: :member
+        end
       end
     end
 

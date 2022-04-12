@@ -10,8 +10,8 @@
           field: part.title,
           value: part.slug,
           edit: {
-            href: edit_admin_country_edition_part_path(@country.slug, @edition, part),
-            link_text: "Change"
+            href: @edition.draft? ? edit_admin_country_edition_part_path(@country.slug, @edition, part) : review_admin_country_edition_part_path(@country.slug, @edition, part),
+            link_text: @edition.draft? ? "Change" : "View",
           }
         }
       end
