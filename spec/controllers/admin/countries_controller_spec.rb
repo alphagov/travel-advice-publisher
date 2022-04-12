@@ -14,7 +14,26 @@ describe Admin::CountriesController do
     it "renders the index view" do
       get :index
 
-      expect(response).to render_template :index
+      expect(response).to render_template :index_legacy
+    end
+
+    context "with Preview Design System permission" do
+      it "populates an array of countries" do
+        user = create(:user, preview_design_system: true)
+        login_as(user)
+        get :index
+
+        expect(assigns(:countries).map(&:slug)).to include("afghanistan", "albania", "algeria")
+        expect(assigns(:countries).map(&:name)).to include("Afghanistan", "Albania", "Algeria")
+      end
+
+      it "renders the index view" do
+        user = create(:user, preview_design_system: true)
+        login_as(user)
+        get :index
+
+        expect(response).to render_template :index
+      end
     end
   end
 
@@ -30,7 +49,26 @@ describe Admin::CountriesController do
       it "renders the show view" do
         get :show, params: { id: "australia" }
 
-        expect(response).to render_template :show
+        expect(response).to render_template :show_legacy
+      end
+
+      context "with Preview Design System permission" do
+        it "assigns the request country" do
+          user = create(:user, preview_design_system: true)
+          login_as(user)
+          get :show, params: { id: "australia" }
+
+          expect(assigns(:country).name).to eq("Australia")
+          expect(assigns(:country).slug).to eq("australia")
+        end
+
+        it "renders the show view" do
+          user = create(:user, preview_design_system: true)
+          login_as(user)
+          get :show, params: { id: "australia" }
+
+          expect(response).to render_template :show
+        end
       end
     end
 
@@ -39,6 +77,16 @@ describe Admin::CountriesController do
         get :show, params: { id: "the-shire" }
 
         expect(response).to be_not_found
+      end
+
+      context "with Preview Design System permission" do
+        it "returns a 404" do
+          user = create(:user, preview_design_system: true)
+          login_as(user)
+          get :show, params: { id: "the-shire" }
+
+          expect(response).to be_not_found
+        end
       end
     end
   end

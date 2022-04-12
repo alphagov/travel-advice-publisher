@@ -3,9 +3,18 @@ FactoryBot.define do
     sequence(:uid) { |n| "uid-#{n}" }
     sequence(:name) { |n| "Joe Bloggs #{n}" }
     sequence(:email) { |n| "joe#{n}@bloggs.com" }
+
+    transient do
+      preview_design_system { false }
+    end
+
     if defined?(GDS::SSO::Config)
-      # Grant permission to signin to the app using the gem
-      permissions { %w[signin] }
+      permissions do
+        [
+          "signin",
+          ("Preview Design System" if preview_design_system),
+        ].compact
+      end
     end
   end
 
