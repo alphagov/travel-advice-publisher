@@ -4,7 +4,7 @@ class Admin::EditionsController < ApplicationController
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
-  before_action :load_country_and_edition, only: %i[edit update destroy diff]
+  before_action :load_country_and_edition, only: %i[edit update destroy diff manage_part_ordering update_part_ordering]
   before_action :strip_empty_alert_statuses, only: :update
 
   def create
@@ -69,6 +69,24 @@ class Admin::EditionsController < ApplicationController
     render layout: "historical_edition"
   end
 
+  def manage_part_ordering
+    redirect_to edit_admin_edition_path(@edition) unless @edition.draft?
+  end
+
+  def update_part_ordering
+    redirect_to edit_admin_edition_path(@edition) unless @edition.draft?
+
+    if @edition.update(part_ordering_params)
+      notifier.put_content(@edition)
+      notifier.enqueue
+      flash["alert"] = "Parts reordered successfully"
+
+      redirect_to edit_admin_edition_path(@edition)
+    else
+      render :manage_part_ordering
+    end
+  end
+
 private
 
   def permitted_edition_attributes
@@ -107,6 +125,24 @@ private
         alert_status: params.dig("edition", "alert_status") || [],
       )
     end
+  end
+
+  def part_ordering_params
+    part_attributes_hash = {}
+
+    params[:ordering].each do |input|
+      part_id, order = input
+      part = @edition.parts.find(part_id)
+      part_attributes_hash[order] = {
+        "order" => order,
+        "id" => part_id,
+        "title" => part.title,
+        "body" => part.body,
+        "slug" => part.slug,
+      }
+    end
+
+    { parts_attributes: part_attributes_hash }
   end
 
   def load_country_and_edition
