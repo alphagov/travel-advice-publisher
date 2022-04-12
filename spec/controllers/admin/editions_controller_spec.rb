@@ -288,4 +288,29 @@ describe Admin::EditionsController do
       expect(assigns(:presenter).country).to eq(@country)
     end
   end
+
+  describe "manage_part_ordering" do
+    before do
+      login_as_stub_user
+      @country = Country.find_by_slug("aruba")
+    end
+
+    context "published edition" do
+      it "redirects to the edit edition page" do
+        @edition = create(:published_travel_advice_edition, country_slug: @country.slug)
+        get :manage_part_ordering, params: { id: @edition.id }
+
+        expect(response).to redirect_to(edit_admin_edition_path(@edition))
+      end
+    end
+
+    context "archived edition" do
+      it "redirects to the edit edition page" do
+        @edition = create(:archived_travel_advice_edition, country_slug: @country.slug)
+        get :manage_part_ordering, params: { id: @edition.id }
+
+        expect(response).to redirect_to(edit_admin_edition_path(@edition))
+      end
+    end
+  end
 end
