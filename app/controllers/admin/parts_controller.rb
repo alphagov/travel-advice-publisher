@@ -6,7 +6,6 @@ class Admin::PartsController < ApplicationController
 
   def new
     @part = Part.new
-    @edition = TravelAdviceEdition.find(params[:edition_id])
   end
 
   def create
@@ -21,6 +20,25 @@ class Admin::PartsController < ApplicationController
       redirect_to edit_admin_edition_path(@edition)
     else
       render "new"
+    end
+  end
+
+  def edit
+    @part = @edition.parts.find(params[:id])
+  end
+
+  def update
+    @part = @edition.parts.find(params[:id])
+    @part.assign_attributes(update_params)
+
+    if @edition.save
+      notifier.put_content(@edition)
+      notifier.enqueue
+      flash["notice"] = "Part updated successfully"
+
+      redirect_to edit_admin_edition_path(@edition)
+    else
+      render "edit"
     end
   end
 
@@ -39,10 +57,13 @@ private
   end
 
   def create_params
+    update_params.merge(order: @edition.parts.count + 1)
+  end
+
+  def update_params
     params
     .require(:part)
     .permit(:title, :body, :slug)
-    .merge(order: @edition.parts.count + 1)
   end
 
   def notifier
