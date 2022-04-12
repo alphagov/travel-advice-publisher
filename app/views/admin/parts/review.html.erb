@@ -1,0 +1,42 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+        url: edit_admin_edition_path(@edition),
+      },
+      {
+        title: "Review #{@part.title}",
+      },
+    ]
+  } %>
+<% end %>
+
+<%= content_for :page_title, @part.title %>
+
+<%= render "govuk_publishing_components/components/summary_list", {
+  title: @part.title,
+  heading_size: 'l',
+  items: [
+    {
+      field: "Title",
+      value: @part.title,
+    },
+    {
+      field: "Body",
+      value: @part.body,
+    },
+    {
+      field: "Slug",
+      value: @part.slug,
+    },
+  ]
+} %>

@@ -1,7 +1,7 @@
 class Admin::PartsController < ApplicationController
   before_action :skip_slimmer
   before_action :load_country_and_edition
-  before_action :redirect_to_edit_edition_unless_draft_edition
+  before_action :redirect_to_edit_edition_unless_draft_edition, except: %i[review edit]
   layout "design_system"
 
   def new
@@ -25,6 +25,7 @@ class Admin::PartsController < ApplicationController
 
   def edit
     @part = @edition.parts.find(params[:id])
+    redirect_to review_admin_country_edition_part_path(@edition.country_slug, @edition, @part) unless @edition.draft?
   end
 
   def update
@@ -40,6 +41,11 @@ class Admin::PartsController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def review
+    @part = @edition.parts.find(params[:id])
+    redirect_to edit_admin_country_edition_part_path(@edition.country_slug, @edition, @part) if @edition.draft?
   end
 
 private
