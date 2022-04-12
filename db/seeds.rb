@@ -3,7 +3,7 @@ if User.where(name: "Test user").blank?
 
   User.create!(
     name: "Test user",
-    permissions: ["signin", "GDS Editor", "Preview Design System"],
+    permissions: ["signin", "GDS Editor"],
     organisation_content_id: gds_organisation_id,
   )
 end
