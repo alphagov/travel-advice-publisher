@@ -15,13 +15,15 @@ class Admin::CountriesController < ApplicationController
 private
 
   def is_legacy_layout?
-    !preview_design_system_user?
+    get_layout == "legacy"
   end
 
   def get_layout
-    return "legacy" if is_legacy_layout?
-
-    "design_system"
+    if preview_design_system_user? && (Rails.env.development? || Rails.env.test?)
+      "design_system"
+    else
+      "legacy"
+    end
   end
 
   def load_country
