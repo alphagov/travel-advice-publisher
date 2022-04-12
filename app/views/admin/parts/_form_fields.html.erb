@@ -1,0 +1,38 @@
+<%= render "govuk_publishing_components/components/input", {
+  label: {
+    text: "Title",
+    bold: true,
+  },
+  name: "part[title]",
+  id: "part_title",
+  error_items: errors_for(@part, :title),
+  value: @part.title,
+} %>
+
+<%= render "govuk_publishing_components/components/textarea", {
+  label: {
+    text: "Body",
+    bold: true,
+  },
+  name: "part[body]",
+  id: "part_body",
+  rows: 15,
+  error_items: errors_for(@part, :body),
+  value: @part.body,
+} %>
+
+<%= render "govuk_publishing_components/components/input", {
+  label: {
+    text: "Slug",
+    bold: true,
+  },
+  name: "part[slug]",
+  id: "part_slug",
+  hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
+  error_items: errors_for(@part, :slug),
+  value: @part.slug
+} %>
+
+<%= render "govuk_publishing_components/components/button", {
+  text: "Save",
+} %>

@@ -14,16 +14,16 @@
         url: edit_admin_edition_path(@edition),
       },
       {
-        title: "New part",
+        title: "Edit #{@part.title}",
       },
     ]
   } %>
 <% end %>
 
-<%= content_for :title, 'New part' %>
+<%= content_for :title, "Edit #{@part.title}" %>
 
 <%= render 'shared/error_summary', object: @part %>
 
-<%= form_for @part, url: admin_country_edition_parts_path(@edition.country_slug, @edition), method: :post do |f| %>
+<%= form_for @part, url: admin_country_edition_part_path(@edition.country_slug, @edition, @part), method: :patch do |f| %>
   <%= render 'form_fields' %>
 <% end %>
