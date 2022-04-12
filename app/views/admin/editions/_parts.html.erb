@@ -5,6 +5,10 @@
     <%= render "govuk_publishing_components/components/summary_list", {
       title: "Parts (govspeak available)",
       borderless: true,
+      edit: ({
+        href: manage_part_ordering_admin_edition_path(@edition),
+        link_text: "Reorder",
+      } if @edition.draft? && @edition.parts.count > 1),
       items: @edition.parts.in_order.map do |part|
         {
           field: part.title,
@@ -15,7 +19,7 @@
           }
         }
       end
-    } %>
+    }.compact %>
   <% end %>
 
   <% if @edition.draft? %>
