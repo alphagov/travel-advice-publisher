@@ -17,7 +17,7 @@
       { text: "Log out", href: gds_sign_out_path }
     ].delete_if{ |item| item[:user_has_permission_to_see] == false },
   }%>
-  <div class="govuk-width-container">
+  <div class="govuk-width-container govuk-width-container--extended">
     <%= render "govuk_publishing_components/components/phase_banner", {
       app_name: "Travel Advice Publisher",
       phase: "beta"
