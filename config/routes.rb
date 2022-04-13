@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :countries, only: %i[index show] do
       resources :editions, only: [:create] do
-        resources :parts, only: %i[new create edit update show] do
+        resources :parts, only: %i[new create edit update show destroy] do
           get "review", on: :member
+          get "confirm_destroy", on: :member
         end
       end
     end
