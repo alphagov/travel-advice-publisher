@@ -1,6 +1,10 @@
 module ApplicationHelper
   def edition_edit_link(edition)
-    link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition), class: "govuk-link")
+    if current_user.has_permission? "Preview Design System"
+      edition.draft? ? link_to("edit", edit_admin_edition_path(edition), class: "govuk-link") : link_to("view details", review_admin_edition_path(edition), class: "govuk-link")
+    else
+      link_to((edition.draft? ? "edit" : "view details"), edit_admin_edition_path(edition), class: "govuk-link")
+    end
   end
 
   def preview_edition_link(edition, short, options = {})

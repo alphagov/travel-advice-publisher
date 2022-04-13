@@ -76,7 +76,7 @@ feature "Country version index" do
     end
 
     within :xpath, "//tr[contains(., 'Version 2')]" do
-      expect(page).to have_link("view details", href: "/admin/editions/#{e2.id}/edit")
+      expect(page).to have_link("view details", href: "/admin/editions/#{e2.id}/review")
       expect(page).to have_selector("a[href^='/admin/editions/#{e2.id}/historical_edition']", text: "print")
     end
 
