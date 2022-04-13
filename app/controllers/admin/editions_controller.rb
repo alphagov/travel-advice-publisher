@@ -1,6 +1,6 @@
 class Admin::EditionsController < ApplicationController
   include Slimmer::Headers
-  layout "legacy"
+  layout :get_layout
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
@@ -68,6 +68,16 @@ class Admin::EditionsController < ApplicationController
   end
 
 private
+
+  def is_legacy_layout?
+    !preview_design_system_user? || !["historical_edition"].include?(action_name)
+  end
+
+  def get_layout
+    return "legacy" if is_legacy_layout?
+
+    "design_system"
+  end
 
   def permitted_edition_attributes
     params.fetch(:edition, {}).permit(
