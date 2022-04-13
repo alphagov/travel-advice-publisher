@@ -178,4 +178,45 @@ describe Admin::PartsController do
       end
     end
   end
+
+  describe "DELETE to destroy" do
+    before do
+      @part = @edition.parts.create!(
+        title: "Some Part Title!",
+        body: "This is some **version** text.",
+        slug: "part-one",
+        order: 1,
+      )
+    end
+
+    let(:params) do
+      {
+        country_id: "aruba",
+        edition_id: @edition.id,
+        id: @part.id,
+      }
+    end
+
+    it "destroys a part" do
+      delete :destroy, params: params
+      @edition.reload
+
+      expect(@edition.parts.count).to eq 0
+    end
+
+    it "notifies PublishingApi of the change" do
+      delete :destroy, params: params
+      expect(PublishingApiWorker.jobs.size).to eq(1)
+    end
+
+    it "sets a flash notice" do
+      delete :destroy, params: params
+      expect(flash[:notice]).to eq("Part deleted successfully")
+    end
+
+    it "redirects to the edit page for the edition" do
+      delete :destroy, params: params
+      expect(response).to redirect_to(edit_admin_edition_path(@edition))
+    end
+  end
 end

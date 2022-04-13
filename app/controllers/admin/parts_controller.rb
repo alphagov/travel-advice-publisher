@@ -48,6 +48,21 @@ class Admin::PartsController < ApplicationController
     redirect_to edit_admin_country_edition_part_path(@edition.country_slug, @edition, @part) if @edition.draft?
   end
 
+  def confirm_destroy
+    @part = @edition.parts.find(params[:id])
+  end
+
+  def destroy
+    @part = @edition.parts.find(params[:id])
+    @part.destroy!
+
+    notifier.put_content(@edition.reload)
+    notifier.enqueue
+    flash["notice"] = "Part deleted successfully"
+
+    redirect_to edit_admin_edition_path(@edition)
+  end
+
 private
 
   def load_country_and_edition
