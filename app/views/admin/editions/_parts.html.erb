@@ -19,7 +19,7 @@
               link_text: @edition.draft? ? "Change" : "View",
             },
             delete: {
-              href: confirm_destroy_admin_country_edition_part_path(@edition, part),
+              href: confirm_destroy_admin_country_edition_part_path(@country.slug, @edition, part),
               link_text: "Remove",
             },
           }
@@ -38,7 +38,7 @@
               link_text: @edition.draft? ? "Change" : "View",
             },
             delete: {
-              href: confirm_destroy_admin_country_edition_part_path(@edition, part),
+              href: confirm_destroy_admin_country_edition_part_path(@country.slug, @edition, part),
               link_text: "Remove",
             },
           }
