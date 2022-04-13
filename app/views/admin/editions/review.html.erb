@@ -1,0 +1,164 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Reviewing #{@country.name}",
+      },
+    ]
+  } %>
+<% end %>
+
+<%= content_for :title, "Reviewing #{@country.name}"%>
+<%= content_for :context, "Version #{@edition.version_number}" %>
+
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#edit">Edit</a>
+    </li>
+
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#history">History & Notes</a>
+    </li>
+  </ul>
+
+  <div class="govuk-tabs__panel" id="edit">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div id="versioning">
+          <%= render "govuk_publishing_components/components/summary_list", {
+            title: "Versioning",
+            items: [
+              {
+                field: "Update type",
+                value: @edition.update_type&.capitalize || "Not provided",
+              },
+              {
+                field: "Public change note",
+                value: @edition.change_description,
+              },
+            ],
+          } %>
+        </div>
+        <br>
+
+        <div id="metadata">
+          <%= render "govuk_publishing_components/components/summary_list", {
+            title: "Metadata",
+            items: [
+              {
+                field: "Search title",
+                value: @edition.title,
+              },
+              {
+                field: "Search description (optional)",
+                value: @edition.overview || "Not provided",
+              },
+              {
+                field: "Country Synonyms (optional)",
+                value: @edition.csv_synonyms || "Not provided",
+              },
+            ]
+          } %>
+        </div>
+        <br>
+
+        <div id="summary_content">
+          <%= render "govuk_publishing_components/components/summary_list", {
+            title: "Summary content",
+            items: [
+              {
+                field: "Alert status",
+                value: render("govuk_publishing_components/components/list", {
+                  items: alert_statuses_with_labels(@edition.alert_status).map(&:first),
+                }),
+              },
+              {
+                field: "Map image",
+                value: render("govuk_publishing_components/components/image_card", {
+                  href: "/not-a-page", #not really sure why this requires a href?
+                  image_src: @edition.image["file_url"],
+                  image_alt: "Map of #{@country.name}",
+                  name: "edition[image]",
+                  id: "edition_image",
+                }),
+              },
+              {
+                field: "PDF Document",
+                value: link_to("Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link") || "Not provided",
+              },
+              {
+                field: "Summary",
+                value: @edition.summary,
+              }
+            ]
+          } %>
+        </div>
+        <br>
+
+
+        <div id="parts">
+          <%= render "govuk_publishing_components/components/summary_list", {
+            title: "Parts",
+            borderless: true,
+            items: @edition.parts.in_order.map do |part|
+              {
+                field: part.title,
+                value: part.slug,
+                edit: {
+                  href: review_admin_country_edition_part_path(@country.slug, @edition, part),
+                  link_text: @edition.draft? ? "Change" : "View",
+                }
+              }
+            end
+          } %>
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-one-third">
+        <div id="side" class="app-side-wrapper">
+          <div class="app-side">
+            <div class="app-side__actions">
+              <% if !@country.has_draft_edition? %>
+                <%= form_with url: admin_country_editions_path(@country.slug), method: :post do |f| %>
+                  <%= render "govuk_publishing_components/components/button", {
+                    text: "Create new edition"
+                  } %>
+                <% end %>
+              <% end %>
+
+              <% if @edition.published? %>
+                <%= render "govuk_publishing_components/components/button", {
+                  text: "Update review date",
+                  value: "Update review date",
+                  name: "commit"
+                } %>
+              <% end %>
+
+              <%= preview_edition_link(@edition, false, class: "govuk-button govuk-button--secondary") %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-tabs__panel" id="history">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Version history</h2>
+        <div class="govuk-accordion" data-module="govuk-accordion">
+          <%= render partial: 'edition_history', collection: @country.editions, as: :edition %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

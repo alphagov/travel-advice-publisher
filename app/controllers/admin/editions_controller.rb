@@ -4,7 +4,7 @@ class Admin::EditionsController < ApplicationController
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
-  before_action :load_country_and_edition, only: %i[edit update destroy diff manage_part_ordering update_part_ordering]
+  before_action :load_country_and_edition, only: %i[edit update destroy diff manage_part_ordering update_part_ordering review]
   before_action :strip_empty_alert_statuses, only: :update
 
   def create
@@ -30,6 +30,8 @@ class Admin::EditionsController < ApplicationController
   end
 
   def edit
+    redirect_to review_admin_edition_path(@edition) and return unless @edition.draft? || is_legacy_layout?
+
     render_edit_layout
   end
 
@@ -85,6 +87,10 @@ class Admin::EditionsController < ApplicationController
     else
       render :manage_part_ordering
     end
+  end
+
+  def review
+    redirect_to edit_admin_edition_path(@edition) if @edition.draft?
   end
 
 private

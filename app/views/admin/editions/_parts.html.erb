@@ -25,7 +25,7 @@
           }
         end
       } %>
-    <% elsif @edition.draft? %>
+    <% else %>
       <%= render "govuk_publishing_components/components/summary_list", {
         title: "Parts (govspeak available)",
         borderless: true,
@@ -41,21 +41,6 @@
               href: confirm_destroy_admin_country_edition_part_path(@country.slug, @edition, part),
               link_text: "Remove",
             },
-          }
-        end
-      } %>
-    <% else %>
-      <%= render "govuk_publishing_components/components/summary_list", {
-        title: "Parts (govspeak available)",
-        borderless: true,
-        items: @edition.parts.in_order.map do |part|
-          {
-            field: part.title,
-            value: part.slug,
-            edit: {
-              href: @edition.draft? ? edit_admin_country_edition_part_path(@country.slug, @edition, part) : review_admin_country_edition_part_path(@country.slug, @edition, part),
-              link_text: @edition.draft? ? "Change" : "View",
-            }
           }
         end
       } %>
