@@ -1,6 +1,7 @@
 class Admin::PartsController < ApplicationController
   before_action :skip_slimmer
   before_action :load_country_and_edition
+  before_action :load_part, only: %i[edit update review confirm_destroy destroy]
   before_action :redirect_to_edit_edition_unless_draft_edition, except: %i[review edit]
   layout "design_system"
 
@@ -24,12 +25,10 @@ class Admin::PartsController < ApplicationController
   end
 
   def edit
-    @part = @edition.parts.find(params[:id])
     redirect_to review_admin_country_edition_part_path(@edition.country_slug, @edition, @part) unless @edition.draft?
   end
 
   def update
-    @part = @edition.parts.find(params[:id])
     @part.assign_attributes(update_params)
 
     if @edition.save
@@ -44,16 +43,12 @@ class Admin::PartsController < ApplicationController
   end
 
   def review
-    @part = @edition.parts.find(params[:id])
     redirect_to edit_admin_country_edition_part_path(@edition.country_slug, @edition, @part) if @edition.draft?
   end
 
-  def confirm_destroy
-    @part = @edition.parts.find(params[:id])
-  end
+  def confirm_destroy; end
 
   def destroy
-    @part = @edition.parts.find(params[:id])
     @part.destroy!
 
     notifier.put_content(@edition.reload)
@@ -68,6 +63,10 @@ private
   def load_country_and_edition
     @edition = TravelAdviceEdition.find(params[:edition_id])
     @country = Country.find_by_slug(@edition.country_slug)
+  end
+
+  def load_part
+    @part = @edition.parts.find(params[:id])
   end
 
   def redirect_to_edit_edition_unless_draft_edition
