@@ -72,24 +72,7 @@ class Admin::EditionsController < ApplicationController
 private
 
   def permitted_edition_attributes
-    if preview_design_system_user?
-      params.fetch(:edition, {}).permit(
-        :update_type,
-        :change_description,
-        :title,
-        :overview,
-        :csv_synonyms,
-        :summary,
-        :note,
-        :image,
-        :document,
-        :remove_document,
-        :remove_image,
-      ).merge(
-        minor_update: params.dig("edition", "update_type") == "minor" ? true : nil,
-        alert_status: params.dig("edition", "alert_status") || [],
-      )
-    else
+    if is_legacy_layout?
       params.fetch(:edition, {}).permit(
         :minor_update,
         :update_type,
@@ -105,6 +88,23 @@ private
         :remove_image,
         alert_status: [],
         parts_attributes: %i[title body slug order id _destroy],
+      )
+    else
+      params.fetch(:edition, {}).permit(
+        :update_type,
+        :change_description,
+        :title,
+        :overview,
+        :csv_synonyms,
+        :summary,
+        :note,
+        :image,
+        :document,
+        :remove_document,
+        :remove_image,
+      ).merge(
+        minor_update: params.dig("edition", "update_type") == "minor" ? true : nil,
+        alert_status: params.dig("edition", "alert_status") || [],
       )
     end
   end
@@ -205,8 +205,12 @@ private
     end
   end
 
+  def is_legacy_layout?
+    get_layout == "legacy"
+  end
+
   def render_edit_layout
-    if get_layout == "legacy"
+    if is_legacy_layout?
       render "edit_legacy"
     else
       render "edit"
