@@ -83,17 +83,17 @@
               },
               {
                 field: "Map image",
-                value: render("govuk_publishing_components/components/image_card", {
+                value: (render("govuk_publishing_components/components/image_card", {
                   href: "/not-a-page", #not really sure why this requires a href?
                   image_src: @edition.image["file_url"],
                   image_alt: "Map of #{@country.name}",
                   name: "edition[image]",
                   id: "edition_image",
-                }),
+                }) if @edition.image.present?) || "Not provided",
               },
               {
                 field: "PDF Document",
-                value: link_to("Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link") || "Not provided",
+                value: (link_to("Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link") if @edition.document.present?) || "Not provided",
               },
               {
                 field: "Summary",
