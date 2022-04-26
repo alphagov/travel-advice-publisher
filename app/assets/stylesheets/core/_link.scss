@@ -1,0 +1,15 @@
+.app-link--destructive {
+  color: govuk-colour("red");
+  @include govuk-font(19);
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: darken(govuk-colour("red"), 5%);
+  }
+
+  &:focus {
+    color: govuk-colour("red");
+  }
+}
