@@ -21,9 +21,34 @@
     </div>
     <div class="govuk-!-margin-top-6">
       <h2 class="govuk-heading-m">Version history</h2>
-      <div class="govuk-accordion" data-module="govuk-accordion">
-        <%= render partial: 'edition_history', collection: @country.editions, as: :edition %>
-      </div>
+      <%
+        items = []
+        @country.editions.each do | edition |
+          content = ""
+          edition.actions.reverse.each do |action|
+            content += render("edition_action", action: action)
+          end
+
+          items.push({
+            heading: {
+              text: "Version #{edition.version_number}"
+            },
+            summary: {
+              text: (link_to(
+                "Compare with version #{edition.version_number - 1}",
+                diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
+                class: "govuk-link govuk-body compare-version-link"
+              ) if edition.version_number > 1),
+            }.compact,
+            content: {
+              html: sanitize(content)
+            }
+          })
+        end
+      %>
+      <%= render "govuk_publishing_components/components/accordion", {
+        items: items
+      } %>
     </div>
   </div>
 </div>
