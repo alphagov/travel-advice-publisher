@@ -145,7 +145,7 @@ private
         country_slug: @edition.country_slug,
       )
 
-      redirect_to admin_country_path(@edition.country_slug), alert: "#{@edition.title} published."
+      redirect_to admin_country_path(@edition.country_slug), notice: "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
       render_edit_layout
@@ -164,7 +164,7 @@ private
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      redirect_to edit_admin_edition_path(@edition), alert: "#{@edition.title} updated."
+      redirect_to edit_admin_edition_path(@edition), notice: "#{@edition.title} updated."
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render_edit_layout
@@ -178,7 +178,7 @@ private
       notifier.put_content(@edition)
       notifier.publish(@edition)
       notifier.enqueue
-      redirect_to admin_country_path(@edition.country_slug), alert: "Updated review date"
+      redirect_to admin_country_path(@edition.country_slug), notice: "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), alert: "Failed to update the review date"
     end
