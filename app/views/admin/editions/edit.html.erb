@@ -19,118 +19,22 @@
 <%= content_for :title, "Editing #{@country.name}"%>
 <%= content_for :context, "Version #{@edition.version_number}" %>
 
-<%= form_for @edition, url: admin_edition_path(@edition), as: :edition, html: { multipart: true } do |f| %>
-  <div class="govuk-tabs" data-module="govuk-tabs">
-    <ul class="govuk-tabs__list">
-      <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
-        <a class="govuk-tabs__tab" href="#edit">Edit</a>
-      </li>
+<div class="govuk-tabs" data-module="govuk-tabs">
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+      <a class="govuk-tabs__tab" href="#edit">Edit</a>
+    </li>
 
-      <li class="govuk-tabs__list-item">
-        <a class="govuk-tabs__tab" href="#history">History & Notes</a>
-      </li>
-    </ul>
+    <li class="govuk-tabs__list-item">
+      <a class="govuk-tabs__tab" href="#history">History & Notes</a>
+    </li>
+  </ul>
 
-    <div class="govuk-tabs__panel" id="edit">
-
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <%= render "change_notes" %>
-          <%= render "metadata" %>
-          <%= render "summary_content" %>
-          <%= render "parts" %>
-        </div>
-        <div class="govuk-grid-column-one-third">
-          <div class="app-side-wrapper">
-            <div class="app-side">
-              <div class="app-side__actions">
-                <%= render "admin/link_check_reports/link_check_report", edition: @edition, report: @edition.latest_link_check_report %>
-              </div>
-            </div>
-            <div class="app-side">
-              <div class="app-side__actions">
-                <%= render "govspeak_guidance_design_system" %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third govuk-!-margin-bottom-0">
-          <div class="govuk-button-group">
-            <%= render "govuk_publishing_components/components/button", {
-              text: "Save",
-              value: "Save",
-              name: "commit",
-            } %>
-            <%= form_with url: admin_edition_path(@edition), method: :delete do |f| %>
-              <%= render "govuk_publishing_components/components/button", {
-                text: "Delete",
-                destructive: true,
-              } %>
-            <% end %>
-            <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-button govuk-button--secondary" %>
-          </div>
-        </div>
-
-        <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-0">
-          <div class="govuk-button-group">
-            <%= preview_edition_link(@edition, false, class: "govuk-button govuk-button--secondary") %>
-            <% if @edition.published? %>
-              <%= render "govuk_publishing_components/components/button", {
-                text: "Update review date",
-                value: "Update review date",
-                name: "commit"
-              } %>
-            <% end %>
-            <% if @edition.draft? %>
-              <%= render "govuk_publishing_components/components/button", {
-                text: "Save & Publish",
-                value: "Save & Publish",
-                name: "commit",
-                destructive: true,
-              } %>
-            <% elsif !@country.has_draft_edition? %>
-              <%= form_with url: admin_country_editions_path(@country.slug), method: :post, html: { class: "govuk-!-margin-top-0" } do |f| %>
-                <%= render "govuk_publishing_components/components/button", {
-                  text: "Create new edition"
-                } %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+  <div class="govuk-tabs__panel" id="edit">
+    <%= render :partial => 'tab_edit' %>
   </div>
 
   <div class="govuk-tabs__panel" id="history">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half">
-        <%= form_for @edition, url: admin_edition_path(@edition) do |f| %>
-          <%= render "govuk_publishing_components/components/textarea", {
-            label: {
-              text: "Note",
-              bold: true,
-            },
-            name: "edition[note][comment]",
-            id: "edition_note_comment",
-            rows: 6,
-          } %>
-
-          <%= render "govuk_publishing_components/components/button", {
-            text: "Add note",
-            value: "Add Note",
-            name: "commit"
-          } %>
-        <% end %>
-      </div>
-      <div class="govuk-grid-column-one-half">
-        <h2 class="govuk-heading-m">Version history</h2>
-        <div class="govuk-accordion" data-module="govuk-accordion">
-          <%= render partial: 'edition_history', collection: @country.editions, as: :edition %>
-        </div>
-      </div>
-    </div>
+    <%= render :partial => 'tab_history', :locals => { edition: @edition } %>
   </div>
 </div>

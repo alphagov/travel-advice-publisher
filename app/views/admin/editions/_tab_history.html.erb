@@ -1,0 +1,29 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div>
+      <%= form_for @edition, url: admin_edition_path(@edition) do |f| %>
+        <%= render "govuk_publishing_components/components/textarea", {
+          label: {
+            text: "Note",
+            bold: true,
+          },
+          name: "edition[note][comment]",
+          id: "edition_note_comment",
+          rows: 6,
+        } %>
+
+        <%= render "govuk_publishing_components/components/button", {
+          text: "Add note",
+          value: "Add Note",
+          name: "commit"
+        } %>
+      <% end %>
+    </div>
+    <div class="govuk-!-margin-top-6">
+      <h2 class="govuk-heading-m">Version history</h2>
+      <div class="govuk-accordion" data-module="govuk-accordion">
+        <%= render partial: 'edition_history', collection: @country.editions, as: :edition %>
+      </div>
+    </div>
+  </div>
+</div>
