@@ -36,10 +36,10 @@ private
   end
 
   def get_layout
-    if preview_design_system_user? && (Rails.env.development? || Rails.env.test?)
-      "design_system"
-    else
-      "legacy"
-    end
+    @get_layout ||= if preview_design_system_user? && (Rails.env.development? || Rails.env.test?)
+                      "design_system"
+                    else
+                      "legacy"
+                    end
   end
 end
