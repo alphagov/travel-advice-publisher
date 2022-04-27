@@ -14,18 +14,6 @@ class Admin::CountriesController < ApplicationController
 
 private
 
-  def is_legacy_layout?
-    get_layout == "legacy"
-  end
-
-  def get_layout
-    if preview_design_system_user? && (Rails.env.development? || Rails.env.test?)
-      "design_system"
-    else
-      "legacy"
-    end
-  end
-
   def load_country
     @country = Country.find_by_slug(params[:id]) || error_404
   end

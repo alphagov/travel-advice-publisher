@@ -197,18 +197,6 @@ private
     @govuk_request_id ||= GdsApi::GovukHeaders.headers[:govuk_request_id]
   end
 
-  def get_layout
-    if preview_design_system_user?
-      "design_system"
-    else
-      "legacy"
-    end
-  end
-
-  def is_legacy_layout?
-    get_layout == "legacy"
-  end
-
   def render_edit_layout
     if is_legacy_layout?
       render "edit_legacy"
