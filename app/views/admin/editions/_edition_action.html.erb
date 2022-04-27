@@ -1,0 +1,14 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-third">
+    <p class="govuk-body govuk-!-font-weight-bold"><%= action.created_at.strftime("%d/%m/%Y") %> <%= action.created_at.strftime("%R") %></p>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body govuk-!-font-weight-bold">
+      <%= action.to_s %> by <%= action.requester.present? ? mail_to(action.requester.email, action.requester.name, class: "govuk-link") : "GOV.UK Bot" %>
+      <% if action.comment.present? %>
+        <%= simple_format(escape_once(action.comment), { class: 'govuk-body' }, :sanitize => false) %>
+      <% end %>
+    </p>
+  </div>
+</div>

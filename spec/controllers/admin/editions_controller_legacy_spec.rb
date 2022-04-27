@@ -9,7 +9,7 @@ describe Admin::EditionsController do
   describe "POST to create" do
     before do
       @country = Country.find_by_slug("aruba")
-      @user = stub_user_with_design_system_permission
+      @user = stub_user
       login_as @user
     end
 

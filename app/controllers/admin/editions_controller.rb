@@ -1,6 +1,6 @@
 class Admin::EditionsController < ApplicationController
   include Slimmer::Headers
-  layout "legacy"
+  layout :get_layout
 
   before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
@@ -29,7 +29,9 @@ class Admin::EditionsController < ApplicationController
     @comparison = @country.editions.find(params[:compare_id])
   end
 
-  def edit; end
+  def edit
+    render_edit_layout
+  end
 
   def destroy
     country_slug = @edition.country_slug
@@ -70,22 +72,41 @@ class Admin::EditionsController < ApplicationController
 private
 
   def permitted_edition_attributes
-    params.fetch(:edition, {}).permit(
-      :minor_update,
-      :update_type,
-      :change_description,
-      :title,
-      :overview,
-      :csv_synonyms,
-      :summary,
-      :note,
-      :image,
-      :document,
-      :remove_document,
-      :remove_image,
-      alert_status: [],
-      parts_attributes: %i[title body slug order id _destroy],
-    )
+    if is_legacy_layout?
+      params.fetch(:edition, {}).permit(
+        :minor_update,
+        :update_type,
+        :change_description,
+        :title,
+        :overview,
+        :csv_synonyms,
+        :summary,
+        :note,
+        :image,
+        :document,
+        :remove_document,
+        :remove_image,
+        alert_status: [],
+        parts_attributes: %i[title body slug order id _destroy],
+      )
+    else
+      params.fetch(:edition, {}).permit(
+        :update_type,
+        :change_description,
+        :title,
+        :overview,
+        :csv_synonyms,
+        :summary,
+        :note,
+        :image,
+        :document,
+        :remove_document,
+        :remove_image,
+      ).merge(
+        minor_update: params.dig("edition", "update_type") == "minor" ? true : nil,
+        alert_status: params.dig("edition", "alert_status") || [],
+      )
+    end
   end
 
   def load_country_and_edition
@@ -124,10 +145,10 @@ private
         country_slug: @edition.country_slug,
       )
 
-      redirect_to admin_country_path(@edition.country_slug), alert: "#{@edition.title} published."
+      redirect_to admin_country_path(@edition.country_slug), notice: "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
-      render "/admin/editions/edit"
+      render_edit_layout
     end
   end
 
@@ -143,10 +164,10 @@ private
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      redirect_to edit_admin_edition_path(@edition), alert: "#{@edition.title} updated."
+      redirect_to edit_admin_edition_path(@edition), notice: "#{@edition.title} updated."
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
-      render "/admin/editions/edit"
+      render_edit_layout
     end
   end
 
@@ -157,7 +178,7 @@ private
       notifier.put_content(@edition)
       notifier.publish(@edition)
       notifier.enqueue
-      redirect_to admin_country_path(@edition.country_slug), alert: "Updated review date"
+      redirect_to admin_country_path(@edition.country_slug), notice: "Updated review date"
     else
       redirect_to edit_admin_edition_path(@edition), alert: "Failed to update the review date"
     end
@@ -174,5 +195,13 @@ private
 
   def govuk_request_id
     @govuk_request_id ||= GdsApi::GovukHeaders.headers[:govuk_request_id]
+  end
+
+  def render_edit_layout
+    if is_legacy_layout?
+      render "edit_legacy"
+    else
+      render "edit"
+    end
   end
 end

@@ -1,7 +1,7 @@
 RSpec.describe "Request tracing", type: :request do
   include GdsApi::TestHelpers::PublishingApi
   include GdsApi::TestHelpers::EmailAlertApi
-  include AuthenticationFeatureHelpers
+  include AuthenticationHelpers::FeatureHelpers
 
   let(:govuk_request_id) { "12345-67890" }
   let(:govuk_authenticated_user) { "0a1b2c3d4e5f" }

@@ -1,0 +1,62 @@
+<%= render "govuk_publishing_components/components/fieldset", {
+  legend_text: "Parts (govspeak available)",
+  heading_size: "m",
+} do %>
+  <div class="govuk-accordion" data-module="govuk-accordion sortable-parts" id="parts">
+    <% @edition.parts.in_order.each_with_index do |part, index| %>
+      <div class="govuk-accordion__section ">
+        <div class="govuk-accordion__section-header">
+          <h2 class="govuk-accordion__section-heading">
+            <span class="govuk-accordion__section-button" id=<%= part.title.dasherize || "untitled" %>>
+              <%= part.title.present? ? part.title : 'Untitled part' %>
+            </span>
+          </h2>
+        </div>
+        <div id="<%= part.slug || 'untitled-part' %>" class="govuk-accordion__section-content" aria-labelledby="<%= part.title.dasherize || "untitled" %>">
+          <%# TODO: all of these are required fields and need to be wired up to produce errors %>
+
+          <%= render "govuk_publishing_components/components/input", {
+            label: {
+              text: "Title",
+              bold: true,
+            },
+            name: "title",
+            value: part.title,
+          } %>
+
+          <%= render "govuk_publishing_components/components/textarea", {
+            label: {
+              text: "Body",
+              bold: true,
+            },
+            name: "body",
+            rows: 15,
+            value: part.body,
+          } %>
+
+          <%= render "govuk_publishing_components/components/input", {
+            label: {
+              text: "Slug",
+              bold: true,
+            },
+            name: "slug",
+            hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
+            value: part.slug,
+          } %>
+
+          <div class="remove-part-button">
+            <%= render "govuk_publishing_components/components/button", {
+              text: "Remove part",
+              destructive: true
+            } %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render "govuk_publishing_components/components/button", {
+    text: "Add new part",
+    secondary_solid: true,
+  } %>
+<% end %>

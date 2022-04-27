@@ -1,0 +1,99 @@
+<%= render "govuk_publishing_components/components/fieldset", {
+  legend_text: "Summary content",
+  heading_size: "m",
+} do %>
+  <%= render "govuk_publishing_components/components/checkboxes", {
+    name: "edition[alert_status][]",
+    id: "edition_alert_status",
+    heading: "Alert status",
+    heading_size: 's',
+    small: true,
+    hint_text: "",
+    items: alert_statuses_with_labels(TravelAdviceEdition::ALERT_STATUSES).map do |option|
+      {
+        label: option.first,
+        value: option.second,
+        checked: @edition.alert_status.include?(option.second),
+      }
+    end
+  } %>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-3">Map image</h3>
+    <% if @edition.image.present? %>
+      <h4 class="govuk-heading-s govuk-!-margin-bottom-3">Current map image</h4>
+      <div class="well uploaded-image">
+        <%= render "govuk_publishing_components/components/image_card", {
+          href: @edition.image["file_url"],
+          image_src: @edition.image["file_url"],
+          image_alt: "Map of #{@country.name}",
+          heading_text: "Map of #{@country.name}",
+          name: "edition[image]",
+          id: "edition_image",
+        } %>
+
+        <%= render "govuk_publishing_components/components/checkboxes", {
+          name: "edition[remove_image]",
+          id: "edition_remove_image",
+          small: true,
+          items: [
+            {
+              label: "Remove image",
+              value: "1"
+            }
+          ]
+        } %>
+
+        <h4 class="govuk-heading-s govuk-!-margin-bottom-3 govuk-!-margin-top-3">Replace map image</h4>
+      </div>
+    <% end %>
+
+    <%= render "govuk_publishing_components/components/file_upload", {
+      label: {
+        text: "Upload a new map image",
+      },
+      name: "edition[image]",
+      id: "edition_image",
+    } %>
+
+    <h3 class="govuk-heading-s govuk-!-margin-bottom-3">PDF Document</h3>
+    <% if @edition.document.present? %>
+      <div class="well uploaded-document">
+        <h4 class="govuk-heading-s govuk-!-margin-bottom-3">Current PDF</h4>
+
+        <p class="govuk-body"><%= link_to "Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link" %></p>
+
+        <%= render "govuk_publishing_components/components/checkboxes", {
+          name: "edition[remove_document]",
+          id: "edition_remove_document",
+          small: true,
+          items: [
+            {
+              label: "Remove PDF",
+              value: "1"
+            }
+          ]
+        } %>
+      </div>
+
+      <h4 class="govuk-heading-s govuk-!-margin-bottom-3 govuk-!-margin-top-3">Replace PDF</h4>
+    <% end %>
+
+    <%= render "govuk_publishing_components/components/file_upload", {
+      label: {
+        text: "Upload a new PDF",
+      },
+      name: "edition[document]",
+      id: "edition_document"
+    } %>
+
+    <%= render "govuk_publishing_components/components/textarea", {
+      label: {
+        text: "Summary (govspeak available)",
+        bold: true,
+      },
+      name: "edition[summary]",
+      id: "edition_summary",
+      rows: 20,
+      value: @edition.summary,
+    } %>
+<% end %>

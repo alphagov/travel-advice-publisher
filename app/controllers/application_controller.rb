@@ -30,4 +30,16 @@ private
   def skip_slimmer
     response.headers[Slimmer::Headers::SKIP_HEADER] = "true"
   end
+
+  def is_legacy_layout?
+    get_layout == "legacy"
+  end
+
+  def get_layout
+    @get_layout ||= if preview_design_system_user?
+                      "design_system"
+                    else
+                      "legacy"
+                    end
+  end
 end

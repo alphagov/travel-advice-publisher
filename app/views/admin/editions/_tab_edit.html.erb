@@ -1,0 +1,75 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_for @edition, url: admin_edition_path(@edition), as: :edition, html: { multipart: true } do |f| %>
+      <%= render "change_notes" %>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <%= render "metadata" %>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <%= render "summary_content" %>
+
+      <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+      <%= render "parts" %>
+
+      <div class="govuk-button-group govuk-!-margin-top-9">
+        <% if @edition.draft? %>
+          <%= render "govuk_publishing_components/components/button", {
+            text: "Save",
+            value: "Save",
+            name: "commit",
+          } %>
+          <%= render "govuk_publishing_components/components/button", {
+            text: "Save & Publish",
+            value: "Save & Publish",
+            name: "commit",
+            secondary: true,
+          } %>
+        <% elsif @edition.published? %>
+          <%= render "govuk_publishing_components/components/button", {
+            text: "Update review date",
+            value: "Update review date",
+            name: "commit",
+            secondary: true,
+          } %>
+        <% end %>
+        <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-link" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="govuk-grid-column-one-third">
+    <div class="app-side-wrapper">
+      <div class="app-side">
+        <div class="app-side__actions">
+          <% if !@country.has_draft_edition? %>
+            <%= form_with url: admin_country_editions_path(@country.slug), method: :post do |f| %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Create new edition"
+              } %>
+            <% end %>
+          <% end %>
+          <% if !@edition.draft? %>
+            <%= form_with url: admin_edition_path(@edition), method: :delete, classes: "govuk-!-margin-bottom-0" do |f| %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Delete",
+                destructive: true,
+              } %>
+            <% end %>
+          <% end %>
+
+          <%= preview_edition_link(@edition, false, { class: "govuk-link", style_as_button: true }) %>
+        </div>
+      </div>
+      <div class="app-side">
+        <div class="app-side__actions">
+          <%= render "admin/link_check_reports/link_check_report", edition: @edition, report: @edition.latest_link_check_report %>
+        </div>
+      </div>
+      <div class="app-side">
+        <div class="app-side__actions">
+          <%= render "govspeak_guidance_design_system" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

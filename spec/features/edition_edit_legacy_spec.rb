@@ -1,6 +1,6 @@
-feature "Edit Edition page" do
+feature "Edit Edition (legacy) page", js: true do
   before do
-    login_as_stub_user_with_design_system_permission
+    login_as_stub_user
     Sidekiq::Testing.inline!
     Sidekiq::Worker.clear_all
   end
@@ -10,17 +10,7 @@ feature "Edit Edition page" do
   end
 
   let(:asset_manager) { double }
-  before do
-    asset = {
-      "id" => "http://asset-manager.dev.gov.uk/assets/an_image_id",
-      "file_url" => "http://path/to/image_one.jpg",
-      "content_type" => "image/jpeg",
-    }
-
-    allow(GdsApi).to receive(:asset_manager).and_return(asset_manager)
-    allow(asset_manager).to receive(:create_asset).and_return(asset)
-    allow(asset_manager).to receive(:asset).with("an_image_id").and_return(asset)
-  end
+  before { allow(GdsApi).to receive(:asset_manager).and_return(asset_manager) }
 
   def assert_details_contains(content_id, key, expected_value)
     assert_publishing_api_put_content(
@@ -48,6 +38,11 @@ feature "Edit Edition page" do
     )
   end
 
+  def reorder_parts(index, new_index)
+    find(:css, "input#edition_parts_attributes_#{index}_order", visible: false)
+      .execute_script("this.value = '#{new_index}'")
+  end
+
   context "creating new editions" do
     scenario "when no editions are present, create a new edition" do
       visit "/admin/countries/aruba"
@@ -56,12 +51,12 @@ feature "Edit Edition page" do
 
       expect(page).to have_field("Search title", with: "Aruba travel advice")
 
-      within(:css, ".govuk-tabs__list") do
+      within(:css, ".tabbable .nav") do
         expect(page).to have_link("Edit")
         expect(page).to have_link("History & Notes")
       end
 
-      within(:css, ".govuk-tabs__list") do
+      within(:css, ".tabbable .nav") do
         click_on "History & Notes"
       end
 
@@ -75,7 +70,9 @@ feature "Edit Edition page" do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      click_on "Create new edition"
+      within(:css, ".navbar-fixed-bottom") do
+        click_on "Create new edition"
+      end
 
       expect(page).to have_field("Search title", with: @edition.title)
       expect(current_path).not_to eq("/admin/editions/#{@edition._id}/edit")
@@ -97,31 +94,26 @@ feature "Edit Edition page" do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      click_on "Create new edition"
+      within(:css, ".navbar-fixed-bottom") do
+        click_on "Create new edition"
+      end
 
       expect(page).to have_field("Search title", with: @edition.title)
       expect(current_path).not_to eq("/admin/editions/#{@edition._id}/edit")
 
-      click_on "History & Notes"
+      within(:css, ".tabbable .nav") do
+        click_on "History & Notes"
+      end
 
       within "#history" do
-        within all(".govuk-accordion__section-heading")[0] do
-          expect(page).to have_content("Version 2")
-        end
+        expect(page).to have_content("Version 2")
+        expect(page).to have_content("New version by Joe Bloggs")
 
-        within all(".govuk-accordion__section-content")[0] do
-          expect(page).to have_content("New version by Joe Bloggs")
-        end
-
-        within all(".govuk-accordion__section-heading")[1] do
-          expect(page).to have_content("Version 1")
-        end
-
-        within all(".govuk-accordion__section-content")[1] do
-          expect(page).to have_content("Publish by Joe Bloggs")
-          expect(page).to have_content("Made some changes...")
-          expect(page).to have_content("New version by GOV.UK Bot")
-        end
+        expect(page).to have_content("Version 1")
+        click_on "Version 1"
+        expect(page).to have_content("Publish by Joe Bloggs")
+        expect(page).to have_content("Made some changes...")
+        expect(page).to have_content("New version by GOV.UK Bot")
       end
     end
 
@@ -131,7 +123,18 @@ feature "Edit Edition page" do
 
       visit "/admin/editions/#{@edition._id}/edit"
 
-      expect(page).not_to have_link("Create new edition")
+      within(:css, ".navbar-fixed-bottom") do
+        expect(page).not_to have_link("Create new edition")
+      end
+    end
+
+    scenario "preventing double submits by using the Rails 'disable_with' feature" do
+      @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
+
+      visit "/admin/editions/#{@edition._id}/edit"
+
+      button = page.find("input[value='Save']")
+      expect(button[:'data-disable-with']).to be_present
     end
   end
 
@@ -139,13 +142,12 @@ feature "Edit Edition page" do
     @edition = create(:draft_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition._id}/edit"
 
-    within("h1") { expect(page).to have_content "Editing Albania" }
-    within(".govuk-caption-l") { expect(page).to have_content "Version 1" }
+    within("h1") { expect(page).to have_content "Editing Albania Version 1" }
 
     within "#edit" do
-      within_section "the fieldset labelled Versioning" do
+      within_section "the fieldset labelled What sort of change are you making?" do
         # The first version can't be a minor update...
-        expect(page).not_to have_field("A typo, style change or similar")
+        expect(page).not_to have_field("A typo, style change or similar (no update is sent to email subscribers)")
         expect(page).to have_field("Public change note")
       end
 
@@ -181,7 +183,23 @@ feature "Edit Edition page" do
 
     fill_in "Synonyms", with: "Foo,Bar"
 
-    click_on "Save"
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-one"
+    end
+
+    click_on "Add new part"
+    within :css, "#parts div.part:nth-of-type(2)" do
+      fill_in "Title", with: "Part Two"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-two"
+    end
+
+    click_navbar_button "Save"
+
+    expect(all(:css, "#parts > div.part").length).to eq(2)
 
     expect(current_path).to eq("/admin/editions/#{@edition._id}/edit")
 
@@ -191,6 +209,18 @@ feature "Edit Edition page" do
     expect(@edition.summary).to eq("Summary of the situation in Albania")
     expect(@edition.change_description).to eq("Made changes to all the stuff")
     expect(@edition.synonyms).to eq(%w[Foo Bar])
+
+    expect(@edition.parts.size).to eq(2)
+    one = @edition.parts.first
+    expect(one.title).to eq("Part One")
+    expect(one.slug).to eq("part-one")
+    expect(one.body).to eq("Body text")
+    expect(one.order).to eq(1)
+    two = @edition.parts.last
+    expect(two.title).to eq("Part Two")
+    expect(two.slug).to eq("part-two")
+    expect(two.body).to eq("Body text")
+    expect(two.order).to eq(2)
 
     assert_publishing_api_put_content(
       "2a3938e1-d588-45fc-8c8f-0f51814d5409",
@@ -220,23 +250,129 @@ feature "Edit Edition page" do
     @edition = create(:draft_travel_advice_edition, country_slug: "albania", update_type: "minor")
     visit "/admin/editions/#{@edition._id}/edit"
 
-    within("h1") { expect(page).to have_content "Editing Albania" }
-    within(".govuk-caption-l") { expect(page).to have_content "Version 2" }
+    within("h1") { expect(page).to have_content "Editing Albania Version 2" }
 
     within "#edit" do
-      within_section "the fieldset labelled Versioning" do
-        expect(page).to have_checked_field("A typo, style change or similar")
+      within_section "the fieldset labelled What sort of change are you making?" do
+        expect(page).to have_checked_field("A typo, style change or similar (no update is sent to email subscribers)")
 
-        choose "A significant change, for example a new travel restriction"
-        fill_in "Public change note", with: "Noted."
+        choose("A typo, style change or similar (no update is sent to email subscribers)")
+        expect(page.find_field("Public change note", visible: false)).not_to be_visible
+
+        choose("A significant change, for example a new travel restriction (sends an email to all subscribers and adds a change note to the summary page)")
+        expect(page.find_field("Public change note")).to be_visible
       end
     end
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     @edition.reload
     expect(@edition.update_type).to eq("major")
-    expect(@edition.change_description).to eq("Noted.")
+  end
+
+  scenario "slug for expect(parts).to be automatically generated" do
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
+
+      expect(find(:css, ".slug").value).to eq("part-one")
+    end
+  end
+
+  scenario "removing a part from an edition" do
+    @edition = build(:travel_advice_edition, country_slug: "albania", state: "draft")
+    @edition.parts.build(title: "Part One", body: "Body text", slug: "part-one")
+    @edition.parts.build(title: "Part Two", body: "Body text", slug: "part-two")
+    @edition.save!
+
+    @edition.parts.build
+    @edition.parts.first.update!(
+      title: "Part One",
+      slug: "part-one",
+      body: "Body text",
+    )
+
+    @edition.parts.build
+    @edition.parts.second.update!(
+      title: "Part Two",
+      slug: "part-two",
+      body: "Body text",
+    )
+
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    remove_part_button = "$('.remove-associated').last()"
+    page.execute_script("#{remove_part_button}.click()")
+
+    input_value = page.evaluate_script("#{remove_part_button}.prev(':input').val()")
+    expect(input_value).to eq("1")
+
+    click_navbar_button "Save"
+    expect(page).to have_css(".alert", text: "#{@edition.title} updated")
+
+    expect(current_path).to eq("/admin/editions/#{@edition._id}/edit")
+
+    assert_details_contains(
+      "2a3938e1-d588-45fc-8c8f-0f51814d5409",
+      "parts",
+      [
+        {
+          "slug" => "part-one",
+          "title" => "Part One",
+          "body" => [
+            { "content_type" => "text/govspeak", "content" => "Body text" },
+          ],
+        },
+      ],
+    )
+
+    expect(page).to have_no_content("Part Two")
+  end
+
+  scenario "adding an invalid part" do
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-one"
+    end
+
+    click_navbar_button "Save"
+
+    expect(page).to have_content("We had some problems saving: Part 1: Title can't be blank.")
+  end
+
+  scenario "updating the parts sort order" do
+    @edition = create(:travel_advice_edition, country_slug: "albania", state: "draft")
+
+    @edition.parts << Part.new(title: "Wallace", body: "some text", slug: "wallace", order: 1)
+    @edition.parts << Part.new(title: "Gromit", body: "some text", slug: "gromit", order: 2)
+    @edition.parts << Part.new(title: "Cheese", body: "some text", slug: "cheese", order: 3)
+    @edition.save!
+
+    visit "/admin/editions/#{@edition._id}/edit"
+
+    # Capybara nth-of-type tests need an element in their selector
+    # https://github.com/jnicklas/capybara/issues/1109
+    expect(page).to have_selector("#parts div.part:nth-of-type(1) .panel-title a", text: "Wallace")
+    expect(page).to have_selector("#parts div.part:nth-of-type(2) .panel-title a", text: "Gromit")
+    expect(page).to have_selector("#parts div.part:nth-of-type(3) .panel-title a", text: "Cheese")
+
+    reorder_parts(0, 2)
+    reorder_parts(1, 0)
+    reorder_parts(2, 1)
+
+    click_navbar_button "Save"
+
+    expect(page).to have_selector("#parts div.part:nth-of-type(1) .panel-title a", text: "Gromit")
+    expect(page).to have_selector("#parts div.part:nth-of-type(2) .panel-title a", text: "Cheese")
+    expect(page).to have_selector("#parts div.part:nth-of-type(3) .panel-title a", text: "Wallace")
   end
 
   scenario "save and publish an edition" do
@@ -258,12 +394,20 @@ feature "Edit Edition page" do
     now = Time.zone.now.utc
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "Save & Publish"
+    click_on "Add new part"
+    within :css, "#parts div.part:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
+    end
+
+    click_navbar_button "Save & Publish"
 
     @old_edition.reload
     expect(@old_edition).to be_archived
 
     @edition.reload
+    expect(@edition.parts.size).to eq 1
+    expect(@edition.parts.first.title).to eq "Part One"
     expect(@edition).to be_published
 
     expect(@edition.published_at.to_i).to be_within(5.0).of(now.to_i)
@@ -297,7 +441,7 @@ feature "Edit Edition page" do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
       fill_in "Summary", with: "## The summary"
-      choose "A typo, style change or similar"
+      choose "A typo, style change or similar (no update is sent to email subscribers)"
 
       click_on "Save & Publish"
     end
@@ -322,6 +466,20 @@ feature "Edit Edition page" do
     assert_publishing_api_publish("2a3938e1-d588-45fc-8c8f-0f51814d5409", update_type: "minor")
   end
 
+  scenario "attempting to edit a published edition" do
+    @edition = create(:published_travel_advice_edition, country_slug: "albania")
+    @draft = create(:draft_travel_advice_edition, country_slug: "albania")
+
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    expect(page).not_to have_content "Add new part"
+    expect(page).to have_css("#edition_title[disabled]")
+    expect(page).to have_css("#edition_overview[disabled]")
+    expect(page).to have_css("#edition_summary[disabled]")
+    expect(page).to have_css(".btn-success[disabled]")
+    expect(page).not_to have_button("Save & Publish")
+  end
+
   scenario "preview an edition" do
     @edition = create(:published_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
@@ -333,7 +491,9 @@ feature "Edit Edition page" do
     @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    click_on "History & Notes"
+    within(:css, ".tabbable .nav") do
+      click_on "History & Notes"
+    end
 
     within(:css, "#history") do
       fill_in "Note", with: "This is a test comment"
@@ -356,7 +516,7 @@ feature "Edit Edition page" do
     check "The FCO advise against all but essential travel to parts of the country"
     check "The FCO advise against all travel to parts of the country"
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     assert_details_contains(
       "48baf826-7d71-4fea-a9c4-9730fd30eb9e",
@@ -364,7 +524,6 @@ feature "Edit Edition page" do
       %w[avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts],
     )
 
-    expect(@edition.reload.alert_status).to eq %w[avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts]
     expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
     expect(page).to have_checked_field("The FCO advise against all travel to parts of the country")
     expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
@@ -373,13 +532,13 @@ feature "Edit Edition page" do
     uncheck "The FCO advise against all but essential travel to parts of the country"
     uncheck "The FCO advise against all travel to parts of the country"
 
+    # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", [])
 
-    expect(@edition.reload.alert_status).to eq []
     expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
     expect(page).to have_unchecked_field("The FCO advise against all travel to parts of the country")
     expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
@@ -414,7 +573,7 @@ feature "Edit Edition page" do
     expect(page).to have_field("Upload a new map image", type: "file")
     attach_file("Upload a new map image", file_one.path)
 
-    click_button "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       expect(page).to have_selector("img[src$='image_one.jpg']")
@@ -431,7 +590,7 @@ feature "Edit Edition page" do
     WebMock::RequestRegistry.instance.reset!
 
     # ensure image is not removed on save
-    click_button "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       expect(page).to have_selector("img[src$='image_one.jpg']")
@@ -452,7 +611,7 @@ feature "Edit Edition page" do
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
 
-    click_button "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-image") do
       expect(page).to have_selector("img[src$='image_two.jpg']")
@@ -466,12 +625,12 @@ feature "Edit Edition page" do
     )
 
     # remove image
-    check "Remove image"
+    check "Remove image?"
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
 
-    click_button "Save"
+    click_navbar_button "Save"
 
     expect(page).not_to have_selector(".uploaded-image")
 
@@ -508,7 +667,7 @@ feature "Edit Edition page" do
     expect(page).to have_field("Upload a new PDF", type: "file")
     attach_file("Upload a new PDF", file_one.path)
 
-    click_button "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
@@ -528,7 +687,7 @@ feature "Edit Edition page" do
     WebMock::RequestRegistry.instance.reset!
 
     # ensure document is not removed on save
-    click_button "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       expect(page).to have_link("Download document_one.pdf", href: "http://path/to/document_one.pdf")
@@ -552,7 +711,7 @@ feature "Edit Edition page" do
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     within(:css, ".uploaded-document") do
       expect(page).to have_link("Download document_two.pdf", href: "http://path/to/document_two.pdf")
@@ -569,12 +728,12 @@ feature "Edit Edition page" do
     )
 
     # remove document
-    check "Remove PDF"
+    check "Remove PDF?"
 
     # Clear the previous request before saving again.
     WebMock::RequestRegistry.instance.reset!
 
-    click_on "Save"
+    click_navbar_button "Save"
 
     expect(page).not_to have_selector(".uploaded-document")
 
@@ -600,7 +759,7 @@ feature "Edit Edition page" do
     visit "/admin/editions/#{@edition.to_param}/edit"
 
     fill_in "Summary", with: "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
-    click_on "Save"
+    click_navbar_button "Save"
 
     expect(page).to have_content("Don't include hover text in links. Delete the text in quotation marks eg \\\"This appears when you hover over the link.")
   end

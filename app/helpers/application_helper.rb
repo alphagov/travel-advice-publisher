@@ -15,6 +15,15 @@ module ApplicationHelper
       url = admin_edition_historical_edition_path(edition)
     end
     name = name.downcase.split(" ").first if short
+
+    if options[:style_as_button]
+      options = options.except(:style_as_button)
+
+      return render "govuk_publishing_components/components/button", options.merge(
+        text: name, href: url, secondary: true, target: "_blank",
+      )
+    end
+
     link_to(name, url, options.merge(target: "blank", class: "govuk-link"))
   end
 
