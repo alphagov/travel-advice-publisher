@@ -18,8 +18,8 @@
     ].delete_if{ |item| item[:user_has_permission_to_see] == false },
   }%>
   <div class="govuk-width-container">
-    <%= yield(:back_link) %>
     <%= yield(:breadcrumbs) %>
+    <%= yield(:back_link) %>
 
     <main class="govuk-main-wrapper<%= " govuk-main-wrapper--l" if yield(:back_link).blank? && yield(:breadcrumbs).blank?%>" id="main-content" role="main">
       <% if flash["notice"].present? %>
