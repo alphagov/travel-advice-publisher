@@ -35,7 +35,7 @@ end
 
 group :test do
   gem "ci_reporter_rspec"
-  gem "database_cleaner"
+  gem "database_cleaner-mongoid"
   gem "factory_bot_rails"
   gem "govuk-content-schema-test-helpers"
   gem "rails-controller-testing"
