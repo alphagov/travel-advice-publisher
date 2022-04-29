@@ -1,7 +1,7 @@
 //= require jquery-ui.custom.min
 //= require jquery.mustache
 //= require ./admin/editions/form.js
-//= require ./modules/sortable_parts.js
+//= require ./modules/sortable_parts_legacy.js
 //= require ./travel_advice_utils.js
 
 var formtasticIds = {}
