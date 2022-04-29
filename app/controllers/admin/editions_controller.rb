@@ -27,6 +27,12 @@ class Admin::EditionsController < ApplicationController
 
   def diff
     @comparison = @country.editions.find(params[:compare_id])
+
+    if is_legacy_layout?
+      render "diff_legacy"
+    else
+      render "diff"
+    end
   end
 
   def edit

@@ -6,9 +6,6 @@ $added-color: #ddffdd;
 $strong-added-color: #77f177;
 $removed-color: #ffdddd;
 $strong-removed-color: #ffaaaa;
-$gray-lighter: govuk-colour("light-grey");
-$state-danger-text: govuk-colour("red");
-$state-success-text: govuk-colour("green");
 
 .diff {
   border: 1px solid $gray-lighter;

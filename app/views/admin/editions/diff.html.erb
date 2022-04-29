@@ -1,23 +1,56 @@
-<ul class="breadcrumb">
-  <li>
-    <%= link_to "All countries", admin_countries_path %>
-  </li>
-  <li><%= link_to @country.name, admin_country_path(@country.slug) %></li>
-  <li class="active">Editing <%= @country.name %></li>
-</ul>
-
-<div class="page-title">
-  <h1><%= @country.name %> <small>Comparing Version <%= @edition.version_number %> with <%= @comparison.version_number %></small></h1>
-</div>
-
-<p>
-  <%= link_to "Back to version #{@edition.version_number}", edit_admin_edition_path(@edition), :class => "btn btn-default" %>
-</p>
-
-<h2>Summary</h2>
-<%= diff_html(@comparison.summary, @edition.summary) %>
-
-<% @edition.parts.each_with_index do |part, index| %>
-  <h2><%= part.title.present? ? part.title : 'Untitled part' %></h2>
-  <%= diff_html(@comparison.parts[index].try(:body), part.body) %>
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+      }
+    ]
+  } %>
 <% end %>
+
+<%= content_for :title, @country.name %>
+<%= content_for :context, "Comparing Version #{@edition.version_number} with #{@comparison.version_number}" %>
+
+<% content_for :back_link do %>
+  <%= render "govuk_publishing_components/components/back_link", {
+    text: "Back to version #{@edition.version_number}",
+    href: edit_admin_edition_path(@edition)
+  } %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+
+    <div class="govuk-!-margin-bottom-5">
+      <%= render "govuk_publishing_components/components/heading", {
+        text: "Summary",
+        margin_bottom: 3
+      } %>
+
+      <div class="govuk-body">
+        <%= diff_html(@comparison.summary, @edition.summary) %>
+      </div>
+    </div>
+
+    <% @edition.parts.each_with_index do |part, index| %>
+      <div class="govuk-!-margin-bottom-5">
+        <%= render "govuk_publishing_components/components/heading", {
+          text: part.title.present? ? part.title : "Untitled part",
+          margin_bottom: 3
+        } %>
+
+        <div class="govuk-body">
+          <%= diff_html(@comparison.parts[index].try(:body), part.body) %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
