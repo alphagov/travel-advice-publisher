@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "6.1.5.1"
+gem "rails", "7.0.2.4"
 
 gem "diffy"
 gem "gds-api-adapters"
@@ -17,6 +17,7 @@ gem "pdf-reader"
 gem "plek"
 gem "sassc-rails"
 gem "slimmer"
+gem "sprockets"
 gem "state_machines"
 gem "state_machines-mongoid"
 gem "uglifier"
@@ -34,7 +35,7 @@ end
 
 group :test do
   gem "ci_reporter_rspec"
-  gem "database_cleaner"
+  gem "database_cleaner-mongoid"
   gem "factory_bot_rails"
   gem "govuk-content-schema-test-helpers"
   gem "rails-controller-testing"
