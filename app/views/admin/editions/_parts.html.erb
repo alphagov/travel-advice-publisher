@@ -7,7 +7,7 @@
     @edition.parts.in_order.each do | part |
       items.push({
         heading: {
-          text: part.title.present? ? part.title : "Untitled part"
+          text: render('part_title', part: part)
         },
         content: {
           html:  render('part', part: part)
@@ -16,10 +16,12 @@
     end
   %>
 
-  <%= render "govuk_publishing_components/components/accordion", {
-    id: "parts",
-    items: items
-  } %>
+  <div data-module="sortable-parts">
+    <%= render "govuk_publishing_components/components/accordion", {
+      id: "parts",
+      items: items
+    } %>
+  </div>
 
   <%= render "govuk_publishing_components/components/button", {
     text: "Add new part",

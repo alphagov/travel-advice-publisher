@@ -1,3 +1,18 @@
 .remove-part-button {
   float: right;
 }
+
+.part__drag-handle {
+  margin-right: govuk-spacing(2);
+}
+
+.part__drag-handle-icon {
+  width: govuk-spacing(2);
+  fill: govuk-colour("mid-grey");
+}
+
+.part__drag-item--chosen {
+  background-color: govuk-colour('light-grey');
+  outline: 2px dotted $govuk-border-colour;
+  padding: govuk-spacing(1);
+}

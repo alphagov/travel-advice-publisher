@@ -2,3 +2,4 @@
 //= require govuk_publishing_components/all_components
 //= require govuk_publishing_components/analytics
 //= require analytics
+//= require ./modules/sortable-parts
