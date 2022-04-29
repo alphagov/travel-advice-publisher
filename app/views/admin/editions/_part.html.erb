@@ -1,0 +1,37 @@
+<div>
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Title",
+      bold: true,
+    },
+    name: "title",
+    value: part.title,
+  } %>
+
+  <%= render "govuk_publishing_components/components/textarea", {
+    label: {
+      text: "Body",
+      bold: true,
+    },
+    name: "body",
+    rows: 15,
+    value: part.body,
+  } %>
+
+  <%= render "govuk_publishing_components/components/input", {
+    label: {
+      text: "Slug",
+      bold: true,
+    },
+    name: "slug",
+    hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
+    value: part.slug,
+  } %>
+
+  <div class="remove-part-button">
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Remove part",
+      destructive: true
+    } %>
+  </div>
+</div>
