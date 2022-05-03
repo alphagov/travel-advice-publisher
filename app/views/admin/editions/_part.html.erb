@@ -4,7 +4,7 @@
       text: "Title",
       bold: true,
     },
-    name: "title",
+    name: "edition[parts_attributes][#{index}][title]",
     value: part.title,
   } %>
 
@@ -13,7 +13,7 @@
       text: "Body",
       bold: true,
     },
-    name: "body",
+    name: "edition[parts_attributes][#{index}][body]",
     rows: 15,
     value: part.body,
   } %>
@@ -23,10 +23,14 @@
       text: "Slug",
       bold: true,
     },
-    name: "slug",
+    name: "edition[parts_attributes][#{index}][slug]",
     hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
     value: part.slug,
   } %>
+
+  <input type="hidden" name="edition[parts_attributes][<%= index %>][id]" value="<%= part.id %>" />
+  <input type="hidden" name="edition[parts_attributes][<%= index %>][_destroy]" value="false" />
+  <input type="hidden" name="edition[parts_attributes][<%= index %>][order]" value="<%= part.order %>" />
 
   <div class="remove-part-button">
     <%= render "govuk_publishing_components/components/button", {
