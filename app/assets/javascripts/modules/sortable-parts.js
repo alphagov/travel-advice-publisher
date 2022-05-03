@@ -9,10 +9,21 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   }
 
   SortableParts.prototype.init = function () {
-    new Sortable(this.module.querySelector('#parts'), {
+    this.sortable = window.Sortable.create(this.module.querySelector('#parts'), {
       handle: ".part__drag-handle",
-      chosenClass: 'part__drag-item--chosen'
+      chosenClass: 'part__drag-item--chosen',
+      onSort: function() {
+        this.updateOrderIndexes()
+      }.bind(this)
     })
+  }
+
+  SortableParts.prototype.updateOrderIndexes = function() {
+    var orderInputs = this.module.querySelectorAll('.edition-part__order')
+
+    for (var i = 0; i < orderInputs.length; i++) {
+      orderInputs[i].setAttribute('value', i + 1)
+    }
   }
 
   Modules.SortableParts = SortableParts

@@ -30,7 +30,7 @@
 
   <input type="hidden" name="edition[parts_attributes][<%= index %>][id]" value="<%= part.id %>" />
   <input type="hidden" name="edition[parts_attributes][<%= index %>][_destroy]" value="false" />
-  <input type="hidden" name="edition[parts_attributes][<%= index %>][order]" value="<%= part.order %>" />
+  <input type="hidden" class="edition-part__order" name="edition[parts_attributes][<%= index %>][order]" value="<%= part.order %>" />
 
   <div class="remove-part-button">
     <%= render "govuk_publishing_components/components/button", {
