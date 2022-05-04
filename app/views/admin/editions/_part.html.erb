@@ -5,7 +5,7 @@
       bold: true,
     },
     name: "edition[parts_attributes][#{index}][title]",
-    value: part.title,
+    value: part[:title],
   } %>
 
   <%= render "govuk_publishing_components/components/textarea", {
@@ -15,7 +15,7 @@
     },
     name: "edition[parts_attributes][#{index}][body]",
     rows: 15,
-    value: part.body,
+    value: part[:body],
   } %>
 
   <%= render "govuk_publishing_components/components/input", {
@@ -25,12 +25,12 @@
     },
     name: "edition[parts_attributes][#{index}][slug]",
     hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
-    value: part.slug,
+    value: part[:slug],
   } %>
 
-  <input type="hidden" name="edition[parts_attributes][<%= index %>][id]" value="<%= part.id %>" />
+  <input type="hidden" name="edition[parts_attributes][<%= index %>][id]" value="<%= part[:id] %>" />
   <input type="hidden" name="edition[parts_attributes][<%= index %>][_destroy]" value="false" />
-  <input type="hidden" class="edition-part__order" name="edition[parts_attributes][<%= index %>][order]" value="<%= part.order %>" />
+  <input type="hidden" class="edition-part__order" name="edition[parts_attributes][<%= index %>][order]" value="<%= part[:order] %>" />
 
   <div class="remove-part-button">
     <%= render "govuk_publishing_components/components/button", {
