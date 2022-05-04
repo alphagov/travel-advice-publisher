@@ -1,30 +1,30 @@
-<%= render "govuk_publishing_components/components/fieldset", {
-  legend_text: "Parts (govspeak available)",
-  heading_size: "m",
-} do %>
-  <%
-    items = []
-    @edition.parts.in_order.each_with_index do | part, index |
-      items.push({
-        heading: {
-          text: render('part_title', part: part)
-        },
-        content: {
-          html:  render('part', part: part, index: index)
-        }
-      })
-    end
-  %>
+<div data-module="parts">
+  <%= render "govuk_publishing_components/components/fieldset", {
+    legend_text: "Parts (govspeak available)",
+    heading_size: "m",
+  } do %>
+    <%
+      items = []
+      @edition.parts.in_order.each_with_index do | part, index |
+        items.push({
+          heading: {
+            text: render('part_title', part: part)
+          },
+          content: {
+            html:  render('part', part: part, index: index)
+          }
+        })
+      end
+    %>
 
-  <div data-module="sortable-parts">
     <%= render "govuk_publishing_components/components/accordion", {
       id: "parts",
       items: items
     } %>
-  </div>
 
-  <%= render "govuk_publishing_components/components/button", {
-    text: "Add new part",
-    secondary_solid: true,
-  } %>
-<% end %>
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Add new part",
+      secondary_solid: true,
+    } %>
+  <% end %>
+</div>

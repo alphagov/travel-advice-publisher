@@ -4,11 +4,15 @@ window.GOVUK = window.GOVUK || {}
 window.GOVUK.Modules = window.GOVUK.Modules || {};
 
 (function (Modules) {
-  function SortableParts (module) {
+  function Parts (module) {
     this.module = module
   }
 
-  SortableParts.prototype.init = function () {
+  Parts.prototype.init = function () {
+    this.initSortable()
+  }
+
+  Parts.prototype.initSortable = function () {
     this.sortable = window.Sortable.create(this.module.querySelector('#parts'), {
       handle: ".part__drag-handle",
       chosenClass: 'part__drag-item--chosen',
@@ -18,7 +22,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     })
   }
 
-  SortableParts.prototype.updateOrderIndexes = function() {
+  Parts.prototype.updateOrderIndexes = function() {
     var orderInputs = this.module.querySelectorAll('.edition-part__order')
 
     for (var i = 0; i < orderInputs.length; i++) {
@@ -26,5 +30,5 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     }
   }
 
-  Modules.SortableParts = SortableParts
+  Modules.Parts = Parts
 })(window.GOVUK.Modules)
