@@ -3,7 +3,7 @@
 }
 
 .part__drag-handle {
-  margin-right: govuk-spacing(2);
+  padding-right: govuk-spacing(2);
 }
 
 .part__drag-handle-icon {
@@ -12,7 +12,7 @@
 }
 
 .part__drag-item--chosen {
-  background-color: govuk-colour('light-grey');
-  outline: 2px dotted $govuk-border-colour;
+  background-color: govuk-colour('yellow');
+  outline: govuk-spacing(1) dashed govuk-colour('black');
   padding: govuk-spacing(1);
 }
