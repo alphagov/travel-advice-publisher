@@ -1,4 +1,4 @@
-<div data-module="parts">
+<div class="parts-wrapper" data-module="parts">
   <%= render "govuk_publishing_components/components/fieldset", {
     legend_text: "Parts (govspeak available)",
     heading_size: "m",
@@ -27,6 +27,7 @@
     <%= render "govuk_publishing_components/components/button", {
       text: "Add new part",
       secondary_solid: true,
+      classes: "js-add-new-part",
     } %>
   <% end %>
 </div>

@@ -16,3 +16,7 @@
   outline: govuk-spacing(1) dashed govuk-colour('black');
   padding: govuk-spacing(1);
 }
+
+.js-enabled .part__show-by-default {
+  display: block;
+}
