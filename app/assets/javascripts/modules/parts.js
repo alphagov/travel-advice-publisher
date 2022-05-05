@@ -104,7 +104,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   }
 
   Parts.prototype.convertTitleToSlug = function (title) {
-    return title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
+    return title.trim().toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
   }
 
   Modules.Parts = Parts
