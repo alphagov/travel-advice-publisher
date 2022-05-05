@@ -12,6 +12,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     this.initSortable()
     this.initAddNewPartBtn()
     this.initRemovePartBtns()
+    this.initTitleListeners()
   }
 
   Parts.prototype.initSortable = function () {
@@ -46,6 +47,8 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     template.firstElementChild.innerHTML = template.firstElementChild.innerHTML.replaceAll('{{ insert-part-index-here }}', newId)
     template.querySelector(".govuk-accordion__section-content").classList.add("part__show-by-default")
     template.querySelector(".edition-part__id").remove()
+
+    this.initTitleListener(template.querySelector(".js-part__title-input"))
     this.initRemovePartBtn(template.querySelector(".js-part__remove-button"))
 
     return template
@@ -77,6 +80,31 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
       part.querySelector('.edition-part__destroy').value = 1
       part.classList.add('part-accordion__section--hidden')
     }.bind(this))
+  }
+
+  Parts.prototype.initTitleListeners = function() {
+    var titleInputs = this.module.querySelectorAll(".js-part__title-input")
+
+    for (var i = 0; i < titleInputs.length; i++) {
+      var titleInput = titleInputs[i]
+      this.initTitleListener( titleInput )
+    }
+  }
+
+  Parts.prototype.initTitleListener = function( titleInput ) {
+    titleInput.addEventListener('change', function(e) {
+      var target = e.currentTarget
+      var partIndex = target.getAttribute("data-part-index")
+      var title = this.module.querySelector("#part-title-" + partIndex)
+      var slugInput = this.module.querySelector("input[name='edition[parts_attributes][" + partIndex + "][slug]']")
+
+      title.innerText = target.value
+      slugInput.value = this.convertTitleToSlug( target.value )
+    }.bind(this))
+  }
+
+  Parts.prototype.convertTitleToSlug = function ( title ) {
+    return title.toLowerCase().replace(/[^\w ]+/g, '').replace(/ +/g, '-')
   }
 
   Modules.Parts = Parts

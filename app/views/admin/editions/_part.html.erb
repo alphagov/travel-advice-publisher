@@ -7,14 +7,12 @@
     </h2>
   </div>
   <div id="parts-content-<%= index %>" class="govuk-accordion__section-content" aria-labelledby="parts-heading-<%= index %>">
-    <%= render "govuk_publishing_components/components/input", {
-      label: {
-        text: "Title",
-        bold: true,
-      },
-      name: "edition[parts_attributes][#{index}][title]",
-      value: part[:title],
-    } %>
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-!-font-weight-bold" for="title-<%= index %>">
+        Title
+      </label>
+      <input class="govuk-input js-part__title-input" data-part-index="<%= index %>" id="title-<%= index %>" name="edition[parts_attributes][<%= index %>][title]" type="text" value="<%= part[:title] %>" />
+    </div>
 
     <%= render "govuk_publishing_components/components/textarea", {
       label: {
