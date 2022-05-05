@@ -7,16 +7,5 @@
 %>
 
 <template id="new-part-template">
-  <div class="govuk-accordion__section">
-    <div class="govuk-accordion__section-header">
-      <h2 class="govuk-accordion__section-heading">
-        <span class="govuk-accordion__section-button" id="parts-heading-<%= index_placeholder %>">
-          <%= render 'part_title', part: part %>
-        </span>
-      </h2>
-    </div>
-    <div id="parts-heading-<%= index_placeholder %>" class="govuk-accordion__section-content part__show-by-default" aria-labelledby="parts-heading-<%= index_placeholder %>">
-      <%= render 'part', part: part, index: index_placeholder %>
-    </div>
-  </div>
+  <%= render 'part', part: part, index: index_placeholder %>
 </template>

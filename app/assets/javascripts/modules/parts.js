@@ -15,6 +15,8 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   }
 
   Parts.prototype.initSortable = function () {
+    if (!this.module.querySelector("#parts")) return
+
     window.Sortable.create(this.module.querySelector("#parts"), {
       handle: ".part__drag-handle",
       chosenClass: "part__drag-item--chosen",
@@ -42,6 +44,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   Parts.prototype.initialiseTemplate = function( template ) {
     var newId = this.module.querySelectorAll('#parts .govuk-accordion__section').length + 1
     template.firstElementChild.innerHTML = template.firstElementChild.innerHTML.replaceAll('{{ insert-part-index-here }}', newId)
+    template.querySelector(".govuk-accordion__section-content").classList.add("part__show-by-default")
     template.querySelector(".edition-part__id").remove()
     this.initRemovePartBtn(template.querySelector(".js-part__remove-button"))
 

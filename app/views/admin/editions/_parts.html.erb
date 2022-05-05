@@ -3,24 +3,11 @@
     legend_text: "Parts (govspeak available)",
     heading_size: "m",
   } do %>
-    <%
-      items = []
-      @edition.parts.in_order.each_with_index do | part, index |
-        items.push({
-          heading: {
-            text: render('part_title', part: part)
-          },
-          content: {
-            html:  render('part', part: part, index: index)
-          }
-        })
-      end
-    %>
-
-    <%= render "govuk_publishing_components/components/accordion", {
-      id: "parts",
-      items: items
-    } %>
+    <div class="govuk-accordion" data-module="govuk-accordion" id="parts">
+      <% @edition.parts.in_order.each_with_index do | part, index | %>
+        <%= render 'part', part: part, index: index %>
+      <% end %>
+    </div>
 
     <%= render "part_template" %>
 
