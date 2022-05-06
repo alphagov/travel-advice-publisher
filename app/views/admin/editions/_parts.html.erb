@@ -4,9 +4,11 @@
     heading_size: "m",
   } do %>
     <div class="govuk-accordion" data-module="govuk-accordion" id="parts">
-      <% @edition.parts.in_order.each_with_index do | part, index | %>
-        <%= render 'part', part: part, index: index %>
-      <% end %>
+      <div class="govuk-accordion__wrapper">
+        <% @edition.parts.in_order.each_with_index do | part, index | %>
+          <%= render 'part', part: part, index: index %>
+        <% end %>
+      </div>
     </div>
 
     <%= render "part_template" %>
