@@ -1,0 +1,18 @@
+<%= render "govuk_publishing_components/components/summary_list", {
+  title: "Metadata",
+  items: [
+    {
+      field: "Search title",
+      value: @edition.title
+    },
+    {
+      field: "Search description (optional)",
+      value: @edition.overview
+    },
+    {
+      field: "Country Synonyms (optional)",
+      value: @edition.csv_synonyms
+    }
+  ],
+  borderless: true
+} %>
