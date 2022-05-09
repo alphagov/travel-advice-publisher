@@ -16,10 +16,10 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
   }
 
   Parts.prototype.initSortable = function () {
-    var accordion__wrapper = this.module.querySelector('.govuk-accordion__wrapper')
-    if (!accordion__wrapper.childElementCount) return
+    var accordionWrapper = this.module.querySelector('.govuk-accordion__wrapper')
+    if (!accordionWrapper.childElementCount) return
 
-    window.Sortable.create(accordion__wrapper, {
+    window.Sortable.create(accordionWrapper, {
       handle: '.part__drag-handle',
       chosenClass: 'part__drag-item--chosen',
       onSort: function () {
@@ -34,7 +34,7 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
     btn.addEventListener('click', function (e) {
       e.preventDefault()
 
-      var template = document.getElementById('new-part-template')
+      var template = this.module.querySelector('#new-part-template')
       template = template.content.cloneNode(true)
       template = this.initialiseTemplate(template)
 
