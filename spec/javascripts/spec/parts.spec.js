@@ -152,4 +152,25 @@ describe('Parts module', function () {
       expect(part.querySelector('input[name="edition[parts_attributes][0][slug]"]').value).toEqual('travel-advice-part-1')
     })
   })
+
+  describe('convert titles to slugs', function () {
+    it('converts to lowercase', function () {
+      expect(module.convertTitleToSlug('THING')).toBe('thing')
+    })
+
+    it('converts spaces to hyphens', function () {
+      expect(module.convertTitleToSlug('The Snail and the Slug'))
+        .toBe('the-snail-and-the-slug')
+    })
+
+    it('strips out non-word characters', function () {
+      expect(module.convertTitleToSlug('The Slug\'s trail of destruction:'))
+        .toBe('the-slugs-trail-of-destruction')
+    })
+
+    it('strips out extra white space', function () {
+      expect(module.convertTitleToSlug('The Snail and the Slug '))
+        .toBe('the-snail-and-the-slug')
+    })
+  })
 })
