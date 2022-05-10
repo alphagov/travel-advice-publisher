@@ -1,0 +1,24 @@
+<%= render "govuk_publishing_components/components/summary_list", {
+  title: "Summary content",
+  items: [
+    {
+      field: "Alert status",
+      value: @edition.alert_status
+    },
+    {
+      field: "Map of #{@country.name}",
+      value: @edition.image.present? ? link_to("Map of #{@country.name}", @edition.image["file_url"], {class: "govuk-link"}): "No Map attached"
+    },
+    {
+      field: "PDF Document",
+      value: @edition.document.present? ?
+        link_to("Download #{@edition.document['name']}", @edition.document["file_url"], {class: "govuk-link"})
+        : "No Document attached"
+    },
+    {
+      field: "Summary",
+      value: sanitize(@edition.summary.truncate(500, omission: "... (For full content: #{preview_edition_link(@edition, false, { class: "govuk-link" })})"))
+    }
+  ],
+  borderless: true
+} %>

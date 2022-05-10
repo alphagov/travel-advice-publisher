@@ -604,4 +604,42 @@ feature "Edit Edition page" do
 
     expect(page).to have_content("Don't include hover text in links. Delete the text in quotation marks eg \\\"This appears when you hover over the link.")
   end
+
+  scenario "published editions should be read only" do
+    @edition = create(:published_travel_advice_edition, country_slug: "albania")
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    expect(page).not_to have_field("Search title")
+    expect(page).not_to have_field("Search description (optional)")
+    expect(page).not_to have_field("Public change note")
+    expect(page).not_to have_field("Summary (govspeak available)")
+    expect(page).not_to have_field("Country Synonyms (optional)")
+
+    within :css, ".gem-c-summary-list:nth-of-type(1)" do
+      expect(page).to have_content("Metadata")
+      expect(page).to have_content("Search title")
+      expect(page).to have_content("Search description (optional)")
+      expect(page).to have_content("Country Synonyms (optional)")
+    end
+
+    within :css, ".gem-c-summary-list:nth-of-type(2)" do
+      expect(page).to have_content("Summary content")
+      expect(page).to have_content("Alert status")
+      expect(page).to have_content("Map of Albania")
+      expect(page).to have_content("PDF Document")
+      expect(page).to have_content("Summary")
+    end
+
+    within :css, ".gem-c-summary-list:nth-of-type(3)" do
+      expect(page).to have_content("Parts")
+    end
+
+    expect(page).not_to have_button("Save")
+    expect(page).not_to have_button("Save & Publish")
+    expect(page).not_to have_link("Cancel")
+
+    expect(page).to have_button("Update review date")
+    expect(page).to have_button("Create new edition")
+    expect(page).to have_link("View on site")
+  end
 end
