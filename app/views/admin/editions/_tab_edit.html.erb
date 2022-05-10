@@ -46,7 +46,7 @@
             <% end %>
           <% end %>
           <%= preview_edition_link(@edition, false, { class: "govuk-link", style_as_button: true }) %>
-          <% if !@edition.draft? %>
+          <% if @edition.draft? %>
             <%= form_with url: admin_edition_path(@edition), method: :delete, classes: "govuk-!-margin-bottom-0" do |f| %>
               <%= render "govuk_publishing_components/components/button", {
                 text: "Delete edition",
