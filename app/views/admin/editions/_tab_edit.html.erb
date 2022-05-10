@@ -62,11 +62,13 @@
           <%= render "admin/link_check_reports/link_check_report", edition: @edition, report: @edition.latest_link_check_report %>
         </div>
       </div>
-      <div class="app-side">
-        <div class="app-side__actions">
-          <%= render "govspeak_guidance_design_system" %>
+      <% if @edition.draft? %>
+        <div class="app-side">
+          <div class="app-side__actions">
+            <%= render "govspeak_guidance_design_system" %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
