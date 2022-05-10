@@ -1,9 +1,18 @@
+<%
+  alert_statuses = render("govuk_publishing_components/components/list", {
+    visible_counters: true,
+    items: alert_statuses_with_labels(@edition.alert_status).map do |option|
+      option.first
+    end
+  })
+%>
+
 <%= render "govuk_publishing_components/components/summary_list", {
   title: "Summary content",
   items: [
     {
       field: "Alert status",
-      value: @edition.alert_status
+      value: alert_statuses.present? ? alert_statuses : "None"
     },
     {
       field: "Map of #{@country.name}",
