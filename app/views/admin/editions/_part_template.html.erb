@@ -1,0 +1,11 @@
+<%
+  index_placeholder = "{{ insert-part-index-here }}"
+  part = {
+    title: "Untitled part",
+    slug: "untitled-part-#{index_placeholder}",
+  }
+%>
+
+<template id="new-part-template">
+  <%= render 'part', part: part, index: index_placeholder %>
+</template>

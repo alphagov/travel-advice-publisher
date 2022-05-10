@@ -1,7 +1,7 @@
 <%= render "govuk_publishing_components/components/summary_list", {
   title: "Parts",
   borderless: true,
-  items: @edition.parts.map do |part|
+  items: @edition.parts.in_order.map do |part|
     {
       field: part[:title],
       value: sanitize(part[:body].truncate(500, omission: "... (For full content: #{preview_edition_link(@edition, false, { class: "govuk-link" })})"))

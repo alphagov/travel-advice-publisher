@@ -1,0 +1,52 @@
+<div class="govuk-accordion__section">
+  <div class="govuk-accordion__section-header">
+    <h2 class="govuk-accordion__section-heading">
+      <span class="govuk-accordion__section-button" id="parts-heading-<%= index %>">
+        <%= render 'part_title', part: part, index: index %>
+      </span>
+    </h2>
+  </div>
+  <div id="parts-content-<%= index %>" class="govuk-accordion__section-content" aria-labelledby="parts-heading-<%= index %>">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-!-font-weight-bold" for="title-<%= index %>">
+        Title
+      </label>
+      <input class="govuk-input js-part__title-input" data-part-index="<%= index %>" id="title-<%= index %>" name="edition[parts_attributes][<%= index %>][title]" type="text" value="<%= part[:title] %>" />
+    </div>
+
+    <%= render "govuk_publishing_components/components/textarea", {
+      label: {
+        text: "Body",
+        bold: true,
+      },
+      name: "edition[parts_attributes][#{index}][body]",
+      rows: 15,
+      value: part[:body],
+    } %>
+
+    <%= render "govuk_publishing_components/components/input", {
+      label: {
+        text: "Slug",
+        bold: true,
+      },
+      name: "edition[parts_attributes][#{index}][slug]",
+      hint: 'For example "title-of-part" (no spaces, apostrophes, etc).',
+      value: part[:slug],
+    } %>
+
+    <input type="hidden" class="edition-part__id" name="edition[parts_attributes][<%= index %>][id]" value="<%= part[:id] %>" />
+    <input type="hidden" class="edition-part__destroy" name="edition[parts_attributes][<%= index %>][_destroy]" value="false" />
+    <input type="hidden" class="edition-part__order" name="edition[parts_attributes][<%= index %>][order]" value="<%= part[:order] %>" />
+
+    <div class="remove-part-button">
+      <%= render "govuk_publishing_components/components/button", {
+        text: "Remove part",
+        destructive: true,
+        classes: "js-part__remove-button",
+        data_attributes: {
+          "part-index": index,
+        },
+      } %>
+    </div>
+  </div>
+</div>

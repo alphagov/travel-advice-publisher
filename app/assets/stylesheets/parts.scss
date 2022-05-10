@@ -1,3 +1,26 @@
 .remove-part-button {
   float: right;
 }
+
+.part__drag-handle {
+  padding-right: govuk-spacing(2);
+}
+
+.part__drag-handle-icon {
+  width: govuk-spacing(2);
+  fill: govuk-colour("mid-grey");
+}
+
+.part__drag-item--chosen {
+  background-color: govuk-colour("yellow");
+  outline: govuk-spacing(1) dashed govuk-colour("black");
+  padding: govuk-spacing(1);
+}
+
+.js-enabled .part__show-by-default {
+  display: block;
+}
+
+.part-accordion__section--hidden {
+  display: none;
+}

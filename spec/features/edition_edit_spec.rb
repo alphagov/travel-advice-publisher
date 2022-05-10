@@ -642,4 +642,58 @@ feature "Edit Edition page" do
     expect(page).to have_button("Create new edition")
     expect(page).to have_link("View on site")
   end
+
+  scenario "edit form and add parts", js: true do
+    @edition = create(:draft_travel_advice_edition, country_slug: "albania")
+    visit "/admin/editions/#{@edition.to_param}/edit"
+
+    within("h1") { expect(page).to have_content "Editing Albania" }
+    within(".govuk-caption-l") { expect(page).to have_content "Version 1" }
+
+    fill_in "Search title", with: "Travel advice for Albania"
+    fill_in "Search description (optional)", with: "Read this if you're planning on visiting Albania"
+    fill_in "Public change note", with: "Made changes to all the stuff"
+    fill_in "Summary (govspeak available)", with: "Summary of the situation in Albania"
+    fill_in "Country Synonyms (optional)", with: "Foo,Bar"
+
+    click_on "Add new part"
+    within :css, "#parts div.govuk-accordion__section:first-of-type" do
+      fill_in "Title", with: "Part One"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-one"
+    end
+
+    click_on "Add new part"
+    within :css, "#parts div.govuk-accordion__section:nth-of-type(2)" do
+      fill_in "Title", with: "Part Two"
+      fill_in "Body",  with: "Body text"
+      fill_in "Slug",  with: "part-two"
+    end
+
+    click_on "Save"
+
+    expect(all(:css, "#parts div.govuk-accordion__section").length).to eq(2)
+
+    expect(current_path).to eq("/admin/editions/#{@edition.to_param}/edit")
+
+    @edition.reload
+    expect(@edition.title).to eq("Travel advice for Albania")
+    expect(@edition.overview).to eq("Read this if you're planning on visiting Albania")
+    expect(@edition.summary).to eq("Summary of the situation in Albania")
+    expect(@edition.change_description).to eq("Made changes to all the stuff")
+    expect(@edition.synonyms).to eq(%w[Foo Bar])
+    expect(@edition.parts.size).to eq(2)
+
+    one = @edition.parts.first
+    expect(one.title).to eq("Part One")
+    expect(one.slug).to eq("part-one")
+    expect(one.body).to eq("Body text")
+    expect(one.order).to eq(1)
+
+    two = @edition.parts.last
+    expect(two.title).to eq("Part Two")
+    expect(two.slug).to eq("part-two")
+    expect(two.body).to eq("Body text")
+    expect(two.order).to eq(2)
+  end
 end

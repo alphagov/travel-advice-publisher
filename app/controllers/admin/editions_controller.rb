@@ -108,6 +108,7 @@ private
         :document,
         :remove_document,
         :remove_image,
+        parts_attributes: %i[title body slug order id _destroy],
       ).merge(
         minor_update: params.dig("edition", "update_type") == "minor" ? true : nil,
         alert_status: params.dig("edition", "alert_status") || [],

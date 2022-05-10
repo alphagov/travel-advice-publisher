@@ -2,7 +2,8 @@
   "srcDir": "public/assets",
   "srcFiles": [
     "govuk-admin-template-*.js",
-    "legacy-*.js"
+    "legacy-*.js",
+    "application-*.js"
   ],
   "cssFiles": [
     "legacy-*.css"
