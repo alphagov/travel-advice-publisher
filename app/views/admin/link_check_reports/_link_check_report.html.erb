@@ -1,7 +1,14 @@
 <div class="broken-links-report" data-module="broken-links">
   <% if !report.present? %>
-    <p class="govuk-body js-broken-links__text">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
+    <div class="js-broken-links__content">
+      <p class="govuk-body">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
+    </div>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check for broken links" %>
+  <% elsif report.in_progress? %>
+    <div class="js-broken-links__content">
+      <p class="govuk-body"><strong>Please wait. Broken link report in progress.</strong></p>
+      <p class="govuk-body">Refresh the page to view to see the result.</p>
+    </div>
   <% elsif report.broken_links.any? || report.caution_links.any? %>
     <%= render "govuk_publishing_components/components/heading", {
       text: "Links",
@@ -10,39 +17,43 @@
       margin_bottom: 2,
     } %>
 
-    <% report.links.sort_by(&:status).group_by(&:status).each do |status, links| %>
-      <% next unless %w(broken caution).include? status %>
+    <div class="js-broken-links__content">
+      <% report.links.sort_by(&:status).group_by(&:status).each do |status, links| %>
+        <% next unless %w(broken caution).include? status %>
 
-      <%= render "govuk_publishing_components/components/heading", {
-        text: status.capitalize,
-        heading_level: 4,
-        font_size: "s",
-        margin_bottom: 2,
-      } %>
+        <%= render "govuk_publishing_components/components/heading", {
+          text: status.capitalize,
+          heading_level: 4,
+          font_size: "s",
+          margin_bottom: 2,
+        } %>
 
-      <ul class="govuk-list">
-        <% links.each do |link| %>
-          <li>
-            <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "govuk-link broken-links-report__link" %>
+        <ul class="govuk-list">
+          <% links.each do |link| %>
+            <li>
+              <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "govuk-link broken-links-report__link" %>
 
-            <div class="govuk-!-margin-top-3 broken-links-report__link-details">
-              <%= render "govuk_publishing_components/components/details", {
-                title: "See more details about this link"
-              } do %>
-                <p class="govuk-body-s"><%= link.problem_summary %></p>
-                <% if link.suggested_fix %>
-                  <p class="govuk-body-s"><strong>Suggested fix:</strong> <%= link.suggested_fix %></p>
+              <div class="govuk-!-margin-top-3 broken-links-report__link-details">
+                <%= render "govuk_publishing_components/components/details", {
+                  title: "See more details about this link"
+                } do %>
+                  <p class="govuk-body-s"><%= link.problem_summary %></p>
+                  <% if link.suggested_fix %>
+                    <p class="govuk-body-s"><strong>Suggested fix:</strong> <%= link.suggested_fix %></p>
+                  <% end %>
                 <% end %>
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-    <% end %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
 
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check again" %>
   <% else %>
-    <p class="govuk-body js-broken-links__text">This edition contains no broken links.</p>
+    <div class="js-broken-links__content">
+      <p class="govuk-body">This edition contains no broken links.</p>
+    </div>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check again" %>
   <% end %>
 </div>

@@ -23,18 +23,19 @@ window.GOVUK.Modules = window.GOVUK.Modules || {};
       request.onreadystatechange = function (res) {
         if (res.currentTarget.readyState === 4 && res.currentTarget.status !== 200) {
           this.module
-            .querySelector('.js-broken-links__text')
-            .innerHTML = '<strong>Error occured when checking for broken links.</strong><br/><br/>' +
-              'Status code ' + res.currentTarget.status + ': ' + res.currentTarget.statusText + '<br/><br/>' +
-              'Please refresh the page and try again.'
+            .querySelector('.js-broken-links__content')
+            .innerHTML = '<p class="govuk-body"><strong>Error occured when checking for broken links.</strong></p>' +
+              '<p class="govuk-body">Status code ' + res.currentTarget.status + ': ' + res.currentTarget.statusText + '</p>' +
+              '<p class="govuk-body">Please refresh the page and try again.</p>'
         }
       }.bind(this)
       request.send()
 
-      e.currentTarget.remove()
       this.module
-        .querySelector('.js-broken-links__text')
-        .innerHTML = '<strong>Please wait. Broken link report in progress.</strong><br/><br/>Refresh the page to view to see the result.'
+        .querySelector('.js-broken-links__content')
+        .innerHTML = '<p class="govuk-body"><strong>Please wait. Broken link report in progress.</strong></p>' +
+          '<p class="govuk-body">Refresh the page to view to see the result.</p>'
+      e.currentTarget.remove()
     }.bind(this))
   }
 
