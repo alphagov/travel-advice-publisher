@@ -3,3 +3,4 @@
 //= require govuk_publishing_components/analytics
 //= require analytics
 //= require ./modules/parts
+//= require ./modules/broken_links

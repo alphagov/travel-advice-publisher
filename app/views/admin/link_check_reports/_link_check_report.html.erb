@@ -1,6 +1,6 @@
-<div class="broken-links-report">
+<div class="broken-links-report" data-module="broken-links">
   <% if !report.present? %>
-    <p class="govuk-body">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
+    <p class="govuk-body js-broken-links__text">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check for broken links" %>
   <% elsif report.in_progress? %>
     <% #TODO: see if this works once the JS is fixed %>
@@ -31,7 +31,7 @@
     <% end %>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check again" %>
   <% else %>
-    <p class="govuk-body">This edition contains no broken links.</p>
+    <p class="govuk-body js-broken-links__text">This edition contains no broken links.</p>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check again" %>
   <% end %>
 </div>

@@ -1,5 +1,5 @@
-<form action="<%= link_check_reports_path(edition_id: edition.id) %>" method="post" ata-remote="true" rel="nofollow">
-    <%= render "govuk_publishing_components/components/button", {
+<form action="<%= link_check_reports_path(edition_id: edition.id) %>" method="post" class="js-broken-links__form">
+  <%= render "govuk_publishing_components/components/button", {
     text: button_text,
     secondary: true,
   } %>
