@@ -3,7 +3,6 @@
     <p class="govuk-body js-broken-links__text">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check for broken links" %>
   <% elsif report.in_progress? %>
-    <% #TODO: see if this works once the JS is fixed %>
     <%= image_tag("ajax_loader_blue_32.gif", width: 24, height: 24, class: "pull-left add-right-margin") %>
     <p class="govuk-body">Broken link report in progress.</p>
     <p class="govuk-body">Please wait. Refresh the page to view to see the result.</p>
@@ -12,19 +11,21 @@
     <% report.links.sort_by(&:status).group_by(&:status).each do |status, links| %>
       <% next unless %w(broken caution).include? status %>
       <h4 class="govuk-heading-s govuk-!-margin-top-2"><%= status.capitalize %></h4>
-      <ul class="issue-list">
+      <ul class="issue-list govuk-list">
         <% links.each do |link| %>
           <li class="govuk-!-margin-top-1">
-            <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "issues-link-design-system govuk-link govuk-!-margin-bottom-2" %>
+            <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "issues-link-design-system govuk-link" %>
 
-            <%= render "govuk_publishing_components/components/details", {
-              title: "See more details about this link"
-            } do %>
-              <p class="govuk-body"><%= link.problem_summary %></p>
-              <% if link.suggested_fix %>
-                <p class="govuk-body">Suggested fix: <%= link.suggested_fix %></p>
+            <div class="govuk-!-margin-top-3">
+              <%= render "govuk_publishing_components/components/details", {
+                title: "See more details about this link"
+              } do %>
+                <p class="govuk-body-s"><%= link.problem_summary %></p>
+                <% if link.suggested_fix %>
+                  <p class="govuk-body-s"><strong>Suggested fix:</strong> <%= link.suggested_fix %></p>
+                <% end %>
               <% end %>
-            <% end %>
+            </div>
           </li>
         <% end %>
       </ul>
