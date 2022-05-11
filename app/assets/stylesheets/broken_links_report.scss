@@ -1,52 +1,13 @@
-.link-check-report {
-  float: right;
-  margin-top: 25px;
-}
-
 .broken-links-report {
   word-break: break-word;
+}
 
-  .issue-summary {
-    font-weight: normal;
-  }
+// overrides
 
-  .issue-list {
-    list-style: none;
-    padding-left: 0;
+.broken-links-report__link.govuk-link {
+  @include govuk-font(16);
+}
 
-    li {
-      margin-top: govuk-spacing(1);
-    }
-  }
-
-  .issue-status-description {
-    margin-top: govuk-spacing(2);
-  }
-
-  .issue-list + .issue-status-description {
-    margin: govuk-spacing(3) 0;
-  }
-
-  .display-issue-details {
-    display: block;
-    font-weight: bold;
-    padding-top: govuk-spacing(1);
-  }
-
-  .display-issue-details::-webkit-details-marker {
-    display: none;
-  }
-
-  .display-issue-details:before {
-    content: "\25B6";
-    padding-right: 3px;
-  }
-
-  details[open] > .display-issue-details:before {
-    content: "\25BC";
-  }
-
-  .issues-link-design-system {
-    word-wrap: break-word;
-  }  /* TODO: clean this file up once we're only using the design system */
+.broken-links-report__link-details .gem-c-details {
+  @include govuk-font(16);
 }

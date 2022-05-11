@@ -2,21 +2,30 @@
   <% if !report.present? %>
     <p class="govuk-body js-broken-links__text">Check this edition for broken links. The report will take a few moments to complete. It only runs against GovSpeak fields.</p>
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check for broken links" %>
-  <% elsif report.in_progress? %>
-    <%= image_tag("ajax_loader_blue_32.gif", width: 24, height: 24, class: "pull-left add-right-margin") %>
-    <p class="govuk-body">Broken link report in progress.</p>
-    <p class="govuk-body">Please wait. Refresh the page to view to see the result.</p>
   <% elsif report.broken_links.any? || report.caution_links.any? %>
-    <h3 class="govuk-heading-m">Links</h3>
+    <%= render "govuk_publishing_components/components/heading", {
+      text: "Links",
+      heading_level: 3,
+      font_size: "m",
+      margin_bottom: 2,
+    } %>
+
     <% report.links.sort_by(&:status).group_by(&:status).each do |status, links| %>
       <% next unless %w(broken caution).include? status %>
-      <h4 class="govuk-heading-s govuk-!-margin-top-2"><%= status.capitalize %></h4>
-      <ul class="issue-list govuk-list">
-        <% links.each do |link| %>
-          <li class="govuk-!-margin-top-1">
-            <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "issues-link-design-system govuk-link" %>
 
-            <div class="govuk-!-margin-top-3">
+      <%= render "govuk_publishing_components/components/heading", {
+        text: status.capitalize,
+        heading_level: 4,
+        font_size: "s",
+        margin_bottom: 2,
+      } %>
+
+      <ul class="govuk-list">
+        <% links.each do |link| %>
+          <li>
+            <%= link_to link.uri.truncate(50), link.uri, title: link.uri, class: "govuk-link broken-links-report__link" %>
+
+            <div class="govuk-!-margin-top-3 broken-links-report__link-details">
               <%= render "govuk_publishing_components/components/details", {
                 title: "See more details about this link"
               } do %>
@@ -30,6 +39,7 @@
         <% end %>
       </ul>
     <% end %>
+
     <%= render "admin/link_check_reports/form", edition: edition, button_text: "Check again" %>
   <% else %>
     <p class="govuk-body js-broken-links__text">This edition contains no broken links.</p>
