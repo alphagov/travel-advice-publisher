@@ -1,6 +1,6 @@
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <div>
+<% if @edition.draft? %>
+  <div class="govuk-grid-row govuk-!-margin-bottom-9">
+    <div class="govuk-grid-column-two-thirds">
       <%= form_for @edition, url: admin_edition_path(@edition) do |f| %>
         <%= render "govuk_publishing_components/components/textarea", {
           label: {
@@ -19,36 +19,42 @@
         } %>
       <% end %>
     </div>
-    <div class="govuk-!-margin-top-6">
-      <h2 class="govuk-heading-m">Version history</h2>
-      <%
-        items = []
-        @country.editions.each do | edition |
-          content = ""
-          edition.actions.reverse.each do |action|
-            content += render("edition_action", action: action)
-          end
+  </div>
+<% end %>
 
-          items.push({
-            heading: {
-              text: "Version #{edition.version_number}"
-            },
-            summary: {
-              text: (link_to(
-                "Compare with version #{edition.version_number - 1}",
-                diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
-                class: "govuk-link govuk-body compare-version-link"
-              ) if edition.version_number > 1),
-            }.compact,
-            content: {
-              html: sanitize(content)
-            }
-          })
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <%= render "govuk_publishing_components/components/heading", {
+      text: "Version history",
+      margin_bottom: 6
+    } %>
+    <%
+      items = []
+      @country.editions.each do | edition |
+        content = ""
+        edition.actions.reverse.each do |action|
+          content += render("edition_action", action: action)
         end
-      %>
-      <%= render "govuk_publishing_components/components/accordion", {
-        items: items
-      } %>
-    </div>
+
+        items.push({
+          heading: {
+            text: "Version #{edition.version_number}"
+          },
+          summary: {
+            text: (link_to(
+              "Compare with version #{edition.version_number - 1}",
+              diff_admin_edition_path(edition.to_param, compare_id: edition.previous_version.to_param),
+              class: "govuk-link govuk-body compare-version-link"
+            ) if edition.version_number > 1),
+          }.compact,
+          content: {
+            html: sanitize(content)
+          }
+        })
+      end
+    %>
+    <%= render "govuk_publishing_components/components/accordion", {
+      items: items
+    } %>
   </div>
 </div>
