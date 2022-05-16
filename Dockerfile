@@ -1,5 +1,10 @@
 FROM ruby:2.7.6
-RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essential nodejs && apt-get clean
+
+# Add yarn to apt sources
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essential nodejs yarn && apt-get clean
 RUN gem install foreman
 
 # This image is only intended to be able to run this app in a production RAILS_ENV
@@ -17,6 +22,7 @@ ADD Gemfile* $APP_HOME/
 RUN bundle config set deployment 'true'
 RUN bundle config set without 'development test'
 RUN bundle install --jobs 4
+RUN yarn install --production --frozen-lockfile
 ADD . $APP_HOME
 
 RUN GOVUK_APP_DOMAIN=www.gov.uk \
