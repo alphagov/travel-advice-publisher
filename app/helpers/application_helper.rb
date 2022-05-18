@@ -24,7 +24,7 @@ module ApplicationHelper
       )
     end
 
-    link_to(name, url, options.merge(target: "blank", class: "govuk-link"))
+    link_to(name, url, options.merge(target: "_blank"))
   end
 
   def timestamp(time)
