@@ -7,19 +7,19 @@
       <%= render(@edition.draft? ? "parts" : "parts_summary") %>
 
       <% if @edition.draft? %>
-        <div class="govuk-button-group govuk-!-margin-top-9">
+        <div class="govuk-button-group govuk-!-margin-top-9 edition-form__action-button-group">
           <%= render "govuk_publishing_components/components/button", {
             text: "Save",
             value: "Save",
             name: "commit",
           } %>
+          <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-link" %>
           <%= render "govuk_publishing_components/components/button", {
             text: "Save & Publish",
             value: "Save & Publish",
             name: "commit",
             secondary: true,
           } %>
-          <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-link" %>
         </div>
       <% end %>
     <% end %>
