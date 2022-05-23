@@ -1,7 +1,24 @@
 <h3 class="govuk-heading-m govuk-!-margin-top-3">Govspeak help</h3>
 
 <div class="app-c-markdown-guidance">
-  <p>For full examples see <%= link_to "the Govspeak Wiki", "https://www.gov.uk/guidance/how-to-publish-on-gov-uk/markdown", target:"_blank", rel: "external", class: "govuk-link" %></p>
+  <p>For full examples <%= link_to "read the Govspeak guidance (opens in a new tab)", "https://www.gov.uk/guidance/how-to-publish-on-gov-uk/markdown", target:"_blank", rel: "external noreferrer noopener", class: "govuk-link" %></p>
+
+  <%= render "govuk_publishing_components/components/details", {
+    title: "Paste and convert to Markdown",
+    margin_bottom: 0
+  } do %>
+    <p>You can paste formatted text and it’ll be converted into Govspeak Markdown in fields which use and support Markdown.</p>
+    <p>This works best when copy and pasting from text editing software like Word or Google Docs. It is less likely to recognise formatting from PDFs.</p>
+    <p>It will convert:</p>
+    <ul>
+      <li>headings</li>
+      <li>bullets</li>
+      <li>numbered lists</li>
+      <li>links</li>
+      <li>email links</li>
+    </ul>
+    <p>Other formatting, such as tables, will be removed and only plain text pasted. You’ll need to write the Markdown for these separately.</p>
+  <% end %>
 
   <%= render "govuk_publishing_components/components/details", {
     title: "Headers",
@@ -16,10 +33,11 @@
   <% end %>
 
   <%= render "govuk_publishing_components/components/details", {
-    title: "Text Styles",
+    title: "Text styles",
     margin_bottom: 0
   } do %>
     <pre class="app-c-markdown-guidance__code-snippet">
+    <p class="govuk-hint">Use bold sparingly - using too much will make it difficult for users to know which parts of your content they need to pay the most attention to. Read more about using bold in the <%= link_to "GOV.UK style guide (opens in a new tab)", "https://www.gov.uk/guidance/style-guide/a-to-z-of-gov-uk-style", target:"_blank", rel: "external noreferrer noopener", class: "govuk-link" %>.</p>
     <p>**This text will be bold**</p>
     </pre>
   <% end %>
@@ -36,7 +54,7 @@
   <% end %>
 
   <%= render "govuk_publishing_components/components/details", {
-    title: "Bulleted List",
+    title: "Bulleted list",
     margin_bottom: 0
   } do %>
     <pre class="app-c-markdown-guidance__code-snippet">
@@ -47,7 +65,7 @@
   <% end %>
 
   <%= render "govuk_publishing_components/components/details", {
-    title: "Numbered List",
+    title: "Numbered list",
     margin_bottom: 0
   } do %>
     <pre class="app-c-markdown-guidance__code-snippet">
@@ -72,6 +90,7 @@
     title: "Tables",
     margin_bottom: 0
   } do %>
+    <p class="govuk-hint">Read more about <%= link_to "using table Markdown (opens in a new tab)", "https://www.gov.uk/guidance/how-to-publish-on-gov-uk/markdown#tables", target:"_blank", rel: "external noreferrer noopener", class: "govuk-link" %>
     <pre class="app-c-markdown-guidance__code-snippet">
     Fruit | Colour
     -|-
@@ -86,7 +105,7 @@
   } do %>
     <p class="govuk-hint">Use when linking to <code>http://www.gov.uk/</code>.</p>
     <pre class="app-c-markdown-guidance__code-snippet">
-    [Income tax rates](/income-tax-rates "Find out more about income tax rates")
+    [Income tax rates](/income-tax-rates)
     </pre>
   <% end %>
 
@@ -95,7 +114,7 @@
     margin_bottom: 0
   } do %>
     <pre class="app-c-markdown-guidance__code-snippet">
-    [link text](http://www.example.com "Title text goes here"){:rel="external"}
+    [link text](http://www.example.com)
     </pre>
   <% end %>
 
