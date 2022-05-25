@@ -1,7 +1,17 @@
 <% content_for :title, "Countries" %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-full" data-module="table-filter">
+    <div class="js-table-filter__input">
+      <%= render "govuk_publishing_components/components/input", {
+        label: {
+          text: "Filter countries"
+        },
+        name: "table-filter",
+        type: "text",
+        search_icon: true
+      } %>
+    </div>
     <%= render "govuk_publishing_components/components/table", {
       head: [
         { text: "Country" },
