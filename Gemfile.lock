@@ -168,7 +168,7 @@ GEM
     govuk_personalisation (0.11.2)
       plek (>= 1.9.0)
       rails (>= 6, < 8)
-    govuk_publishing_components (29.9.0)
+    govuk_publishing_components (29.10.0)
       govuk_app_config
       govuk_personalisation (>= 0.7.0)
       kramdown
@@ -285,7 +285,7 @@ GEM
       ttfunk
     plek (4.0.0)
     power_assert (2.0.1)
-    prometheus_exporter (2.0.2)
+    prometheus_exporter (2.0.3)
       webrick
     pry (0.13.1)
       coderay (~> 1.1)
