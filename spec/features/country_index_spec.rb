@@ -24,19 +24,19 @@ feature "Country Index" do
 
     rows = page.all("table tbody tr").map { |r| r.all("th, td").map(&:text).map(&:strip) }
     expect(rows).to eq([
-      ["Afghanistan",         "advice published"],
-      ["Albania",             "no advice published"],
-      ["Algeria",             "advice published"],
-      ["Andorra",             "no advice published"],
-      ["Angola",              "no advice published"],
-      ["Anguilla",            "no advice published"],
-      ["Antigua and Barbuda", "no advice published"],
-      ["Argentina",           "no advice published"],
-      ["Armenia",             "no advice published"],
-      ["Aruba",               "advice published"],
-      ["Australia",           "no advice published"],
-      ["Austria",             "advice published"],
-      ["Azerbaijan",          "no advice published"],
+      ["Afghanistan",         "Advice published"],
+      ["Albania",             "No advice published"],
+      ["Algeria",             "Advice published"],
+      ["Andorra",             "No advice published"],
+      ["Angola",              "No advice published"],
+      ["Anguilla",            "No advice published"],
+      ["Antigua and Barbuda", "No advice published"],
+      ["Argentina",           "No advice published"],
+      ["Armenia",             "No advice published"],
+      ["Aruba",               "Advice published"],
+      ["Australia",           "No advice published"],
+      ["Austria",             "Advice published"],
+      ["Azerbaijan",          "No advice published"],
     ])
   end
 end

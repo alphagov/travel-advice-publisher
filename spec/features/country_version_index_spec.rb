@@ -64,11 +64,11 @@ feature "Country version index" do
 
     rows = page.all("table tr").map { |r| r.all("th, td").map(&:text).map(&:strip) }
     expect(rows).to eq([
-      ["Version", "State", "Updated", "Reviewed", ""],
-      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit — preview"],
-      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — view"],
-      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — print"],
-      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details — print"],
+      %w[Version Status Updated Reviewed Action],
+      ["Version 4", "draft", e4.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "edit - preview"],
+      ["Version 3", "published", e3.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - view"],
+      ["Version 2", "archived", e2.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - print"],
+      ["Version 1", "archived", e1.updated_at.strftime("%d/%m/%Y %H:%M %Z"), "N/A", "view details - print"],
     ])
 
     within :xpath, "//tr[contains(., 'Version 4')]" do
