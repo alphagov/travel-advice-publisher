@@ -14,7 +14,7 @@ private
   helper_method :preview_design_system_user?
 
   def preview_design_system_user?
-    current_user.has_permission? "Preview Design System"
+    true
   end
 
   def error(status_code)
@@ -32,14 +32,10 @@ private
   end
 
   def is_legacy_layout?
-    get_layout == "legacy"
+    false
   end
 
   def get_layout
-    @get_layout ||= if preview_design_system_user?
-                      "design_system"
-                    else
-                      "legacy"
-                    end
+    "design_system"
   end
 end
