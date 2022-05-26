@@ -14,7 +14,7 @@ describe Admin::CountriesController do
     it "renders the index view" do
       get :index
 
-      expect(response).to render_template :index_legacy
+      expect(response).to render_template :index
     end
 
     context "with Preview Design System permission" do
@@ -49,7 +49,7 @@ describe Admin::CountriesController do
       it "renders the show view" do
         get :show, params: { id: "australia" }
 
-        expect(response).to render_template :show_legacy
+        expect(response).to render_template :show
       end
 
       context "with Preview Design System permission" do
