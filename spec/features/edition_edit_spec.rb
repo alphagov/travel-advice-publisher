@@ -1,6 +1,6 @@
 feature "Edit Edition page" do
   before do
-    login_as_stub_user_with_design_system_permission
+    login_as_stub_user
     Sidekiq::Testing.inline!
     Sidekiq::Worker.clear_all
   end

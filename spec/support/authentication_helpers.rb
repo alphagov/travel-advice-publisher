@@ -6,14 +6,6 @@ module AuthenticationHelpers
   def login_as_stub_user
     login_as stub_user
   end
-
-  def login_as_stub_user_with_design_system_permission
-    login_as stub_user_with_design_system_permission
-  end
-
-  def stub_user_with_design_system_permission
-    create(:user, :with_design_system_permission)
-  end
 end
 RSpec.configuration.include AuthenticationHelpers, type: :controller
 RSpec.configuration.include AuthenticationHelpers, type: :feature
