@@ -11,12 +11,6 @@ class ApplicationController < ActionController::Base
 
 private
 
-  helper_method :preview_design_system_user?
-
-  def preview_design_system_user?
-    true
-  end
-
   def error(status_code)
     render status: status_code, plain: "#{status_code} error"
   end
@@ -29,13 +23,5 @@ private
 
   def skip_slimmer
     response.headers[Slimmer::Headers::SKIP_HEADER] = "true"
-  end
-
-  def is_legacy_layout?
-    false
-  end
-
-  def get_layout
-    "design_system"
   end
 end
