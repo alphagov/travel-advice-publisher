@@ -18,8 +18,6 @@ Rails.application.routes.draw do
 
   root to: redirect("/admin")
 
-  mount GovukAdminTemplate::Engine, at: "/style-guide"
-
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::SidekiqRedis,
