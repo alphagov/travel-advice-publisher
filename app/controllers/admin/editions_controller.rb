@@ -143,7 +143,7 @@ private
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      redirect_to edit_admin_edition_path(@edition), notice: "#{@edition.title} updated."
+      redirect_to edit_admin_edition_path(@edition), notice: "#{@edition.title} draft has been saved."
     else
       flash[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render "edit"
