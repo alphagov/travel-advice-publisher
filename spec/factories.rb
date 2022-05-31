@@ -4,22 +4,7 @@ FactoryBot.define do
     sequence(:name) { |n| "Joe Bloggs #{n}" }
     sequence(:email) { |n| "joe#{n}@bloggs.com" }
 
-    transient do
-      preview_design_system { false }
-    end
-
-    if defined?(GDS::SSO::Config)
-      permissions do
-        [
-          "signin",
-          ("Preview Design System" if preview_design_system),
-        ].compact
-      end
-    end
-
-    trait :with_design_system_permission do
-      permissions { ["signin", "Preview Design System"] }
-    end
+    permissions { %w[signin] } if defined?(GDS::SSO::Config)
   end
 
   factory :travel_advice_edition do

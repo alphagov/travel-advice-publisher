@@ -19,9 +19,7 @@
       "jasmine": true
     },
     "globals": [
-      "AdminEditionsForm",
-      "GOVUKAdmin",
-      "TravelAdviceUtils"
+      "GOVUKAdmin"
     ]
   },
   "eslintConfig": {
