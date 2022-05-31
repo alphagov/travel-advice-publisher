@@ -8,19 +8,13 @@ class LinkCheckReportsController < ApplicationController
 
     @report = service.call
 
-    respond_to do |format|
-      format.js { render "admin/link_check_reports/create" }
-      format.html { redirect_to edit_admin_edition_url(@edition.id) }
-    end
+    redirect_to edit_admin_edition_url(@edition.id)
   end
 
   def show
     @report = @edition.link_check_reports.find_by(id: params[:id])
 
-    respond_to do |format|
-      format.js { render "admin/link_check_reports/show" }
-      format.html { redirect_to edit_admin_edition_url(@edition.id) }
-    end
+    redirect_to edit_admin_edition_url(@edition.id)
   end
 
 private

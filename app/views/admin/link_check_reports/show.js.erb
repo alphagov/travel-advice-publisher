@@ -1,3 +1,0 @@
-<% if @report.completed? %>
-  $('.broken-links-report').replaceWith('<%=escape_javascript render("admin/link_check_reports/link_check_report_legacy", report: @report, edition: @edition ) %>');
-<% end %>
