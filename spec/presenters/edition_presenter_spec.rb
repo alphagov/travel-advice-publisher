@@ -81,7 +81,7 @@ describe EditionPresenter do
 
     it "is valid against the content schemas" do
       expect(presented_data["schema_name"]).to eq("travel_advice")
-      expect(presented_data).to be_valid_against_schema("travel_advice")
+      expect(presented_data).to be_valid_against_publisher_schema("travel_advice")
     end
 
     it "returns a travel_advice item" do

@@ -16,7 +16,7 @@ RSpec.describe EmailAlertSignup::EditionPresenter do
 
   it "validates against the email alert signup schema" do
     presenter = described_class.new(edition)
-    expect(presenter.content_payload.as_json).to be_valid_against_schema("email_alert_signup")
+    expect(presenter.content_payload.as_json).to be_valid_against_publisher_schema("email_alert_signup")
   end
 
   it "presents the email signup content item for the edition" do
