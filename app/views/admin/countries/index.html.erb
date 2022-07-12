@@ -1,26 +1,18 @@
 <% content_for :title, "Countries" %>
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-full" data-module="table-filter">
-    <div class="js-table-filter__input">
-      <%= render "govuk_publishing_components/components/input", {
-        label: {
-          text: "Filter countries"
-        },
-        name: "table-filter",
-        type: "text",
-        search_icon: true
-      } %>
-    </div>
+  <div class="govuk-grid-column-full">
     <%= render "govuk_publishing_components/components/table", {
+      filterable: true,
+      label: t("country_table.filter.label"),
       head: [
-        { text: "Country" },
-        { text: "Status" }
+        { text: t("country_table.table.head_country") },
+        { text: t("country_table.table.head_status") }
       ],
       rows: @countries.map do |country|
         [
           { text: link_to(country.name, admin_country_path(country.slug), class: 'govuk-link') },
-          { text: country.has_published_edition? ? "Advice published" : "No advice published" }
+          { text: country.has_published_edition? ? t("country_table.table.published") : t("country_table.table.not_published") }
         ]
       end
     } %>
