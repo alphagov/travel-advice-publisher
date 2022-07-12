@@ -5,4 +5,3 @@
 //= require ./modules/parts
 //= require ./modules/broken_links
 //= require ./modules/paste_html_to_govspeak
-//= require ./modules/table_filter
