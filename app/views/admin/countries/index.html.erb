@@ -4,15 +4,15 @@
   <div class="govuk-grid-column-full">
     <%= render "govuk_publishing_components/components/table", {
       filterable: true,
-      label: "Filter countries",
+      label: t("country_table.filter.label"),
       head: [
-        { text: "Country" },
-        { text: "Status" }
+        { text: t("country_table.table.head_country") },
+        { text: t("country_table.table.head_status") }
       ],
       rows: @countries.map do |country|
         [
           { text: link_to(country.name, admin_country_path(country.slug), class: 'govuk-link') },
-          { text: country.has_published_edition? ? "Advice published" : "No advice published" }
+          { text: country.has_published_edition? ? t("country_table.table.published") : t("country_table.table.not_published") }
         ]
       end
     } %>
