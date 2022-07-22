@@ -54,14 +54,14 @@ describe TravelAdviceEdition do
         create(:travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "draft"
         expect(ta).not_to be_valid
-        expect(ta.errors.messages[:state]).to include("is already taken")
+        expect(ta.errors.messages[:state]).to include("has already been taken")
       end
 
       it "only allows one edition in published per slug" do
         create(:published_travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "published"
         expect(ta).not_to be_valid
-        expect(ta.errors.messages[:state]).to include("is already taken")
+        expect(ta.errors.messages[:state]).to include("has already been taken")
       end
 
       it "allows multiple editions in archived per slug" do
@@ -151,7 +151,7 @@ describe TravelAdviceEdition do
         create(:archived_travel_advice_edition, country_slug: ta.country_slug, version_number: 3)
         ta.version_number = 3
         expect(ta).not_to be_valid
-        expect(ta.errors.messages[:version_number]).to include("is already taken")
+        expect(ta.errors.messages[:version_number]).to include("has already been taken")
       end
 
       it "allows matching version_numbers for different slugs" do
