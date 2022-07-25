@@ -78,7 +78,7 @@ private
     TravelAdviceEdition.where(country_slug: edition.country_slug)
       .pluck("parts.slug")
       .compact
-      .flat_map { |slugs| slugs.map { |slug| slug["slug"] } }
+      .flatten
       .uniq
   end
 
