@@ -1,3 +1,16 @@
+GIT
+  remote: https://github.com/alphagov/govuk_sidekiq
+  revision: 13c64b1828c8b877b3ba0b2d61e3c786e3b50cef
+  branch: version-bump
+  specs:
+    govuk_sidekiq (5.0.0)
+      gds-api-adapters (>= 19.1.0)
+      govuk_app_config (>= 1.1)
+      redis-namespace (~> 1.6)
+      sidekiq (>= 6, < 7)
+      sidekiq-logging-json (~> 0.0)
+      sidekiq-statsd (>= 2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -168,13 +181,6 @@ GEM
       sprockets (>= 3)
     govuk_schemas (4.4.1)
       json-schema (~> 2.8.0)
-    govuk_sidekiq (5.0.0)
-      gds-api-adapters (>= 19.1.0)
-      govuk_app_config (>= 1.1)
-      redis-namespace (~> 1.6)
-      sidekiq (>= 5, < 6)
-      sidekiq-logging-json (~> 0.0)
-      sidekiq-statsd (>= 2.1)
     govuk_test (3.0.1)
       brakeman (>= 5.0.2)
       capybara (>= 3.36)
@@ -333,9 +339,9 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    redis (4.5.1)
-    redis-namespace (1.8.2)
-      redis (>= 3.0.4)
+    redis (4.7.1)
+    redis-namespace (1.9.0)
+      redis (>= 4)
     regexp_parser (2.5.0)
     request_store (1.5.1)
       rack (>= 1.4)
@@ -421,11 +427,10 @@ GEM
     sentry-sidekiq (5.4.2)
       sentry-ruby (~> 5.4.2)
       sidekiq (>= 3.0)
-    sidekiq (5.2.10)
-      connection_pool (~> 2.2, >= 2.2.2)
+    sidekiq (6.5.5)
+      connection_pool (>= 2.2.2)
       rack (~> 2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 4.5, < 4.6.0)
+      redis (>= 4.5.0)
     sidekiq-logging-json (0.0.19)
       sidekiq (>= 3)
     sidekiq-statsd (2.1.0)
@@ -510,7 +515,7 @@ DEPENDENCIES
   govuk_app_config
   govuk_publishing_components
   govuk_schemas
-  govuk_sidekiq
+  govuk_sidekiq!
   govuk_test
   listen
   mini_magick
@@ -522,6 +527,7 @@ DEPENDENCIES
   pry-rails
   rails (= 7.0.3.1)
   rails-controller-testing
+  redis (= 4.7.1)
   rspec-rails
   rubocop-govuk
   sassc-rails
