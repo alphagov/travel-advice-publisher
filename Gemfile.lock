@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/alphagov/govuk_sidekiq
-  revision: 13c64b1828c8b877b3ba0b2d61e3c786e3b50cef
+  revision: fbbbb6af36c9e44f0eabeac846338451098a5b67
   branch: version-bump
   specs:
     govuk_sidekiq (5.0.0)
@@ -8,7 +8,6 @@ GIT
       govuk_app_config (>= 1.1)
       redis-namespace (~> 1.6)
       sidekiq (>= 6, < 7)
-      sidekiq-logging-json (~> 0.0)
       sidekiq-statsd (>= 2.1)
 
 GEM
@@ -427,12 +426,10 @@ GEM
     sentry-sidekiq (5.4.2)
       sentry-ruby (~> 5.4.2)
       sidekiq (>= 3.0)
-    sidekiq (6.5.5)
-      connection_pool (>= 2.2.2)
+    sidekiq (6.5.6)
+      connection_pool (>= 2.2.5)
       rack (~> 2.0)
-      redis (>= 4.5.0)
-    sidekiq-logging-json (0.0.19)
-      sidekiq (>= 3)
+      redis (>= 4.5.0, < 5)
     sidekiq-statsd (2.1.0)
       activesupport
       sidekiq (>= 3.3.1)
