@@ -1,34 +1,30 @@
-FROM ruby:2.7.6
+ARG base_image=ghcr.io/alphagov/govuk-ruby-base:2.7.6
+ARG builder_image=ghcr.io/alphagov/govuk-ruby-builder:2.7.6
+ 
+FROM $builder_image AS builder
 
-# Add yarn to apt sources
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+WORKDIR /app
 
-RUN apt-get update -qq && apt-get upgrade -y && apt-get install -y build-essential nodejs yarn && apt-get clean
-RUN gem install foreman
+COPY Gemfile* .ruby-version /app/
 
-# This image is only intended to be able to run this app in a production RAILS_ENV
-ENV RAILS_ENV production
+RUN bundle install
 
-ENV GOVUK_APP_NAME travel-advice-publisher
-ENV MONGODB_URI mongodb://mongo/travel-advice-publisher
-ENV PORT 3035
+COPY . /app
 
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
+RUN bundle exec rails assets:precompile && \
+    yarn install --frozen-lockfile && \
+    rm -fr /app/log
 
-WORKDIR $APP_HOME
-ADD Gemfile* $APP_HOME/
-RUN bundle config set deployment 'true'
-RUN bundle config set without 'development test'
-RUN bundle install --jobs 4
-RUN yarn install --production --frozen-lockfile
-ADD . $APP_HOME
 
-RUN GOVUK_APP_DOMAIN=www.gov.uk \
-  GOVUK_WEBSITE_ROOT=www.gov.uk \
-  bundle exec rails assets:precompile
+FROM $base_image
 
-HEALTHCHECK CMD curl --silent --fail localhost:$PORT || exit 1
+ENV GOVUK_APP_NAME=travel-advice-publisher
 
-CMD foreman run web
+WORKDIR /app
+
+COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
+COPY --from=builder /app /app/
+
+USER app
+
+CMD bundle exec puma
