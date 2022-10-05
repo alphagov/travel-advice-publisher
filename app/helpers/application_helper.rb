@@ -9,7 +9,7 @@ module ApplicationHelper
       url = "#{Plek.new.external_url_for('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
     elsif edition.published?
       name = "View on site"
-      url = "#{Plek.current.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
+      url = "#{Plek.new.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
     else
       name = "Print historical version"
       url = admin_edition_historical_edition_path(edition)
