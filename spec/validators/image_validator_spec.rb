@@ -12,7 +12,7 @@ RSpec.describe ImageValidator do
   end
 
   let(:image) { nil }
-  let(:document) { Document.new(image: image) }
+  let(:document) { Document.new(image:) }
 
   shared_examples "is valid" do
     it "should be valid" do

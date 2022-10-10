@@ -2,18 +2,18 @@ module EmailAlertSignup
   class IndexPresenter
     def content_payload
       {
-        base_path: base_path,
+        base_path:,
         document_type: "email_alert_signup",
         schema_name: "email_alert_signup",
         title: "Foreign travel advice",
         description: "Foreign travel advice email alert signup",
-        public_updated_at: public_updated_at,
+        public_updated_at:,
         locale: "en",
         publishing_app: "travel-advice-publisher",
         rendering_app: "email-alert-frontend",
-        routes: routes,
-        details: details,
-        update_type: update_type,
+        routes:,
+        details:,
+        update_type:,
       }
     end
 
@@ -48,8 +48,8 @@ module EmailAlertSignup
         subscriber_list: {
           document_type: "travel_advice",
         },
-        summary: summary,
-        breadcrumbs: breadcrumbs,
+        summary:,
+        breadcrumbs:,
         govdelivery_title: "Foreign travel advice",
       }
     end

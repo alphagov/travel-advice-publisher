@@ -108,7 +108,7 @@ class TravelAdviceEdition
   end
 
   def build_action_as(user, action_type, comment = nil)
-    actions.build(requester: user, request_type: action_type, comment: comment)
+    actions.build(requester: user, request_type: action_type, comment:)
   end
 
   def publish_as(user)
@@ -117,7 +117,7 @@ class TravelAdviceEdition
   end
 
   def previous_version
-    self.class.where(country_slug: country_slug, :version_number.lt => version_number).order_by(version_number: :desc).first
+    self.class.where(country_slug:, :version_number.lt => version_number).order_by(version_number: :desc).first
   end
 
   after_validation :extract_part_errors
@@ -159,8 +159,8 @@ private
     if %w[published draft].include?(state) &&
         self.class.where(
           :_id.ne => id,
-          country_slug: country_slug,
-          state: state,
+          country_slug:,
+          state:,
         ).any?
       errors.add(:state, :taken)
     end
@@ -168,7 +168,7 @@ private
 
   def populate_version_number
     if version_number.nil? && !country_slug.nil? && !country_slug.empty?
-      latest_edition = self.class.where(country_slug: country_slug).order_by(version_number: :desc).first
+      latest_edition = self.class.where(country_slug:).order_by(version_number: :desc).first
       self.version_number = if latest_edition
                               latest_edition.version_number + 1
                             else

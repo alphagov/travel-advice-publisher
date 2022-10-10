@@ -14,7 +14,7 @@ module PublicationCheck
           .with(publish_request)
       end
 
-      Runner.run_check(publish_requests: publish_requests)
+      Runner.run_check(publish_requests:)
     end
 
     it "uses a new check object per check" do
@@ -24,14 +24,14 @@ module PublicationCheck
           .to receive(:new).exactly(2).times
           .and_return(double(run: true))
       end
-      Runner.run_check(publish_requests: publish_requests)
+      Runner.run_check(publish_requests:)
     end
 
     it "adds each checked PublishRequest to the result" do
       allow(Result).to receive(:new).and_return(result = Result.new)
       expect(result).to receive(:add_checked_request).with(request_one)
       expect(result).to receive(:add_checked_request).with(request_two)
-      Runner.run_check(publish_requests: publish_requests, checks: [check])
+      Runner.run_check(publish_requests:, checks: [check])
     end
 
     it "registers a check on the PublishRequest" do

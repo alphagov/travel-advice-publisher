@@ -33,7 +33,7 @@ describe SafeHtml do
     end
   end
 
-  subject(:dummy) { Dummy.new(i_am_govspeak: i_am_govspeak) }
+  subject(:dummy) { Dummy.new(i_am_govspeak:) }
 
   context "with an invalid embedded document" do
     let(:i_am_govspeak) { "" }

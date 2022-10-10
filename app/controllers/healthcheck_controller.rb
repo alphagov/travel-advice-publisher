@@ -15,7 +15,7 @@ class HealthcheckController < ApplicationController
       }
     end
 
-    render json: { editions: editions }
+    render json: { editions: }
   end
 
 private

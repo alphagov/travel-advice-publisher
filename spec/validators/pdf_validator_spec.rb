@@ -12,7 +12,7 @@ RSpec.describe PdfValidator do
   end
 
   let(:pdf) { nil }
-  let(:document) { DocumentWithPdf.new(pdf: pdf) }
+  let(:document) { DocumentWithPdf.new(pdf:) }
 
   shared_examples "is valid" do
     it "should be valid" do
