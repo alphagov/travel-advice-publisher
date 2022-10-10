@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/alphagov/govuk_sidekiq
-  revision: c0d9a41a4e8f217c9c3d6f5ffcc634140e7eeb58
+  revision: d646dd4c0b7a0007eb36580caf4a1f106978c512
   branch: version-bump
   specs:
     govuk_sidekiq (5.0.0)
