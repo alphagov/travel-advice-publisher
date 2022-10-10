@@ -41,7 +41,6 @@ group :test do
   gem "rails-controller-testing"
   gem "rubocop-govuk"
   gem "simplecov"
-  gem "test-unit"
   gem "timecop"
   gem "webmock", require: false
 end
