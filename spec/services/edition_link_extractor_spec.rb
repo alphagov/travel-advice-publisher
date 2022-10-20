@@ -30,7 +30,7 @@ RSpec.describe EditionLinkExtractor do
     end
 
     def call_edition_link_extractor(edition)
-      EditionLinkExtractor.new(edition: edition).call
+      EditionLinkExtractor.new(edition:).call
     end
   end
 end

@@ -6,18 +6,18 @@ module EmailAlertSignup
 
     def content_payload
       {
-        base_path: base_path,
+        base_path:,
         document_type: "email_alert_signup",
         schema_name: "email_alert_signup",
         title: edition.title,
         description: "#{edition.title} Email Alert Signup",
-        public_updated_at: public_updated_at,
+        public_updated_at:,
         locale: "en",
         publishing_app: "travel-advice-publisher",
         rendering_app: "email-alert-frontend",
-        routes: routes,
-        details: details,
-        update_type: update_type,
+        routes:,
+        details:,
+        update_type:,
       }
     end
 
@@ -55,8 +55,8 @@ module EmailAlertSignup
           document_type: "travel_advice",
           links: subscriber_list_links,
         },
-        summary: summary,
-        breadcrumbs: breadcrumbs,
+        summary:,
+        breadcrumbs:,
         govdelivery_title: edition.title,
       }
     end

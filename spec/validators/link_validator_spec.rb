@@ -14,7 +14,7 @@ describe LinkValidator do
   end
 
   let(:body) { nil }
-  subject(:doc) { LinkValidatorDummy.new(body: body) }
+  subject(:doc) { LinkValidatorDummy.new(body:) }
 
   shared_examples "is valid" do
     it "should be valid" do
