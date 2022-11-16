@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-library("govuk")
+library("govuk@add-publishing-api-clone")
 
 node {
   // Run against the MongoDB 3.6 Docker instance on GOV.UK CI
