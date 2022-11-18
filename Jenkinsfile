@@ -9,12 +9,8 @@ node {
   govuk.buildProject(
     brakeman: true,
     extraParameters: [
-      [$class: 'BooleanParameterValue',
-        name: 'USE_PUBLISHING_API_FOR_SCHEMAS',
-        value: true],
-      [$class: 'StringParameterValue',
-        name: 'PUBLISHING_API_SCHEMAS_BRANCH',
-        value: 'add-content-schemas']
+      stringParam(name: 'USE_PUBLISHING_API_FOR_SCHEMAS', value: true),
+      booleanParam(name: 'PUBLISHING_API_SCHEMAS_BRANCH', value: 'add-content-schemas')
     ]
   )
 }
