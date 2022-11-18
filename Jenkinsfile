@@ -8,7 +8,7 @@ node {
 
   govuk.buildProject(
     brakeman: true,
-    extraParameters: [
+    parameters: [
       stringParam(name: 'USE_PUBLISHING_API_FOR_SCHEMAS', value: true),
       booleanParam(name: 'PUBLISHING_API_SCHEMAS_BRANCH', value: 'add-content-schemas')
     ]
