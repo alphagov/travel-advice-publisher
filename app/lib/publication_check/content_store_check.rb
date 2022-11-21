@@ -13,7 +13,7 @@ module PublicationCheck
   private
 
     def content_store_url
-      File.join(Plek.new.website_root, "api/content/foreign-travel-advice", country_slug)
+      File.join(Plek.website_root, "api/content/foreign-travel-advice", country_slug)
     end
 
     def edition

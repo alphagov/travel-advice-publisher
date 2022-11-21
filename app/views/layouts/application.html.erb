@@ -13,7 +13,7 @@
         href: admin_countries_path,
         active: 'active',
       },
-      { text: current_user.name, href: Plek.new.external_url_for("signon") },
+      { text: current_user.name, href: Plek.external_url_for("signon") },
       { text: "Log out", href: gds_sign_out_path }
     ].delete_if{ |item| item[:user_has_permission_to_see] == false },
   }%>
@@ -55,7 +55,7 @@
         title: "Support and feedback",
         items: [
           {
-            href: Plek.new.external_url_for("support"),
+            href: Plek.external_url_for("support"),
             text: "Raise a support request"
           },
           {

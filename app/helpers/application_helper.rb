@@ -6,10 +6,10 @@ module ApplicationHelper
   def preview_edition_link(edition, short, options = {})
     if edition.draft?
       name = "Preview saved version"
-      url = "#{Plek.new.external_url_for('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
+      url = "#{Plek.external_url_for('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
     elsif edition.published?
       name = "View on site"
-      url = "#{Plek.new.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
+      url = "#{Plek.website_root}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
     else
       name = "Print historical version"
       url = admin_edition_historical_edition_path(edition)
