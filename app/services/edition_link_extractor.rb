@@ -14,7 +14,7 @@ private
   attr_reader :edition
 
   def public_root
-    @public_root ||= Plek.new.website_root
+    @public_root ||= Plek.website_root
   end
 
   def find_links_in_edition

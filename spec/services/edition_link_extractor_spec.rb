@@ -26,7 +26,7 @@ RSpec.describe EditionLinkExtractor do
     it "should convert absolute paths to full urls" do
       result = call_edition_link_extractor(edition_with_absolute_paths_in_govspeak_fields)
 
-      expect(result).to eq(["https://www.example.com", "#{Plek.new.website_root}/id-for-driving-licence"])
+      expect(result).to eq(["https://www.example.com", "#{Plek.website_root}/id-for-driving-licence"])
     end
 
     def call_edition_link_extractor(edition)
