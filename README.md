@@ -17,3 +17,7 @@ You can use the [GOV.UK Docker environment](https://github.com/alphagov/govuk-do
 ### Further documentation
 
 Detailed technical information can be found in [`docs/`](docs/).
+
+## Licence
+
+[MIT License](LICENCE)
