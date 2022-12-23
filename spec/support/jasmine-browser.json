@@ -1,5 +1,5 @@
 {
-  "srcDir": "public/assets",
+  "srcDir": "public/assets/travel-advice-publisher",
   "srcFiles": [
     "govuk-admin-template-*.js",
     "legacy-*.js",
