@@ -11,6 +11,7 @@ RUN bundle install
 COPY package.json yarn.lock ./
 RUN yarn install --production --frozen-lockfile --non-interactive --link-duplicates
 COPY . .
+RUN bootsnap precompile --gemfile .
 RUN rails assets:precompile && rm -fr log node_modules
 
 
@@ -20,6 +21,7 @@ ENV GOVUK_APP_NAME=travel-advice-publisher
 
 WORKDIR $APP_HOME
 COPY --from=builder $BUNDLE_PATH $BUNDLE_PATH
+COPY --from=builder $BOOTSNAP_CACHE_DIR $BOOTSNAP_CACHE_DIR
 COPY --from=builder $APP_HOME .
 
 USER app
