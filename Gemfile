@@ -9,7 +9,6 @@ gem "govspeak"
 gem "govuk_app_config"
 gem "govuk_publishing_components"
 gem "govuk_sidekiq"
-gem "mail", "~> 2.8.0"  # TODO: remove once https://github.com/mikel/mail/issues/1489 is fixed.
 gem "mini_magick"
 gem "mongo"
 gem "mongoid"

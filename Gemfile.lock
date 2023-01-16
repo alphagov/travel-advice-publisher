@@ -511,7 +511,6 @@ DEPENDENCIES
   govuk_sidekiq
   govuk_test
   listen
-  mail (~> 2.8.0)
   mini_magick
   mongo
   mongoid
