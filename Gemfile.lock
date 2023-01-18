@@ -190,7 +190,7 @@ GEM
       domain_name (~> 0.5)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
-    json (2.6.2)
+    json (2.6.3)
     json-schema (3.0.0)
       addressable (>= 2.8)
     jwt (2.5.0)
@@ -289,7 +289,7 @@ GEM
     puma (6.0.2)
       nio4r (~> 2.0)
     racc (1.6.2)
-    rack (2.2.5)
+    rack (2.2.6)
     rack-protection (3.0.4)
       rack
     rack-proxy (0.7.4)
@@ -436,7 +436,7 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    slimmer (18.0.0)
+    slimmer (18.1.0)
       json
       nokogiri (~> 1.7)
       null_logger
