@@ -71,6 +71,8 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     afm (0.2.2)
     ast (2.4.2)
+    bootsnap (1.15.0)
+      msgpack (~> 1.2)
     brakeman (5.2.2)
     bson (4.15.0)
     builder (3.2.4)
@@ -226,6 +228,7 @@ GEM
       activemodel (>= 5.1, < 7.1, != 7.0.0)
       mongo (>= 2.18.0, < 3.0.0)
       ruby2_keywords (~> 0.0.5)
+    msgpack (1.6.0)
     multi_xml (0.6.0)
     net-imap (0.3.4)
       date
@@ -498,6 +501,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  bootsnap
   ci_reporter_rspec
   database_cleaner-mongoid
   diffy
