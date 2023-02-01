@@ -25,7 +25,7 @@ RSpec.describe "Request tracing", type: :request do
       "HTTP_GOVUK_REQUEST_ID" => govuk_request_id,
     }
 
-    put "/admin/editions/#{edition.id}", params: params, headers: inbound_headers
+    put "/admin/editions/#{edition.id}", params:, headers: inbound_headers
     GdsApi::GovukHeaders.clear_headers # Simulate workers running in a separate thread
     Sidekiq::Worker.drain_all # Run all workers
 
