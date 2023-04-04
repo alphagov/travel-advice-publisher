@@ -14,8 +14,8 @@ COPY . .
 RUN bootsnap precompile --gemfile .
 RUN rails assets:precompile && rm -fr log node_modules
 
-
 FROM $base_image
+RUN install_packages imagemagick
 
 ENV GOVUK_APP_NAME=travel-advice-publisher
 
