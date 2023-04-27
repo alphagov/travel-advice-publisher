@@ -1,5 +1,5 @@
 <%= render "govuk_publishing_components/components/fieldset", {
-  legend_text: "Summary content",
+  legend_text: "General information",
   heading_size: "m",
 } do %>
   <%= render "govuk_publishing_components/components/checkboxes", {
@@ -85,20 +85,21 @@
       name: "edition[document]",
       id: "edition_document"
     } %>
-
-    <%= render "govuk_publishing_components/components/textarea", {
-      label: {
-        text: "Summary (govspeak available)",
-        bold: true,
-      },
-      data: {
-        module: "paste-html-to-govspeak",
-      },
-      name: "edition[summary]",
-      id: "edition_summary",
-      rows: 20,
-      value: @edition.summary,
-    } %>
 <% end %>
+    <% if @edition.summary.present? %>
+      <%= render "govuk_publishing_components/components/textarea", {
+        label: {
+          text: "Summary (govspeak available)",
+          bold: true,
+        },
+        data: {
+          module: "paste-html-to-govspeak",
+        },
+        name: "edition[summary]",
+        id: "edition_summary",
+        rows: 20,
+        value: @edition.summary,
+      } %>
+  <% end %>
 
 <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">

@@ -155,13 +155,11 @@ feature "Edit Edition page" do
         expect(page).to have_field("Synonyms")
       end
 
-      within_section "the fieldset labelled Summary content" do
+      within_section "the fieldset labelled General information" do
         expect(page).to have_unchecked_field("The FCO advise against all travel to the whole country")
         expect(page).to have_unchecked_field("The FCO advise against all travel to parts of the country")
         expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
         expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
-
-        expect(page).to have_field("Summary")
       end
 
       within_section "the fieldset labelled Parts (govspeak available)" do
@@ -177,8 +175,6 @@ feature "Edit Edition page" do
 
     fill_in "Public change note", with: "Made changes to all the stuff"
 
-    fill_in "Summary", with: "Summary of the situation in Albania"
-
     fill_in "Synonyms", with: "Foo,Bar"
 
     click_on "Save"
@@ -188,7 +184,6 @@ feature "Edit Edition page" do
     @edition.reload
     expect(@edition.title).to eq("Travel advice for Albania")
     expect(@edition.overview).to eq("Read this if you're planning on visiting Albania")
-    expect(@edition.summary).to eq("Summary of the situation in Albania")
     expect(@edition.change_description).to eq("Made changes to all the stuff")
     expect(@edition.synonyms).to eq(%w[Foo Bar])
 
@@ -252,7 +247,6 @@ feature "Edit Edition page" do
       change_description: "Stuff changed",
       update_type: "major",
       overview: "The overview",
-      summary: "## Summary",
     )
 
     now = Time.zone.now.utc
@@ -281,7 +275,6 @@ feature "Edit Edition page" do
       @old_edition = create(
         :published_travel_advice_edition,
         country_slug: "albania",
-        summary: "## The summaryy",
         change_description: "Some things changed",
         update_type: "major",
       )
@@ -296,7 +289,6 @@ feature "Edit Edition page" do
     travel_to(Time.zone.now) do
       visit "/admin/editions/#{@edition.to_param}/edit"
 
-      fill_in "Summary", with: "## The summary"
       choose "A typo, style change or similar"
 
       click_on "Save & Publish"
@@ -595,16 +587,6 @@ feature "Edit Edition page" do
     end
   end
 
-  scenario "disallowing hover text on links in govspeak fields" do
-    @edition = create(:draft_travel_advice_edition, country_slug: "albania")
-    visit "/admin/editions/#{@edition.to_param}/edit"
-
-    fill_in "Summary", with: "Some things changed on [GOV.UK](https://www.gov.uk/ \"GOV.UK\")"
-    click_on "Save"
-
-    expect(page).to have_content("Don't include hover text in links. Delete the text in quotation marks eg \\\"This appears when you hover over the link.")
-  end
-
   scenario "published editions should be read only" do
     @edition = create(:published_travel_advice_edition, country_slug: "albania")
     visit "/admin/editions/#{@edition.to_param}/edit"
@@ -612,7 +594,6 @@ feature "Edit Edition page" do
     expect(page).not_to have_field("Search title")
     expect(page).not_to have_field("Search description (optional)")
     expect(page).not_to have_field("Public change note")
-    expect(page).not_to have_field("Summary (govspeak available)")
     expect(page).not_to have_field("Country Synonyms (optional)")
 
     within :css, ".gem-c-summary-list:nth-of-type(1)" do
@@ -623,11 +604,10 @@ feature "Edit Edition page" do
     end
 
     within :css, ".gem-c-summary-list:nth-of-type(2)" do
-      expect(page).to have_content("Summary content")
+      expect(page).to have_content("General information")
       expect(page).to have_content("Alert status")
       expect(page).to have_content("Map of Albania")
       expect(page).to have_content("PDF Document")
-      expect(page).to have_content("Summary")
     end
 
     within :css, ".gem-c-summary-list:nth-of-type(3)" do
@@ -653,7 +633,6 @@ feature "Edit Edition page" do
     fill_in "Search title", with: "Travel advice for Albania"
     fill_in "Search description (optional)", with: "Read this if you're planning on visiting Albania"
     fill_in "Public change note", with: "Made changes to all the stuff"
-    fill_in "Summary (govspeak available)", with: "Summary of the situation in Albania"
     fill_in "Country Synonyms (optional)", with: "Foo,Bar"
 
     click_on "Add new part"
@@ -679,7 +658,6 @@ feature "Edit Edition page" do
     @edition.reload
     expect(@edition.title).to eq("Travel advice for Albania")
     expect(@edition.overview).to eq("Read this if you're planning on visiting Albania")
-    expect(@edition.summary).to eq("Summary of the situation in Albania")
     expect(@edition.change_description).to eq("Made changes to all the stuff")
     expect(@edition.synonyms).to eq(%w[Foo Bar])
     expect(@edition.parts.size).to eq(2)
