@@ -39,9 +39,6 @@ private
 
   def details
     details = {
-      "summary" => [
-        { "content_type" => "text/govspeak", "content" => edition.summary },
-      ],
       "country" => {
         "slug" => country.slug,
         "name" => country.name,
@@ -55,7 +52,7 @@ private
       "alert_status" => edition.alert_status,
       "max_cache_time" => 10,
     }
-
+    details["summary"] = summary if summary
     details["image"] = image if image
     details["document"] = document if document
 
@@ -128,6 +125,14 @@ private
     edition.order_parts.map do |part|
       PartPresenter.present(part)
     end
+  end
+
+  def summary
+    @summary ||= if edition.summary.present?
+                   [
+                     { "content_type" => "text/govspeak", "content" => edition.summary },
+                   ]
+                 end
   end
 
   def image
