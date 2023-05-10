@@ -7,27 +7,29 @@
   })
 %>
 
+<% general_information_items = [
+  {
+    field: "Alert status",
+    value: alert_statuses.present? ? alert_statuses : "None"
+  },
+  {
+    field: "Map of #{@country.name}",
+    value: @edition.image.present? ? link_to("Map of #{@country.name}", @edition.image["file_url"], { class: "govuk-link" }) : "No Map attached"
+  },
+  {
+    field: "PDF Document",
+    value: @edition.document.present? ?
+             link_to("Download #{@edition.document['name']}", @edition.document["file_url"], { class: "govuk-link" })
+             : "No Document attached"
+  }]
+  general_information_items << {
+   field: "Summary",
+   value: sanitize(@edition.summary.truncate(500, omission: "... (For full content: #{preview_edition_link(@edition, false, { class: "govuk-link" })})"))
+  } if @edition.summary.present?
+%>
+
 <%= render "govuk_publishing_components/components/summary_list", {
-  title: "Summary content",
-  items: [
-    {
-      field: "Alert status",
-      value: alert_statuses.present? ? alert_statuses : "None"
-    },
-    {
-      field: "Map of #{@country.name}",
-      value: @edition.image.present? ? link_to("Map of #{@country.name}", @edition.image["file_url"], {class: "govuk-link"}): "No Map attached"
-    },
-    {
-      field: "PDF Document",
-      value: @edition.document.present? ?
-        link_to("Download #{@edition.document['name']}", @edition.document["file_url"], {class: "govuk-link"})
-        : "No Document attached"
-    },
-    {
-      field: "Summary",
-      value: sanitize(@edition.summary.truncate(500, omission: "... (For full content: #{preview_edition_link(@edition, false, { class: "govuk-link" })})"))
-    }
-  ],
+  title: "General information",
+  items: general_information_items,
   borderless: true
 } %>
