@@ -1,5 +1,5 @@
 namespace :db do
-  desc "move summary from details into parts for one country"
+  desc "move summary from details into parts for one country and rename it to warnings and insurance"
   task :migrate_summary, [:country_slug] => :environment do |_task, args|
     country = Country.find_by_slug(args[:country_slug])
     raise "Could not find country #{args[:country_slug]}" unless country
@@ -7,7 +7,7 @@ namespace :db do
     migrate_summary_for(country)
   end
 
-  desc "move summary from details into parts for one country"
+  desc "move summary from details into parts for all countries and rename it to warnings and insurance"
   task migrate_summary_all_countries: :environment do
     Country.all.map { |country| migrate_summary_for(country) }
   end
@@ -40,8 +40,8 @@ def migrate_summary_for(country)
   end
   new_edition.parts.build(
     order: 1,
-    title: "Summary",
-    slug: "summary",
+    title: "Warnings and Insurance",
+    slug: "warnings-and-insurance",
     body: summary,
   )
 

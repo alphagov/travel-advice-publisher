@@ -68,7 +68,7 @@ describe "data migration rake tasks", type: :rake_task do
       expect(existing_country2.parts.size).to eq(2)
     end
 
-    it "moves summary into parts for specified country and does not affect others" do
+    it "moves summary into parts and renames to 'warnings and insurance' for specified country and does not affect others" do
       task.invoke(country_with_ordered_parts)
 
       migrated_travel_advice = Country.find_by_slug(country_with_ordered_parts).last_published_edition
@@ -76,9 +76,9 @@ describe "data migration rake tasks", type: :rake_task do
       expect(migrated_travel_advice.parts.size).to eq(3)
       migrated_parts = migrated_travel_advice.parts.order_by(order: :asc)
       expect(migrated_parts[0].order).to eq(1)
-      expect(migrated_parts[0].title).to eq("Summary")
+      expect(migrated_parts[0].title).to eq("Warnings and Insurance")
       expect(migrated_parts[0].body).to eq("Summary1")
-      expect(migrated_parts[0].slug).to eq("summary")
+      expect(migrated_parts[0].slug).to eq("warnings-and-insurance")
       expect(migrated_parts[1].order).to eq(2)
       expect(migrated_parts[1].title).to eq("Some Part Title!")
       expect(migrated_parts[2].order).to eq(3)
@@ -89,7 +89,7 @@ describe "data migration rake tasks", type: :rake_task do
       expect(non_migrated_travel_advice.parts.size).to eq(2)
     end
 
-    it "moves summary into parts for countries with non-ordered parts" do
+    it "moves summary into parts and renames to 'warnings and insurance' for countries with non-ordered parts" do
       task.invoke(country_with_unordered_parts)
 
       migrated_travel_advice = Country.find_by_slug(country_with_unordered_parts).last_published_edition
@@ -97,25 +97,25 @@ describe "data migration rake tasks", type: :rake_task do
       expect(migrated_travel_advice.parts.size).to eq(3)
       migrated_parts = migrated_travel_advice.parts.order_by(order: :asc)
       expect(migrated_parts[0].order).to eq(1)
-      expect(migrated_parts[0].title).to eq("Summary")
+      expect(migrated_parts[0].title).to eq("Warnings and Insurance")
       expect(migrated_parts[0].body).to eq("Summary2")
-      expect(migrated_parts[0].slug).to eq("summary")
+      expect(migrated_parts[0].slug).to eq("warnings-and-insurance")
       expect(migrated_parts[1].order).to be_nil
       expect(migrated_parts[1].title).to eq("Some Part Title!")
       expect(migrated_parts[2].order).to be_nil
       expect(migrated_parts[2].title).to eq("Another Part Title")
     end
 
-    it "move summary into new part for countries without any existing parts" do
+    it "move summary into new part and renames to 'warnings and insurance' for countries without any existing parts" do
       task.invoke(country_with_no_parts)
 
       migrated_travel_advice = Country.find_by_slug(country_with_no_parts).last_published_edition
       expect(migrated_travel_advice.summary).to be_nil
       expect(migrated_travel_advice.parts.size).to eq(1)
       expect(migrated_travel_advice.parts.first.order).to eq(1)
-      expect(migrated_travel_advice.parts.first.title).to eq("Summary")
+      expect(migrated_travel_advice.parts.first.title).to eq("Warnings and Insurance")
       expect(migrated_travel_advice.parts.first.body).to eq("Summary4")
-      expect(migrated_travel_advice.parts.first.slug).to eq("summary")
+      expect(migrated_travel_advice.parts.first.slug).to eq("warnings-and-insurance")
     end
 
     it "doesn't change anything for countries without summaries" do
@@ -157,7 +157,7 @@ describe "data migration rake tasks", type: :rake_task do
   describe "db:migrate_summary_all_countries" do
     let(:task) { Rake::Task["db:migrate_summary_all_countries"] }
 
-    it "migrates summary into parts for all countries" do
+    it "migrates summary into parts and renames it to 'warnings and insurance' for all countries" do
       task.invoke
 
       travel_advice_with_ordered_parts = Country.find_by_slug(country_with_ordered_parts).last_published_edition
@@ -167,9 +167,9 @@ describe "data migration rake tasks", type: :rake_task do
       expect(travel_advice_with_ordered_parts.parts.size).to eq(3)
       travel_advice_with_ordered_parts_migrated_parts = travel_advice_with_ordered_parts.parts.order_by(order: :asc)
       expect(travel_advice_with_ordered_parts_migrated_parts[0].order).to eq(1)
-      expect(travel_advice_with_ordered_parts_migrated_parts[0].title).to eq("Summary")
+      expect(travel_advice_with_ordered_parts_migrated_parts[0].title).to eq("Warnings and Insurance")
       expect(travel_advice_with_ordered_parts_migrated_parts[0].body).to eq("Summary1")
-      expect(travel_advice_with_ordered_parts_migrated_parts[0].slug).to eq("summary")
+      expect(travel_advice_with_ordered_parts_migrated_parts[0].slug).to eq("warnings-and-insurance")
       expect(travel_advice_with_ordered_parts_migrated_parts[1].order).to eq(2)
       expect(travel_advice_with_ordered_parts_migrated_parts[1].title).to eq("Some Part Title!")
       expect(travel_advice_with_ordered_parts_migrated_parts[2].order).to eq(3)
@@ -179,9 +179,9 @@ describe "data migration rake tasks", type: :rake_task do
       expect(travel_advice_with_unordered_parts.parts.size).to eq(3)
       travel_advice_with_unordered_parts_migrated_parts = travel_advice_with_unordered_parts.parts.order_by(order: :asc)
       expect(travel_advice_with_unordered_parts_migrated_parts[0].order).to eq(1)
-      expect(travel_advice_with_unordered_parts_migrated_parts[0].title).to eq("Summary")
+      expect(travel_advice_with_unordered_parts_migrated_parts[0].title).to eq("Warnings and Insurance")
       expect(travel_advice_with_unordered_parts_migrated_parts[0].body).to eq("Summary2")
-      expect(travel_advice_with_unordered_parts_migrated_parts[0].slug).to eq("summary")
+      expect(travel_advice_with_unordered_parts_migrated_parts[0].slug).to eq("warnings-and-insurance")
       expect(travel_advice_with_unordered_parts_migrated_parts[1].order).to be_nil
       expect(travel_advice_with_unordered_parts_migrated_parts[1].title).to eq("Some Part Title!")
       expect(travel_advice_with_unordered_parts_migrated_parts[2].order).to be_nil
