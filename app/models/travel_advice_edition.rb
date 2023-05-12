@@ -167,7 +167,7 @@ private
   end
 
   def populate_version_number
-    if version_number.nil? && !country_slug.nil? && !country_slug.empty?
+    if version_number.nil? && country_slug.present?
       latest_edition = self.class.where(country_slug:).order_by(version_number: :desc).first
       self.version_number = if latest_edition
                               latest_edition.version_number + 1

@@ -31,6 +31,8 @@
   </div>
 <% end %>
 
-<%= render 'govuk_publishing_components/components/govspeak' do %>
-  <%= sanitize(presenter.summary) %>
+<% if @presenter.edition.summary.present? %>
+  <%= render 'govuk_publishing_components/components/govspeak' do %>
+    <%= sanitize(presenter.summary) %>
+  <% end %>
 <% end %>
