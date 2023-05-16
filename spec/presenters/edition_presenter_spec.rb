@@ -8,7 +8,6 @@ describe EditionPresenter do
       title: "Aruba travel advice",
       overview: "Something something",
       published_at: 5.minutes.ago,
-      summary: "### Summary",
       alert_status: [TravelAdviceEdition::ALERT_STATUSES.first],
     )
 
@@ -84,147 +83,71 @@ describe EditionPresenter do
     around do |example|
       travel_to(Time.zone.now) { example.run }
     end
-    context "with legacy summary (as part of details)" do
-      it "is valid against the content schemas" do
-        expect(presented_data["schema_name"]).to eq("travel_advice")
-        expect(presented_data).to be_valid_against_publisher_schema("travel_advice")
-      end
 
-      it "returns a travel_advice item" do
-        expect(presented_data).to eq(
-          "base_path" => "/foreign-travel-advice/aruba",
-          "document_type" => "travel_advice",
-          "schema_name" => "travel_advice",
-          "title" => "Aruba travel advice",
-          "description" => "Something something",
-          "locale" => "en",
-          "publishing_app" => "travel-advice-publisher",
-          "rendering_app" => "government-frontend",
-          "public_updated_at" => edition.published_at.iso8601,
-          "update_type" => "major",
-          "routes" => [
-            { "path" => "/foreign-travel-advice/aruba", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba/print", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba/money", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
-            { "path" => "/foreign-travel-advice/aruba/summary", "type" => "exact" },
-          ],
-          "change_note" => "Stuff changed",
-          "details" => {
-            "country" => {
-              "slug" => "aruba",
-              "name" => "Aruba",
-              "synonyms" => [],
-            },
-            "summary" => [
-              { "content_type" => "text/govspeak", "content" => "### Summary" },
-            ],
-            "updated_at" => Time.zone.now.iso8601,
-            "reviewed_at" => Time.zone.now.iso8601,
-            "change_description" => "Stuff changed",
-            "email_signup_link" => "/foreign-travel-advice/aruba/email-signup",
-            "parts" => [
-              {
-                "slug" => "summary",
-                "title" => "Summary",
-                "body" => [
-                  { "content_type" => "text/govspeak", "content" => "### Summary" },
-                ],
-              },
-              {
-                "slug" => "safety-and-security",
-                "title" => "Safety and security",
-                "body" => [
-                  { "content_type" => "text/govspeak", "content" => "Keep your valuables safely stored ..." },
-                ],
-              },
-              {
-                "slug" => "terrorism",
-                "title" => "Terrorism",
-                "body" => [
-                  { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
-                ],
-              },
-            ],
-            "alert_status" => %w[avoid_all_but_essential_travel_to_parts],
-            "max_cache_time" => 10,
+    it "is valid against the content schemas" do
+      expect(presented_data["schema_name"]).to eq("travel_advice")
+      expect(presented_data).to be_valid_against_publisher_schema("travel_advice")
+    end
+
+    it "returns a travel_advice item" do
+      expect(presented_data).to eq(
+        "base_path" => "/foreign-travel-advice/aruba",
+        "document_type" => "travel_advice",
+        "schema_name" => "travel_advice",
+        "title" => "Aruba travel advice",
+        "description" => "Something something",
+        "locale" => "en",
+        "publishing_app" => "travel-advice-publisher",
+        "rendering_app" => "government-frontend",
+        "public_updated_at" => edition.published_at.iso8601,
+        "update_type" => "major",
+        "routes" => [
+          { "path" => "/foreign-travel-advice/aruba", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/print", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/money", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
+          { "path" => "/foreign-travel-advice/aruba/summary", "type" => "exact" },
+        ],
+        "change_note" => "Stuff changed",
+        "details" => {
+          "country" => {
+            "slug" => "aruba",
+            "name" => "Aruba",
+            "synonyms" => [],
           },
-        )
-      end
-
-      context "with summary moved to parts" do
-        before do
-          edition.summary = nil
-        end
-
-        it "is valid against the content schemas" do
-          expect(presented_data["schema_name"]).to eq("travel_advice")
-          expect(presented_data).to be_valid_against_publisher_schema("travel_advice")
-        end
-
-        it "returns a travel_advice item" do
-          expect(presented_data).to eq(
-            "base_path" => "/foreign-travel-advice/aruba",
-            "document_type" => "travel_advice",
-            "schema_name" => "travel_advice",
-            "title" => "Aruba travel advice",
-            "description" => "Something something",
-            "locale" => "en",
-            "publishing_app" => "travel-advice-publisher",
-            "rendering_app" => "government-frontend",
-            "public_updated_at" => edition.published_at.iso8601,
-            "update_type" => "major",
-            "routes" => [
-              { "path" => "/foreign-travel-advice/aruba", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba.atom", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba/print", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba/money", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba/terrorism", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba/safety-and-security", "type" => "exact" },
-              { "path" => "/foreign-travel-advice/aruba/summary", "type" => "exact" },
-            ],
-            "change_note" => "Stuff changed",
-            "details" => {
-              "country" => {
-                "slug" => "aruba",
-                "name" => "Aruba",
-                "synonyms" => [],
-              },
-              "updated_at" => Time.zone.now.iso8601,
-              "reviewed_at" => Time.zone.now.iso8601,
-              "change_description" => "Stuff changed",
-              "email_signup_link" => "/foreign-travel-advice/aruba/email-signup",
-              "parts" => [
-                {
-                  "slug" => "summary",
-                  "title" => "Summary",
-                  "body" => [
-                    { "content_type" => "text/govspeak", "content" => "### Summary" },
-                  ],
-                },
-                {
-                  "slug" => "safety-and-security",
-                  "title" => "Safety and security",
-                  "body" => [
-                    { "content_type" => "text/govspeak", "content" => "Keep your valuables safely stored ..." },
-                  ],
-                },
-                {
-                  "slug" => "terrorism",
-                  "title" => "Terrorism",
-                  "body" => [
-                    { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
-                  ],
-                },
+          "updated_at" => Time.zone.now.iso8601,
+          "reviewed_at" => Time.zone.now.iso8601,
+          "change_description" => "Stuff changed",
+          "email_signup_link" => "/foreign-travel-advice/aruba/email-signup",
+          "parts" => [
+            {
+              "slug" => "summary",
+              "title" => "Summary",
+              "body" => [
+                { "content_type" => "text/govspeak", "content" => "### Summary" },
               ],
-              "alert_status" => %w[avoid_all_but_essential_travel_to_parts],
-              "max_cache_time" => 10,
             },
-          )
-        end
-      end
+            {
+              "slug" => "safety-and-security",
+              "title" => "Safety and security",
+              "body" => [
+                { "content_type" => "text/govspeak", "content" => "Keep your valuables safely stored ..." },
+              ],
+            },
+            {
+              "slug" => "terrorism",
+              "title" => "Terrorism",
+              "body" => [
+                { "content_type" => "text/govspeak", "content" => "There is an underlying threat from ..." },
+              ],
+            },
+          ],
+          "alert_status" => %w[avoid_all_but_essential_travel_to_parts],
+          "max_cache_time" => 10,
+        },
+      )
     end
 
     context "when the edition does not have a published_at" do
