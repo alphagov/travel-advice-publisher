@@ -28,17 +28,18 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
+    <% unless @comparison.summary.nil? && @edition.summary.nil? %>
+      <div class="govuk-!-margin-bottom-5">
+        <%= render "govuk_publishing_components/components/heading", {
+          text: "Summary",
+          margin_bottom: 3
+        } %>
 
-    <div class="govuk-!-margin-bottom-5">
-      <%= render "govuk_publishing_components/components/heading", {
-        text: "Summary",
-        margin_bottom: 3
-      } %>
-
-      <div class="govuk-body">
-        <%= diff_html(@comparison.summary, @edition.summary) %>
+        <div class="govuk-body">
+          <%= diff_html(@comparison.summary, @edition.summary) %>
+        </div>
       </div>
-    </div>
+    <% end %>
 
     <% @edition.parts.each_with_index do |part, index| %>
       <div class="govuk-!-margin-bottom-5">
