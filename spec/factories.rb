@@ -10,7 +10,6 @@ FactoryBot.define do
   factory :travel_advice_edition do
     sequence(:country_slug) { |n| "test-country-#{n}" }
     sequence(:title) { |n| "Test Country #{n}" }
-    sequence(:summary) { |n| "Travel advice about Test Country #{n}" }
     change_description { "Stuff changed" }
     update_type { "major" }
   end
