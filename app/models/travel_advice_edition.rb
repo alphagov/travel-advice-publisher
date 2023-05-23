@@ -14,7 +14,7 @@ class TravelAdviceEdition
   field :version_number,       type: Integer
   field :state,                type: String,    default: "draft"
   field :alert_status,         type: Array,     default: []
-  field :summary,              type: String,    default: ""
+  field :summary,              type: String,    default: "" # Deprecated (see docs/move_summary_to_parts.mb)
   field :change_description,   type: String
   field :minor_update,         type: Boolean
   field :update_type,          type: String,    default: -> { "major" if first_version? }
