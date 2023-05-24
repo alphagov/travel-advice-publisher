@@ -1,3 +1,5 @@
+require "sidekiq/api"
+
 RSpec.describe EmailAlertApiWorker, :perform do
   include GdsApi::TestHelpers::EmailAlertApi
 

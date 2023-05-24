@@ -1,3 +1,5 @@
+require "sidekiq/api"
+
 describe WorkerError do
   let(:instance) { Object.new }
   let(:error) { StandardError.new("some error message") }
