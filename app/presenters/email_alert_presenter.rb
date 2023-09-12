@@ -1,6 +1,4 @@
 class EmailAlertPresenter
-  include AfghanistanLinksPresenter
-
   def self.present(edition)
     new(edition).present
   end
@@ -47,12 +45,6 @@ private
   end
 
   def links
-    return base_links unless country.name == "Afghanistan"
-
-    base_links.merge(afganistan_topical_event_payload)
-  end
-
-  def base_links
     { countries: [content_id] }
   end
 
