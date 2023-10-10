@@ -156,10 +156,10 @@ feature "Edit Edition page" do
       end
 
       within_section "the fieldset labelled General information" do
-        expect(page).to have_unchecked_field("The FCO advise against all travel to the whole country")
-        expect(page).to have_unchecked_field("The FCO advise against all travel to parts of the country")
-        expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
-        expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
+        expect(page).to have_unchecked_field("FCO advises against all travel to the whole country")
+        expect(page).to have_unchecked_field("FCO advises against all travel to parts of the country")
+        expect(page).to have_unchecked_field("FCO advises against all but essential travel to the whole country")
+        expect(page).to have_unchecked_field("FCO advises against all but essential travel to parts of the country")
       end
 
       within_section "the fieldset labelled Parts (govspeak available)" do
@@ -340,13 +340,13 @@ feature "Edit Edition page" do
     @edition = create(:travel_advice_edition, country_slug: "australia", state: "draft")
     visit "/admin/editions/#{@edition.to_param}/edit"
 
-    expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
-    expect(page).to have_unchecked_field("The FCO advise against all travel to parts of the country")
-    expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
-    expect(page).to have_unchecked_field("The FCO advise against all travel to the whole country")
+    expect(page).to have_unchecked_field("FCO advises against all but essential travel to parts of the country")
+    expect(page).to have_unchecked_field("FCO advises against all travel to parts of the country")
+    expect(page).to have_unchecked_field("FCO advises against all but essential travel to the whole country")
+    expect(page).to have_unchecked_field("FCO advises against all travel to the whole country")
 
-    check "The FCO advise against all but essential travel to parts of the country"
-    check "The FCO advise against all travel to parts of the country"
+    check "FCO advises against all but essential travel to parts of the country"
+    check "FCO advises against all travel to parts of the country"
 
     click_on "Save"
 
@@ -357,13 +357,13 @@ feature "Edit Edition page" do
     )
 
     expect(@edition.reload.alert_status).to eq %w[avoid_all_travel_to_parts avoid_all_but_essential_travel_to_parts]
-    expect(page).to have_checked_field("The FCO advise against all but essential travel to parts of the country")
-    expect(page).to have_checked_field("The FCO advise against all travel to parts of the country")
-    expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
-    expect(page).to have_unchecked_field("The FCO advise against all travel to the whole country")
+    expect(page).to have_checked_field("FCO advises against all but essential travel to parts of the country")
+    expect(page).to have_checked_field("FCO advises against all travel to parts of the country")
+    expect(page).to have_unchecked_field("FCO advises against all but essential travel to the whole country")
+    expect(page).to have_unchecked_field("FCO advises against all travel to the whole country")
 
-    uncheck "The FCO advise against all but essential travel to parts of the country"
-    uncheck "The FCO advise against all travel to parts of the country"
+    uncheck "FCO advises against all but essential travel to parts of the country"
+    uncheck "FCO advises against all travel to parts of the country"
 
     WebMock::RequestRegistry.instance.reset!
 
@@ -372,10 +372,10 @@ feature "Edit Edition page" do
     assert_details_contains("48baf826-7d71-4fea-a9c4-9730fd30eb9e", "alert_status", [])
 
     expect(@edition.reload.alert_status).to eq []
-    expect(page).to have_unchecked_field("The FCO advise against all but essential travel to parts of the country")
-    expect(page).to have_unchecked_field("The FCO advise against all travel to parts of the country")
-    expect(page).to have_unchecked_field("The FCO advise against all but essential travel to the whole country")
-    expect(page).to have_unchecked_field("The FCO advise against all travel to the whole country")
+    expect(page).to have_unchecked_field("FCO advises against all but essential travel to parts of the country")
+    expect(page).to have_unchecked_field("FCO advises against all travel to parts of the country")
+    expect(page).to have_unchecked_field("FCO advises against all but essential travel to the whole country")
+    expect(page).to have_unchecked_field("FCO advises against all travel to the whole country")
   end
 
   scenario "managing images for an edition" do
