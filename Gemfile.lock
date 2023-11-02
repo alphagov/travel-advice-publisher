@@ -71,7 +71,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     afm (0.2.2)
     ast (2.4.2)
-    bootsnap (1.16.0)
+    bootsnap (1.17.0)
       msgpack (~> 1.2)
     brakeman (6.0.1)
     bson (4.15.0)
@@ -234,7 +234,7 @@ GEM
       concurrent-ruby (>= 1.0.5, < 2.0)
       mongo (>= 2.18.0, < 3.0.0)
       ruby2_keywords (~> 0.0.5)
-    msgpack (1.6.0)
+    msgpack (1.7.2)
     multi_xml (0.6.0)
     net-imap (0.4.3)
       date
