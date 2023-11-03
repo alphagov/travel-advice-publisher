@@ -1,3 +1,4 @@
+<% render "layouts/google_tag_manager" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
   <% end %>
   <%= stylesheet_link_tag "historical-edition", media: "all" %>
   <%= yield :extra_headers %>
+  <%= yield :head %>
 </head>
 <body>
   <div id="wrapper" class="travel-advice-guide">
