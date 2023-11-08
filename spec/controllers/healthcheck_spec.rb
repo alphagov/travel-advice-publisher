@@ -2,7 +2,7 @@ describe HealthcheckController, type: :controller do
   include Rails.application.routes.url_helpers
 
   describe "#recently_published_editions" do
-    let!(:travel_advice_edition) { create(:published_travel_advice_edition, published_at: 160.minutes.ago) }
+    let!(:travel_advice_edition) { create(:published_travel_advice_edition, published_at: 160.minutes.ago, country_slug: "albania") }
 
     it "should return the title and published_at of recently published editions" do
       get :recently_published_editions
@@ -11,6 +11,7 @@ describe HealthcheckController, type: :controller do
           {
             title: travel_advice_edition.title,
             published_at: travel_advice_edition.published_at,
+            content_id: "2a3938e1-d588-45fc-8c8f-0f51814d5409",
           },
         ],
       }.to_json
