@@ -12,6 +12,7 @@ class HealthcheckController < ApplicationController
       {
         title: edition.title,
         published_at: edition.published_at,
+        content_id: Country.find_by_slug(edition.country_slug).content_id,
       }
     end
 
