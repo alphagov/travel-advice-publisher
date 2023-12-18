@@ -56,8 +56,8 @@ $state-success-text: govuk-colour("green");
       }
     }
 
-    .del:before,
-    .ins:before {
+    .del::before,
+    .ins::before {
       position: absolute;
       font-weight: bold;
       margin-left: -55px;
@@ -68,13 +68,13 @@ $state-success-text: govuk-colour("green");
       bottom: 0;
     }
 
-    .del:before {
+    .del::before {
       color: $state-danger-text;
       background-color: $removed-color;
       content: "-";
     }
 
-    .ins:before {
+    .ins::before {
       color: $state-success-text;
       background-color: $added-color;
       content: "+";
