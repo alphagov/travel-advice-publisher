@@ -23,6 +23,4 @@ Rails.application.routes.draw do
     GovukHealthcheck::SidekiqRedis,
     GovukHealthcheck::Mongoid,
   )
-
-  get "/healthcheck/recently-published-editions" => "healthcheck#recently_published_editions"
 end
