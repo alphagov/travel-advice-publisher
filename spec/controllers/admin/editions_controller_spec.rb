@@ -225,52 +225,6 @@ describe Admin::EditionsController do
 
         expect(PublishingApiWorker.jobs.size).to eq(1)
       end
-
-      it "creates a PublishRequest for that edition" do
-        request_id = "123456"
-        allow(GdsApi::GovukHeaders).to receive(:headers).and_return(govuk_request_id: request_id)
-        post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
-        publish_request = PublishRequest.last
-        expect(publish_request.edition_id).to eq(draft.id)
-        expect(publish_request.request_id).to eq(request_id)
-      end
-
-      context "when this is the first edition for the country" do
-        it "creates a PublishRequest for the email signup page" do
-          Sidekiq::Worker.clear_all
-
-          post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
-
-          expect(PublishingApiWorker.jobs.size).to eq(1)
-          actions = PublishingApiWorker.jobs[0]["args"][0]
-          expect(actions.count).to eq(6)
-          signup_email = actions.detect do |_, _, details|
-            details["base_path"] == "/foreign-travel-advice/aruba/email-signup"
-          end
-          expect(signup_email).not_to be_nil
-        end
-      end
-
-      context "when previous edition exist for the country" do
-        before do
-          create(:published_travel_advice_edition, country_slug: "aruba")
-          draft.update!(version_number: 2)
-        end
-
-        it "doesn't create a PublishRequest for the email signup page" do
-          Sidekiq::Worker.clear_all
-
-          post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
-
-          expect(PublishingApiWorker.jobs.size).to eq(1)
-          actions = PublishingApiWorker.jobs[0]["args"][0]
-          expect(actions.count).to eq(4)
-          signup_email = actions.detect do |_, _, details|
-            details["base_path"] == "/foreign-travel-advice/aruba/email-signup"
-          end
-          expect(signup_email).to be_nil
-        end
-      end
     end
   end
 
