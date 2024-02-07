@@ -118,12 +118,6 @@ private
         flash[:alert] = @edition.errors.full_messages.join(", ")
       end
 
-      PublishRequest.create!(
-        request_id: govuk_request_id,
-        edition_id: @edition.id,
-        country_slug: @edition.country_slug,
-      )
-
       redirect_to admin_country_path(@edition.country_slug), notice: "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
