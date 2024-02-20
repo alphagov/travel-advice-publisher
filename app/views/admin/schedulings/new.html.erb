@@ -1,0 +1,6 @@
+<h1>Form</h1>
+
+<%= form_with model: @scheduling, url: admin_edition_schedulings_path, method: :post do |f| %>
+  <%= f.date_field :scheduled_publish_time %>
+  <%= f.submit %>
+<% end %>

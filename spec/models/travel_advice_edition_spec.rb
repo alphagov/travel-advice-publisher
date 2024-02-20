@@ -57,6 +57,13 @@ describe TravelAdviceEdition do
         expect(ta.errors.messages[:state]).to include("has already been taken")
       end
 
+      it "only allows one edition in scheduled per slug" do
+        create(:scheduled_travel_advice_edition, country_slug: ta.country_slug)
+        ta.state = "scheduled"
+        expect(ta).not_to be_valid
+        expect(ta.errors.messages[:state]).to include("has already been taken")
+      end
+
       it "only allows one edition in published per slug" do
         create(:published_travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "published"
@@ -98,6 +105,11 @@ describe TravelAdviceEdition do
         expect(ta.publish).to be true
       end
 
+      it "allows publishing scheduled editions" do
+        ta = create(:scheduled_travel_advice_edition)
+        expect(ta.publish).to be true
+      end
+
       it "allows 'save & publish'" do
         ta = create(:travel_advice_edition)
         ta.title = "Foo"
@@ -114,6 +126,14 @@ describe TravelAdviceEdition do
         ta.title = "Foo"
         expect(ta.archive).to be false
         expect(ta.errors.messages[:state]).to include("must be draft to modify")
+      end
+
+      it "does not allow editing of scheduled edition" do
+        tae = create(:scheduled_travel_advice_edition)
+        tae.title = "New title"
+
+        expect(tae).not_to be_valid
+        expect(tae.errors.messages[:state]).to include("must be draft to modify")
       end
     end
 
@@ -594,7 +614,7 @@ describe TravelAdviceEdition do
 
       it "uploads the asset" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
-          .with(file: @file).and_return(@asset)
+                                                         .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
@@ -602,7 +622,7 @@ describe TravelAdviceEdition do
 
       it "assigns the asset id to the attachment id attribute" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
-          .with(file: @file).and_return(@asset)
+                                                         .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!

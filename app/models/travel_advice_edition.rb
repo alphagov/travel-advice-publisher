@@ -24,6 +24,7 @@ class TravelAdviceEdition
 
   embeds_many :actions
   embeds_many :link_check_reports
+  has_one :scheduling
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
 
@@ -69,8 +70,12 @@ class TravelAdviceEdition
       edition.class.where(country_slug: edition.country_slug, state: "published").each(&:archive)
     end
 
+    event :schedule do
+      transition draft: :scheduled
+    end
+
     event :publish do
-      transition draft: :published
+      transition from: %i[draft scheduled], to: :published
     end
 
     event :archive do
@@ -82,8 +87,13 @@ class TravelAdviceEdition
       validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
       validates :update_type, presence: { message: "can't be blank on publish" }
     end
+
     state :archived do
       validate :cannot_edit_archived
+    end
+
+    state :scheduled do
+      validate :cannot_edit_scheduled
     end
   end
 
@@ -156,7 +166,7 @@ class TravelAdviceEdition
 private
 
   def state_for_slug_unique
-    if %w[published draft].include?(state) &&
+    if %w[published draft scheduled].include?(state) &&
         self.class.where(
           :_id.ne => id,
           country_slug:,
@@ -185,6 +195,12 @@ private
 
   def cannot_edit_archived
     if anything_other_than_state_changed?("update_type")
+      errors.add(:state, "must be draft to modify")
+    end
+  end
+
+  def cannot_edit_scheduled
+    if anything_other_than_state_changed?("update_type", "scheduled_publish_time")
       errors.add(:state, "must be draft to modify")
     end
   end

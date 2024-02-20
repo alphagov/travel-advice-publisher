@@ -18,6 +18,13 @@ FactoryBot.define do
   factory :draft_travel_advice_edition, parent: :travel_advice_edition do
   end
 
+  factory :scheduled_travel_advice_edition, parent: :travel_advice_edition do
+    after :create do |tae|
+      tae.state = "scheduled"
+      tae.save!
+    end
+  end
+
   factory :published_travel_advice_edition, parent: :travel_advice_edition do
     after :create do |tae|
       tae.published_at ||= Time.zone.now.utc
