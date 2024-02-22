@@ -42,6 +42,7 @@
     "paste-html-to-govspeak": "^0.4.0"
   },
   "resolutions": {
+    "selenium-webdriver": "4.17.0",
     "stylelint/string-width": "4.2.3"
   },
   "packageManager": "yarn@4.0.2"
