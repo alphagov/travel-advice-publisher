@@ -10,7 +10,7 @@ class Admin::SchedulingsController < ApplicationController
     scheduled_publish_time = scheduling_params[:scheduled_publish_time]
 
     @scheduling = Scheduling.new(travel_advice_edition_id: edition, scheduled_publish_time:)
-    if @scheduling.save
+    if @scheduling.save && edition.schedule_as(current_user)
       @scheduling.schedule_for_publication(edition)
 
       redirect_to admin_countries_path

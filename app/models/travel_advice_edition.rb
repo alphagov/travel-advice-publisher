@@ -126,6 +126,10 @@ class TravelAdviceEdition
     build_action_as(user, Action::PUBLISH, comment) && publish
   end
 
+  def schedule_as(user)
+    build_action_as(user, Action::SCHEDULE_FOR_PUBLISHING) && schedule
+  end
+
   def previous_version
     self.class.where(country_slug:, :version_number.lt => version_number).order_by(version_number: :desc).first
   end

@@ -29,12 +29,19 @@ describe Admin::SchedulingsController do
       }.to change(Scheduling, :count).by(1)
     end
 
-    it "changes edition state to scheduled and redirects to countries index page" do
+    it "changes the edition state to scheduled and redirects to countries index page" do
       post :create, params: { edition_id: @edition.id, scheduling: { scheduled_publish_time: Time.zone.now + 3.days } }
-      edition = TravelAdviceEdition.find(Scheduling.last.travel_advice_edition_id)
 
+      expect(@edition.reload.state).to eq("scheduled")
       response.should redirect_to admin_countries_path
-      expect(edition.state).to eq("scheduled")
+    end
+
+    it "enqueues the publishing worker" do
+      Sidekiq::Worker.clear_all
+
+      post :create, params: { edition_id: @edition.id, scheduling: { scheduled_publish_time: Time.zone.now + 1.hour } }
+
+      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
     end
 
     context "invalid params" do

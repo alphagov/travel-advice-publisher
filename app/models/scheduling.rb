@@ -8,8 +8,8 @@ class Scheduling
   validates :scheduled_publish_time, presence: true
   validate :validate_scheduled_published_time
 
-  def schedule_for_publication(edition)
-    edition.schedule
+  def schedule_for_publication(current_user)
+    PublishScheduledEditionWorker.perform_at(scheduled_publish_time, travel_advice_edition.id.to_s, current_user.id.to_s)
   end
 
 private
