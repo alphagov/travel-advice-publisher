@@ -40,6 +40,10 @@ class Country
     editions.with_state("draft").any?
   end
 
+  def has_scheduled_edition?
+    editions.with_state("scheduled").any?
+  end
+
   def self.all
     @all ||= data.map { |d| Country.new(d) }
   end

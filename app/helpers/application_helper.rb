@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def preview_edition_link(edition, short, options = {})
-    if edition.draft?
+    if edition.draft? || edition.scheduled?
       name = "Preview saved version"
       url = "#{Plek.external_url_for('draft-origin')}/foreign-travel-advice/#{edition.country_slug}?cache=#{Time.zone.now.to_i}"
     elsif edition.published?

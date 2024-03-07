@@ -51,6 +51,8 @@ class Admin::EditionsController < ApplicationController
       save_draft
     when "Save & Publish"
       save_and_publish
+    when "Save & Schedule"
+      save_and_schedule
     when "Add Note"
       add_note
     else
@@ -121,6 +123,17 @@ private
       redirect_to admin_country_path(@edition.country_slug), notice: "#{@edition.title} published."
     else
       flash[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
+      render "edit"
+    end
+  end
+
+  def save_and_schedule
+    redirect_to admin_countries_path and return unless can_schedule_edition?
+
+    if @edition.update(permitted_edition_attributes)
+      redirect_to new_admin_edition_scheduling_path(@edition)
+    else
+      flash.now[:alert] = "We had some problems publishing: #{@edition.errors.full_messages.join(', ')}."
       render "edit"
     end
   end

@@ -1,5 +1,5 @@
 .edition-form__action-button-group {
-  :last-child {
+  :nth-last-child(2) {
     margin-left: auto;
   }
 }

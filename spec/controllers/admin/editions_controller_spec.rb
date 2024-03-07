@@ -111,6 +111,15 @@ describe Admin::EditionsController do
         expect(assigns(:edition)).to eq(@edition)
         expect(assigns(:country)).to eq(@country)
       end
+
+      it "displays scheduled publish time if edition in scheduled state" do
+        @edition.schedule
+        scheduling = @edition.create_scheduling(travel_advice_edition_id: @edition.id, scheduled_publish_time: Time.zone.now + 1.hour)
+
+        get :edit, params: { id: @edition._id }
+
+        expect(response.body).to include "Publication scheduled for #{scheduling.scheduled_publish_time.strftime('%B %d, %Y %H:%M %Z')}."
+      end
     end
 
     describe "PUT to update with valid params" do
@@ -224,6 +233,41 @@ describe Admin::EditionsController do
         post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 
         expect(PublishingApiWorker.jobs.size).to eq(1)
+      end
+    end
+
+    describe "Save & Schedule" do
+      context "feature flag on" do
+        it "should save the edition and redirect to scheduling form" do
+          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
+          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+          allow(draft).to receive(:schedule).and_return(true)
+
+          post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
+
+          expect(draft.reload.title).to eq "new title"
+          expect(response).to redirect_to new_admin_edition_scheduling_path(draft)
+        end
+
+        it "displays validation errors and does not redirect if edition is invalid" do
+          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
+          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+
+          post :update, params: { id: draft.to_param, edition: { title: "" }, commit: "Save & Schedule" }
+
+          expect(flash[:alert]).to include "We had some problems publishing"
+          expect(response).not_to redirect_to new_admin_edition_scheduling_path(draft)
+        end
+      end
+
+      context "feature flag off" do
+        it "should redirect to countries page" do
+          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
+
+          post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
+
+          expect(response).to redirect_to admin_countries_path
+        end
       end
     end
   end
