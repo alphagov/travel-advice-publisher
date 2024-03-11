@@ -70,12 +70,46 @@ describe Admin::SchedulingsController do
     end
 
     context "invalid params" do
-      it "renders a flash alert and new template if publish time is nil" do
-        post :create, params: { edition_id: @edition.id, scheduling: { "scheduled_publish_time(1i)": nil } }
+      [
+        ["scheduled_publish_time", "1", ""],
+        ["scheduled_publish_time", "2", ""],
+        ["scheduled_publish_time", "3", ""],
+        ["scheduled_publish_time", "4", ""],
+        ["scheduled_publish_time", "5", ""],
+        ["scheduled_publish_time", "1", "asdf"],
+        ["scheduled_publish_time", "2", "a"],
+        ["scheduled_publish_time", "3", "a"],
+        ["scheduled_publish_time", "4", "a"],
+        ["scheduled_publish_time", "5", "a"],
+        ["scheduled_publish_time", "1", "-2024"],
+        ["scheduled_publish_time", "2", "-1"],
+        ["scheduled_publish_time", "3", "-1"],
+        ["scheduled_publish_time", "4", "-1"],
+        ["scheduled_publish_time", "5", "-1"],
+        ["scheduled_publish_time", "2", "0"],
+        ["scheduled_publish_time", "3", "0"],
+        ["scheduled_publish_time", "1", "10000"],
+        ["scheduled_publish_time", "2", "13"],
+        ["scheduled_publish_time", "3", "32"],
+        ["scheduled_publish_time", "4", "25"],
+        ["scheduled_publish_time", "5", "60"],
+      ].each do |param_base_name, param_sub_ordinal, param_value|
+        it "displays a validation error when the '#{param_base_name}' sub-param '#{param_sub_ordinal}' is '#{param_value}'" do
+          params = generate_scheduling_params(Time.zone.now)
+          params.merge!("#{param_base_name}(#{param_sub_ordinal}i)" => param_value)
 
-        expect(response).to render_template("new")
-        expect(flash[:alert]).to include "We had some problems saving"
-        expect(@edition.reload.state).to eq("draft")
+          post :create, params: { edition_id: @edition.id, scheduling: params }
+
+          expect(response.body).to match(/Scheduled publish time format is invalid/)
+        end
+      end
+
+      it "surfaces the model validations for publish time in the past when datetime input is otherwise valid" do
+        params = generate_scheduling_params(1.hour.ago)
+
+        post :create, params: { edition_id: @edition.id, scheduling: params }
+
+        expect(response.body).to match(/Scheduled publish time can&#39;t be in the past/)
       end
     end
   end

@@ -31,19 +31,19 @@
     time_hint: "For example, 09:30 or 19:30",
     error_items: errors_for(@scheduling.errors, :scheduled_publish_time),
     year: {
-      value: params.dig("scheduling", "scheduled_publish_time(1i)")&.to_i,
+      value: params.dig("scheduling", "scheduled_publish_time(1i)"),
       name: "scheduling[scheduled_publish_time(1i)]",
       label: "Year",
       width: 4,
     },
     month: {
-      value: params.dig("scheduling", "scheduled_publish_time(2i)")&.to_i,
+      value: params.dig("scheduling", "scheduled_publish_time(2i)"),
       name: "scheduling[scheduled_publish_time(2i)]",
       label: "Month",
       width: 2,
     },
     day: {
-      value: params.dig("scheduling", "scheduled_publish_time(3i)")&.to_i,
+      value: params.dig("scheduling", "scheduled_publish_time(3i)"),
       name: "scheduling[scheduled_publish_time(3i)]",
       label: "Day",
       width: 2,
