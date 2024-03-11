@@ -49,6 +49,13 @@ describe TravelAdviceEdition do
       expect(ta.errors.messages[:title]).to include("can't be blank")
     end
 
+    it "requires the scheduled publication time to be in the future" do
+      edition = build(:scheduled_travel_advice_edition, scheduled_publication_time: 1.hour.ago)
+
+      expect(edition).not_to be_valid
+      expect(edition.errors.full_messages).to include(/Scheduled publication time can't be in the past/)
+    end
+
     context "on state" do
       it "only allows one edition in draft per slug" do
         create(:travel_advice_edition, country_slug: ta.country_slug)
@@ -382,6 +389,47 @@ describe TravelAdviceEdition do
       ed.update_type = "minor"
       ed.publish!
       expect(ed.change_description).to eq(published.change_description)
+    end
+  end
+
+  context "scheduling" do
+    let!(:published) do
+      create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
+    end
+    let!(:scheduled) { create(:scheduled_travel_advice_edition, country_slug: "aruba") }
+
+    it "can schedule a draft edition" do
+      draft = create(:travel_advice_edition)
+      draft.schedule!
+      expect(draft.reload).to be_scheduled
+    end
+
+    it "publishes the scheduled edition and archives previously published edition" do
+      scheduled.publish!
+      published.reload
+      expect(scheduled).to be_published
+      expect(published).to be_archived
+    end
+
+    context "setting the published date" do
+      it "sets the published_at to now for a normal update" do
+        travel_to(1.day.from_now) do
+          scheduled.publish!
+          expect(scheduled.published_at.to_i).to eq(Time.zone.now.utc.to_i)
+        end
+      end
+
+      it "sets the published_at to the previous version's published_at for a minor update" do
+        scheduled.update_type = "minor"
+        scheduled.publish!
+        expect(scheduled.published_at).to eq(published.published_at)
+      end
+    end
+
+    it "sets the change_description to the previous version's change_description for a minor update" do
+      scheduled.update_type = "minor"
+      scheduled.publish!
+      expect(scheduled.change_description).to eq(published.change_description)
     end
   end
 

@@ -35,10 +35,10 @@
   </div>
   <div class="govuk-grid-column-one-third">
     <div class="app-side-wrapper">
-      <% if @edition.scheduled? && @edition&.scheduling&.scheduled_publish_time %>
+      <% if @edition.scheduled? && @edition.scheduled_publication_time %>
         <div class="app-side govuk-!-padding-0">
           <%= render "govuk_publishing_components/components/inset_text", {
-            text: "Publication scheduled for #{@edition.scheduling.scheduled_publish_time.strftime("%B %d, %Y %H:%M %Z")}.",
+            text: "Publication scheduled for #{@edition.scheduled_publication_time.strftime("%B %d, %Y %H:%M %Z")}.",
             margin_bottom: 0,
           }
           %>

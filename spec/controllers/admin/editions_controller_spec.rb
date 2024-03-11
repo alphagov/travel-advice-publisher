@@ -113,12 +113,12 @@ describe Admin::EditionsController do
       end
 
       it "displays scheduled publish time if edition in scheduled state" do
-        @edition.schedule
-        scheduling = @edition.create_scheduling(travel_advice_edition_id: @edition.id, scheduled_publish_time: Time.zone.now + 1.hour)
+        country = Country.find_by_slug("afghanistan")
+        scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
 
-        get :edit, params: { id: @edition._id }
+        get :edit, params: { id: scheduled_edition._id }
 
-        expect(response.body).to include "Publication scheduled for #{scheduling.scheduled_publish_time.strftime('%B %d, %Y %H:%M %Z')}."
+        expect(response.body).to include "Publication scheduled for #{scheduled_edition.scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')}."
       end
     end
 

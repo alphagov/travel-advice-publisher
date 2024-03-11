@@ -34,12 +34,12 @@ describe Admin::SchedulingsController do
       allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
     end
 
-    it "creates a new instance of scheduling" do
+    it "sets the scheduled publication time on the edition" do
       scheduling_params = generate_scheduling_params(3.hours.from_now)
 
       post :create, params: { edition_id: @edition.id, scheduling: scheduling_params }
 
-      expect(@edition.reload.scheduling.scheduled_publish_time).to eq Time.zone.local(*scheduling_params.values)
+      expect(@edition.reload.scheduled_publication_time).to eq Time.zone.local(*scheduling_params.values)
     end
 
     it "changes the edition state to scheduled and redirects to country page with success message" do
@@ -56,9 +56,14 @@ describe Admin::SchedulingsController do
 
       post :create, params: { edition_id: @edition.id, scheduling: generate_scheduling_params(3.hours.from_now) }
 
-      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
+      edition_id_param = PublishScheduledEditionWorker.jobs.first["args"].first
+      user_id_param = PublishScheduledEditionWorker.jobs.first["args"].second
       worker_perform_at = Time.zone.at(PublishScheduledEditionWorker.jobs.first["at"]).localtime
+
+      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
       expect(worker_perform_at).to eq Time.zone.local(*scheduling_params.values)
+      expect(edition_id_param).to eq @edition.id.to_s
+      expect(user_id_param).to eq @user.id.to_s
     end
 
     it "redirects to country page if user does not have permission to schedule" do
@@ -71,28 +76,28 @@ describe Admin::SchedulingsController do
 
     context "invalid params" do
       [
-        ["scheduled_publish_time", "1", ""],
-        ["scheduled_publish_time", "2", ""],
-        ["scheduled_publish_time", "3", ""],
-        ["scheduled_publish_time", "4", ""],
-        ["scheduled_publish_time", "5", ""],
-        ["scheduled_publish_time", "1", "asdf"],
-        ["scheduled_publish_time", "2", "a"],
-        ["scheduled_publish_time", "3", "a"],
-        ["scheduled_publish_time", "4", "a"],
-        ["scheduled_publish_time", "5", "a"],
-        ["scheduled_publish_time", "1", "-2024"],
-        ["scheduled_publish_time", "2", "-1"],
-        ["scheduled_publish_time", "3", "-1"],
-        ["scheduled_publish_time", "4", "-1"],
-        ["scheduled_publish_time", "5", "-1"],
-        ["scheduled_publish_time", "2", "0"],
-        ["scheduled_publish_time", "3", "0"],
-        ["scheduled_publish_time", "1", "10000"],
-        ["scheduled_publish_time", "2", "13"],
-        ["scheduled_publish_time", "3", "32"],
-        ["scheduled_publish_time", "4", "25"],
-        ["scheduled_publish_time", "5", "60"],
+        ["scheduled_publication_time", "1", ""],
+        ["scheduled_publication_time", "2", ""],
+        ["scheduled_publication_time", "3", ""],
+        ["scheduled_publication_time", "4", ""],
+        ["scheduled_publication_time", "5", ""],
+        ["scheduled_publication_time", "1", "asdf"],
+        ["scheduled_publication_time", "2", "a"],
+        ["scheduled_publication_time", "3", "a"],
+        ["scheduled_publication_time", "4", "a"],
+        ["scheduled_publication_time", "5", "a"],
+        ["scheduled_publication_time", "1", "-2024"],
+        ["scheduled_publication_time", "2", "-1"],
+        ["scheduled_publication_time", "3", "-1"],
+        ["scheduled_publication_time", "4", "-1"],
+        ["scheduled_publication_time", "5", "-1"],
+        ["scheduled_publication_time", "2", "0"],
+        ["scheduled_publication_time", "3", "0"],
+        ["scheduled_publication_time", "1", "10000"],
+        ["scheduled_publication_time", "2", "13"],
+        ["scheduled_publication_time", "3", "32"],
+        ["scheduled_publication_time", "4", "25"],
+        ["scheduled_publication_time", "5", "60"],
       ].each do |param_base_name, param_sub_ordinal, param_value|
         it "displays a validation error when the '#{param_base_name}' sub-param '#{param_sub_ordinal}' is '#{param_value}'" do
           params = generate_scheduling_params(Time.zone.now)
@@ -100,7 +105,7 @@ describe Admin::SchedulingsController do
 
           post :create, params: { edition_id: @edition.id, scheduling: params }
 
-          expect(response.body).to match(/Scheduled publish time format is invalid/)
+          expect(response.body).to match(/Scheduled publication time format is invalid/)
         end
       end
 
@@ -109,7 +114,7 @@ describe Admin::SchedulingsController do
 
         post :create, params: { edition_id: @edition.id, scheduling: params }
 
-        expect(response.body).to match(/Scheduled publish time can&#39;t be in the past/)
+        expect(response.body).to match(/Scheduled publication time can&#39;t be in the past/)
       end
     end
   end
@@ -122,11 +127,11 @@ describe Admin::SchedulingsController do
     minute = date_time.min
 
     {
-      "scheduled_publish_time(1i)" => year.to_i,
-      "scheduled_publish_time(2i)" => month.to_i,
-      "scheduled_publish_time(3i)" => day.to_i,
-      "scheduled_publish_time(4i)" => hour.to_i,
-      "scheduled_publish_time(5i)" => minute.to_i,
+      "scheduled_publication_time(1i)" => year.to_i,
+      "scheduled_publication_time(2i)" => month.to_i,
+      "scheduled_publication_time(3i)" => day.to_i,
+      "scheduled_publication_time(4i)" => hour.to_i,
+      "scheduled_publication_time(5i)" => minute.to_i,
     }
   end
 end

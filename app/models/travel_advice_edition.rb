@@ -8,23 +8,23 @@ class TravelAdviceEdition
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :country_slug,         type: String
-  field :title,                type: String
-  field :overview,             type: String
-  field :version_number,       type: Integer
-  field :state,                type: String,    default: "draft"
-  field :alert_status,         type: Array,     default: []
-  field :summary,              type: String,    default: "" # Deprecated (see docs/move_summary_to_parts.mb)
-  field :change_description,   type: String
-  field :minor_update,         type: Boolean
-  field :update_type,          type: String,    default: -> { "major" if first_version? }
-  field :synonyms,             type: Array,     default: []
-  field :published_at,         type: Time # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
-  field :reviewed_at,          type: Time
+  field :country_slug,           type: String
+  field :title,                  type: String
+  field :overview,               type: String
+  field :version_number,         type: Integer
+  field :state,                  type: String,    default: "draft"
+  field :alert_status,           type: Array,     default: []
+  field :summary,                type: String,    default: "" # Deprecated (see docs/move_summary_to_parts.mb)
+  field :change_description,     type: String
+  field :minor_update,           type: Boolean
+  field :update_type,            type: String,    default: -> { "major" if first_version? }
+  field :synonyms,               type: Array,     default: []
+  field :published_at,           type: Time # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
+  field :reviewed_at,            type: Time
+  field :scheduled_publication_time, type: Time
 
   embeds_many :actions
   embeds_many :link_check_reports
-  has_one :scheduling
 
   index({ country_slug: 1, version_number: -1 }, unique: true)
 
@@ -57,7 +57,7 @@ class TravelAdviceEdition
   @fields_to_clone = %i[title country_slug overview alert_status summary image_id document_id synonyms]
 
   state_machine initial: :draft do
-    before_transition draft: :published do |edition, _|
+    before_transition %i[draft scheduled] => :published do |edition, _|
       if edition.is_minor_update?
         previous = edition.previous_version
         edition.published_at = previous.published_at
@@ -68,6 +68,10 @@ class TravelAdviceEdition
         edition.reviewed_at = edition.published_at
       end
       edition.class.where(country_slug: edition.country_slug, state: "published").each(&:archive)
+    end
+
+    state :draft do
+      validate :validate_scheduled_publication_time
     end
 
     event :schedule do
@@ -126,8 +130,9 @@ class TravelAdviceEdition
     build_action_as(user, Action::PUBLISH, comment) && publish
   end
 
-  def schedule_as(user)
+  def schedule_for_publication(user)
     build_action_as(user, Action::SCHEDULE_FOR_PUBLISHING) && schedule
+    PublishScheduledEditionWorker.perform_at(scheduled_publication_time, id.to_s, user.id.to_s)
   end
 
   def previous_version
@@ -192,7 +197,7 @@ private
   end
 
   def cannot_edit_published
-    if anything_other_than_state_changed?("reviewed_at", "update_type") && state_was != "draft"
+    if anything_other_than_state_changed?("reviewed_at", "update_type") && state_was != "draft" && state_was != "scheduled"
       errors.add(:state, "must be draft to modify")
     end
   end
@@ -204,7 +209,7 @@ private
   end
 
   def cannot_edit_scheduled
-    if anything_other_than_state_changed?("update_type", "scheduled_publish_time")
+    if anything_other_than_state_changed?("update_type", "scheduled_publication_time")
       errors.add(:state, "must be draft to modify")
     end
   end
@@ -223,6 +228,10 @@ private
     if is_minor_update? && first_version?
       errors.add(:update_type, "can't be minor for first version")
     end
+  end
+
+  def validate_scheduled_publication_time
+    errors.add(:scheduled_publication_time, "can't be in the past") if scheduled_publication_time && scheduled_publication_time <= Time.zone.now
   end
 
   def extract_part_errors

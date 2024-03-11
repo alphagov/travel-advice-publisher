@@ -4,39 +4,35 @@ class Admin::SchedulingsController < ApplicationController
 
   def new
     redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
-
-    @scheduling = Scheduling.new
   end
 
   def create
     redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
 
     if has_valid_datetime_input_values?
-      squashed_params = squash_multiparameter_scheduled_publish_time_attribute(scheduling_params)
-      @scheduling = Scheduling.new(travel_advice_edition: @edition, scheduled_publish_time: squashed_params[:scheduled_publish_time])
+      squashed_params = squash_multiparameter_scheduled_publication_time_attribute(scheduling_params)
+      @edition.scheduled_publication_time = squashed_params[:scheduled_publication_time]
 
-      if @scheduling.save && @edition.schedule_as(current_user)
-        @scheduling.schedule_for_publication(@edition)
-        redirect_to admin_country_path(@country.slug), notice: "#{@country.name} travel advice is scheduled to publish on #{@edition.scheduling.scheduled_publish_time.strftime('%B %d, %Y %H:%M %Z')}."
+      if @edition.save && @edition.schedule_for_publication(current_user)
+        redirect_to admin_country_path(@country.slug), notice: "#{@country.name} travel advice is scheduled to publish on #{@edition.scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')}."
       else
-        flash.now[:alert] = "We had some problems saving: #{@scheduling.errors.full_messages.join(', ')}."
+        flash.now[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
         render "new"
       end
     else
-      @scheduling = Scheduling.new(travel_advice_edition: @edition, scheduled_publish_time: nil)
-      @scheduling.errors.delete(:scheduled_publish_time)
-      @scheduling.errors.add(:scheduled_publish_time, "format is invalid")
-      flash.now[:alert] = "We had some problems saving: #{@scheduling.errors.full_messages.join(', ')}."
+      @edition.errors.delete(:scheduled_publication_time)
+      @edition.errors.add(:scheduled_publication_time, "format is invalid")
+      flash.now[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render "new"
     end
   end
 
 private
 
-  def squash_multiparameter_scheduled_publish_time_attribute(params)
+  def squash_multiparameter_scheduled_publication_time_attribute(params)
     datetime_params = scheduling_params.to_h.sort.map { |_, v| v.to_i }
-    params.delete_if { |k, _| k.include? "scheduled_publish_time" }
-    params[:scheduled_publish_time] = Time.zone.local(*datetime_params) if datetime_params.present?
+    params.delete_if { |k, _| k.include? "scheduled_publication_time" }
+    params[:scheduled_publication_time] = Time.zone.local(*datetime_params) if datetime_params.present?
 
     params
   end
@@ -56,7 +52,7 @@ private
 
   def scheduling_params
     params.fetch(:scheduling, {}).permit(
-      :scheduled_publish_time,
+      :scheduled_publication_time,
     )
   end
 

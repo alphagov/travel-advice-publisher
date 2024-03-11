@@ -2,9 +2,9 @@ class PublishScheduledEditionWorker
   include Sidekiq::Worker
 
   def perform(edition_id, user_id)
-    edition = TravelAdviceEdition.where(id: edition_id, state: "scheduled").first
+    edition = TravelAdviceEdition.find(edition_id)
 
-    if edition.scheduling.scheduled_publish_time <= Time.zone.now
+    if edition.scheduled_publication_time <= Time.zone.now
       notifier.put_content(edition)
       notifier.patch_links(edition)
       notifier.email_signup(edition) if edition.previous_version.nil?
@@ -12,7 +12,8 @@ class PublishScheduledEditionWorker
       notifier.send_alert(edition)
       notifier.enqueue
 
-      edition.publish_as(User.find(user_id))
+      user = User.find(user_id)
+      edition.publish_as(user)
     else
       Sidekiq.logger.info("Scheduled published time should be in the past.")
     end
