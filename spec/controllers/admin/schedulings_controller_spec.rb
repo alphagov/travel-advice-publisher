@@ -46,6 +46,7 @@ describe Admin::SchedulingsController do
       post :create, params: { edition_id: @edition.id, scheduling: generate_scheduling_params(3.hours.from_now) }
 
       expect(@edition.reload.state).to eq("scheduled")
+      expect(@edition.actions.first.request_details["scheduled_publication_time"]).to eq 3.hours.from_now.strftime("%B %d, %Y %H:%M %Z")
       expect(response).to redirect_to admin_country_path(@country.slug)
       expect(flash[:notice]).to eq "#{@country.name} travel advice is scheduled to publish on #{3.hours.from_now.strftime('%B %d, %Y %H:%M %Z')}."
     end

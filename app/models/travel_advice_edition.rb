@@ -121,8 +121,8 @@ class TravelAdviceEdition
     new_edition
   end
 
-  def build_action_as(user, action_type, comment = nil)
-    actions.build(requester: user, request_type: action_type, comment:)
+  def build_action_as(user, action_type, comment = nil, request_details = {})
+    actions.build(requester: user, request_type: action_type, comment:, request_details:)
   end
 
   def publish_as(user)
@@ -131,7 +131,7 @@ class TravelAdviceEdition
   end
 
   def schedule_for_publication(user)
-    build_action_as(user, Action::SCHEDULE_FOR_PUBLISHING) && schedule
+    build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
     PublishScheduledEditionWorker.perform_at(scheduled_publication_time, id.to_s, user.id.to_s)
   end
 

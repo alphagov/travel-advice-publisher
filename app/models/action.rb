@@ -4,8 +4,8 @@ class Action
   include Mongoid::Document
 
   STATUS_ACTIONS = [
-    CREATE                      = "create".freeze,
-    SCHEDULE_FOR_PUBLISHING     = "schedule_for_publishing".freeze,
+    CREATE = "create".freeze,
+    SCHEDULE_FOR_PUBLICATION = "schedule_for_publication".freeze,
     PUBLISH                     = "publish".freeze,
     NEW_VERSION                 = "new_version".freeze,
   ].freeze
@@ -34,9 +34,9 @@ class Action
   end
 
   def to_s
-    if request_type == SCHEDULE_FOR_PUBLISHING
-      string = "Scheduled for publishing"
-      string += " on #{request_details['scheduled_time'].to_time.in_time_zone('London').strftime('%d/%m/%Y %H:%M')}" if request_details["scheduled_time"].present?
+    if request_type == SCHEDULE_FOR_PUBLICATION
+      string = "Scheduled for publication"
+      string += " on #{request_details['scheduled_publication_time'].strftime('%B %d, %Y %H:%M %Z')}" if request_details["scheduled_publication_time"].present?
       string
     else
       request_type.humanize.capitalize
