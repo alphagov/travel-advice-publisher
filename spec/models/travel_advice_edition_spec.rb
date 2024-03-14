@@ -218,6 +218,14 @@ describe TravelAdviceEdition do
         expect(ta.errors.messages[:change_description]).to include("can't be blank on publish")
       end
 
+      it "is required on schedule" do
+        ta.save!
+        ta.change_description = ""
+        ta.state = "scheduled"
+        expect(ta).not_to be_valid
+        expect(ta.errors.messages[:change_description]).to include("can't be blank on schedule")
+      end
+
       it "is not required on publish for a minor update" do
         create(:archived_travel_advice_edition, country_slug: ta.country_slug)
         ta.version_number = 2

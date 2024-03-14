@@ -255,8 +255,17 @@ describe Admin::EditionsController do
 
           post :update, params: { id: draft.to_param, edition: { title: "" }, commit: "Save & Schedule" }
 
-          expect(flash[:alert]).to include "We had some problems publishing"
+          expect(flash[:alert]).to include "We had some problems scheduling"
           expect(response).not_to redirect_to new_admin_edition_scheduling_path(draft)
+        end
+
+        it "does not allow an empty change description when scheduling" do
+          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
+          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+
+          post :update, params: { id: draft.to_param, edition: { change_description: "" }, commit: "Save & Schedule" }
+
+          expect(flash[:alert]).to include "We had some problems scheduling: Change description can't be blank on schedule."
         end
       end
 

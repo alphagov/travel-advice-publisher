@@ -98,6 +98,7 @@ class TravelAdviceEdition
 
     state :scheduled do
       validate :cannot_edit_scheduled
+      validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on schedule" }
     end
   end
 
@@ -131,7 +132,8 @@ class TravelAdviceEdition
   end
 
   def schedule_for_publication(user)
-    build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
+    return false unless build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
+
     PublishScheduledEditionWorker.perform_at(scheduled_publication_time, id.to_s, user.id.to_s)
   end
 
@@ -170,6 +172,13 @@ class TravelAdviceEdition
 
   def first_version?
     version_number == 1
+  end
+
+  def has_valid_change_description_for_scheduling?
+    return true unless !is_minor_update? && !change_description.presence
+
+    errors.add(:change_description, "can't be blank on schedule")
+    false
   end
 
 private
