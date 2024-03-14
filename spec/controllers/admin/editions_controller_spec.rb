@@ -238,10 +238,13 @@ describe Admin::EditionsController do
 
     describe "Save & Schedule" do
       context "feature flag on" do
-        it "should save the edition and redirect to scheduling form" do
+        it "should save the edition, update publishing-api and redirect to scheduling form" do
           allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
           allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
           allow(draft).to receive(:schedule).and_return(true)
+
+          expect_any_instance_of(PublishingApiNotifier).to receive(:put_content).with(draft)
+          expect_any_instance_of(PublishingApiNotifier).to receive(:enqueue)
 
           post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
 

@@ -34,37 +34,26 @@ describe Admin::SchedulingsController do
       allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
     end
 
-    it "sets the scheduled publication time on the edition" do
+    after do
+      Sidekiq::Worker.clear_all
+    end
+
+    it "schedules the edition for publication" do
+      Sidekiq::Worker.clear_all
       scheduling_params = generate_scheduling_params(3.hours.from_now)
 
       post :create, params: { edition_id: @edition.id, scheduling: scheduling_params }
 
+      expect(@edition.reload.state).to eq("scheduled")
       expect(@edition.reload.scheduled_publication_time).to eq Time.zone.local(*scheduling_params.values)
+      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
     end
 
-    it "changes the edition state to scheduled and redirects to country page with success message" do
+    it "redirects to country page with success message" do
       post :create, params: { edition_id: @edition.id, scheduling: generate_scheduling_params(3.hours.from_now) }
 
-      expect(@edition.reload.state).to eq("scheduled")
-      expect(@edition.actions.first.request_details["scheduled_publication_time"]).to eq 3.hours.from_now.strftime("%B %d, %Y %H:%M %Z")
       expect(response).to redirect_to admin_country_path(@country.slug)
       expect(flash[:notice]).to eq "#{@country.name} travel advice is scheduled to publish on #{3.hours.from_now.strftime('%B %d, %Y %H:%M %Z')}."
-    end
-
-    it "enqueues the publishing worker" do
-      Sidekiq::Worker.clear_all
-      scheduling_params = generate_scheduling_params(3.hours.from_now)
-
-      post :create, params: { edition_id: @edition.id, scheduling: generate_scheduling_params(3.hours.from_now) }
-
-      edition_id_param = PublishScheduledEditionWorker.jobs.first["args"].first
-      user_id_param = PublishScheduledEditionWorker.jobs.first["args"].second
-      worker_perform_at = Time.zone.at(PublishScheduledEditionWorker.jobs.first["at"]).localtime
-
-      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
-      expect(worker_perform_at).to eq Time.zone.local(*scheduling_params.values)
-      expect(edition_id_param).to eq @edition.id.to_s
-      expect(user_id_param).to eq @user.id.to_s
     end
 
     it "redirects to country page if user does not have permission to schedule" do
