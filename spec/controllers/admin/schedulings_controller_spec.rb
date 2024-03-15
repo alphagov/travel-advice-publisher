@@ -109,6 +109,47 @@ describe Admin::SchedulingsController do
     end
   end
 
+  describe "DELETE /destroy" do
+    before do
+      @country = Country.find_by_slug("aruba")
+      @edition = create(:scheduled_travel_advice_edition, country_slug: "aruba")
+      @user = stub_user
+      login_as @user
+      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
+    end
+
+    it "deletes the scheduled publication time and changes state to draft" do
+      post :destroy, params: { edition_id: @edition.id }
+
+      expect(@edition.reload.scheduled_publication_time).to be_nil
+      expect(@edition.reload.state).to eq("draft")
+    end
+
+    it "redirects to edition edit page with success message" do
+      post :destroy, params: { edition_id: @edition.id }
+
+      expect(response).to redirect_to edit_admin_edition_path(@edition)
+      expect(flash[:notice]).to eq "Publication schedule cancelled."
+    end
+
+    it "redirects to country page if user does not have permission to schedule" do
+      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
+
+      delete :destroy, params: { edition_id: @edition.id }
+
+      expect(response).to redirect_to admin_country_path(@country.slug)
+    end
+
+    it "redirects to edition edit page with alert message if there are any errors with the cancellation" do
+      allow_any_instance_of(TravelAdviceEdition).to receive(:cancel_schedule_for_publication).and_return(false)
+
+      delete :destroy, params: { edition_id: @edition.id }
+
+      expect(flash[:alert]).to include("We had some problems cancelling")
+      expect(response).to redirect_to edit_admin_edition_path(@edition)
+    end
+  end
+
   def generate_scheduling_params(date_time)
     year = date_time.year
     month = date_time.month

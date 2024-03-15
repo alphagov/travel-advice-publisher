@@ -1,6 +1,6 @@
 class Admin::SchedulingsController < ApplicationController
   before_action :skip_slimmer
-  before_action :load_country_and_edition, only: %i[new create]
+  before_action :load_country_and_edition, only: %i[new create destroy]
 
   def new
     redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
@@ -24,6 +24,16 @@ class Admin::SchedulingsController < ApplicationController
       @edition.errors.add(:scheduled_publication_time, "format is invalid")
       flash.now[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render "new"
+    end
+  end
+
+  def destroy
+    redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
+
+    if @edition.cancel_schedule_for_publication
+      redirect_to edit_admin_edition_path(@edition), notice: "Publication schedule cancelled."
+    else
+      redirect_to edit_admin_edition_path(@edition), alert: "We had some problems cancelling: #{@edition.errors.full_messages.join(', ')}."
     end
   end
 

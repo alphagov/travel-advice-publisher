@@ -70,10 +70,6 @@ class TravelAdviceEdition
       edition.class.where(country_slug: edition.country_slug, state: "published").each(&:archive)
     end
 
-    state :draft do
-      validate :validate_scheduled_publication_time
-    end
-
     event :schedule do
       transition draft: :scheduled
     end
@@ -84,6 +80,14 @@ class TravelAdviceEdition
 
     event :archive do
       transition all => :archived, unless: :archived?
+    end
+
+    event :draft do
+      transition scheduled: :draft
+    end
+
+    state :draft do
+      validate :validate_scheduled_publication_time
     end
 
     state :published do
@@ -135,6 +139,11 @@ class TravelAdviceEdition
     return false unless build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
 
     ScheduledPublishingWorker.enqueue(self)
+  end
+
+  def cancel_schedule_for_publication
+    draft
+    unset(:scheduled_publication_time)
   end
 
   def previous_version
