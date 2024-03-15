@@ -46,7 +46,7 @@ describe Admin::SchedulingsController do
 
       expect(@edition.reload.state).to eq("scheduled")
       expect(@edition.reload.scheduled_publication_time).to eq Time.zone.local(*scheduling_params.values)
-      expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
+      expect(ScheduledPublishingWorker.jobs.size).to eq(1)
     end
 
     it "redirects to country page with success message" do

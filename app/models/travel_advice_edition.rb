@@ -134,7 +134,7 @@ class TravelAdviceEdition
   def schedule_for_publication(user)
     return false unless build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
 
-    PublishScheduledEditionWorker.perform_at(scheduled_publication_time, id.to_s, user.id.to_s)
+    ScheduledPublishingWorker.enqueue(self)
   end
 
   def previous_version

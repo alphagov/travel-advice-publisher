@@ -42,4 +42,8 @@ class Action
       request_type.humanize.capitalize
     end
   end
+
+  def requester_is_a_robot?
+    requester.uid == "scheduled_publishing_robot"
+  end
 end

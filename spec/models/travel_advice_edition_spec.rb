@@ -457,14 +457,12 @@ describe TravelAdviceEdition do
         draft = create(:travel_advice_edition, country_slug: country.slug, scheduled_publication_time: 3.hours.from_now)
         draft.schedule_for_publication(user)
 
-        worker_perform_at = Time.zone.at(PublishScheduledEditionWorker.jobs.first["at"]).localtime
-        edition_id_param = PublishScheduledEditionWorker.jobs.first["args"].first
-        user_id_param = PublishScheduledEditionWorker.jobs.first["args"].second
+        worker_perform_at = Time.zone.at(ScheduledPublishingWorker.jobs.first["at"]).localtime
+        edition_id_param = ScheduledPublishingWorker.jobs.first["args"].first
 
-        expect(PublishScheduledEditionWorker.jobs.size).to eq(1)
+        expect(ScheduledPublishingWorker.jobs.size).to eq(1)
         expect(worker_perform_at).to eq 3.hours.from_now
         expect(edition_id_param).to eq draft.id.to_s
-        expect(user_id_param).to eq user.id.to_s
       end
     end
   end
