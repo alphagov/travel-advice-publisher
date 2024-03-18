@@ -141,8 +141,9 @@ class TravelAdviceEdition
     ScheduledPublishingWorker.enqueue(self)
   end
 
-  def cancel_schedule_for_publication
-    draft
+  def cancel_schedule_for_publication(user)
+    return false unless build_action_as(user, Action::CANCEL_SCHEDULE) && draft
+
     unset(:scheduled_publication_time)
   end
 

@@ -30,7 +30,7 @@ class Admin::SchedulingsController < ApplicationController
   def destroy
     redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
 
-    if @edition.cancel_schedule_for_publication
+    if @edition.cancel_schedule_for_publication(current_user)
       redirect_to edit_admin_edition_path(@edition), notice: "Publication schedule cancelled."
     else
       redirect_to edit_admin_edition_path(@edition), alert: "We had some problems cancelling: #{@edition.errors.full_messages.join(', ')}."

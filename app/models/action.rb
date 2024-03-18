@@ -8,6 +8,7 @@ class Action
     SCHEDULE_FOR_PUBLICATION = "schedule_for_publication".freeze,
     PUBLISH                     = "publish".freeze,
     NEW_VERSION                 = "new_version".freeze,
+    CANCEL_SCHEDULE             = "cancel_schedule".freeze,
   ].freeze
 
   NON_STATUS_ACTIONS = [
