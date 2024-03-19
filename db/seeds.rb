@@ -6,4 +6,9 @@ if User.where(name: "Test user").blank?
     permissions: ["signin", "GDS Editor"],
     organisation_content_id: gds_organisation_id,
   )
+
+  User.create!(
+    name: "Scheduled Publishing Robot",
+    uid: "scheduled_publishing_robot",
+  )
 end
