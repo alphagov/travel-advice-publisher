@@ -9,6 +9,7 @@ class User
   include GDS::SSO::User
 
   store_in collection: "travel_advice_publisher_users"
+  SCHEDULE_EDITION_PERMISSION = "schedule_edition_permission".freeze
 
   field "name",                    type: String
   field "uid",                     type: String

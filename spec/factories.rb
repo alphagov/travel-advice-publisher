@@ -7,6 +7,11 @@ FactoryBot.define do
     permissions { %w[signin] } if defined?(GDS::SSO::Config)
   end
 
+  factory :scheduled_publishing_robot, parent: :user do
+    uid { "scheduled_publishing_robot" }
+    name { "Scheduled Publishing Robot" }
+  end
+
   factory :travel_advice_edition do
     sequence(:country_slug) { |n| "test-country-#{n}" }
     sequence(:title) { |n| "Test Country #{n}" }
@@ -16,6 +21,14 @@ FactoryBot.define do
 
   # These factories only work when used with FactoryBot.create
   factory :draft_travel_advice_edition, parent: :travel_advice_edition do
+  end
+
+  factory :scheduled_travel_advice_edition, parent: :travel_advice_edition do
+    after :create do |tae|
+      tae.state = "scheduled"
+      tae.scheduled_publication_time = 1.hour.from_now
+      tae.save!
+    end
   end
 
   factory :published_travel_advice_edition, parent: :travel_advice_edition do

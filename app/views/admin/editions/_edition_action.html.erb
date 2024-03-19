@@ -5,7 +5,7 @@
 
   <div class="govuk-grid-column-two-thirds">
     <p class="govuk-body govuk-!-font-weight-bold">
-      <%= action.to_s %> by <%= action.requester.present? ? mail_to(action.requester.email, action.requester.name, class: "govuk-link") : "GOV.UK Bot" %>
+      <%= action.to_s %> by <%= action.requester.present? && !action.requester_is_a_robot? ? mail_to(action.requester.email, action.requester.name, class: "govuk-link") : "Scheduled Publishing Robot" %>
       <% if action.comment.present? %>
         <%= simple_format(escape_once(action.comment), { class: 'govuk-body' }, :sanitize => false) %>
       <% end %>

@@ -8,19 +8,20 @@ class TravelAdviceEdition
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  field :country_slug,         type: String
-  field :title,                type: String
-  field :overview,             type: String
-  field :version_number,       type: Integer
-  field :state,                type: String,    default: "draft"
-  field :alert_status,         type: Array,     default: []
-  field :summary,              type: String,    default: "" # Deprecated (see docs/move_summary_to_parts.mb)
-  field :change_description,   type: String
-  field :minor_update,         type: Boolean
-  field :update_type,          type: String,    default: -> { "major" if first_version? }
-  field :synonyms,             type: Array,     default: []
-  field :published_at,         type: Time # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
-  field :reviewed_at,          type: Time
+  field :country_slug,           type: String
+  field :title,                  type: String
+  field :overview,               type: String
+  field :version_number,         type: Integer
+  field :state,                  type: String,    default: "draft"
+  field :alert_status,           type: Array,     default: []
+  field :summary,                type: String,    default: "" # Deprecated (see docs/move_summary_to_parts.mb)
+  field :change_description,     type: String
+  field :minor_update,           type: Boolean
+  field :update_type,            type: String,    default: -> { "major" if first_version? }
+  field :synonyms,               type: Array,     default: []
+  field :published_at,           type: Time # This is the publicly presented publish time. For minor updates, this will be the publish time of the previous version
+  field :reviewed_at,            type: Time
+  field :scheduled_publication_time, type: Time
 
   embeds_many :actions
   embeds_many :link_check_reports
@@ -56,7 +57,7 @@ class TravelAdviceEdition
   @fields_to_clone = %i[title country_slug overview alert_status summary image_id document_id synonyms]
 
   state_machine initial: :draft do
-    before_transition draft: :published do |edition, _|
+    before_transition %i[draft scheduled] => :published do |edition, _|
       if edition.is_minor_update?
         previous = edition.previous_version
         edition.published_at = previous.published_at
@@ -69,8 +70,16 @@ class TravelAdviceEdition
       edition.class.where(country_slug: edition.country_slug, state: "published").each(&:archive)
     end
 
+    state :draft do
+      validate :validate_scheduled_publication_time
+    end
+
+    event :schedule do
+      transition draft: :scheduled
+    end
+
     event :publish do
-      transition draft: :published
+      transition from: %i[draft scheduled], to: :published
     end
 
     event :archive do
@@ -82,8 +91,14 @@ class TravelAdviceEdition
       validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on publish" }
       validates :update_type, presence: { message: "can't be blank on publish" }
     end
+
     state :archived do
       validate :cannot_edit_archived
+    end
+
+    state :scheduled do
+      validate :cannot_edit_scheduled
+      validates :change_description, presence: { unless: :is_minor_update?, message: "can't be blank on schedule" }
     end
   end
 
@@ -107,13 +122,19 @@ class TravelAdviceEdition
     new_edition
   end
 
-  def build_action_as(user, action_type, comment = nil)
-    actions.build(requester: user, request_type: action_type, comment:)
+  def build_action_as(user, action_type, comment = nil, request_details = {})
+    actions.build(requester: user, request_type: action_type, comment:, request_details:)
   end
 
   def publish_as(user)
     comment = is_minor_update? ? "Minor update" : Govspeak::Document.new(change_description).to_text
     build_action_as(user, Action::PUBLISH, comment) && publish
+  end
+
+  def schedule_for_publication(user)
+    return false unless build_action_as(user, Action::SCHEDULE_FOR_PUBLICATION, nil, scheduled_publication_time:) && schedule
+
+    ScheduledPublishingWorker.enqueue(self)
   end
 
   def previous_version
@@ -153,10 +174,17 @@ class TravelAdviceEdition
     version_number == 1
   end
 
+  def has_valid_change_description_for_scheduling?
+    return true unless !is_minor_update? && !change_description.presence
+
+    errors.add(:change_description, "can't be blank on schedule")
+    false
+  end
+
 private
 
   def state_for_slug_unique
-    if %w[published draft].include?(state) &&
+    if %w[published draft scheduled].include?(state) &&
         self.class.where(
           :_id.ne => id,
           country_slug:,
@@ -178,13 +206,19 @@ private
   end
 
   def cannot_edit_published
-    if anything_other_than_state_changed?("reviewed_at", "update_type") && state_was != "draft"
+    if anything_other_than_state_changed?("reviewed_at", "update_type") && state_was != "draft" && state_was != "scheduled"
       errors.add(:state, "must be draft to modify")
     end
   end
 
   def cannot_edit_archived
     if anything_other_than_state_changed?("update_type")
+      errors.add(:state, "must be draft to modify")
+    end
+  end
+
+  def cannot_edit_scheduled
+    if anything_other_than_state_changed?("update_type", "scheduled_publication_time")
       errors.add(:state, "must be draft to modify")
     end
   end
@@ -203,6 +237,10 @@ private
     if is_minor_update? && first_version?
       errors.add(:update_type, "can't be minor for first version")
     end
+  end
+
+  def validate_scheduled_publication_time
+    errors.add(:scheduled_publication_time, "can't be in the past") if scheduled_publication_time && scheduled_publication_time <= Time.zone.now
   end
 
   def extract_part_errors

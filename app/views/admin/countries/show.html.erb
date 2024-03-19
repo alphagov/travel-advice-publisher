@@ -15,7 +15,7 @@
 <% content_for :title, @country.name %>
 
 <% content_for :title_side do %>
-  <% unless @country.has_draft_edition? %>
+  <% unless @country.has_draft_edition? || @country.has_scheduled_edition? %>
     <%= form_with url: admin_country_editions_path(@country.slug), method: :post do |f| %>
       <%= render("govuk_publishing_components/components/button", {
         text: "Create new edition",

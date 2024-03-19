@@ -91,8 +91,8 @@ feature "Edit Edition page" do
 
     scenario "create an edition from a published edition" do
       @edition = create(:published_travel_advice_edition, country_slug: "albania", title: "A published title")
-      @edition.actions.build(request_type: Action::NEW_VERSION)
-      @edition.actions.build(request_type: Action::PUBLISH, requester: User.first, comment: "Made some changes...")
+      @edition.actions.build(request_type: Action::NEW_VERSION, requester: User.first)
+      @edition.actions.build(request_type: Action::PUBLISH, comment: "Made some changes...")
       @edition.save!(validate: false)
 
       visit "/admin/editions/#{@edition._id}/edit"
@@ -118,9 +118,9 @@ feature "Edit Edition page" do
         end
 
         within all(".govuk-accordion__section-content")[1] do
-          expect(page).to have_content("Publish by Joe Bloggs")
+          expect(page).to have_content("Publish by Scheduled Publishing Robot")
           expect(page).to have_content("Made some changes...")
-          expect(page).to have_content("New version by GOV.UK Bot")
+          expect(page).to have_content("New version by Joe Bloggs")
         end
       end
     end

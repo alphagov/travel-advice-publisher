@@ -49,10 +49,24 @@ describe TravelAdviceEdition do
       expect(ta.errors.messages[:title]).to include("can't be blank")
     end
 
+    it "requires the scheduled publication time to be in the future" do
+      edition = build(:scheduled_travel_advice_edition, scheduled_publication_time: 1.hour.ago)
+
+      expect(edition).not_to be_valid
+      expect(edition.errors.full_messages).to include(/Scheduled publication time can't be in the past/)
+    end
+
     context "on state" do
       it "only allows one edition in draft per slug" do
         create(:travel_advice_edition, country_slug: ta.country_slug)
         ta.state = "draft"
+        expect(ta).not_to be_valid
+        expect(ta.errors.messages[:state]).to include("has already been taken")
+      end
+
+      it "only allows one edition in scheduled per slug" do
+        create(:scheduled_travel_advice_edition, country_slug: ta.country_slug)
+        ta.state = "scheduled"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:state]).to include("has already been taken")
       end
@@ -98,6 +112,11 @@ describe TravelAdviceEdition do
         expect(ta.publish).to be true
       end
 
+      it "allows publishing scheduled editions" do
+        ta = create(:scheduled_travel_advice_edition)
+        expect(ta.publish).to be true
+      end
+
       it "allows 'save & publish'" do
         ta = create(:travel_advice_edition)
         ta.title = "Foo"
@@ -114,6 +133,14 @@ describe TravelAdviceEdition do
         ta.title = "Foo"
         expect(ta.archive).to be false
         expect(ta.errors.messages[:state]).to include("must be draft to modify")
+      end
+
+      it "does not allow editing of scheduled edition" do
+        tae = create(:scheduled_travel_advice_edition)
+        tae.title = "New title"
+
+        expect(tae).not_to be_valid
+        expect(tae.errors.messages[:state]).to include("must be draft to modify")
       end
     end
 
@@ -189,6 +216,14 @@ describe TravelAdviceEdition do
         ta.state = "published"
         expect(ta).not_to be_valid
         expect(ta.errors.messages[:change_description]).to include("can't be blank on publish")
+      end
+
+      it "is required on schedule" do
+        ta.save!
+        ta.change_description = ""
+        ta.state = "scheduled"
+        expect(ta).not_to be_valid
+        expect(ta.errors.messages[:change_description]).to include("can't be blank on schedule")
       end
 
       it "is not required on publish for a minor update" do
@@ -362,6 +397,73 @@ describe TravelAdviceEdition do
       ed.update_type = "minor"
       ed.publish!
       expect(ed.change_description).to eq(published.change_description)
+    end
+  end
+
+  context "scheduling" do
+    let!(:published) do
+      create(:published_travel_advice_edition, country_slug: "aruba", published_at: 3.days.ago, change_description: "Stuff changed")
+    end
+    let!(:scheduled) { create(:scheduled_travel_advice_edition, country_slug: "aruba") }
+
+    it "can schedule a draft edition" do
+      draft = create(:travel_advice_edition)
+      draft.schedule!
+      expect(draft.reload).to be_scheduled
+    end
+
+    it "publishes the scheduled edition and archives previously published edition" do
+      scheduled.publish!
+      published.reload
+      expect(scheduled).to be_published
+      expect(published).to be_archived
+    end
+
+    context "setting the published date" do
+      it "sets the published_at to now for a normal update" do
+        travel_to(1.day.from_now) do
+          scheduled.publish!
+          expect(scheduled.published_at.to_i).to eq(Time.zone.now.utc.to_i)
+        end
+      end
+
+      it "sets the published_at to the previous version's published_at for a minor update" do
+        scheduled.update_type = "minor"
+        scheduled.publish!
+        expect(scheduled.published_at).to eq(published.published_at)
+      end
+    end
+
+    it "sets the change_description to the previous version's change_description for a minor update" do
+      scheduled.update_type = "minor"
+      scheduled.publish!
+      expect(scheduled.change_description).to eq(published.change_description)
+    end
+
+    context "#schedule_for_publication" do
+      let(:user) { create(:user) }
+      let(:country) { Country.find_by_slug("afghanistan") }
+
+      it "sends an action with the correct scheduled publication time" do
+        draft = create(:travel_advice_edition, country_slug: country.slug, scheduled_publication_time: 3.hours.from_now)
+        draft.schedule_for_publication(user)
+
+        expect(draft.reload.actions.first.request_details["scheduled_publication_time"]).to eq 3.hours.from_now
+      end
+
+      it "enqueues the publish scheduled worker" do
+        Sidekiq::Worker.clear_all
+
+        draft = create(:travel_advice_edition, country_slug: country.slug, scheduled_publication_time: 3.hours.from_now)
+        draft.schedule_for_publication(user)
+
+        worker_perform_at = Time.zone.at(ScheduledPublishingWorker.jobs.first["at"]).localtime
+        edition_id_param = ScheduledPublishingWorker.jobs.first["args"].first
+
+        expect(ScheduledPublishingWorker.jobs.size).to eq(1)
+        expect(worker_perform_at).to eq 3.hours.from_now
+        expect(edition_id_param).to eq draft.id.to_s
+      end
     end
   end
 
@@ -594,7 +696,7 @@ describe TravelAdviceEdition do
 
       it "uploads the asset" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
-          .with(file: @file).and_return(@asset)
+                                                         .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!
@@ -602,7 +704,7 @@ describe TravelAdviceEdition do
 
       it "assigns the asset id to the attachment id attribute" do
         allow_any_instance_of(GdsApi::AssetManager).to receive(:create_asset)
-          .with(file: @file).and_return(@asset)
+                                                         .with(file: @file).and_return(@asset)
 
         @ed.image = @file
         @ed.save!

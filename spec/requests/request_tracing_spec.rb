@@ -8,6 +8,8 @@ RSpec.describe "Request tracing", type: :request do
   let(:edition) { create(:travel_advice_edition, country_slug: "aruba") }
 
   before do
+    Sidekiq::Worker.clear_all
+
     user = create(:user, uid: govuk_authenticated_user)
     login_as(user)
     stub_any_publishing_api_call

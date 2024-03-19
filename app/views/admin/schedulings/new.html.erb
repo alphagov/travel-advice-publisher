@@ -1,0 +1,70 @@
+<% content_for :breadcrumbs do %>
+  <%= render "govuk_publishing_components/components/breadcrumbs", {
+    breadcrumbs: [
+      {
+        title: 'All countries',
+        url: admin_countries_path,
+      },
+      {
+        title: @country.name,
+        url: admin_country_path(@country.slug),
+      },
+      {
+        title: "Editing #{@country.name}",
+        url: edit_admin_edition_path(@edition),
+      },
+      {
+        title: "Schedule",
+      },
+    ]
+  } %>
+<% end %>
+
+<%= content_for :title, "Set a date and time to publish" %>
+<%= content_for :context, "Version #{@edition.version_number}" %>
+
+<%= form_with model: @edition, url: admin_edition_schedulings_path, method: :post do |f| %>
+  <%= render "components/datetime_fields", {
+    field_name: "scheduled_publication_time",
+    prefix: "scheduling",
+    date_hint: "For example, 01 08 2022",
+    time_hint: "For example, 09:30 or 19:30",
+    error_items: errors_for(@edition.errors, :scheduled_publication_time),
+    year: {
+      value: params.dig("scheduling", "scheduled_publication_time(1i)"),
+      name: "scheduling[scheduled_publication_time(1i)]",
+      label: "Year",
+      width: 4,
+    },
+    month: {
+      value: params.dig("scheduling", "scheduled_publication_time(2i)"),
+      name: "scheduling[scheduled_publication_time(2i)]",
+      label: "Month",
+      width: 2,
+    },
+    day: {
+      value: params.dig("scheduling", "scheduled_publication_time(3i)"),
+      name: "scheduling[scheduled_publication_time(3i)]",
+      label: "Day",
+      width: 2,
+    },
+    hour: {
+      value: params.dig("scheduling", "scheduled_publication_time(4i)")&.to_i,
+      id: "scheduling_scheduled_publication_time_4i",
+    },
+    minute: {
+      value: params.dig("scheduling", "scheduled_publication_time(5i)")&.to_i,
+      id: "scheduling_scheduled_publication_time_5i",
+    },
+  } %>
+  <div class="govuk-button-group govuk-!-margin-top-8">
+    <%= render "govuk_publishing_components/components/button", {
+      text: "Create scheduling",
+      name: "Create scheduling",
+      value: "Create scheduling",
+      type: "submit",
+      primary: true,
+    } %>
+    <%= link_to("Cancel", edit_admin_edition_path(@edition), class: "govuk-link") %>
+  </div>
+<% end %>

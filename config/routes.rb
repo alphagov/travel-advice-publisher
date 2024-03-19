@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :editions, only: %i[edit update destroy] do
       get "diff/:compare_id", action: :diff, as: :diff, on: :member
       get "historical_edition"
+      resources :schedulings, only: %i[new create]
     end
 
     root to: "countries#index"
