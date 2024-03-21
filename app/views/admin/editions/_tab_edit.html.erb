@@ -7,46 +7,41 @@
       <%= render(@edition.draft? ? "parts" : "parts_summary") %>
 
       <% if @edition.draft? %>
-        <div class="govuk-button-group govuk-!-margin-top-9 edition-form__action-button-group">
+        <div class="govuk-button-group govuk-!-margin-top-9">
           <%= render "govuk_publishing_components/components/button", {
             text: "Save",
             value: "Save",
             name: "commit",
           } %>
-          <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-link" %>
           <%= render "govuk_publishing_components/components/button", {
             text: "Save & Publish",
             value: "Save & Publish",
             name: "commit",
-            secondary: true,
+            secondary_solid: true,
           } %>
           <% if current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION) %>
             <%= render "govuk_publishing_components/components/button", {
               text: "Save & Schedule",
               value: "Save & Schedule",
               name: "commit",
-              secondary: true,
+              secondary_solid: true,
             } %>
           <% end %>
+          <%= link_to "Cancel", admin_country_path(@edition.country_slug), :class => "govuk-link" %>
         </div>
       <% end %>
       <%= preview_edition_link(@edition, false, { class: "govuk-body govuk-link govuk-link--no-visited-state edition-form__action-preview-link" }) %>
     <% end %>
   </div>
   <div class="govuk-grid-column-one-third">
-    <div class="app-side-wrapper">
+    <aside class="app-side-wrapper">
       <% if @edition.scheduled? && @edition.scheduled_publication_time %>
         <div class="app-side govuk-!-padding-0">
           <%= render "govuk_publishing_components/components/inset_text", {
-            text: "Publication scheduled for #{@edition.scheduled_publication_time.strftime("%B %d, %Y %H:%M %Z")}.",
-            margin_bottom: 0,
-          }
-          %>
-          <%= render "govuk_publishing_components/components/inset_text", {
-            text: "Please cancel the schedule to make further edits or to delete this edition.",
-            margin_top: 0,
-          }
-          %>
+          } do %>
+            <p>Publication scheduled for <%= @edition.scheduled_publication_time.strftime("%B %d, %Y %H:%M %Z") %>.</p>
+            <p>Cancel the schedule to make further edits or to delete this edition.</p>
+          <% end %>
         </div>
       <% end %>
       <div class="app-side">
@@ -99,6 +94,6 @@
           </div>
         </div>
       <% end %>
-    </div>
+    </aside>
   </div>
 </div>
