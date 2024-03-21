@@ -15,6 +15,11 @@ class ScheduledPublishingWorker
       return
     end
 
+    unless edition.scheduled? && edition.scheduled_publication_time
+      Sidekiq.logger.warn("Publishing cancelled for edition of ID '#{edition.id}'.")
+      return
+    end
+
     if edition.scheduled_publication_time > Time.zone.now
       Sidekiq.logger.info("Edition of ID '#{edition.id}' is not yet due for publication.")
       return

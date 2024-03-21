@@ -120,6 +120,26 @@ describe Admin::EditionsController do
 
         expect(response.body).to include "Publication scheduled for #{scheduled_edition.scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')}."
       end
+
+      it "does not show the Cancel button if the user does not have permission to schedule" do
+        country = Country.find_by_slug("afghanistan")
+        scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
+        allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
+
+        get :edit, params: { id: scheduled_edition._id }
+
+        expect(response.body).not_to include "Cancel schedule"
+      end
+
+      it "shows Cancel button if the user has permission to schedule" do
+        country = Country.find_by_slug("afghanistan")
+        scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
+        allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
+
+        get :edit, params: { id: scheduled_edition._id }
+
+        expect(response.body).to include "Cancel schedule"
+      end
     end
 
     describe "PUT to update with valid params" do

@@ -7,7 +7,9 @@ Rails.application.routes.draw do
     resources :editions, only: %i[edit update destroy] do
       get "diff/:compare_id", action: :diff, as: :diff, on: :member
       get "historical_edition"
-      resources :schedulings, only: %i[new create]
+      resources :schedulings, only: %i[new create] do
+        delete "cancel", to: "schedulings#destroy", on: :collection
+      end
     end
 
     root to: "countries#index"

@@ -77,6 +77,14 @@
               } %>
             <% end %>
           <% end %>
+          <% if current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION) && @edition.scheduled? %>
+            <%= form_with url: cancel_admin_edition_schedulings_path(@edition), method: :delete, classes: "govuk-!-margin-bottom-0" do |_f| %>
+              <%= render "govuk_publishing_components/components/button", {
+                text: "Cancel schedule",
+                destructive: true,
+              } %>
+            <% end %>
+          <% end %>
         </div>
       </div>
       <div class="app-side">

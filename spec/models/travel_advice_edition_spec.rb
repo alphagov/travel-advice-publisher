@@ -465,6 +465,18 @@ describe TravelAdviceEdition do
         expect(edition_id_param).to eq draft.id.to_s
       end
     end
+
+    context "cancel schedule for publication" do
+      let(:user) { create(:user) }
+      let(:country) { Country.find_by_slug("afghanistan") }
+
+      it "sends a cancel schedule action" do
+        scheduled = create(:scheduled_travel_advice_edition, country_slug: country.slug)
+        scheduled.cancel_schedule_for_publication(user)
+
+        expect(scheduled.actions.first.request_type).to eq "cancel_schedule"
+      end
+    end
   end
 
   context "setting the reviewed at date" do
