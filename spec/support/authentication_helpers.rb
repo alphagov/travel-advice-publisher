@@ -1,10 +1,15 @@
 module AuthenticationHelpers
-  def stub_user
-    create(:user)
+  def stub_user(permission = nil)
+    user = create(:user)
+    if permission
+      user.permissions << permission
+      user.save!
+    end
+    user
   end
 
-  def login_as_stub_user
-    login_as stub_user
+  def login_as_stub_user(permission = nil)
+    login_as stub_user(permission)
   end
 end
 RSpec.configuration.include AuthenticationHelpers, type: :controller
