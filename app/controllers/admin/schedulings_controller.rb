@@ -9,7 +9,7 @@ class Admin::SchedulingsController < ApplicationController
   def create
     redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
 
-    if has_valid_datetime_input_values?
+    if datetime_input_errors.empty?
       squashed_params = squash_multiparameter_scheduled_publication_time_attribute(scheduling_params)
       @edition.scheduled_publication_time = squashed_params[:scheduled_publication_time]
 
@@ -21,7 +21,7 @@ class Admin::SchedulingsController < ApplicationController
       end
     else
       @edition.errors.delete(:scheduled_publication_time)
-      @edition.errors.add(:scheduled_publication_time, "format is invalid")
+      @edition.errors.add(:scheduled_publication_time, datetime_input_errors[:scheduled_publication_time])
       flash.now[:alert] = "We had some problems saving: #{@edition.errors.full_messages.join(', ')}."
       render "new"
     end
@@ -47,17 +47,21 @@ private
     params
   end
 
-  def has_valid_datetime_input_values?
+  def datetime_input_errors
+    errors = {}
     year, month, day, hour, minute = scheduling_params.to_h.sort.map { |_, v| v }
-    return false unless year.match?(/^\d{4}$/) && month.match?(/^\d{1,2}$/) && day.match?(/^\d{1,2}$/) \
+
+    return errors.merge!({ scheduled_publication_time: "cannot be blank" }) if [year, month, day].all?(&:blank?)
+    return errors.merge!({ scheduled_publication_time: "is not in the correct format" }) unless year.match?(/^\d{4}$/) && month.match?(/^\d{1,2}$/) && day.match?(/^\d{1,2}$/) \
       && hour.match?(/^\d{1,2}$/) && minute.match?(/^\d{1,2}$/)
 
     begin
       Time.zone.local(year.to_i, month.to_i, day.to_i, hour.to_i, minute.to_i)
     rescue ArgumentError
-      return false
+      return errors.merge!({ scheduled_publication_time: "is not in the correct format" })
     end
-    true
+
+    errors
   end
 
   def scheduling_params
