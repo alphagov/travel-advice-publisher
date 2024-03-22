@@ -65,6 +65,20 @@ describe Admin::SchedulingsController do
     end
 
     context "invalid params" do
+      it "displays a validation error if all datetime fields are blank" do
+        params = {
+          "scheduled_publication_time(1i)" => "",
+          "scheduled_publication_time(2i)" => "",
+          "scheduled_publication_time(3i)" => "",
+          "scheduled_publication_time(4i)" => "",
+          "scheduled_publication_time(5i)" => "",
+        }
+
+        post :create, params: { edition_id: @edition.id, scheduling: params }
+
+        expect(response.body).to include "Scheduled publication time cannot be blank."
+      end
+
       [
         ["scheduled_publication_time", "1", ""],
         ["scheduled_publication_time", "2", ""],
@@ -95,7 +109,7 @@ describe Admin::SchedulingsController do
 
           post :create, params: { edition_id: @edition.id, scheduling: params }
 
-          expect(response.body).to match(/Scheduled publication time format is invalid/)
+          expect(response.body).to match(/Scheduled publication time is not in the correct format/)
         end
       end
 

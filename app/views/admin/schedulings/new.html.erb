@@ -29,6 +29,7 @@
     prefix: "scheduling",
     date_hint: "For example, 01 08 2022",
     time_hint: "For example, 09:30 or 19:30",
+    heading_level: 2,
     error_items: errors_for(@edition.errors, :scheduled_publication_time),
     year: {
       value: params.dig("scheduling", "scheduled_publication_time(1i)"),
