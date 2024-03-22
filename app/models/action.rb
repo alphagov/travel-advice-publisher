@@ -36,7 +36,7 @@ class Action
 
   def to_s
     if request_type == SCHEDULE_FOR_PUBLICATION
-      string = "Scheduled for publication"
+      string = "Schedule for publication"
       string += " on #{request_details['scheduled_publication_time'].strftime('%B %d, %Y %H:%M %Z')}" if request_details["scheduled_publication_time"].present?
       string
     else

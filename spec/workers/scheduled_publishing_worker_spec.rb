@@ -53,6 +53,8 @@ RSpec.describe ScheduledPublishingWorker, type: :worker do
       ScheduledPublishingWorker.enqueue(edition)
       travel_to(1.hour.from_now)
       ScheduledPublishingWorker.drain
+
+      expect(edition.reload.state).to eq "draft"
     end
   end
 end
