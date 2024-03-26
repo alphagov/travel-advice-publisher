@@ -1,13 +1,11 @@
 class Admin::SchedulingsController < ApplicationController
   before_action :skip_slimmer
   before_action :load_country_and_edition, only: %i[new create destroy]
+  before_action :redirect_unless_can_schedule
 
-  def new
-    redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
-  end
+  def new; end
 
   def create
-    redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
 
     if datetime_input_errors.empty?
       squashed_params = squash_multiparameter_scheduled_publication_time_attribute(scheduling_params)
@@ -28,8 +26,6 @@ class Admin::SchedulingsController < ApplicationController
   end
 
   def destroy
-    redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
-
     if @edition.cancel_schedule_for_publication(current_user)
       redirect_to edit_admin_edition_path(@edition), notice: "Publication schedule cancelled."
     else
@@ -43,8 +39,11 @@ private
     datetime_params = scheduling_params.to_h.sort.map { |_, v| v.to_i }
     params.delete_if { |k, _| k.include? "scheduled_publication_time" }
     params[:scheduled_publication_time] = Time.zone.local(*datetime_params) if datetime_params.present?
-
     params
+  end
+
+  def redirect_unless_can_schedule
+    redirect_to admin_country_path(@country.slug) and return unless can_schedule_edition?
   end
 
   def datetime_input_errors
