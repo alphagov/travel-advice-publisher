@@ -37,14 +37,13 @@ private
   end
 
   def scheduled_publication_time
-    year, month, day, hour, minute = scheduling_params.to_h.sort.map { |_, v| v }
-
-    raise StandardError, "cannot be blank" if [year, month, day, hour, minute].any?(&:blank?)
-    raise StandardError, "is not in the correct format" unless year.to_s.match?(/^\d{4}$/) && month.match?(/^\d{1,2}$/) \
-      && day.match?(/^\d{1,2}$/) && hour.match?(/^\d{1,2}$/) && minute.match?(/^\d{1,2}$/) && Date.valid_date?(year.to_i, month.to_i, day.to_i)
+    raise StandardError, "cannot be blank" if scheduling_params.values.any?(&:blank?)
 
     begin
-      Time.zone.local(year.to_i, month.to_i, day.to_i, hour.to_i, minute.to_i)
+      year, month, day, hour, minute = scheduling_params.to_h.sort.map { |_, v| Integer(v) }
+      raise ArgumentError unless year.to_s.match?(/^\d{4}$/) && Date.valid_date?(year, month, day)
+
+      Time.zone.local(year, month, day, hour, minute)
     rescue ArgumentError
       raise StandardError, "is not in the correct format"
     end
