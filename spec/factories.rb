@@ -26,7 +26,7 @@ FactoryBot.define do
   factory :scheduled_travel_advice_edition, parent: :travel_advice_edition do
     after :create do |tae|
       tae.state = "scheduled"
-      tae.scheduled_publication_time = 1.hour.from_now
+      tae.scheduled_publication_time ||= 1.hour.from_now
       tae.save!
     end
   end
