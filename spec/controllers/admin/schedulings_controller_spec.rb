@@ -65,26 +65,7 @@ describe Admin::SchedulingsController do
     end
 
     context "invalid params" do
-      it "displays a validation error if all datetime fields are blank" do
-        params = {
-          "scheduled_publication_time(1i)" => "",
-          "scheduled_publication_time(2i)" => "",
-          "scheduled_publication_time(3i)" => "",
-          "scheduled_publication_time(4i)" => "",
-          "scheduled_publication_time(5i)" => "",
-        }
-
-        post :create, params: { edition_id: @edition.id, scheduling: params }
-
-        expect(response.body).to include "Scheduled publication time cannot be blank."
-      end
-
       [
-        ["scheduled_publication_time", "1", ""],
-        ["scheduled_publication_time", "2", ""],
-        ["scheduled_publication_time", "3", ""],
-        ["scheduled_publication_time", "4", ""],
-        ["scheduled_publication_time", "5", ""],
         ["scheduled_publication_time", "1", "asdf"],
         ["scheduled_publication_time", "2", "a"],
         ["scheduled_publication_time", "3", "a"],
@@ -111,6 +92,32 @@ describe Admin::SchedulingsController do
 
           expect(response.body).to match(/Scheduled publication time is not in the correct format/)
         end
+      end
+
+      [
+        ["scheduled_publication_time", "1", ""],
+        ["scheduled_publication_time", "2", ""],
+        ["scheduled_publication_time", "3", ""],
+        ["scheduled_publication_time", "4", ""],
+        ["scheduled_publication_time", "5", ""],
+      ].each do |param_base_name, param_sub_ordinal, param_value|
+        it "displays a validation error when the '#{param_base_name}' sub-param '#{param_sub_ordinal}' is blank" do
+          params = generate_scheduling_params(Time.zone.now)
+          params.merge!("#{param_base_name}(#{param_sub_ordinal}i)" => param_value)
+
+          post :create, params: { edition_id: @edition.id, scheduling: params }
+
+          expect(response.body).to match(/Scheduled publication time cannot be blank/)
+        end
+      end
+
+      it "displays a validation error when the date is not a real calendar date" do
+        params = generate_scheduling_params(Time.zone.now)
+        params.merge!({ "scheduled_publication_time(2i)" => "2", "scheduled_publication_time(3i)" => "30" })
+
+        post :create, params: { edition_id: @edition.id, scheduling: params }
+
+        expect(response.body).to match(/Scheduled publication time is not in the correct format/)
       end
 
       it "surfaces the model validations for publish time in the past when datetime input is otherwise valid" do
