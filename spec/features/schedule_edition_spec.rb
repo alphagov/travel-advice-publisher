@@ -36,7 +36,8 @@ feature "Edit Edition page" do
 
   scenario "scheduled edition should be read-only and display scheduling information" do
     country_slug = "albania"
-    edition = create(:scheduled_travel_advice_edition, country_slug:)
+    scheduled_publication_time = 2.hours.from_now
+    edition = create(:scheduled_travel_advice_edition, scheduled_publication_time:, country_slug:)
 
     visit "/admin/countries/#{country_slug}"
 
@@ -50,7 +51,7 @@ feature "Edit Edition page" do
     expect(page).not_to have_button "Save & Schedule"
     expect(page).not_to have_button "Delete edition"
     within(:css, ".govuk-inset-text") do
-      expect(page).to have_text "Publication scheduled for November 11, 2011 12:11 UTC."
+      expect(page).to have_text "Publication scheduled for #{scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')}."
       expect(page).to have_text "Cancel the schedule to make further edits or to delete this edition."
     end
   end
@@ -59,8 +60,9 @@ feature "Edit Edition page" do
     User.create!(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot")
 
     country_slug = "albania"
+    scheduled_publication_time = 2.hours.from_now
     create(:published_travel_advice_edition, country_slug:)
-    edition = create(:travel_advice_edition, country_slug:, scheduled_publication_time: 1.hour.from_now)
+    edition = create(:travel_advice_edition, country_slug:, scheduled_publication_time:)
 
     Sidekiq::Testing.fake! do
       edition.schedule_for_publication(@user)
@@ -90,7 +92,7 @@ feature "Edit Edition page" do
 
     expect(page).to have_text "Version history"
     expect(page).to have_text "Publish by Scheduled Publishing Robot"
-    expect(page).to have_text(/Schedule for publication on November 11, 2011 12:11 UTC by Joe Bloggs/)
+    expect(page).to have_text(/Schedule for publication on #{scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')} by Joe Bloggs/)
   end
 
   scenario "cancels a scheduled edition" do
