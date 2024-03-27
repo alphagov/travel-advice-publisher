@@ -569,24 +569,40 @@ describe TravelAdviceEdition do
   end
 
   context "parts" do
-    it "should merge part validation errors with parent document's errors" do
-      edition = create(:travel_advice_edition)
-      edition.parts = [
-        Part.new(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview"),
-        Part.new(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: ""),
-        Part.new(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid"),
-      ]
+    it "should merge part validation errors with parent document's errors when parts are created as nested attributes" do
+      edition = build(:travel_advice_edition,
+                      parts: [
+                        { _id: "54c10d4d759b743528000010", order: "1", title: "", slug: "part-1" },
+                        { _id: "54c10d4d759b743528000011", order: "3", title: "Part 3", slug: "" },
+                        { _id: "54c10d4d759b743528000012", order: "2", title: "Part 2", slug: "part-2" },
+                      ])
 
       expect(edition).not_to be_valid
 
-      expect(edition.errors[:part]).to eq(["1: Title can't be blank and 2: Slug can't be blank and Slug is invalid"])
+      expect(edition.errors[:part]).to eq(["1: Title can't be blank and 3: Slug can't be blank and Slug is invalid"])
+    end
+
+    it "should merge part validation errors with parent document's errors when parts are created as built parts" do
+      edition = create(:travel_advice_edition)
+      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "part-1")
+      edition.parts.build(_id: "54c10d4d759b743528000011", order: "3", title: "Part 3", slug: "")
+      edition.parts.build(_id: "54c10d4d759b743528000012", order: "2", title: "Part 2", slug: "part-2")
+
+      expect(edition).not_to be_valid
+
+      expect(edition.errors[:part]).to eq(["1: Title can't be blank and 3: Slug can't be blank and Slug is invalid"])
     end
 
     it "#whole_body returns ordered parts" do
-      edition = create(:travel_advice_edition)
-      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "Part 1", slug: "part_1")
-      edition.parts.build(_id: "54c10d4d759b743528000011", order: "3", title: "Part 3", slug: "part_3")
-      edition.parts.build(_id: "54c10d4d759b743528000012", order: "2", title: "Part 2", slug: "part_2")
+      edition = create(:travel_advice_edition,
+                       parts: [
+                         { _id: "54c10d4d759b743528000010", order: "1", title: "Part 1", slug: "part-1" },
+                         { _id: "54c10d4d759b743528000011", order: "3", title: "Part 3", slug: "part-3" },
+                         { _id: "54c10d4d759b743528000012", order: "2", title: "Part 2", slug: "part-2" },
+                       ])
+
+      expect(edition).to be_valid
+
       expect(edition.whole_body).to eq("# Part 1\n\n\n\n# Part 2\n\n\n\n# Part 3\n\n")
     end
   end

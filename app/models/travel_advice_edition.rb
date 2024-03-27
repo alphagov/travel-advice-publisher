@@ -43,6 +43,7 @@ class TravelAdviceEdition
   validates :version_number, presence: true, uniqueness: { scope: :country_slug }
   validate :alert_status_contains_valid_values
   validate :first_version_cant_be_minor_update
+  validate :parts_valid?
   validates_with SafeHtml
   validates_with LinkValidator
 
@@ -247,6 +248,10 @@ private
     if is_minor_update? && first_version?
       errors.add(:update_type, "can't be minor for first version")
     end
+  end
+
+  def parts_valid?
+    parts.map(&:valid?).all?
   end
 
   def validate_scheduled_publication_time
