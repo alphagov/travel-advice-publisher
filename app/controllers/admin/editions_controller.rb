@@ -128,8 +128,6 @@ private
   end
 
   def save_and_schedule
-    redirect_to admin_countries_path and return unless can_schedule_edition?
-
     if @edition.update(permitted_edition_attributes) && @edition.has_valid_change_description_for_scheduling?
       notifier.put_content(@edition)
       notifier.enqueue
