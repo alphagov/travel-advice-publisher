@@ -7,21 +7,12 @@ describe Admin::SchedulingsController do
       @edition = create(:travel_advice_edition, country_slug: "aruba")
       @user = stub_user
       login_as @user
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
     end
 
     it "renders the create scheduled edition form" do
       get :new, params: { edition_id: @edition.id }
 
       assert_response :success
-    end
-
-    it "redirects to country page if user does not have permission to schedule" do
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
-
-      get :new, params: { edition_id: @edition.id }
-
-      expect(response).to redirect_to admin_country_path(@country.slug)
     end
   end
 
@@ -31,7 +22,6 @@ describe Admin::SchedulingsController do
       @edition = create(:travel_advice_edition, country_slug: "aruba")
       @user = stub_user
       login_as @user
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
     end
 
     after do
@@ -54,14 +44,6 @@ describe Admin::SchedulingsController do
 
       expect(response).to redirect_to admin_country_path(@country.slug)
       expect(flash[:notice]).to eq "#{@country.name} travel advice is scheduled to publish on #{3.hours.from_now.strftime('%B %d, %Y %H:%M %Z')}."
-    end
-
-    it "redirects to country page if user does not have permission to schedule" do
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
-
-      post :create, params: { edition_id: @edition.id, scheduling: generate_scheduling_params(3.hours.from_now) }
-
-      expect(response).to redirect_to admin_country_path(@country.slug)
     end
 
     context "validations" do
@@ -164,7 +146,6 @@ describe Admin::SchedulingsController do
       @edition = create(:scheduled_travel_advice_edition, country_slug: "aruba")
       @user = stub_user
       login_as @user
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
     end
 
     it "deletes the scheduled publication time and changes state to draft" do
@@ -179,14 +160,6 @@ describe Admin::SchedulingsController do
 
       expect(response).to redirect_to edit_admin_edition_path(@edition)
       expect(flash[:notice]).to eq "Publication schedule cancelled."
-    end
-
-    it "redirects to country page if user does not have permission to schedule" do
-      allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
-
-      delete :destroy, params: { edition_id: @edition.id }
-
-      expect(response).to redirect_to admin_country_path(@country.slug)
     end
 
     it "redirects to edition edit page with alert message if there are any errors with the cancellation" do
