@@ -571,9 +571,11 @@ describe TravelAdviceEdition do
   context "parts" do
     it "should merge part validation errors with parent document's errors" do
       edition = create(:travel_advice_edition)
-      edition.parts.build(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview")
-      edition.parts.build(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: "")
-      edition.parts.build(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid")
+      edition.parts = [
+        Part.new(_id: "54c10d4d759b743528000010", order: "1", title: "", slug: "overview"),
+        Part.new(_id: "54c10d4d759b743528000011", order: "2", title: "Prepare for your appointment", slug: ""),
+        Part.new(_id: "54c10d4d759b743528000012", order: "3", title: "Valid", slug: "valid"),
+      ]
 
       expect(edition).not_to be_valid
 
