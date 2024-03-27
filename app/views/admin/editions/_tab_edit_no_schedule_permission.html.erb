@@ -20,14 +20,6 @@
             name: "commit",
             secondary_solid: true,
           } %>
-          <% if current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION) %>
-            <%= render "govuk_publishing_components/components/button", {
-              text: "Save & Schedule",
-              value: "Save & Schedule",
-              name: "commit",
-              secondary_solid: true,
-            } %>
-          <% end %>
         </div>
       <% end %>
       <%= preview_edition_link(@edition, false, { class: "govuk-body govuk-link govuk-link--no-visited-state edition-form__action-preview-link" }) %>
@@ -68,14 +60,6 @@
             <%= form_with url: admin_edition_path(@edition), method: :delete, classes: "govuk-!-margin-bottom-0" do |f| %>
               <%= render "govuk_publishing_components/components/button", {
                 text: "Delete edition",
-                destructive: true,
-              } %>
-            <% end %>
-          <% end %>
-          <% if current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION) && @edition.scheduled? %>
-            <%= form_with url: cancel_admin_edition_schedulings_path(@edition), method: :delete, classes: "govuk-!-margin-bottom-0" do |_f| %>
-              <%= render "govuk_publishing_components/components/button", {
-                text: "Cancel schedule",
                 destructive: true,
               } %>
             <% end %>
