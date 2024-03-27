@@ -1,5 +1,11 @@
-.edition-form__action-button-group {
+.edition-form__action-button-group__no_scheduling_permission {
   :last-child {
+    margin-left: auto;
+  }
+}
+
+.edition-form__action-button-group {
+  :nth-last-child(2) {
     margin-left: auto;
   }
 }

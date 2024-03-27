@@ -7,7 +7,7 @@
       <%= render(@edition.draft? ? "parts" : "parts_summary") %>
 
       <% if @edition.draft? %>
-        <div class="govuk-button-group govuk-!-margin-top-9 edition-form__action-button-group">
+        <div class="govuk-button-group govuk-!-margin-top-9 edition-form__action-button-group__no_scheduling_permission">
           <%= render "govuk_publishing_components/components/button", {
             text: "Save",
             value: "Save",
