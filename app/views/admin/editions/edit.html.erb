@@ -31,7 +31,11 @@
   </ul>
 
   <div class="govuk-tabs__panel" id="edit">
-    <%= render :partial => 'tab_edit' %>
+    <% if current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION) %>
+        <%= render :partial => 'tab_edit' %>
+      <% else %>
+        <%= render :partial => 'tab_edit_no_schedule_permission' %>
+    <% end %>
   </div>
 
   <div class="govuk-tabs__panel" id="history">
