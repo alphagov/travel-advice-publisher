@@ -1,7 +1,6 @@
 class Admin::SchedulingsController < ApplicationController
   before_action :skip_slimmer
   before_action :load_country_and_edition
-  before_action :redirect_unless_can_schedule
 
   def new; end
 
@@ -28,10 +27,6 @@ class Admin::SchedulingsController < ApplicationController
   end
 
 private
-
-  def redirect_unless_can_schedule
-    redirect_to admin_country_path(@country.slug) unless can_schedule_edition?
-  end
 
   def scheduled_publication_time
     raise StandardError, "cannot be blank" if scheduling_params.values.any?(&:blank?)

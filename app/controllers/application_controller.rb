@@ -24,8 +24,4 @@ private
   def skip_slimmer
     response.headers[Slimmer::Headers::SKIP_HEADER] = "true"
   end
-
-  def can_schedule_edition?
-    current_user.has_permission?(User::SCHEDULE_EDITION_PERMISSION)
-  end
 end
