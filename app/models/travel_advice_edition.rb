@@ -53,6 +53,7 @@ class TravelAdviceEdition
                                 reject_if: proc { |attrs| attrs["title"].blank? && attrs["body"].blank? }
 
   scope :published, -> { where(state: "published") }
+  scope :scheduled, -> { where(state: "scheduled").order(scheduled_publication_time: :desc, id: :asc) }
 
   class << self; attr_accessor :fields_to_clone end
   @fields_to_clone = %i[title country_slug overview alert_status summary image_id document_id synonyms]
@@ -146,6 +147,10 @@ class TravelAdviceEdition
     return false unless build_action_as(user, Action::CANCEL_SCHEDULE) && draft
 
     unset(:scheduled_publication_time)
+  end
+
+  def self.due_for_publication
+    scheduled.where({ "scheduled_publication_time" => { "$lte" => Time.zone.now } })
   end
 
   def previous_version
