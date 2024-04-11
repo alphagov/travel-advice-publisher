@@ -267,6 +267,15 @@ describe TravelAdviceEdition do
     expect(TravelAdviceEdition.published.to_a.sort).to eq([e2, e4].sort)
   end
 
+  it "has a scheduled scope, which returns scheduled editions ordered by scheduled publication time (desc) and ID (asc)" do
+    _e1 = create(:draft_travel_advice_edition)
+    e2 = create(:scheduled_travel_advice_edition, scheduled_publication_time: 1.hour.from_now)
+    e3 = create(:scheduled_travel_advice_edition, scheduled_publication_time: 2.hours.from_now)
+    e4 = create(:scheduled_travel_advice_edition, scheduled_publication_time: 1.hour.from_now)
+    e5 = create(:scheduled_travel_advice_edition, scheduled_publication_time: 4.hours.from_now)
+    expect(TravelAdviceEdition.scheduled.to_a).to eq([e5, e3, e2, e4])
+  end
+
   context "fields on a new edition" do
     it "is in draft state" do
       expect(TravelAdviceEdition.new).to be_draft
@@ -476,6 +485,22 @@ describe TravelAdviceEdition do
 
         expect(scheduled.actions.first.request_type).to eq "cancel_schedule"
       end
+    end
+  end
+
+  context ".due_for_publication" do
+    it "returns all scheduled editions left unpublished" do
+      # An edition whose scheduling has been cancelled
+      create(:published_travel_advice_edition, country_slug: "aruba", scheduled_publication_time: 1.hour.from_now)
+      # An edition not yet due
+      create(:scheduled_travel_advice_edition, country_slug: "aruba", scheduled_publication_time: 3.hours.from_now)
+      # The overdue edition which the method should return
+      create(:scheduled_travel_advice_edition, country_slug: "spain", scheduled_publication_time: 1.hour.from_now)
+
+      travel_to(1.hour.from_now)
+
+      expect(TravelAdviceEdition.due_for_publication.count).to eq 1
+      expect(TravelAdviceEdition.due_for_publication.first.country_slug).to eq "spain"
     end
   end
 
