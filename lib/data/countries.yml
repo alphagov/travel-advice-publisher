@@ -275,6 +275,10 @@
   slug: falkland-islands
   content_id: 61a1542f-d196-42a0-9605-ad667b60504e
   email_signup_content_id: 14d80b15-93f6-49aa-aa44-9dd2ae3626eb
+- name: Federated States of Micronesia
+  slug: federated-states-of-micronesia
+  content_id: d010fd00-bf63-42f0-ba7b-0982f49cb3d4
+  email_signup_content_id: d79f8657-c943-4952-b87d-d968917d4079
 - name: Fiji
   slug: fiji
   content_id: 4b79ee8f-0217-486b-bcc9-5f0ef9c16b54
@@ -527,10 +531,6 @@
   slug: mexico
   content_id: 34dafa2b-24e5-4625-b542-bf5e0bb8cd80
   email_signup_content_id: 5e97d048-633a-4ed5-9244-c94f267d592e
-- name: Micronesia
-  slug: micronesia
-  content_id: d010fd00-bf63-42f0-ba7b-0982f49cb3d4
-  email_signup_content_id: d79f8657-c943-4952-b87d-d968917d4079
 - name: Moldova
   slug: moldova
   content_id: 4064154c-ef7e-4edf-9f98-8f747ce39471
