@@ -20,7 +20,7 @@ class ScheduledPublishingWorker
       return
     end
 
-    if edition.scheduled_publication_time > Time.zone.now
+    if edition.scheduled_publication_time > Time.zone.now.utc
       Sidekiq.logger.info("Edition of ID '#{edition.id}' is not yet due for publication.")
       return
     end

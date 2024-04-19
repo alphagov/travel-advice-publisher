@@ -23,6 +23,12 @@
 <%= content_for :title, "Set a date and time to publish" %>
 <%= content_for :context, "Version #{@edition.version_number}" %>
 
+<p>Time zone now</p>
+<%= Time.zone.now %>
+
+<p>Time UTC</p>
+<%= Time.zone.now.utc %>
+
 <%= form_with model: @edition, url: admin_edition_schedulings_path, method: :post do |f| %>
   <%= render "components/datetime_fields", {
     field_name: "scheduled_publication_time",
