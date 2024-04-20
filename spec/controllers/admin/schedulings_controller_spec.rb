@@ -64,7 +64,30 @@ describe Admin::SchedulingsController do
       expect(response).to redirect_to admin_country_path(@country.slug)
     end
 
-    context "invalid params" do
+    context "validations" do
+      [
+        %w[scheduled_publication_time 08 08 1234 1 1],
+        %w[scheduled_publication_time 25 03 9999 8 20],
+        %w[scheduled_publication_time 09 12 2345 9 35],
+        %w[scheduled_publication_time 9 06 5567 09 05],
+        %w[scheduled_publication_time 17 5 0057 23 59],
+      ].each do |param_base_name, day, month, year, hour, minute|
+        it "is valid for day #{day}, month #{month} year #{year}, hour #{hour} and minute #{minute} with or without leading 0s, within the required digit range" do
+          params = generate_scheduling_params(Time.zone.now)
+          params.merge!({
+            "#{param_base_name}(3i)" => day,
+            "#{param_base_name}(2i)" => month,
+            "#{param_base_name}(1i)" => year,
+            "#{param_base_name}(4i)" => hour,
+            "#{param_base_name}(5i)" => minute,
+          })
+
+          post :create, params: { edition_id: @edition.id, scheduling: params }
+
+          expect(response.body).not_to match(/Scheduled publication time is not in the correct format/)
+        end
+      end
+
       [
         ["scheduled_publication_time", "1", "asdf"],
         ["scheduled_publication_time", "2", "a"],
@@ -83,6 +106,11 @@ describe Admin::SchedulingsController do
         ["scheduled_publication_time", "3", "32"],
         ["scheduled_publication_time", "4", "25"],
         ["scheduled_publication_time", "5", "60"],
+        ["scheduled_publication_time", "1", "02345"],
+        ["scheduled_publication_time", "2", "010"],
+        ["scheduled_publication_time", "3", "012"],
+        ["scheduled_publication_time", "4", "009"],
+        ["scheduled_publication_time", "5", "060"],
       ].each do |param_base_name, param_sub_ordinal, param_value|
         it "displays a validation error when the '#{param_base_name}' sub-param '#{param_sub_ordinal}' is '#{param_value}'" do
           params = generate_scheduling_params(Time.zone.now)
