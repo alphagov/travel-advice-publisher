@@ -477,13 +477,23 @@ describe TravelAdviceEdition do
 
     context "cancel schedule for publication" do
       let(:user) { create(:user) }
-      let(:country) { Country.find_by_slug("afghanistan") }
+      let!(:country) { Country.find_by_slug("afghanistan") }
 
       it "sends a cancel schedule action" do
         scheduled = create(:scheduled_travel_advice_edition, country_slug: country.slug)
         scheduled.cancel_schedule_for_publication(user)
 
         expect(scheduled.actions.first.request_type).to eq "cancel_schedule"
+      end
+
+      it "allows cancelling a failed scheduled edition (failed to publish)" do
+        scheduled_overdue = create(:scheduled_travel_advice_edition, country_slug: country.slug)
+        travel_to(2.hours.from_now)
+
+        scheduled_overdue.cancel_schedule_for_publication(user)
+
+        expect(scheduled_overdue.reload.scheduled_publication_time).to be_nil
+        expect(scheduled_overdue.reload.state).to eq "draft"
       end
     end
   end

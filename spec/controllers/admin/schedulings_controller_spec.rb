@@ -169,6 +169,17 @@ describe Admin::SchedulingsController do
       expect(flash[:alert]).to include("We had some problems cancelling")
       expect(response).to redirect_to edit_admin_edition_path(@edition)
     end
+
+    it "cancels an overdue scheduled edition (failed to publish)" do
+      scheduled_publication_time = 1.hour.from_now
+      edition = create(:scheduled_travel_advice_edition, country_slug: "albania", scheduled_publication_time:)
+
+      travel_to 2.hours.from_now
+      delete :destroy, params: { edition_id: edition.id }
+
+      expect(edition.reload.scheduled_publication_time).to be_nil
+      expect(edition.reload.state).to eq("draft")
+    end
   end
 
   def generate_scheduling_params(date_time)

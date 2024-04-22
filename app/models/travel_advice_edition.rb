@@ -260,7 +260,7 @@ private
   end
 
   def validate_scheduled_publication_time
-    errors.add(:scheduled_publication_time, "can't be in the past") if scheduled_publication_time && scheduled_publication_time <= Time.zone.now
+    errors.add(:scheduled_publication_time, "can't be in the past") if scheduled_publication_time && scheduled_publication_time <= Time.zone.now && state_was != "scheduled"
   end
 
   def extract_part_errors
