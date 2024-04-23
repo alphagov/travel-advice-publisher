@@ -37,10 +37,11 @@ private
     raise StandardError, "cannot be blank" if scheduling_params.values.any?(&:blank?)
 
     begin
-      year, month, day, hour, minute = scheduling_params.to_h.sort.map { |_, v| Integer(v) }
-      raise ArgumentError unless year.to_s.match?(/^\d{4}$/) && Date.valid_date?(year, month, day)
+      year, month, day, hour, minute = scheduling_params.to_h.sort.map { |_, v| v }
+      raise ArgumentError unless year.to_s.match?(/^\d{4}$/) && month.match?(/^\d{1,2}$/) && day.match?(/^\d{1,2}$/) \
+        && hour.match?(/^\d{1,2}$/) && minute.match?(/^\d{1,2}$/) && Date.valid_date?(year.to_i, month.to_i, day.to_i)
 
-      Time.zone.local(year, month, day, hour, minute)
+      Time.zone.local(year.to_i, month.to_i, day.to_i, hour.to_i, minute.to_i)
     rescue ArgumentError
       raise StandardError, "is not in the correct format"
     end
