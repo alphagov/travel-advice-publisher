@@ -25,7 +25,7 @@ feature "Edit Edition page" do
     fill_in "Day", with: "12"
     fill_in "Month", with: "12"
     fill_in "Year", with: "2999"
-    click_on "Create scheduling"
+    click_on "Schedule to publish"
 
     expect(current_path).to eq("/admin/countries/#{country_slug}")
     expect(page).to have_text "Albania travel advice is scheduled to publish on December 12, 2999 00:00 UTC."
