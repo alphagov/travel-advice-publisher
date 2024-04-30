@@ -19,9 +19,11 @@ describe "publish_scheduled_editions", type: :rake_task do
     expect(edition.reload.state).to eq("published")
   end
 
-  it "does not publish editions scheduled for future publication" do
+  it "does not attempt to publish editions scheduled for future publication" do
     edition = create(:scheduled_travel_advice_edition, country_slug: country.slug, scheduled_publication_time: 5.hours.from_now)
     travel_to(2.hours.from_now)
+    expect(Sidekiq.logger).not_to receive(:info).with("Edition of ID '#{edition.id}' is not yet due for publication.")
+
     task.invoke
 
     expect(PublishingApiWorker.jobs.size).to eq(0)
