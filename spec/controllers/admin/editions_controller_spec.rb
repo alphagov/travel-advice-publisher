@@ -97,6 +97,7 @@ describe Admin::EditionsController do
       end
     end
   end
+
   describe "edit, update" do
     before do
       login_as_stub_user
@@ -112,32 +113,22 @@ describe Admin::EditionsController do
         expect(assigns(:country)).to eq(@country)
       end
 
-      it "displays scheduled publish time if edition in scheduled state" do
+      it "does not show the 'Cancel schedule' button if edition is in draft" do
+        country = Country.find_by_slug("afghanistan")
+        draft_edition = create(:travel_advice_edition, country_slug: country.slug)
+
+        get :edit, params: { id: draft_edition._id }
+
+        expect(response.body).not_to include "Cancel schedule"
+      end
+
+      it "displays scheduled publish time and 'Cancel schedule' button if edition in scheduled state" do
         country = Country.find_by_slug("afghanistan")
         scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
 
         get :edit, params: { id: scheduled_edition._id }
 
         expect(response.body).to include "Publication scheduled for #{scheduled_edition.scheduled_publication_time.strftime('%B %d, %Y %H:%M %Z')}."
-      end
-
-      it "does not show the Cancel button if the user does not have permission to schedule" do
-        country = Country.find_by_slug("afghanistan")
-        scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
-        allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
-
-        get :edit, params: { id: scheduled_edition._id }
-
-        expect(response.body).not_to include "Cancel schedule"
-      end
-
-      it "shows Cancel button if the user has permission to schedule" do
-        country = Country.find_by_slug("afghanistan")
-        scheduled_edition = create(:scheduled_travel_advice_edition, country_slug: country.slug)
-        allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
-
-        get :edit, params: { id: scheduled_edition._id }
-
         expect(response.body).to include "Cancel schedule"
       end
     end
@@ -257,49 +248,34 @@ describe Admin::EditionsController do
     end
 
     describe "Save & Schedule" do
-      context "feature flag on" do
-        it "should save the edition, update publishing-api and redirect to scheduling form" do
-          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
-          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
-          allow(draft).to receive(:schedule).and_return(true)
+      it "should save the edition, update publishing-api and redirect to scheduling form" do
+        allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+        allow(draft).to receive(:schedule).and_return(true)
 
-          expect_any_instance_of(PublishingApiNotifier).to receive(:put_content).with(draft)
-          expect_any_instance_of(PublishingApiNotifier).to receive(:enqueue)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:put_content).with(draft)
+        expect_any_instance_of(PublishingApiNotifier).to receive(:enqueue)
 
-          post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
+        post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
 
-          expect(draft.reload.title).to eq "new title"
-          expect(response).to redirect_to new_admin_edition_scheduling_path(draft)
-        end
-
-        it "displays validation errors and does not redirect if edition is invalid" do
-          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
-          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
-
-          post :update, params: { id: draft.to_param, edition: { title: "" }, commit: "Save & Schedule" }
-
-          expect(flash[:alert]).to include "We had some problems scheduling"
-          expect(response).not_to redirect_to new_admin_edition_scheduling_path(draft)
-        end
-
-        it "does not allow an empty change description when scheduling" do
-          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(true)
-          allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
-
-          post :update, params: { id: draft.to_param, edition: { change_description: "" }, commit: "Save & Schedule" }
-
-          expect(flash[:alert]).to include "We had some problems scheduling: Change description can't be blank on schedule."
-        end
+        expect(draft.reload.title).to eq "new title"
+        expect(response).to redirect_to new_admin_edition_scheduling_path(draft)
       end
 
-      context "feature flag off" do
-        it "should redirect to countries page" do
-          allow_any_instance_of(User).to receive(:has_permission?).with(User::SCHEDULE_EDITION_PERMISSION).and_return(false)
+      it "displays validation errors and does not redirect if edition is invalid" do
+        allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
 
-          post :update, params: { id: draft.to_param, edition: { title: "new title" }, commit: "Save & Schedule" }
+        post :update, params: { id: draft.to_param, edition: { title: "" }, commit: "Save & Schedule" }
 
-          expect(response).to redirect_to admin_countries_path
-        end
+        expect(flash[:alert]).to include "We had some problems scheduling"
+        expect(response).not_to redirect_to new_admin_edition_scheduling_path(draft)
+      end
+
+      it "does not allow an empty change description when scheduling" do
+        allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
+
+        post :update, params: { id: draft.to_param, edition: { change_description: "" }, commit: "Save & Schedule" }
+
+        expect(flash[:alert]).to include "We had some problems scheduling: Change description can't be blank on schedule."
       end
     end
   end

@@ -1,7 +1,7 @@
 feature "Edit Edition page" do
   before do
     allow(Sidekiq.logger).to receive(:info)
-    @user = login_as_stub_user("schedule_edition_permission")
+    @user = login_as_stub_user
     Sidekiq::Testing.inline!
     Sidekiq::Worker.clear_all
   end
