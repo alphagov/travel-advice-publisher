@@ -7,8 +7,10 @@ if User.where(name: "Test user").blank?
     organisation_content_id: gds_organisation_id,
   )
 
-  User.create!(
-    name: "Scheduled Publishing Robot",
-    uid: "scheduled_publishing_robot",
-  )
+  if User.where(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot").blank?
+    User.create!(
+      name: "Scheduled Publishing Robot",
+      uid: "scheduled_publishing_robot",
+    )
+  end
 end

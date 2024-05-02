@@ -2,7 +2,7 @@ require "rake"
 describe "publish_scheduled_editions", type: :rake_task do
   let(:country) { Country.find_by_slug("aruba") }
   let(:task) { Rake::Task["publish_scheduled_editions"] }
-  let!(:robot) { create(:scheduled_publishing_robot) }
+  let!(:robot) { User.where(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot").first_or_create }
 
   before do
     Rake.application = nil

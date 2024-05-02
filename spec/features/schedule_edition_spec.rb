@@ -57,7 +57,7 @@ feature "Edit Edition page" do
   end
 
   scenario "publishes a scheduled edition, archives previously published editions, and shows version history" do
-    User.create!(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot")
+    User.where(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot").first_or_create!
 
     country_slug = "albania"
     scheduled_publication_time = 2.hours.from_now

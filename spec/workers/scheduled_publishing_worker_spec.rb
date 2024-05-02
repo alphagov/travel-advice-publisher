@@ -3,7 +3,7 @@ RSpec.describe ScheduledPublishingWorker, type: :worker do
     let(:country) { Country.find_by_slug("afghanistan") }
     let(:edition) { create(:scheduled_travel_advice_edition, country_slug: country.slug) }
     let(:user) { create(:user) }
-    let!(:robot) { create(:scheduled_publishing_robot) }
+    let!(:robot) { User.where(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot").first_or_create }
 
     before do
       Sidekiq::Worker.clear_all
