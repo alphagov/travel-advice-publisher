@@ -47,7 +47,15 @@ module TravelAdvicePublisher
     config.assets.prefix = "/assets/travel-advice-publisher"
 
     config.slimmer.use_cache = true
-    # config.time_zone = "Central Time (US & Canada)"
+
+    # Even though most GOV.UK apps use the London time_zone, travel-advice-publisher does want to
+    # present times in UTC (as it's an international audience), so we set that as the default time_zone
+    initializer "publishing_api.configure_timezone",
+                after: "govuk_app_config.configure_timezone",
+                before: "active_support.initialize_time_zone" do
+      config.time_zone = "UTC"
+    end
+
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
