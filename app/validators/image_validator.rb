@@ -1,3 +1,5 @@
+require "marcel"
+
 class ImageValidator < ActiveModel::EachValidator
   MIME_TYPES = {
     "image/jpeg" => /(\.jpeg|\.jpg)$/,
@@ -8,15 +10,13 @@ class ImageValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return unless value.present? && File.exist?(value.path)
 
-    image = MiniMagick::Image.open(value.path)
+    mime_type = Marcel::MimeType.for(Pathname.new(value.path))
 
-    valid_extension = MIME_TYPES[image.mime_type]
+    valid_extension = MIME_TYPES[mime_type]
     if valid_extension.nil?
-      record.errors[attribute] << "is not an allowed image format"
+      record.errors.add(attribute, message: "is not an allowed image format")
     elsif !value.path.downcase.match?(valid_extension)
-      record.errors.add(attribute, message: "is of type '#{image.mime_type}', but has the extension '#{File.extname(value.path)}'")
+      record.errors.add(attribute, message: "is of type '#{mime_type}', but has the extension '#{File.extname(value.path)}'")
     end
-  rescue MiniMagick::Error, MiniMagick::Invalid
-    record.errors.add(attribute, message: "is not an image")
   end
 end
