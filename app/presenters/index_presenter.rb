@@ -13,7 +13,7 @@ class IndexPresenter
       "document_type" => TravelAdvicePublisher::INDEX_FORMAT,
       "schema_name" => TravelAdvicePublisher::INDEX_FORMAT,
       "title" => "Foreign travel advice",
-      "description" => "Get advice about travelling abroad, including the latest information on coronavirus, safety and security, entry requirements and travel warnings.",
+      "description" => "Get advice and warnings about travel abroad, including entry requirements, safety and security, health risks and legal differences.",
       "locale" => "en",
       "publishing_app" => "travel-advice-publisher",
       "rendering_app" => "frontend",
