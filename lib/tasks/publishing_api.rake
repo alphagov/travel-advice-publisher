@@ -8,7 +8,7 @@ namespace :publishing_api do
     GdsApi.publishing_api.publish(presenter.content_id)
   end
 
-  desc "send index content-item to publishing-api"
+  desc "patch links for the index content-item in publishing-api"
   task patch_index_links: :environment do
     GdsApi.publishing_api.patch_links(
       TravelAdvicePublisher::INDEX_CONTENT_ID,
