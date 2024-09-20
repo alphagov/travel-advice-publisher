@@ -20,7 +20,7 @@ gem "slimmer"
 gem "sprockets"
 gem "state_machines"
 gem "state_machines-mongoid"
-gem "uglifier"
+gem "terser"
 
 group :development do
   gem "listen"
