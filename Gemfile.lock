@@ -137,7 +137,7 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
-    gds-api-adapters (96.0.3)
+    gds-api-adapters (97.0.0)
       addressable
       link_header
       null_logger
@@ -537,7 +537,7 @@ GEM
     puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.1.7)
+    rack (3.1.8)
     rack-protection (4.0.0)
       base64 (>= 0.1.0)
       rack (>= 3.0.0, < 4)
