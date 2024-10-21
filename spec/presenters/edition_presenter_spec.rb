@@ -186,5 +186,33 @@ describe EditionPresenter do
         expect(presented_data["update_type"]).to eq("republish")
       end
     end
+
+    describe "when there is an associated CREATE action" do
+      before do
+        edition.actions.build(
+          request_type: Action::CREATE,
+          requester: user,
+          comment: "Some comment",
+        )
+      end
+
+      it "includes the requester's uid" do
+        expect(presented_data["last_edited_by_editor_id"]).to eq(user.uid)
+      end
+    end
+
+    describe "when there is an associated NEW_VERSION action" do
+      before do
+        edition.actions.build(
+          request_type: Action::NEW_VERSION,
+          requester: user,
+          comment: "Some comment",
+        )
+      end
+
+      it "includes the requester's uid" do
+        expect(presented_data["last_edited_by_editor_id"]).to eq(user.uid)
+      end
+    end
   end
 end
