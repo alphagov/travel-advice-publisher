@@ -861,4 +861,23 @@ describe TravelAdviceEdition do
       end
     end
   end
+
+  describe "#created_by" do
+    let!(:user) { create(:user) }
+    let!(:edition) { create(:draft_travel_advice_edition, country_slug: "foo") }
+
+    it "returns nil by default" do
+      expect(edition.created_by).to eq(nil)
+    end
+
+    it "returns the requester of the first CREATE action when present" do
+      edition.build_action_as(user, Action::CREATE)
+      expect(edition.created_by).to eq(user)
+    end
+
+    it "returns the requester of the first NEW_VERSION action when present" do
+      edition.build_action_as(user, Action::NEW_VERSION, "a comment for the new version")
+      expect(edition.created_by).to eq(user)
+    end
+  end
 end

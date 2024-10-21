@@ -29,10 +29,11 @@ class EditionPresenter
       "rendering_app" => "government-frontend",
       "routes" => routes,
       "public_updated_at" => public_updated_at.iso8601,
+      "last_edited_by_editor_id" => edition.created_by&.uid,
       "update_type" => update_type,
       "details" => details,
       "change_note" => change_description,
-    }
+    }.compact
   end
 
 private
