@@ -197,6 +197,13 @@ class TravelAdviceEdition
     false
   end
 
+  def created_by
+    creation = actions.detect do |a|
+      a.request_type == Action::CREATE || a.request_type == Action::NEW_VERSION
+    end
+    creation.requester if creation
+  end
+
 private
 
   def state_for_slug_unique
