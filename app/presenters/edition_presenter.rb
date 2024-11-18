@@ -26,7 +26,7 @@ class EditionPresenter
       "description" => edition.overview,
       "locale" => "en",
       "publishing_app" => "travel-advice-publisher",
-      "rendering_app" => "government-frontend",
+      "rendering_app" => "frontend",
       "routes" => routes,
       "public_updated_at" => public_updated_at.iso8601,
       "last_edited_by_editor_id" => edition.created_by&.uid,
