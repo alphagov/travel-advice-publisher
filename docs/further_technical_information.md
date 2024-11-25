@@ -4,7 +4,7 @@
 
 The list of countries is defined in [`lib/data/countries.yml`](../lib/data/countries.yml).
 
-Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend) and [government-frontend](https://github.com/alphagov/government-frontend).
+Published travel advice is exposed through the [content-store](https://github.com/alphagov/content-store) and presented in [frontend](https://github.com/alphagov/frontend).
 
 ### Workflow
 
