@@ -138,7 +138,7 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.16.3)
-    gds-api-adapters (97.5.0)
+    gds-api-adapters (97.6.0)
       addressable
       link_header
       null_logger
@@ -223,7 +223,7 @@ GEM
     hashie (5.0.0)
     htmlentities (4.3.4)
     http-accept (1.7.0)
-    http-cookie (1.0.7)
+    http-cookie (1.0.8)
       domain_name (~> 0.5)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
