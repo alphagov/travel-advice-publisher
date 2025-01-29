@@ -4,8 +4,9 @@ describe "publishing_api rake tasks", type: :rake_task do
   include GdsApi::TestHelpers::PublishingApi
 
   before do
-    Rake.application = nil # Reset any previously loaded tasks
-    Rails.application.load_tasks
+    Rake.application.clear
+    load "lib/tasks/publishing_api.rake"
+    Rake::Task.define_task(:environment)
 
     stub_any_publishing_api_call
   end

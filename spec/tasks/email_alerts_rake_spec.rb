@@ -4,8 +4,9 @@ describe "Email alert rake tasks", type: :rake_task do
   include GdsApi::TestHelpers::EmailAlertApi
 
   before do
-    Rake.application = nil # Reset any previously loaded tasks
-    Rails.application.load_tasks
+    Rake.application.clear
+    load "lib/tasks/email_alerts.rake"
+    Rake::Task.define_task(:environment)
     stub_any_email_alert_api_call
   end
 
