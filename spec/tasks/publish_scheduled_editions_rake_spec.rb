@@ -5,8 +5,9 @@ describe "publish_scheduled_editions", type: :rake_task do
   let!(:robot) { User.where(name: "Scheduled Publishing Robot", uid: "scheduled_publishing_robot").first_or_create }
 
   before do
-    Rake.application = nil
-    Rails.application.load_tasks
+    Rake.application.clear
+    load "lib/tasks/publish_scheduled_editions.rake"
+    Rake::Task.define_task(:environment)
     Sidekiq::Worker.clear_all
   end
 

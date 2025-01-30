@@ -17,8 +17,9 @@ describe "data migration rake tasks", type: :rake_task do
   let!(:published_with_draft_travel_advice) { create(:travel_advice_edition_with_parts, country_slug: country_with_published_and_draft_travel_advice, summary: "Summary5") }
 
   before do
-    Rake.application = nil # Reset any previously loaded tasks
-    Rails.application.load_tasks
+    Rake.application.clear
+    load "lib/tasks/data_migrations.rake"
+    Rake::Task.define_task(:environment)
     save_and_publish_test_travel_advice_editions
     $stdout = output
   end
