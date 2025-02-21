@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   root to: redirect("/admin")
 
+  mount GovukPublishingComponents::Engine, at: "/component-guide"
+
   get "/healthcheck/live", to: proc { [200, {}, %w[OK]] }
   get "/healthcheck/ready", to: GovukHealthcheck.rack_response(
     GovukHealthcheck::SidekiqRedis,
