@@ -7,7 +7,7 @@ Rails.application.configure do
   config.enable_reloading = Sidekiq.server? ? false : true
 
   # Do not eager load code on boot.
-  config.eager_load = Sidekiq.server? ? true : false
+  config.eager_load = Sidekiq.server? || false
 
   # Show full error reports.
   config.consider_all_requests_local = true
