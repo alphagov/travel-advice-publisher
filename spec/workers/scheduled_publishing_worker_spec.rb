@@ -1,4 +1,7 @@
 RSpec.describe ScheduledPublishingWorker, type: :worker do
+  include GdsApi::TestHelpers::EmailAlertApi
+  include GdsApi::TestHelpers::PublishingApi
+
   describe "#perform" do
     let(:country) { Country.find_by_slug("afghanistan") }
     let(:edition) { create(:scheduled_travel_advice_edition, country_slug: country.slug) }
@@ -17,6 +20,26 @@ RSpec.describe ScheduledPublishingWorker, type: :worker do
       expect(PublishingApiWorker.jobs.size).to eq(1)
       expect(edition.reload.state).to eq("published")
       expect(edition.reload.actions.first.requester.name).to eq robot.name
+    end
+
+    it "#perform sends email alerts for an edition" do
+      stub_any_publishing_api_call
+      stub_email_alert_api_accepts_content_change
+
+      # Queue up and execute the ScheduledPublishingWorker, move to after scheduled time
+      ScheduledPublishingWorker.enqueue(edition)
+      travel_to(1.hour.from_now)
+      ScheduledPublishingWorker.drain
+
+      # Check that the above created a PublishingApiWorker, then execute it
+      expect(PublishingApiWorker.jobs.size).to eq(1)
+      PublishingApiWorker.drain
+
+      # Check that the above created a EmailAlertApiWorker, then execute it
+      expect(EmailAlertApiWorker.jobs.size).to eq(1)
+      EmailAlertApiWorker.drain
+
+      assert_email_alert_api_content_change_created
     end
 
     it "does not publish edition that isn't yet due for publication" do
