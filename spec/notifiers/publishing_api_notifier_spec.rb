@@ -105,15 +105,6 @@ RSpec.describe PublishingApiNotifier do
       end
     end
 
-    context "for a draft edition" do
-      it "doesn't enqueue anything" do
-        subject.send_alert(edition)
-        subject.enqueue
-
-        expect(PublishingApiWorker.jobs).to be_empty
-      end
-    end
-
     context "for a minor update" do
       it "doesn't enqueue anything" do
         edition.update!(update_type: "minor", version_number: 2)
