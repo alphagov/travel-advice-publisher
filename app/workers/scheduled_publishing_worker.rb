@@ -25,19 +25,19 @@ class ScheduledPublishingWorker
       return
     end
 
-    notifier.put_content(edition)
-    notifier.patch_links(edition)
-    notifier.email_signup(edition) if edition.previous_version.nil?
-    notifier.publish(edition)
-    notifier.send_alert(edition)
-    notifier.enqueue
-
     unless publishing_robot
       Sidekiq.logger.error("You must set up a Scheduled Publishing Robot")
       return
     end
 
     edition.publish_as(publishing_robot)
+
+    notifier.put_content(edition)
+    notifier.patch_links(edition)
+    notifier.email_signup(edition) if edition.previous_version.nil?
+    notifier.publish(edition)
+    notifier.send_alert(edition)
+    notifier.enqueue
   end
 
 private

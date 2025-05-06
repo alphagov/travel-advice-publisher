@@ -232,6 +232,7 @@ describe Admin::EditionsController do
       it "should publish the edition" do
         allow(TravelAdviceEdition).to receive(:find).with(draft.to_param).and_return(draft)
         allow(draft).to receive(:publish).and_return(true)
+        draft.published_at = Time.zone.now
 
         post :update, params: { id: draft.to_param, edition: {}, commit: "Save & Publish" }
 

@@ -38,7 +38,7 @@ class PublishingApiNotifier
   end
 
   def send_alert(edition)
-    return unless send_alert?(edition)
+    return if edition.is_minor_update?
 
     presenter = EmailAlertPresenter.new(edition)
     payload = presenter.present.as_json
@@ -56,10 +56,6 @@ private
 
   def worker
     PublishingApiWorker
-  end
-
-  def send_alert?(edition)
-    edition.state == "published" && !edition.is_minor_update?
   end
 
   def validate_tasks_order
