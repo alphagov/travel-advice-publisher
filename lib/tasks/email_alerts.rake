@@ -5,6 +5,10 @@ namespace :email_alerts do
 
     edition = TravelAdviceEdition.find(args[:edition_id])
     puts "Sending an email alert for #{edition.title}"
+    unless Thor::Shell::Basic.new.yes?("Proceed with sending this email alert? (yes/no)")
+      puts "Aborted"
+      exit 1
+    end
     EmailAlertApiNotifier.send_alert(edition)
   end
 end
