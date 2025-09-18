@@ -1,4 +1,5 @@
 require "rake"
+require "thor"
 
 describe "Email alert rake tasks", type: :rake_task do
   include GdsApi::TestHelpers::EmailAlertApi
@@ -17,6 +18,7 @@ describe "Email alert rake tasks", type: :rake_task do
     it "triggers an email notification for the given edition ID" do
       edition = create(:published_travel_advice_edition, country_slug:)
 
+      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
       task.invoke(edition.id)
 
       assert_email_alert_api_content_change_created(
