@@ -611,10 +611,6 @@
   slug: norway
   content_id: 5db38510-b08a-4e4c-b84f-ca2d62353ab6
   email_signup_content_id: 6953a7da-0c05-49d2-a51a-f7a1cc56cc67
-- name: The Occupied Palestinian Territories
-  slug: the-occupied-palestinian-territories
-  content_id: 1db59f95-ea74-4cb0-b5c3-9b0724001e17
-  email_signup_content_id: c9222b56-dd59-4bcd-aabd-7101848161cb
 - name: Oman
   slug: oman
   content_id: aa62bc84-6fd0-4665-8b9a-4c4ab5977e8a
@@ -627,6 +623,10 @@
   slug: palau
   content_id: fb9351aa-1fc4-4df1-8d9f-504a89ea5856
   email_signup_content_id: e8275a44-36ce-4347-91a2-5261785c75a4
+- name: Palestine
+  slug: palestine
+  content_id: 1db59f95-ea74-4cb0-b5c3-9b0724001e17
+  email_signup_content_id: c9222b56-dd59-4bcd-aabd-7101848161cb
 - name: Panama
   slug: panama
   content_id: a15edf3a-5af1-45b3-8a10-31fcf4bfdbea
