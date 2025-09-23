@@ -6,9 +6,7 @@
   <% if @presenter.overview.present? %>
     <meta name="description" content="<%= @presenter.overview %>">
   <% end %>
-  <meta name="govuk:components_gem_version" content="<%= GovukPublishingComponents::VERSION %>">
-  <%= javascript_include_tag "domain-config" %>
-  <%= javascript_include_tag "govuk_publishing_components/load-analytics" %>
+  <%= render "layouts/analytics" %>
   <%= stylesheet_link_tag "historical-edition", media: "all" %>
   <%= yield :extra_headers %>
   <%= yield :head %>
