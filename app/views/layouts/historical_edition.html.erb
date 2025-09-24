@@ -1,4 +1,3 @@
-<% render "layouts/google_tag_manager" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +6,7 @@
   <% if @presenter.overview.present? %>
     <meta name="description" content="<%= @presenter.overview %>">
   <% end %>
+  <%= render "layouts/analytics" %>
   <%= stylesheet_link_tag "historical-edition", media: "all" %>
   <%= yield :extra_headers %>
   <%= yield :head %>
@@ -17,5 +17,6 @@
     <%= yield %>
     </main>
   </div>
+  <%= javascript_include_tag "application" %>
 </body>
 </html>
