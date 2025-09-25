@@ -6,6 +6,10 @@ namespace :country do
     end
 
     puts "Renaming #{args.old_country_slug} to #{args.new_country_slug}..."
+    unless Thor::Shell::Basic.new.yes?("Proceed with renaming country? (yes/no)")
+      puts "Aborted"
+      exit 1
+    end
     TravelAdviceEdition.where(country_slug: args.old_country_slug).update_all(country_slug: args.new_country_slug)
   end
 end
