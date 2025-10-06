@@ -1,3 +1,9 @@
+require "thor"
+
+def shell
+  @shell ||= Thor::Shell::Basic.new
+end
+
 namespace :email_alerts do
   desc "Triggers an email notification for the given edition ID"
   task :trigger, [:edition_id] => :environment do |task, args|
@@ -5,6 +11,10 @@ namespace :email_alerts do
 
     edition = TravelAdviceEdition.find(args[:edition_id])
     puts "Sending an email alert for #{edition.title}"
+    unless shell.yes?("Proceed with sending this email alert? (yes/no)")
+      shell.say_error "Aborted"
+      next
+    end
     EmailAlertApiNotifier.send_alert(edition)
   end
 end
