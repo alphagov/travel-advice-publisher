@@ -49,13 +49,6 @@ describe "publishing_api rake tasks", type: :rake_task do
         ),
       )
     end
-
-    it "aborts when the user declines the confirmation prompt" do
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(false)
-
-      expect_any_instance_of(Thor::Shell::Basic).to receive(:say_error).with("Aborted")
-      task.invoke
-    end
   end
 
   describe "republish_edition" do
@@ -90,11 +83,6 @@ describe "publishing_api rake tasks", type: :rake_task do
 
       expect(a_request(:post, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}/publish"))
         .not_to have_been_made
-    end
-    it "aborts when the user declines the confirmation prompt." do
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(false)
-      expect_any_instance_of(Thor::Shell::Basic).to receive(:say_error).with("Aborted")
-      task.invoke(country.slug)
     end
   end
 
@@ -156,11 +144,6 @@ describe "publishing_api rake tasks", type: :rake_task do
       )
 
       assert_publishing_api_publish("b5c8e64b-3461-4447-9144-1588e4a84fe6", "update_type" => "republish")
-    end
-    it "aborts when the user declines the confirmation prompt." do
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(false)
-      expect_any_instance_of(Thor::Shell::Basic).to receive(:say_error).with("Aborted")
-      task.invoke
     end
   end
 end

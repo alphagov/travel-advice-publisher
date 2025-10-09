@@ -10,7 +10,7 @@ namespace :publishing_api do
     presenter = IndexPresenter.new
 
     unless shell.yes?("You are about to publish travel advice index content item. Would you like to proceed? (yes/no)")
-      shell.say_error("Aborted")
+      shell.say "Aborted"
       next
     end
     GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
@@ -24,7 +24,7 @@ namespace :publishing_api do
     alternative_path = "/foreign-travel-advice/#{args[:new_country_slug]}"
 
     unless shell.yes?("You are about to unpublish a published travel advice page and email signup page for #{country} and redirect to #{alternative_path}")
-      shell.say_error("Aborted")
+      shell.say "Aborted"
       next
     end
     GdsApi.publishing_api.unpublish(country.email_signup_content_id, type: "redirect", alternative_path: "#{alternative_path}/email-signup")
@@ -42,7 +42,7 @@ namespace :publishing_api do
   desc "republish all published editions to publishing-api"
   task republish_editions: :environment do
     unless shell.yes?("You are about to republish all travel advice content items. Would you like to proceed? (yes/no)")
-      shell.say_error("Aborted")
+      shell.say "Aborted"
       next
     end
     TravelAdviceEdition.published.each do |edition|
@@ -86,7 +86,7 @@ namespace :publishing_api do
   desc "republish a published edition to publishing-api for a country"
   task :republish_edition, [:country_slug] => :environment do |_task, args|
     unless shell.yes?("You are about to republish published travel advice for #{args[:country_slug]}. Would you like to proceed? (yes/no)")
-      shell.say_error("Aborted")
+      shell.say "Aborted"
       next
     end
     edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
@@ -113,7 +113,7 @@ namespace :publishing_api do
       presenter = EmailAlertSignup::IndexPresenter.new
 
       unless shell.yes?("You are about to republish email sign up pages for travel advice index. Would you like to proceed? (yes/no)")
-        shell.say_error("Aborted")
+        shell.say "Aborted"
         next
       end
       GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
@@ -123,7 +123,7 @@ namespace :publishing_api do
     desc "republish email signup content item for all countries"
     task editions: :environment do
       unless shell.yes?("You are about to republish email signup pages for all countries. Would you like to proceed? (yes/no)")
-        shell.say_error("Aborted")
+        shell.say "Aborted"
         next
       end
       TravelAdviceEdition.published.each do |edition|
@@ -144,7 +144,7 @@ namespace :publishing_api do
       presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
       unless shell.yes?("You are about to republish email signup for #{args[:country_slug]}. Would you like to proceed? (yes/no)")
-        shell.say_error("Aborted")
+        shell.say "Aborted"
         next
       end
       GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
