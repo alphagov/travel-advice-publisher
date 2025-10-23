@@ -19,7 +19,7 @@
   {
     field: "PDF Document",
     value: @edition.document.present? ?
-             link_to("Download #{@edition.document['name']}", @edition.document["file_url"], { class: "govuk-link" })
+             download_link_with_size("Download #{@edition.document['name']}", @edition.document["file_url"], { class: "govuk-link" })
              : "No Document attached"
   }]
   general_information_items << {

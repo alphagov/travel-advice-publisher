@@ -40,4 +40,14 @@ module ApplicationHelper
   def diff_html(version1, version2)
     Diffy::Diff.new(version1.to_s, version2.to_s, allow_empty_diff: false).to_s(:html).html_safe
   end
+
+  def download_link_with_size(text, url, options = {})
+    return content_tag(:span, text) unless url.present?
+
+    service = FileSizeService.new
+    file_size = service.get_file_size_from_url(url)
+    link_text = file_size ? "#{text} (#{service.format_file_size(file_size)})" : text
+    
+    link_to(link_text, url, options)
+  end
 end

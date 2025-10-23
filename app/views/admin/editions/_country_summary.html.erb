@@ -26,7 +26,7 @@
 <% if presenter.document %>
   <div class="form-download">
   <p>
-    <a href="<%= presenter.document['file_url'] %>">Download a more detailed map (PDF)</a>
+    <%= download_link_with_size("Download a more detailed map (PDF)", presenter.document['file_url']) %>
   </p>
   </div>
 <% end %>
