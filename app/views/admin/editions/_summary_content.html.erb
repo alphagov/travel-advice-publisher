@@ -60,7 +60,9 @@
       <div class="well uploaded-document">
         <h4 class="govuk-heading-s govuk-!-margin-bottom-3">Current PDF</h4>
 
-        <p class="govuk-body"><%= link_to "Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link" %></p>
+        <p class="govuk-body">
+          <%= download_link_with_size("Download #{@edition.document['name']}", @edition.document["file_url"], class: "govuk-link") %>
+        </p>
 
         <%= render "govuk_publishing_components/components/checkboxes", {
           name: "edition[remove_document]",
