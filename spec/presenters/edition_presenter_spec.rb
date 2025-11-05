@@ -214,5 +214,28 @@ describe EditionPresenter do
         expect(presented_data["last_edited_by_editor_id"]).to eq(user.uid)
       end
     end
+
+    describe "document field" do
+      let(:document_details) { presented_data["details"]["document"] }
+
+      context "when the edition has a document" do
+        before do
+          allow(edition).to receive(:document).and_return(
+            "file_url" => "https://assets.example.com/map.pdf",
+            "content_type" => "application/pdf",
+            "size" => 201_672,
+          )
+        end
+
+        it "includes the file size in the document details" do
+          expect(document_details).to include(
+            "file_size" => 201_672,
+            "url" => "https://assets.example.com/map.pdf",
+            "content_type" => "application/pdf",
+            "attachment_type" => "file",
+          )
+        end
+      end
+    end
   end
 end
