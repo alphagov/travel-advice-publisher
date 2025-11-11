@@ -1,1 +1,17 @@
 @import "govuk_publishing_components/all_components";
+
+$is-print: true;
+
+// OUTPUT
+// The following files and inline CSS will form the output of print.css
+@import "helpers/core-print";
+@import "helpers/print-base";
+
+section > header h1::after {
+  content: "";
+}
+
+#how-to-claim { // stylelint-disable-line selector-max-id
+  border: 1pt solid rgb(225, 225, 225);
+  padding: 2pt 4pt;
+}

@@ -1,0 +1,107 @@
+// Global print stylesheet
+
+a {
+  text-decoration: none;
+}
+
+// Override relative link printing to include gov.uk
+a[href^="/"]::after {
+  content: " (https://www.gov.uk" attr(href) ")";
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+}
+
+h2,
+h3,
+h4,
+p,
+ul {
+  orphans: 3;
+  widows: 3;
+}
+
+h2,
+h3,
+h4 {
+  page-break-after: avoid;
+}
+
+h2 {
+  @include govuk-font(19, $weight: bold);
+  padding-top: 7pt;
+}
+
+h3 {
+  @include govuk-font(16, $weight: bold);
+}
+
+h4 {
+  @include govuk-font(14, $weight: bold);
+}
+
+p {
+  @include govuk-font(14);
+}
+
+ul,
+ol {
+  @include govuk-font(14);
+  padding-left: 26pt;
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+li {
+  line-height: 1.5;
+
+  p {
+    margin: 0;
+  }
+}
+
+figure {
+  margin: govuk-spacing(3) 0;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: govuk-spacing(3) 0;
+
+  th,
+  td {
+    border: 1pt solid $govuk-border-colour;
+    padding: govuk-spacing(2);
+    text-align: left;
+  }
+
+  caption {
+    @include govuk-font(19);
+    margin: govuk-spacing(3) 0;
+  }
+}
+
+// hide the unnecessary page elements
+
+// stylelint-disable selector-max-id
+.dont-print,
+#global-header #search,
+#global-header .search-toggle,
+#global-header .header-proposition,
+#global-breadcrumb,
+.print-link {
+  display: none;
+}
