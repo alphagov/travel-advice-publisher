@@ -1,5 +1,4 @@
 class Admin::CountriesController < ApplicationController
-  before_action :skip_slimmer
   before_action :load_country, only: [:show]
 
   def index

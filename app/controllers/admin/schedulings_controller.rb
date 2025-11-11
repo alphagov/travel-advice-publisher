@@ -1,5 +1,4 @@
 class Admin::SchedulingsController < ApplicationController
-  before_action :skip_slimmer
   before_action :load_country_and_edition
 
   def new; end

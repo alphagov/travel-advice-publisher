@@ -1,7 +1,4 @@
 class Admin::EditionsController < ApplicationController
-  include Slimmer::Headers
-
-  before_action :skip_slimmer, except: :historical_edition
   before_action :load_country, only: [:create]
   before_action :load_country_and_edition, only: %i[edit update destroy diff]
   before_action :strip_empty_alert_statuses, only: :update
@@ -64,7 +61,7 @@ class Admin::EditionsController < ApplicationController
     edition = TravelAdviceEdition.find(params[:edition_id])
     country = Country.find_by_slug(edition.country_slug)
     @presenter = HistoricalEditionPresenter.new(edition, country)
-    set_slimmer_headers template: "print"
+
     render layout: "historical_edition"
   end
 
