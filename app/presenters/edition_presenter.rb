@@ -152,6 +152,7 @@ private
                       "id" => SecureRandom.uuid,
                       "url" => edition.document["file_url"],
                       "content_type" => edition.document["content_type"],
+                      "file_size" => edition.document["size"],
                     }
                   end
   end
