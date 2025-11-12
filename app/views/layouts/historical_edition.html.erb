@@ -8,10 +8,22 @@
   <% end %>
   <%= render "layouts/analytics" %>
   <%= stylesheet_link_tag "historical-edition", media: "all" %>
+
+  <script type="text/javascript">
+    window.onload = function() { window.print(); }
+  </script>
+
   <%= yield :extra_headers %>
   <%= yield :head %>
 </head>
+
 <body>
+  <header role="banner" class="group" id="global-header">
+    <div id="logo">
+      <img src="<%= asset_path 'gov.uk_logotype_crown_invert.png' %>" alt=""> GOV.UK
+    </div>
+  </header>
+
   <div id="wrapper" class="travel-advice-guide">
     <main role="main" id="content">
     <%= yield %>

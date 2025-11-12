@@ -20,8 +20,4 @@ private
       GdsApi::GovukHeaders.set_header(:x_govuk_authenticated_user, current_user.uid)
     end
   end
-
-  def skip_slimmer
-    response.headers[Slimmer::Headers::SKIP_HEADER] = "true"
-  end
 end

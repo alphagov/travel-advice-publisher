@@ -1,0 +1,122 @@
+// Global print stylesheet
+html {
+  font-size: 62.5%;
+}
+
+main > header {
+  position: relative;
+
+  h1 {
+    @include govuk-font(24, $weight: bold);
+    border-bottom: solid 1pt #000000;
+    padding-bottom: 6pt;
+    width: 80%;
+  }
+
+  p {
+    @include govuk-font(14);
+    border-bottom: solid 1pt #000000;
+    bottom: -11pt;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    padding-bottom: 6pt;
+    right: 0;
+    width: 15%;
+  }
+}
+
+.content-block,
+article {
+  margin-bottom: 1cm;
+  width: 80%;
+
+  .info-notice {
+    page-break-after: avoid;
+  }
+
+  header h1 {
+    @include govuk-font(19, $weight: bold);
+    border-bottom: 1pt solid $govuk-border-colour;
+    padding-top: 7pt;
+    padding-bottom: 7pt;
+  }
+
+  table {
+    td:first-child ~ td {
+      text-align: right;
+    }
+  }
+
+  select {
+    background: #ffffff;
+  }
+
+  .contact,
+  .info-notice,
+  .help-notice {
+    border: 1pt solid $govuk-border-colour;
+    padding: 2pt;
+    margin: 14pt 0;
+  }
+
+  .info-notice p,
+  .help-notice p {
+    margin-left: govuk-spacing(6);
+    position: relative;
+
+    &::before {
+      @include govuk-font(27);
+      font-weight: bold;
+      content: "!";
+      position: absolute;
+      top: -2px;
+      left: -18px;
+    }
+  }
+
+  .highlight-answer,
+  .highlighted-event {
+    p {
+      @include govuk-font(19);
+    }
+
+    p em {
+      font-style: normal;
+      font-weight: 700;
+    }
+  }
+}
+
+.modified-date {
+  color: rgb(225, 225, 225);
+  @include govuk-font(14);
+
+  &::after {
+    content: "\00A9  Crown Copyright";
+    float: right;
+  }
+}
+
+// hide the unnecessary page elements
+
+// stylelint-disable selector-max-id, selector-no-qualifying-type, declaration-no-important
+body #global-user-location,
+body .related-positioning,
+header.page-header div h1 span,
+header nav,
+body .actions,
+#local-locator-form,
+#location-loading,
+#get-started,
+.finding_location,
+.found_location,
+.loading_location,
+.location_error,
+.done-questions .start-again,
+.done-questions .question-number,
+.done-questions li.done .undo,
+.player-container,
+.video-transcript-toggle .return-to-top {
+  display: none !important;
+}

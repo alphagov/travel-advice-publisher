@@ -690,13 +690,6 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    slimmer (18.7.0)
-      json
-      nokogiri (~> 1.7)
-      null_logger
-      plek (>= 1.1.0)
-      rack (>= 3.0)
-      rest-client
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
       version_gem (>= 1.1.8, < 3)
@@ -785,7 +778,6 @@ DEPENDENCIES
   rubocop-govuk
   sentry-sidekiq
   simplecov
-  slimmer
   sprockets
   state_machines
   state_machines-mongoid
