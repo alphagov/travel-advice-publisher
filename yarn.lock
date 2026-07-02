@@ -2833,6 +2833,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.5.16":
+  version: 8.5.16
+  resolution: "postcss@npm:8.5.16"
+  dependencies:
+    nanoid: "npm:^3.3.12"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 625de7a02f662f3a340964d14b487bd5097adf16f5f171e257d19005ba37aea8768ee446557500e88e91ca46b4d14d6cb4a0bf033c6ec0c8c0b660d85719f1ef
+  languageName: node
+  linkType: hard
+
 "prelude-ls@npm:^1.2.1":
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
@@ -3718,7 +3729,7 @@ __metadata:
     jasmine-browser-runner: "npm:^4.0.0"
     jasmine-core: "npm:^6.3.0"
     paste-html-to-govspeak: "npm:^0.5.0"
-    postcss: "npm:^8.5.15"
+    postcss: "npm:^8.5.16"
     standardx: "npm:^7.0.0"
     stylelint: "npm:^17.14.0"
     stylelint-config-gds: "npm:^2.0.0"
