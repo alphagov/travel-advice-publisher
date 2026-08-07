@@ -8,7 +8,7 @@
 
 .part__drag-handle-icon {
   width: govuk-spacing(2);
-  fill: govuk-colour("mid-grey");
+  fill: govuk-colour("black", $variant: "tint-95");
 }
 
 .part__drag-item--chosen {
