@@ -6,7 +6,7 @@
   &:visited,
   &:hover,
   &:active {
-    color: darken(govuk-colour("red"), 5%);
+    color: govuk-colour("red", $variant: "shade-25")
   }
 
   &:focus {
