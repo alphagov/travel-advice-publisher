@@ -43,16 +43,16 @@ h3 {
 }
 
 h4 {
-  @include govuk-font(14, $weight: bold);
+  @include govuk-font(16, $weight: bold);
 }
 
 p {
-  @include govuk-font(14);
+  @include govuk-font(16);
 }
 
 ul,
 ol {
-  @include govuk-font(14);
+  @include govuk-font(16);
   padding-left: 26pt;
 }
 
