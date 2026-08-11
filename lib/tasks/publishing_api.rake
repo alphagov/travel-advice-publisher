@@ -32,9 +32,11 @@ namespace :publishing_api do
       country.content_id,
       type: "redirect",
       redirects: [
-        path: "/foreign-travel-advice/#{args[:country_slug]}",
-        type: "prefix",
-        destination: alternative_path,
+        {
+          path: "/foreign-travel-advice/#{args[:country_slug]}",
+          type: "prefix",
+          destination: alternative_path,
+        },
       ],
     )
   end
