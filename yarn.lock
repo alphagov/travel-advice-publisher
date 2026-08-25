@@ -1654,10 +1654,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jasmine-core@npm:^7.0.1":
-  version: 7.0.1
-  resolution: "jasmine-core@npm:7.0.1"
-  checksum: 25b15c46ca44df8160cb73c5449f93457d2c64947d84fc4858b11f60ea70361192d196e25babdfcd0905d5944ef5b9ed0dcf9809a86e1bb0666c642f25116091
+"jasmine-core@npm:^7.0.2":
+  version: 7.0.2
+  resolution: "jasmine-core@npm:7.0.2"
+  checksum: 335304a185284bb7cac23810e5f4547211b6b00c783ea1fad02e24bb0ef4a3b8f87d46a72c6650cbaed647bcf325b22a5a0322afc17602565450dc3bd8f24cda
   languageName: node
   linkType: hard
 
@@ -3199,7 +3199,7 @@ __metadata:
   resolution: "travel-advice-publisher@workspace:."
   dependencies:
     jasmine-browser-runner: "npm:^5.0.0"
-    jasmine-core: "npm:^7.0.1"
+    jasmine-core: "npm:^7.0.2"
     paste-html-to-govspeak: "npm:^0.5.0"
     postcss: "npm:^8.5.26"
     standardx: "npm:^7.0.0"
