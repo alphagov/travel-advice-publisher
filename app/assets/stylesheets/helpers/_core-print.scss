@@ -14,7 +14,7 @@ main > header {
   }
 
   p {
-    @include govuk-font(14);
+    @include govuk-font(16);
     border-bottom: solid 1pt #000000;
     bottom: -11pt;
     position: absolute;
@@ -37,7 +37,7 @@ article {
 
   header h1 {
     @include govuk-font(19, $weight: bold);
-    border-bottom: 1pt solid $govuk-border-colour;
+    border-bottom: 1pt solid govuk-functional-colour(border);
     padding-top: 7pt;
     padding-bottom: 7pt;
   }
@@ -55,7 +55,7 @@ article {
   .contact,
   .info-notice,
   .help-notice {
-    border: 1pt solid $govuk-border-colour;
+    border: 1pt solid govuk-functional-colour(border);
     padding: 2pt;
     margin: 14pt 0;
   }
@@ -90,7 +90,7 @@ article {
 
 .modified-date {
   color: rgb(225, 225, 225);
-  @include govuk-font(14);
+  @include govuk-font(16);
 
   &::after {
     content: "\00A9  Crown Copyright";
