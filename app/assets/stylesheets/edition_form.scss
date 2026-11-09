@@ -1,3 +1,5 @@
+@use "govuk_publishing_components/base" as *;
+
 .edition-form__action-button-group__no_scheduling_permission {
   :last-child {
     margin-left: auto;

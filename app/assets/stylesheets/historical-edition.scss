@@ -1,11 +1,11 @@
-@import "govuk_publishing_components/all-components";
+@use "govuk_publishing_components/all-components";
 
 $is-print: true;
 
 // OUTPUT
 // The following files and inline CSS will form the output of print.css
-@import "helpers/core-print";
-@import "helpers/print-base";
+@use "helpers/core-print";
+@use "helpers/print-base";
 
 section > header h1::after {
   content: "";

@@ -1,10 +1,14 @@
-@import "govuk_publishing_components/all-components";
-@import "./objects/grid";
-@import "./core/link";
-@import "parts";
-@import "govspeak";
-@import "side";
-@import "broken_links_report";
-@import "diff";
-@import "edition_form";
-@import "date_time";
+
+@use "govuk_publishing_components/govuk-core";
+@use "govuk_publishing_components/lib"; // not sure if needed?
+
+@use "govuk_publishing_components/all-components";
+@use "./objects/grid";
+@use "./core/link";
+@use "parts";
+@use "govspeak";
+@use "side";
+@use "broken_links_report";
+@use "diff";
+@use "edition_form";
+@use "date_time";
