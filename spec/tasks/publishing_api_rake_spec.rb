@@ -1,5 +1,4 @@
 require "rake"
-require "thor"
 
 describe "publishing_api rake tasks", type: :rake_task do
   include GdsApi::TestHelpers::PublishingApi
@@ -16,7 +15,6 @@ describe "publishing_api rake tasks", type: :rake_task do
     let(:task) { Rake::Task["publishing_api:publish_travel_advice_index"] }
 
     it "sends the index item to publishing_api" do
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
       task.invoke
 
       assert_publishing_api_put_content(
@@ -34,7 +32,6 @@ describe "publishing_api rake tasks", type: :rake_task do
     end
 
     it "send the links for the index item to publishing api" do
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
       task.invoke
 
       assert_publishing_api_patch_links(
@@ -57,7 +54,7 @@ describe "publishing_api rake tasks", type: :rake_task do
 
     it "sends the published edition to the publishing_api with update_type of 'republish'" do
       edition = create(:published_travel_advice_edition, country_slug: "aruba")
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
+
       task.invoke(country.slug)
 
       expected_request_attributes = {
@@ -75,7 +72,7 @@ describe "publishing_api rake tasks", type: :rake_task do
 
     it "ignore draft items" do
       create(:draft_travel_advice_edition, country_slug: country.slug)
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
+
       task.invoke(country.slug)
 
       expect(a_request(:put, GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT + "/content/#{country.content_id}"))
@@ -92,7 +89,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     it "sends all published editions to the publishing_api with update_type of 'republish'" do
       aruba = create(:published_travel_advice_edition, country_slug: "aruba", published_at: 10.minutes.ago)
       algeria = create(:published_travel_advice_edition, country_slug: "algeria", published_at: 5.minutes.ago)
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
+
       task.invoke
 
       assert_publishing_api_put_content(
@@ -127,7 +124,7 @@ describe "publishing_api rake tasks", type: :rake_task do
     it "ignores draft items" do
       create(:draft_travel_advice_edition, country_slug: "aruba", published_at: 10.minutes.ago)
       create(:published_travel_advice_edition, country_slug: "algeria", published_at: 5.minutes.ago)
-      allow_any_instance_of(Thor::Shell::Basic).to receive(:yes?).and_return(true)
+
       task.invoke
 
       expect(a_request(:put, "#{GdsApi::TestHelpers::PublishingApi::PUBLISHING_API_V2_ENDPOINT}/content/56bae85b-a57c-4ca2-9dbd-68361a086bb3"))

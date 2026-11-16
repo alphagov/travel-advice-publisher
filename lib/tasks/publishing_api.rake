@@ -1,18 +1,8 @@
-require "thor"
-
-def shell
-  @shell ||= Thor::Shell::Basic.new
-end
-
 namespace :publishing_api do
   desc "send index content-item to publishing-api"
   task publish_travel_advice_index: :environment do
     presenter = IndexPresenter.new
 
-    unless shell.yes?("You are about to publish travel advice index content item. Would you like to proceed? (yes/no)")
-      shell.say "Aborted"
-      next
-    end
     GdsApi.publishing_api.put_content(presenter.content_id, presenter.render_for_publishing_api)
     GdsApi.publishing_api.patch_links(TravelAdvicePublisher::INDEX_CONTENT_ID, IndexLinksPresenter.present)
     GdsApi.publishing_api.publish(presenter.content_id)
@@ -23,10 +13,6 @@ namespace :publishing_api do
     country = Country.find_by_slug(args[:country_slug])
     alternative_path = "/foreign-travel-advice/#{args[:new_country_slug]}"
 
-    unless shell.yes?("You are about to unpublish a published travel advice page and email signup page for #{country} and redirect to #{alternative_path}")
-      shell.say "Aborted"
-      next
-    end
     GdsApi.publishing_api.unpublish(country.email_signup_content_id, type: "redirect", alternative_path: "#{alternative_path}/email-signup")
     GdsApi.publishing_api.unpublish(
       country.content_id,
@@ -43,10 +29,6 @@ namespace :publishing_api do
 
   desc "republish all published editions to publishing-api"
   task republish_editions: :environment do
-    unless shell.yes?("You are about to republish all travel advice content items. Would you like to proceed? (yes/no)")
-      shell.say "Aborted"
-      next
-    end
     TravelAdviceEdition.published.each do |edition|
       presenter = EditionPresenter.new(edition, republish: true)
       links_presenter = LinksPresenter.new(edition)
@@ -87,10 +69,6 @@ namespace :publishing_api do
 
   desc "republish a published edition to publishing-api for a country"
   task :republish_edition, [:country_slug] => :environment do |_task, args|
-    unless shell.yes?("You are about to republish published travel advice for #{args[:country_slug]}. Would you like to proceed? (yes/no)")
-      shell.say "Aborted"
-      next
-    end
     edition         = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
     presenter       = EditionPresenter.new(edition, republish: true)
     links_presenter = LinksPresenter.new(edition)
@@ -114,20 +92,12 @@ namespace :publishing_api do
     task index: :environment do
       presenter = EmailAlertSignup::IndexPresenter.new
 
-      unless shell.yes?("You are about to republish email sign up pages for travel advice index. Would you like to proceed? (yes/no)")
-        shell.say "Aborted"
-        next
-      end
       GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
       GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
     end
 
     desc "republish email signup content item for all countries"
     task editions: :environment do
-      unless shell.yes?("You are about to republish email signup pages for all countries. Would you like to proceed? (yes/no)")
-        shell.say "Aborted"
-        next
-      end
       TravelAdviceEdition.published.each do |edition|
         presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
@@ -145,10 +115,6 @@ namespace :publishing_api do
       edition = TravelAdviceEdition.published.find_by(country_slug: args[:country_slug])
       presenter = EmailAlertSignup::EditionPresenter.new(edition)
 
-      unless shell.yes?("You are about to republish email signup for #{args[:country_slug]}. Would you like to proceed? (yes/no)")
-        shell.say "Aborted"
-        next
-      end
       GdsApi.publishing_api.put_content(presenter.content_id, presenter.content_payload)
       GdsApi.publishing_api.publish(presenter.content_id, presenter.update_type)
       puts "SUCCEED: The country #{args[:country_slug]} has been republished"
