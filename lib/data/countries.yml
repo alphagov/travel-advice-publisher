@@ -95,8 +95,8 @@
   slug: bolivia
   content_id: 2f6708c2-9a26-4949-8eb7-824e601ee377
   email_signup_content_id: cdfa1b33-e8d0-45f8-b902-000569d05b25
-- name: Bonaire/St Eustatius/Saba
-  slug: bonaire-st-eustatius-saba
+- name: Bonaire/Sint Eustatius/Saba
+  slug: bonaire-sint-eustatius-saba
   content_id: a33df5a7-34ec-4ff1-ad23-656f3d7d0331
   email_signup_content_id: 9855e249-bf30-4654-9f32-95e540bb539f
 - name: Bosnia and Herzegovina
