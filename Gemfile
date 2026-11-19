@@ -3,6 +3,7 @@ source "https://rubygems.org"
 gem "rails", "~> 8.1.4"
 
 gem "bootsnap", require: false
+gem "csv"
 gem "dartsass-rails"
 gem "diffy"
 gem "gds-api-adapters"
