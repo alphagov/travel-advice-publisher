@@ -51,8 +51,8 @@
   slug: azerbaijan
   content_id: f68b6778-cb3b-4c0b-82a0-b90613fdda26
   email_signup_content_id: e6506691-92ac-4ef0-b084-32dd1e9aa6fb
-- name: Bahamas
-  slug: bahamas
+- name: The Bahamas
+  slug: the-bahamas
   content_id: ac5f0376-62ef-4f8f-8fbe-6dc6c2e4a671
   email_signup_content_id: 11d2143b-3be2-483c-bb77-0be2b7a15bfe
 - name: Bahrain
@@ -95,8 +95,8 @@
   slug: bolivia
   content_id: 2f6708c2-9a26-4949-8eb7-824e601ee377
   email_signup_content_id: cdfa1b33-e8d0-45f8-b902-000569d05b25
-- name: Bonaire/St Eustatius/Saba
-  slug: bonaire-st-eustatius-saba
+- name: Bonaire/Sint Eustatius/Saba
+  slug: bonaire-sint-eustatius-saba
   content_id: a33df5a7-34ec-4ff1-ad23-656f3d7d0331
   email_signup_content_id: 9855e249-bf30-4654-9f32-95e540bb539f
 - name: Bosnia and Herzegovina
@@ -771,8 +771,8 @@
   slug: st-martin-and-st-barthelemy
   content_id: 98c0a9e6-54b0-4c67-8007-43bde256e8ad
   email_signup_content_id: c41428d3-bc45-4d3c-b07f-049fd72a35a5
-- name: St Maarten
-  slug: st-maarten
+- name: Sint Maarten
+  slug: sint-maarten
   content_id: f752255c-de89-4b61-af7a-6233dd44a58a
   email_signup_content_id: c0348945-a135-4134-b10d-b4014f080ee8
 - name: St Pierre & Miquelon
