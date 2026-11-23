@@ -1,3 +1,6 @@
+@use "govuk_publishing_components/base" as *;
+@use "govuk_publishing_components/core";
+
 .app-c-markdown-guidance {
   @include govuk-font(19);
 
